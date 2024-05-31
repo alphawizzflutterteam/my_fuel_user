@@ -4,6 +4,10 @@ import 'package:flutter/widgets.dart';
 import 'package:test_prj/orderfuel/EV/cartPage.dart';
 import 'package:test_prj/components/my_button.dart';
 
+import '../../components/my_hinttext_field.dart';
+import '../../vehicle_number.dart';
+import '../bottom_sheet.dart';
+
 class EvVehicle extends StatefulWidget {
   const EvVehicle({super.key});
 
@@ -95,11 +99,57 @@ class _EvVehicleState extends State<EvVehicle> {
               itemBuilder: (_, index) {
                 final item = gridMap[index];
                 return InkWell(
-                  onTap: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => CartPage(),
-                      )),
+                  onTap: () =>showModalBottomSheet(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return Container(
+                        padding: EdgeInsets.zero,
+                        child: Padding(
+                          padding: const EdgeInsets.all(20.0),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: <Widget>[
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Text(
+                                'Enter Your Vehicle Number',
+                                style: TextStyle(
+                                    fontSize: 24, fontWeight: FontWeight.w500),
+                              ),
+                              const SizedBox(
+                                height: 40,
+                              ),
+                              MyHintTextField(
+                                  hintText: Text(
+                                    "Vehicle Number",
+                                    style: TextStyle(
+                                        color: Colors.grey, fontWeight: FontWeight.w500),
+                                  )),
+                              const SizedBox(
+                                height: 40,
+                              ),
+                              InkWell(
+                                onTap: () {},
+                                child:  InkWell(
+                                  child:  InkWell(
+                                    onTap: () {
+                                      showModalBottomSheet(context: context, builder: (context) =>  BottamSheet(),);
+                                    },
+                                    child: Container(
+                                      child: MyButton(
+                                        text: "Submit",
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  ),
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Container(

@@ -7,6 +7,7 @@ import 'package:test_prj/payment/payment_form.dart';
 import 'package:test_prj/payment/payment_page.dart';
 
 import 'orderfuel/EV/charginStationDetails.dart';
+import 'orderfuel/doorStepDelivery/my_assets.dart';
 
 class SelectNewAddress extends StatefulWidget {
   const SelectNewAddress({super.key});
@@ -415,7 +416,7 @@ class _SelectNewAddressState extends State<SelectNewAddress> {
                           context,
                           MaterialPageRoute(
                               builder: (context) =>
-                                  PaymentScreenTree()));
+                                  MyAssets()));
                     },
                   ),
                 ),
