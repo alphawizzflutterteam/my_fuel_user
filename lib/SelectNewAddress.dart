@@ -10,6 +10,7 @@ import 'package:test_prj/payment/payment_page.dart';
 import 'Home/checkout_car_service.dart';
 import 'Home/fuel_ontab_checkout.dart';
 import 'orderfuel/EV/charginStationDetails.dart';
+import 'orderfuel/doorStepDelivery/my_assets.dart';
 
 class SelectNewAddress extends StatefulWidget {
   const SelectNewAddress({super.key, this.isFromFuelOnTab});
@@ -440,21 +441,11 @@ class _SelectNewAddressState extends State<SelectNewAddress> {
                   child: GestureDetector(
                     child: const MyButton(text: 'Save Address'),
                     onTap: () {
-                      if (widget.isFromFuelOnTab != null &&
-                          widget.isFromFuelOnTab!) {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => FuelOnTabCheckoutScreen(
-                                      isFromFuelOnTap: widget.isFromFuelOnTab,
-                                    )));
-                      } else {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    const PaymentScreenTree()));
-                      }
+                 Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  MyAssets()));
                     },
                   ),
                 ),
