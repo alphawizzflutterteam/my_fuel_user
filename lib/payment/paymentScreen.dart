@@ -3,7 +3,9 @@ import 'package:test_prj/components/my_button.dart';
 import 'package:test_prj/payment/payment_form.dart';
 
 class PaymentScreenTree extends StatefulWidget {
-  const PaymentScreenTree({super.key});
+  final bool? isFromFuelOnTap;
+
+  const PaymentScreenTree({super.key, this.isFromFuelOnTap});
 
   @override
   State<PaymentScreenTree> createState() => _PaymentScreenTreeState();
@@ -25,34 +27,35 @@ class _PaymentScreenTreeState extends State<PaymentScreenTree> {
   Widget build(BuildContext context) {
     //Size size = MediaQuery.of(context).size;
     return Scaffold(
-        appBar: AppBar(
-          leading: Icon(Icons.arrow_back_ios_new_outlined),
-          foregroundColor: Colors.white,
-          flexibleSpace: Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.center,
-                colors: [
-                  Color.fromRGBO(211, 83, 7, 1),
-                  Color.fromRGBO(252, 130, 59, 1),
-                  Color.fromRGBO(252, 130, 59, 1),
-                ],
-              ),
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(23),
-                bottomRight: Radius.circular(23),
-              ),
+      appBar: AppBar(
+        leading: const Icon(Icons.arrow_back_ios_new_outlined),
+        foregroundColor: Colors.white,
+        flexibleSpace: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.center,
+              colors: [
+                Color.fromRGBO(211, 83, 7, 1),
+                Color.fromRGBO(252, 130, 59, 1),
+                Color.fromRGBO(252, 130, 59, 1),
+              ],
+            ),
+            borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(23),
+              bottomRight: Radius.circular(23),
             ),
           ),
-          title: Text('Payment Type'),
-          centerTitle: true,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(20),
-              bottomRight: Radius.circular(20),
-            ),
-          ),),
+        ),
+        title: const Text('Payment Type'),
+        centerTitle: true,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            bottomLeft: Radius.circular(20),
+            bottomRight: Radius.circular(20),
+          ),
+        ),
+      ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -98,8 +101,8 @@ class _PaymentScreenTreeState extends State<PaymentScreenTree> {
               //     ],
               //   ),
               // ),
-              Padding(
-                padding: const EdgeInsets.only(top: 20,bottom: 20),
+              const Padding(
+                padding: EdgeInsets.only(top: 20, bottom: 20),
                 child: Text(
                   'Select payment method',
                   style: TextStyle(
@@ -109,14 +112,14 @@ class _PaymentScreenTreeState extends State<PaymentScreenTree> {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(top: 10),
+                padding: const EdgeInsets.only(top: 10),
                 child: GestureDetector(
                   onTap: () => _handleRadio(2),
                   child: Container(
                       width: 325,
                       height: 85,
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
+                          borderRadius: BorderRadius.circular(5),
                           border: _type == 1
                               ? Border.all(width: 1, color: Colors.grey)
                               : Border.all(width: 0.3, color: Colors.grey)),
@@ -124,40 +127,38 @@ class _PaymentScreenTreeState extends State<PaymentScreenTree> {
                           child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Row(children: [
+                          const Row(children: [
                             Padding(
-                              padding: const EdgeInsets.only(left: 5),
-                              child: Container(
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Column(
+                              padding: EdgeInsets.only(left: 5),
+                              child: Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        'Pay by My fuels card',
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w500),
-                                      ),
-                                      Text(
-                                        'Available blalance',
-                                        style: TextStyle(
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w500,
-                                            color: Colors.grey),
-                                      ),
-                                      Row(
-                                        children: [
-                                          Text(
-                                            'Rs.1000',
-                                            style: TextStyle(
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.w500),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
+                                  children: [
+                                    Text(
+                                      'Pay by My fuels card',
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w500),
+                                    ),
+                                    Text(
+                                      'Available balance',
+                                      style: TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w500,
+                                          color: Colors.grey),
+                                    ),
+                                    Row(
+                                      children: [
+                                        Text(
+                                          'Rs.1000',
+                                          style: TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
                                 ),
                               ),
                             ),
@@ -166,11 +167,11 @@ class _PaymentScreenTreeState extends State<PaymentScreenTree> {
                             padding: const EdgeInsets.only(left: 20),
                             child: Text("",
                                 style: _type == 1
-                                    ? TextStyle(
+                                    ? const TextStyle(
                                         fontSize: 17,
                                         fontWeight: FontWeight.w500,
                                         color: Colors.black)
-                                    : TextStyle(
+                                    : const TextStyle(
                                         fontSize: 15,
                                         fontWeight: FontWeight.w500,
                                         color: Colors.grey,
@@ -187,7 +188,7 @@ class _PaymentScreenTreeState extends State<PaymentScreenTree> {
                                   activeColor: Colors.orange,
                                 ),
                               ),
-                              Text(
+                              const Text(
                                 'Add Money',
                                 style: TextStyle(
                                     fontSize: 16,
@@ -201,61 +202,57 @@ class _PaymentScreenTreeState extends State<PaymentScreenTree> {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(top: 9),
+                padding: const EdgeInsets.only(top: 9),
                 child: Container(
-             //     width: 325,
+                  //     width: 325,
                   height: 55,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5),
+                      borderRadius: BorderRadius.circular(5),
                       border: _type == 2
                           ? Border.all(width: 1, color: Colors.black)
                           : Border.all(width: 0.3, color: Colors.grey)),
                   child: Center(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(children: [
-                          Padding(
-                            padding: const EdgeInsets.only(left: 5),
-                            child: Image.asset(
-                              "assets/visa.png",
-                              height: 50,
-                              width: 50,
-                            ),
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 5, right: 5),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Image.asset(
+                            "assets/visa.png",
+                            height: 50,
+                            width: 50,
                           ),
-                        ]),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 20),
-                          child: Text("Visa",
-                              style: _type == 2
-                                  ? TextStyle(
-                                      fontSize: 17,
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.black)
-                                  : TextStyle(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.grey,
-                                    )),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 140),
-                          child: Radio(
+                          SizedBox(
+                            width: 100,
+                            child: Text("Visa",
+                                textAlign: TextAlign.start,
+                                style: _type == 2
+                                    ? const TextStyle(
+                                        fontSize: 17,
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.black)
+                                    : const TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.grey,
+                                      )),
+                          ),
+                          Radio(
                             value: 2,
                             groupValue: _type,
                             onChanged: _handleRadio,
                             activeColor: Colors.orange,
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(top: 9),
+                padding: const EdgeInsets.only(top: 9),
                 child: Container(
-                   // width: 325,
+                    // width: 325,
                     height: 55,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(5),
@@ -263,47 +260,45 @@ class _PaymentScreenTreeState extends State<PaymentScreenTree> {
                             ? Border.all(width: 1, color: Colors.black)
                             : Border.all(width: 0.3, color: Colors.grey)),
                     child: Center(
-                        child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(children: [
-                          Padding(
-                            padding: const EdgeInsets.only(left: 5),
-                            child: Image.asset(
-                              "assets/phonepy.png",
-                              height: 50,
-                              width: 50,
-                            ),
+                        child: Padding(
+                      padding: const EdgeInsets.only(left: 5, right: 5),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Image.asset(
+                            "assets/phonepy.png",
+                            height: 50,
+                            width: 50,
                           ),
-                        ]),
-                        Text("Phone Pay",
-                            style: _type == 3
-                                ? TextStyle(
-                                    fontSize: 17,
-                                    fontWeight: FontWeight.w500,
-                                    color: Colors.black)
-                                : TextStyle(
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w500,
-                                    color: Colors.grey,
-                                  )),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 80),
-                          child: Radio(
+                          SizedBox(
+                            width: 100,
+                            child: Text("PhonePe",
+                                textAlign: TextAlign.start,
+                                style: _type == 3
+                                    ? const TextStyle(
+                                        fontSize: 17,
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.black)
+                                    : const TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.grey,
+                                      )),
+                          ),
+                          Radio(
                             value: 3,
                             groupValue: _type,
                             onChanged: _handleRadio,
                             activeColor: Colors.orange,
                           ),
-                        ),
-                        // SizedBox(width: 5,)
-                      ],
+                        ],
+                      ),
                     ))),
               ),
               Padding(
-                  padding: EdgeInsets.only(top: 9),
+                  padding: const EdgeInsets.only(top: 9),
                   child: Container(
-                   // width: 325,
+                    // width: 325,
                     height: 55,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(5),
@@ -311,51 +306,45 @@ class _PaymentScreenTreeState extends State<PaymentScreenTree> {
                             ? Border.all(width: 1, color: Colors.black)
                             : Border.all(width: 0.3, color: Colors.grey)),
                     child: Center(
-                        child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(left: 5),
-                              child: Image.asset(
-                                "assets/upi.png",
-                                height: 50,
-                                width: 50,
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 22),
-                              child: Text("UPI Payment",
-                                  style: _type == 4
-                                      ? TextStyle(
-                                          fontSize: 17,
-                                          fontWeight: FontWeight.w500,
-                                          color: Colors.black)
-                                      : TextStyle(
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.w500,
-                                          color: Colors.grey,
-                                        )),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 105),
-                              child: Radio(
-                                value: 4,
-                                groupValue: _type,
-                                onChanged: _handleRadio,
-                                activeColor: Colors.orange,
-                              ),
-                            ),
-                          ],
-                        )
-                      ],
+                        child: Padding(
+                      padding: const EdgeInsets.only(left: 5, right: 5),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Image.asset(
+                            "assets/upi.png",
+                            height: 50,
+                            width: 50,
+                          ),
+                          SizedBox(
+                            width: 100,
+                            child: Text("UPI Payment",
+                                textAlign: TextAlign.start,
+                                style: _type == 4
+                                    ? const TextStyle(
+                                        fontSize: 17,
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.black)
+                                    : const TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.grey,
+                                      )),
+                          ),
+                          Radio(
+                            value: 4,
+                            groupValue: _type,
+                            onChanged: _handleRadio,
+                            activeColor: Colors.orange,
+                          ),
+                        ],
+                      ),
                     )),
                   )),
               Padding(
-                  padding: EdgeInsets.only(top: 9),
+                  padding: const EdgeInsets.only(top: 9),
                   child: Container(
-                 //   width: 325,
+                    //   width: 325,
                     height: 55,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(5),
@@ -363,53 +352,98 @@ class _PaymentScreenTreeState extends State<PaymentScreenTree> {
                             ? Border.all(width: 1, color: Colors.black)
                             : Border.all(width: 0.3, color: Colors.grey)),
                     child: Center(
+                        child: Padding(
+                      padding: const EdgeInsets.only(left: 5, right: 5),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Image.asset(
+                            "assets/googlepy.png",
+                            height: 50,
+                            width: 50,
+                          ),
+                          SizedBox(
+                            width: 100,
+                            child: Text("Google Pay",
+                                textAlign: TextAlign.start,
+                                style: _type == 5
+                                    ? const TextStyle(
+                                        fontSize: 17,
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.black)
+                                    : const TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.grey,
+                                      )),
+                          ),
+                          Radio(
+                            value: 5,
+                            groupValue: _type,
+                            onChanged: _handleRadio,
+                            activeColor: Colors.orange,
+                          ),
+                        ],
+                      ),
+                    )),
+                  )),
+              Padding(
+                padding: const EdgeInsets.only(top: 9),
+                child: GestureDetector(
+                  onTap: () => _handleRadio,
+                  child: Container(
+                    //   width: 325,
+                    height: 55,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
+                        border: _type == 6
+                            ? Border.all(width: 1, color: Colors.black)
+                            : Border.all(width: 0.3, color: Colors.grey)),
+                    child: Center(
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 5, right: 5),
                         child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Padding(
-                              padding: const EdgeInsets.only(left: 5),
-                              child: Image.asset(
-                                "assets/googlepy.png",
-                                height: 40,
-                                width: 40,
-                              ),
+                            Image.asset(
+                              "assets/paystation.png",
+                              height: 50,
+                              width: 50,
                             ),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 28),
-                              child: Text("Google Pay",
-                                  style: _type == 5
-                                      ? TextStyle(
+                            SizedBox(
+                              width: 100,
+                              child: Text("Pay at Station",
+                                  textAlign: TextAlign.start,
+                                  style: _type == 6
+                                      ? const TextStyle(
                                           fontSize: 17,
                                           fontWeight: FontWeight.w500,
                                           color: Colors.black)
-                                      : TextStyle(
+                                      : const TextStyle(
                                           fontSize: 15,
                                           fontWeight: FontWeight.w500,
                                           color: Colors.grey,
                                         )),
                             ),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 120),
-                              child: Radio(
-                                value: 5,
-                                groupValue: _type,
-                                onChanged: _handleRadio,
-                                activeColor: Colors.orange,
-                              ),
+                            Radio(
+                              value: 6,
+                              groupValue: _type,
+                              onChanged: _handleRadio,
+                              activeColor: Colors.orange,
                             ),
                           ],
-                        )
-                      ],
-                    )),
-                  )),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
               Padding(
-                padding: EdgeInsets.only(top: 9),
+                padding: const EdgeInsets.only(top: 9),
                 child: GestureDetector(
                   onTap: () => _handleRadio,
                   child: Container(
-                 //   width: 325,
+                    //       width: 325,
                     height: 55,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(5),
@@ -417,130 +451,65 @@ class _PaymentScreenTreeState extends State<PaymentScreenTree> {
                             ? Border.all(width: 1, color: Colors.black)
                             : Border.all(width: 0.3, color: Colors.grey)),
                     child: Center(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(left: 5),
-                                child: Image.asset(
-                                  "assets/paystation.png",
-                                  height: 40,
-                                  width: 40,
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(left: 28),
-                                child: GestureDetector(
-                                  onTap: () => _handleRadio,
-                                  child: Text("Pay at Station",
-                                      style: _type == 7
-                                          ? TextStyle(
-                                              fontSize: 17,
-                                              fontWeight: FontWeight.w500,
-                                              color: Colors.black)
-                                          : TextStyle(
-                                              fontSize: 15,
-                                              fontWeight: FontWeight.w500,
-                                              color: Colors.grey,
-                                            )),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(left: 100),
-                                child: Radio(
-                                  value: 7,
-                                  groupValue: _type,
-                                  onChanged: _handleRadio,
-                                  activeColor: Colors.orange,
-                                ),
-                              ),
-                            ],
-                          )
-                        ],
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 5, right: 5),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Image.asset(
+                              "assets/paystation.png",
+                              height: 50,
+                              width: 50,
+                            ),
+                            SizedBox(
+                              width: 100,
+                              child: Text("Buy now pay later",
+                                  textAlign: TextAlign.start,
+                                  style: _type == 7
+                                      ? const TextStyle(
+                                          fontSize: 17,
+                                          fontWeight: FontWeight.w500,
+                                          color: Colors.black)
+                                      : const TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.w500,
+                                          color: Colors.grey,
+                                        )),
+                            ),
+                            Radio(
+                              value: 7,
+                              groupValue: _type,
+                              onChanged: _handleRadio,
+                              activeColor: Colors.orange,
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
                 ),
               ),
-              Padding(
-                padding: EdgeInsets.only(top: 9),
-                child: GestureDetector(
-                  onTap: () => _handleRadio,
-                  child: Container(
-            //       width: 325,
-                    height: 55,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                        border: _type == 8
-                            ? Border.all(width: 1, color: Colors.black)
-                            : Border.all(width: 0.3, color: Colors.grey)),
-                    child: Center(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(left: 5),
-                                child: Image.asset(
-                                  "assets/paystation.png",
-                                  height: 40,
-                                  width: 40,
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(left: 28),
-                                child: GestureDetector(
-                                  onTap: () => _handleRadio,
-                                  child: Text("Pay at Station",
-                                      style: _type == 8
-                                          ? TextStyle(
-                                              fontSize: 17,
-                                              fontWeight: FontWeight.w500,
-                                              color: Colors.black)
-                                          : TextStyle(
-                                              fontSize: 15,
-                                              fontWeight: FontWeight.w500,
-                                              color: Colors.grey,
-                                            )),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(left: 100),
-                                child: Radio(
-                                  value: 8,
-                                  groupValue: _type,
-                                  onChanged: _handleRadio,
-                                  activeColor: Colors.orange,
-                                ),
-                              ),
-                            ],
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(
+              const SizedBox(
                 height: 56,
               ),
               GestureDetector(
                 onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => PaymentForm()));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => PaymentForm(
+                                isFromFuelOnTap: widget.isFromFuelOnTap,
+                              )));
                 },
                 child: Container(
                   alignment: Alignment.bottomCenter,
                   width: 330,
-                  child: MyButton(
+                  child: const MyButton(
                     text: 'Continue',
                   ),
                 ),
               ),
-              SizedBox(width: 80),
+              const SizedBox(width: 80),
             ],
           ),
         ),

@@ -6,6 +6,7 @@ import 'package:test_prj/profile/notification1.dart';
 import 'package:test_prj/orderfuel/doorStepDelivery/forLooking.dart';
 import 'package:test_prj/schedule_day.dart';
 import 'Home/car_service.dart';
+import 'Home/fuel_on_tab.dart';
 import 'Home/insurance_scr.dart';
 import 'Home/rescue_me_src.dart';
 import 'Home/tyres_screen.dart';
@@ -22,15 +23,18 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
-
-  List<String> vehicles=['Two Wheeler', 'Four Wheeler ,Heavy Vehicle'];
-  List<String> productsAndServices=['Genset Maintenance', 'Fuel Management Services ','Fuel on Tap','My Fuels Jerry...'];
+  List<String> vehicles = ['Two Wheeler', 'Four Wheeler ,Heavy Vehicle'];
+  List<String> productsAndServices = [
+    'Genset Maintenance',
+    'Fuel Management Services ',
+    'Fuel on Tap',
+    'My Fuels Jerry...'
+  ];
   String? selectedVehicle;
   String? selectedVehicleManufacture;
   String? selectModel;
 
-  int count = 0 ;
+  int count = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -94,10 +98,18 @@ class _HomePageState extends State<HomePage> {
                           //   "assets/Group 2979.png",
                           //   height: 24,
                           // ),
-                          const Icon(Icons.search,color: Colors.white,size: 30,),
+                          const Icon(
+                            Icons.search,
+                            color: Colors.white,
+                            size: 30,
+                          ),
                           const SizedBox(width: 8),
                           GestureDetector(
-                            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const Notification1(),)),
+                            onTap: () => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const Notification1(),
+                                )),
                             child: Image.asset(
                               "assets/Notification.png",
                               height: 24,
@@ -120,13 +132,13 @@ class _HomePageState extends State<HomePage> {
                   child: Padding(
                     padding: const EdgeInsets.only(top: 10),
                     child: Container(
-                        decoration: const BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(35),
-                            topRight: Radius.circular(35),
-                          ),
+                      decoration: const BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(35),
+                          topRight: Radius.circular(35),
                         ),
+                      ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -163,7 +175,8 @@ class _HomePageState extends State<HomePage> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => const LookingForCompany()),
+                                    builder: (context) =>
+                                        const LookingForCompany()),
                               );
                             },
                             child: Padding(
@@ -174,11 +187,13 @@ class _HomePageState extends State<HomePage> {
                                 decoration: BoxDecoration(
                                   color: const Color.fromRGBO(138, 180, 2, 200),
                                   border: Border.all(
-                                    color: const Color.fromRGBO(138, 180, 2, 10),
+                                    color:
+                                        const Color.fromRGBO(138, 180, 2, 10),
                                   ),
                                   borderRadius: BorderRadius.circular(8),
                                 ),
-                                padding: const EdgeInsets.symmetric(horizontal: 16),
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 16),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -189,7 +204,8 @@ class _HomePageState extends State<HomePage> {
                                     const Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
                                         Text(
                                           "Order Fuel",
@@ -202,7 +218,8 @@ class _HomePageState extends State<HomePage> {
                                           "Door Step Delivery",
                                           style: TextStyle(
                                             fontSize: 12,
-                                            color: Color.fromRGBO(89, 89, 89, 1),
+                                            color:
+                                                Color.fromRGBO(89, 89, 89, 1),
                                           ),
                                         ),
                                       ],
@@ -257,71 +274,98 @@ class _HomePageState extends State<HomePage> {
                                 ),
 
                                 GridView.builder(
-                                    physics: const NeverScrollableScrollPhysics(),
+                                    physics:
+                                        const NeverScrollableScrollPhysics(),
                                     shrinkWrap: true,
                                     primary: false,
                                     padding: const EdgeInsets.all(10),
-                                    itemCount: productsAndServices.length ,
+                                    itemCount: productsAndServices.length,
                                     gridDelegate:
-                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                                        const SliverGridDelegateWithFixedCrossAxisCount(
                                       crossAxisCount: 2,
-                                       childAspectRatio: 95 / 120,
+                                      childAspectRatio: 95 / 120,
                                       crossAxisSpacing: 10,
                                       mainAxisSpacing: 10.0,
                                     ),
-                                    itemBuilder: (BuildContext context, int i)
-                                    {
-
-                                      return Stack(
-                                        children: [
-                                          InkWell(
-                                            child: Container(
-                                              // child: Image.asset('assets/fuel.png',fit: BoxFit.cover,),
-                                              decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.circular(20),
+                                    itemBuilder: (BuildContext context, int i) {
+                                      return Stack(children: [
+                                        InkWell(
+                                          child: Container(
+                                            // child: Image.asset('assets/fuel.png',fit: BoxFit.cover,),
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(20),
                                                 image: const DecorationImage(
-                                                  image: AssetImage('assets/fuel.png'),
-                                                  fit: BoxFit.cover
-                                                )
-                                            ),
-                                              height: MediaQuery.of(context).size.height / 2.4,
-                                                 width: MediaQuery.of(context).size.width / 2.4,
-                                            ),
-                                            onTap: (){
-                                              if(i==0)
-                                              genesetMaintenance(context);
-                                              if(i==1)
-                                                fuelManagmentServices(context);
-                                            },
+                                                    image: AssetImage(
+                                                        'assets/fuel.png'),
+                                                    fit: BoxFit.cover)),
+                                            height: MediaQuery.of(context)
+                                                    .size
+                                                    .height /
+                                                2.4,
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width /
+                                                2.4,
                                           ),
-                                          Positioned(
-                                            bottom: 10,
-                                            left: 5,
-                                            child: Column(
-                                              crossAxisAlignment: CrossAxisAlignment.start  ,
-                                              children: [
+                                          onTap: () {
+                                            if (i == 0) {
+                                              genesetMaintenance(context);
+                                            } else if (i == 1) {
+                                              fuelManagmentServices(context);
+                                            } else if (i == 2) {
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        const FuelOnTabScreen(),
+                                                  ));
+                                            } else {
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        const FuelOnTabScreen(
+                                                            title:
+                                                                "My Fuel Jerry Can"),
+                                                  ));
+                                            }
+                                          },
+                                        ),
+                                        Positioned(
+                                          bottom: 10,
+                                          left: 5,
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
                                               SizedBox(
                                                 width: 100,
-                                                child: Text(productsAndServices[i], maxLines:2, style: const TextStyle(color: Colors.white,fontWeight: FontWeight.w700),
-                                                  overflow:TextOverflow.visible,
-
+                                                child: Text(
+                                                  productsAndServices[i],
+                                                  maxLines: 2,
+                                                  style: const TextStyle(
+                                                      color: Colors.white,
+                                                      fontWeight:
+                                                          FontWeight.w700),
+                                                  overflow:
+                                                      TextOverflow.visible,
                                                 ),
                                               ),
-                                                i % 4 == 2 || i % 4 == 3 ?  const Text('0.5 kl/LK/2KI',style: TextStyle(color: Colors.grey) ,
-                                                overflow:TextOverflow.visible,
-
-                                              ) : const SizedBox()
-                                            ],),
-
-                                          )
-                                          ,]);
-
-
-                                    }
-
-
-                                ),
-
+                                              i % 4 == 2 || i % 4 == 3
+                                                  ? const Text(
+                                                      '0.5 kl/LK/2KI',
+                                                      style: TextStyle(
+                                                          color: Colors.grey),
+                                                      overflow:
+                                                          TextOverflow.visible,
+                                                    )
+                                                  : const SizedBox()
+                                            ],
+                                          ),
+                                        ),
+                                      ]);
+                                    }),
 
                                 // const SizedBox(height: 20),
                                 // productTile(),
@@ -350,8 +394,12 @@ class _HomePageState extends State<HomePage> {
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       InkWell(
-                                        onTap: (){
-                                          Navigator.push(context, MaterialPageRoute(builder: (context)=>const RescueMe()));
+                                        onTap: () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      const RescueMe()));
                                         },
                                         child: Container(
                                           child: Column(
@@ -373,9 +421,8 @@ class _HomePageState extends State<HomePage> {
                                         ),
                                       ),
                                       InkWell(
-                                        onTap: (){
+                                        onTap: () {
                                           _showBottomSheet(context);
-
                                         },
                                         child: Container(
                                           child: Column(
@@ -397,8 +444,12 @@ class _HomePageState extends State<HomePage> {
                                         ),
                                       ),
                                       InkWell(
-                                        onTap: (){
-                                          Navigator.push(context, MaterialPageRoute(builder: (context)=>const Insurance_Scr()));
+                                        onTap: () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      const Insurance_Scr()));
                                         },
                                         child: Container(
                                           child: Column(
@@ -426,7 +477,7 @@ class _HomePageState extends State<HomePage> {
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       InkWell(
-                                        onTap: (){
+                                        onTap: () {
                                           tyresBottomSheet(context);
                                         },
                                         child: Container(
@@ -449,7 +500,7 @@ class _HomePageState extends State<HomePage> {
                                         ),
                                       ),
                                       InkWell(
-                                        onTap: (){
+                                        onTap: () {
                                           batteryBottomSheet(context);
                                         },
                                         child: Container(
@@ -472,7 +523,7 @@ class _HomePageState extends State<HomePage> {
                                         ),
                                       ),
                                       InkWell(
-                                        onTap: (){
+                                        onTap: () {
                                           carwashBottomShee(context);
                                         },
                                         child: Container(
@@ -520,7 +571,8 @@ class _HomePageState extends State<HomePage> {
       context: context,
       isScrollControlled: true, // Ensure the bottom sheet can scroll
       builder: (BuildContext context) {
-        return SingleChildScrollView( // Wrap your content in SingleChildScrollView
+        return SingleChildScrollView(
+          // Wrap your content in SingleChildScrollView
           child: Container(
             padding: EdgeInsets.zero,
             child: Padding(
@@ -560,7 +612,8 @@ class _HomePageState extends State<HomePage> {
                           });
                         }
                       },
-                      items: vehicles.map<DropdownMenuItem<String>>((String value) {
+                      items: vehicles
+                          .map<DropdownMenuItem<String>>((String value) {
                         return DropdownMenuItem<String>(
                           value: value,
                           child: Text(value),
@@ -568,12 +621,13 @@ class _HomePageState extends State<HomePage> {
                       }).toList(),
                     ),
                   ),
-                  const SizedBox(height: 10,),
+                  const SizedBox(
+                    height: 10,
+                  ),
                   Container(
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
-                        border: Border.all(color: colors.black12,width: 2 )
-                    ),
+                        border: Border.all(color: colors.black12, width: 2)),
                     child: const MyHintTextField(
                       hintText: Text(
                         "Vehicle Number",
@@ -589,7 +643,10 @@ class _HomePageState extends State<HomePage> {
                   ),
                   InkWell(
                     onTap: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=>const CarService()));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const CarService()));
 
                       // Add your onTap logic here
                     },
@@ -613,7 +670,8 @@ class _HomePageState extends State<HomePage> {
       context: context,
       isScrollControlled: true, // Ensure the bottom sheet can scroll
       builder: (BuildContext context) {
-        return SingleChildScrollView( // Wrap your content in SingleChildScrollView
+        return SingleChildScrollView(
+          // Wrap your content in SingleChildScrollView
           child: Container(
             padding: EdgeInsets.zero,
             child: Padding(
@@ -653,7 +711,8 @@ class _HomePageState extends State<HomePage> {
                           });
                         }
                       },
-                      items: vehicles.map<DropdownMenuItem<String>>((String value) {
+                      items: vehicles
+                          .map<DropdownMenuItem<String>>((String value) {
                         return DropdownMenuItem<String>(
                           value: value,
                           child: Text(value),
@@ -661,7 +720,9 @@ class _HomePageState extends State<HomePage> {
                       }).toList(),
                     ),
                   ),
-                  const SizedBox(height: 10,),
+                  const SizedBox(
+                    height: 10,
+                  ),
                   Container(
                     height: 55,
                     decoration: BoxDecoration(
@@ -681,7 +742,8 @@ class _HomePageState extends State<HomePage> {
                           });
                         }
                       },
-                      items: vehicles.map<DropdownMenuItem<String>>((String value) {
+                      items: vehicles
+                          .map<DropdownMenuItem<String>>((String value) {
                         return DropdownMenuItem<String>(
                           value: value,
                           child: Text(value),
@@ -689,12 +751,13 @@ class _HomePageState extends State<HomePage> {
                       }).toList(),
                     ),
                   ),
-                  const SizedBox(height: 10,),
+                  const SizedBox(
+                    height: 10,
+                  ),
                   Container(
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
-                        border: Border.all(color: colors.black12,width: 2 )
-                    ),
+                        border: Border.all(color: colors.black12, width: 2)),
                     child: const MyHintTextField(
                       hintText: Text(
                         "Tyre Size",
@@ -710,7 +773,12 @@ class _HomePageState extends State<HomePage> {
                   ),
                   InkWell(
                     onTap: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=>TyresScreen(page: 1,)));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => TyresScreen(
+                                    page: 1,
+                                  )));
 
                       // Add your onTap logic here
                     },
@@ -734,7 +802,8 @@ class _HomePageState extends State<HomePage> {
       context: context,
       isScrollControlled: true, // Ensure the bottom sheet can scroll
       builder: (BuildContext context) {
-        return SingleChildScrollView( // Wrap your content in SingleChildScrollView
+        return SingleChildScrollView(
+          // Wrap your content in SingleChildScrollView
           child: Container(
             padding: EdgeInsets.zero,
             child: Padding(
@@ -774,7 +843,8 @@ class _HomePageState extends State<HomePage> {
                           });
                         }
                       },
-                      items: vehicles.map<DropdownMenuItem<String>>((String value) {
+                      items: vehicles
+                          .map<DropdownMenuItem<String>>((String value) {
                         return DropdownMenuItem<String>(
                           value: value,
                           child: Text(value),
@@ -782,7 +852,9 @@ class _HomePageState extends State<HomePage> {
                       }).toList(),
                     ),
                   ),
-                  const SizedBox(height: 10,),
+                  const SizedBox(
+                    height: 10,
+                  ),
                   Container(
                     height: 55,
                     decoration: BoxDecoration(
@@ -802,7 +874,8 @@ class _HomePageState extends State<HomePage> {
                           });
                         }
                       },
-                      items: vehicles.map<DropdownMenuItem<String>>((String value) {
+                      items: vehicles
+                          .map<DropdownMenuItem<String>>((String value) {
                         return DropdownMenuItem<String>(
                           value: value,
                           child: Text(value),
@@ -810,14 +883,20 @@ class _HomePageState extends State<HomePage> {
                       }).toList(),
                     ),
                   ),
-                  const SizedBox(height: 10,),
-
+                  const SizedBox(
+                    height: 10,
+                  ),
                   const SizedBox(
                     height: 40,
                   ),
                   InkWell(
                     onTap: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=>TyresScreen(page: 2,)));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => TyresScreen(
+                                    page: 2,
+                                  )));
 
                       // Add your onTap logic here
                     },
@@ -835,6 +914,7 @@ class _HomePageState extends State<HomePage> {
       },
     );
   }
+
   void showReviewDialog(BuildContext context) {
     showDialog(
       context: context,
@@ -846,33 +926,45 @@ class _HomePageState extends State<HomePage> {
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(
-
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const SizedBox(height: 30,),
+                  const SizedBox(
+                    height: 30,
+                  ),
                   Container(
                     width: 50,
                     height: 50,
-                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(26),
-                      color: colors.primary.withOpacity(.2),),
-                    child: const Icon(Icons.book_online_sharp,color: colors.primary,),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(26),
+                      color: colors.primary.withOpacity(.2),
+                    ),
+                    child: const Icon(
+                      Icons.book_online_sharp,
+                      color: colors.primary,
+                    ),
                   ),
-                  const SizedBox(height: 20,),
-
-
-                  const Text('On of our agents will connect',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18),),
-                  const Text('you shortly',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18),),
-                  const SizedBox(height: 20,),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  const Text(
+                    'On of our agents will connect',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                  ),
+                  const Text(
+                    'you shortly',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
                   InkWell(
-                    onTap: (){
+                    onTap: () {
                       Navigator.pop(context);
                     },
                     child: const MyButton(
                       text: "Back to home",
                     ),
                   )
-
-
                 ],
               ),
             ),
@@ -887,7 +979,8 @@ class _HomePageState extends State<HomePage> {
       context: context,
       isScrollControlled: true, // Ensure the bottom sheet can scroll
       builder: (BuildContext context) {
-        return SingleChildScrollView( // Wrap your content in SingleChildScrollView
+        return SingleChildScrollView(
+          // Wrap your content in SingleChildScrollView
           child: Container(
             padding: EdgeInsets.zero,
             child: Padding(
@@ -927,7 +1020,8 @@ class _HomePageState extends State<HomePage> {
                           });
                         }
                       },
-                      items: vehicles.map<DropdownMenuItem<String>>((String value) {
+                      items: vehicles
+                          .map<DropdownMenuItem<String>>((String value) {
                         return DropdownMenuItem<String>(
                           value: value,
                           child: Text(value),
@@ -956,7 +1050,12 @@ class _HomePageState extends State<HomePage> {
                   ),
                   InkWell(
                     onTap: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=>TyresScreen(page: 3,)));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => TyresScreen(
+                                    page: 3,
+                                  )));
 
                       // Add your onTap logic here
                     },
@@ -975,8 +1074,6 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-
-
   List<bool> _selections = [true, true, false, false];
 
   void genesetMaintenance(BuildContext context) {
@@ -984,102 +1081,112 @@ class _HomePageState extends State<HomePage> {
       context: context,
       isScrollControlled: true, // Ensure the bottom sheet can scroll
       builder: (BuildContext context) {
-        return StatefulBuilder(builder: (context, genesetState) {
-          return SingleChildScrollView( // Wrap your content in SingleChildScrollView
-            child: Container(
-              padding: EdgeInsets.zero,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  const Text(
-                    'Genset Maintenance',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w500,
+        return StatefulBuilder(
+          builder: (context, genesetState) {
+            return SingleChildScrollView(
+              // Wrap your content in SingleChildScrollView
+              child: Container(
+                padding: EdgeInsets.zero,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    const SizedBox(
+                      height: 10,
                     ),
-                  ),
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  Container(
-                    height: 60,
-                    decoration: BoxDecoration(
-                        color: colors.greyTemp.withOpacity(.1)
+                    const Text(
+                      'Genset Maintenance',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
-                    child: const Padding(
-                      padding: EdgeInsets.all(12.0),
-                      child: Text('lorem lpsum is simply dummy text of the printing and typesetting industry' ),
+                    const SizedBox(
+                      height: 30,
                     ),
-                  ),
-
-                  Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Column(
-                      children: [
-
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        ListView.builder(
-                          shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
-                          itemCount: _selections.length,
-                          itemBuilder: (context, index) {
-                            return GestureDetector(
-                              onTap: () {
-                                genesetState(() {
-                                  _selections[index] = !_selections[index];
-                                });
-                              },
-                              child: Container(
-                                margin: const EdgeInsets.symmetric(vertical: 8.0),
-                                padding: const EdgeInsets.all(15.0),
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                    color: _selections[index] ? colors.greenTemp : colors.greyTemp.withOpacity(0.5),
-                                    width: 2.0,
-                                  ),
-                                  borderRadius: BorderRadius.circular(8.0),
-                                ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      _getServiceText(index),
-                                      style: const TextStyle(fontSize: 18),
-                                    ),
-                                    if (_selections[index])
-                                      const Icon(Icons.check_circle_outline_rounded, color: colors.greenTemp),
-                                  ],
-                                ),
-                              ),
-                            );
-                          },
-                        ),
-                        const SizedBox(height: 50,),
-
-
-                        InkWell(
-                          onTap: (){
-                            Navigator.push(context, MaterialPageRoute(builder: (context)=>const SelectNewAddress()));
-                            // _showBottomSheet(context);
-                          },
-                          child: const MyButton(
-                            text: "Next",
+                    Container(
+                      height: 60,
+                      decoration:
+                          BoxDecoration(color: colors.greyTemp.withOpacity(.1)),
+                      child: const Padding(
+                        padding: EdgeInsets.all(12.0),
+                        child: Text(
+                            'lorem lpsum is simply dummy text of the printing and typesetting industry'),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Column(
+                        children: [
+                          const SizedBox(
+                            height: 10,
                           ),
-                        ),
-                      ],
-                    ),
-                  )
-
-                ],
+                          ListView.builder(
+                            shrinkWrap: true,
+                            physics: NeverScrollableScrollPhysics(),
+                            itemCount: _selections.length,
+                            itemBuilder: (context, index) {
+                              return GestureDetector(
+                                onTap: () {
+                                  genesetState(() {
+                                    _selections[index] = !_selections[index];
+                                  });
+                                },
+                                child: Container(
+                                  margin:
+                                      const EdgeInsets.symmetric(vertical: 8.0),
+                                  padding: const EdgeInsets.all(15.0),
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                      color: _selections[index]
+                                          ? colors.greenTemp
+                                          : colors.greyTemp.withOpacity(0.5),
+                                      width: 2.0,
+                                    ),
+                                    borderRadius: BorderRadius.circular(8.0),
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        _getServiceText(index),
+                                        style: const TextStyle(fontSize: 18),
+                                      ),
+                                      if (_selections[index])
+                                        const Icon(
+                                            Icons.check_circle_outline_rounded,
+                                            color: colors.greenTemp),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                          const SizedBox(
+                            height: 50,
+                          ),
+                          InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const SelectNewAddress()));
+                              // _showBottomSheet(context);
+                            },
+                            child: const MyButton(
+                              text: "Next",
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
               ),
-            ),
-          );
-        },);
+            );
+          },
+        );
       },
     );
   }
@@ -1104,7 +1211,8 @@ class _HomePageState extends State<HomePage> {
       context: context,
       isScrollControlled: true, // Ensure the bottom sheet can scroll
       builder: (BuildContext context) {
-        return SingleChildScrollView( // Wrap your content in SingleChildScrollView
+        return SingleChildScrollView(
+          // Wrap your content in SingleChildScrollView
           child: Container(
             padding: EdgeInsets.zero,
             child: Column(
@@ -1125,72 +1233,90 @@ class _HomePageState extends State<HomePage> {
                 ),
                 Container(
                   height: 60,
-                  decoration: BoxDecoration(
-                      color: colors.greyTemp.withOpacity(.1)
-                  ),
+                  decoration:
+                      BoxDecoration(color: colors.greyTemp.withOpacity(.1)),
                   child: const Padding(
                     padding: EdgeInsets.all(12.0),
-                    child: Text('lorem lpsum is simply dummy text of the printing and typesetting industry' ),
+                    child: Text(
+                        'lorem lpsum is simply dummy text of the printing and typesetting industry'),
                   ),
                 ),
-
-           Padding(
-             padding: const EdgeInsets.all(16.0),
-             child: Column(
-               children: [
-
-                 const SizedBox(
-                   height: 10,
-                 ),
-
-                 Container(
-                   padding: const EdgeInsetsDirectional.symmetric(horizontal: 10,vertical: 10),
-                   height: 50,
-                   width: MediaQuery.sizeOf(context).width,
-                   decoration: BoxDecoration(
-                       borderRadius: BorderRadius.circular(10),
-                       border: Border.all(color: colors.greyTemp,width: 2)
-                   ),
-                   child  :const Text('Monthly Consumption',style: TextStyle(color: colors.greyTemp,fontWeight: FontWeight.bold),),
-                 )   ,
-                 const SizedBox(height: 20,),
-                 Container(
-                   padding: const EdgeInsetsDirectional.symmetric(horizontal: 10,vertical: 10),
-                   height: 50,
-                   width: MediaQuery.sizeOf(context).width,
-                   decoration: BoxDecoration(
-                       borderRadius: BorderRadius.circular(10),
-                       border: Border.all(color: colors.greyTemp,width: 2)
-                   ),
-                   child  :const Text('Number of assets',style: TextStyle(color: colors.greyTemp,fontWeight: FontWeight.bold),),
-                 )   ,
-                 const SizedBox(height: 20,),
-                 Container(
-                   padding: const EdgeInsetsDirectional.symmetric(horizontal: 10,vertical: 10),
-                   height: 50,
-                   width: MediaQuery.sizeOf(context).width,
-                   decoration: BoxDecoration(
-                       borderRadius: BorderRadius.circular(10),
-                       border: Border.all(color: colors.greyTemp,width: 2)
-                   ),
-                   child  :const Text('Number of Locations',style: TextStyle(color: colors.greyTemp,fontWeight: FontWeight.bold),),
-                 ),
-                 const SizedBox(height: 50,),
-
-
-                 InkWell(
-                   onTap: (){
-                     showReviewDialog(context);
-                     // _showBottomSheet(context);
-                   },
-                   child: const MyButton(
-                     text: "Next",
-                   ),
-                 ),
-               ],
-             ),
-           )
-
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    children: [
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Container(
+                        padding: const EdgeInsetsDirectional.symmetric(
+                            horizontal: 10, vertical: 10),
+                        height: 50,
+                        width: MediaQuery.sizeOf(context).width,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            border:
+                                Border.all(color: colors.greyTemp, width: 2)),
+                        child: const Text(
+                          'Monthly Consumption',
+                          style: TextStyle(
+                              color: colors.greyTemp,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Container(
+                        padding: const EdgeInsetsDirectional.symmetric(
+                            horizontal: 10, vertical: 10),
+                        height: 50,
+                        width: MediaQuery.sizeOf(context).width,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            border:
+                                Border.all(color: colors.greyTemp, width: 2)),
+                        child: const Text(
+                          'Number of assets',
+                          style: TextStyle(
+                              color: colors.greyTemp,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Container(
+                        padding: const EdgeInsetsDirectional.symmetric(
+                            horizontal: 10, vertical: 10),
+                        height: 50,
+                        width: MediaQuery.sizeOf(context).width,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            border:
+                                Border.all(color: colors.greyTemp, width: 2)),
+                        child: const Text(
+                          'Number of Locations',
+                          style: TextStyle(
+                              color: colors.greyTemp,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 50,
+                      ),
+                      InkWell(
+                        onTap: () {
+                          showReviewDialog(context);
+                          // _showBottomSheet(context);
+                        },
+                        child: const MyButton(
+                          text: "Next",
+                        ),
+                      ),
+                    ],
+                  ),
+                )
               ],
             ),
           ),
@@ -1198,8 +1324,6 @@ class _HomePageState extends State<HomePage> {
       },
     );
   }
-
-
 }
 
 // products tileF
@@ -1248,7 +1372,4 @@ Widget productTile() {
       ],
     ),
   );
-
-
-
 }

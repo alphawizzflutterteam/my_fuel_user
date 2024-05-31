@@ -10,12 +10,12 @@ class MyButton extends StatelessWidget {
       height: 56,
       decoration: BoxDecoration(
         gradient: const LinearGradient(
-          colors: [Color(0xFFF3B781F),Color(0xFF8AB402)],
+          colors: [Color(0xFFF3B781F), Color(0xFF8AB402)],
           stops: [0, 1],
           begin: AlignmentDirectional(0.94, -1),
           end: AlignmentDirectional(-0.94, 1),
         ),
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(15),
       ),
       alignment: Alignment.center,
       child: Text(

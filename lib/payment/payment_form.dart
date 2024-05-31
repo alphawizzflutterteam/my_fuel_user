@@ -7,20 +7,22 @@ import 'package:test_prj/components/my_hinttext_field.dart';
 import 'package:test_prj/payment/pay_success_page.dart';
 
 class PaymentForm extends StatelessWidget {
-  const PaymentForm({super.key});
+  final bool? isFromFuelOnTap;
+
+  const PaymentForm({super.key, this.isFromFuelOnTap});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
         children: [
-          MyAppbar(title: "Payment"),
+          const MyAppbar(title: "Payment"),
           Padding(
             padding: const EdgeInsets.all(18.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Container(
-                  margin: EdgeInsets.only(bottom: 260),
+                  margin: const EdgeInsets.only(bottom: 260),
                   child: Column(
                     children: [
                       MyHintTextField(
@@ -76,11 +78,13 @@ class PaymentForm extends StatelessWidget {
                   onTap: () => Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => OrderPlaced(),
+                        builder: (context) => OrderPlaced(
+                          isFromFuelOnTap: isFromFuelOnTap,
+                        ),
                       )),
                   child: Container(
                     alignment: Alignment.bottomCenter,
-                    child: MyButton(
+                    child: const MyButton(
                       text: "Pay Now",
                     ),
                   ),

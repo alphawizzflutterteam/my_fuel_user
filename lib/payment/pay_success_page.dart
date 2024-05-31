@@ -1,9 +1,13 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:test_prj/components/my_button.dart';
+import 'package:test_prj/helper/colors.dart';
 import 'package:test_prj/home.dart';
 
 class OrderPlaced extends StatefulWidget {
-  const OrderPlaced({super.key});
-
+  const OrderPlaced({super.key, this.isFromFuelOnTap});
+  final bool? isFromFuelOnTap;
   @override
   State<OrderPlaced> createState() => _OrderPlacedState();
 }
@@ -13,8 +17,19 @@ class _OrderPlacedState extends State<OrderPlaced> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: InkWell(
-        onTap: () => Navigator.push(
-            context, MaterialPageRoute(builder: (context) => Home())),
+        onTap: () {
+          if (widget.isFromFuelOnTap ?? false) {
+            showDialog(
+              context: context,
+              builder: (context) {
+                return RateDriverDialog();
+              },
+            );
+          } else {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => const Home()));
+          }
+        },
         child: Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(
@@ -85,6 +100,102 @@ class _OrderPlacedState extends State<OrderPlaced> {
               ],
             ),
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class RateDriverDialog extends StatefulWidget {
+  @override
+  _RateDriverDialogState createState() => _RateDriverDialogState();
+}
+
+class _RateDriverDialogState extends State<RateDriverDialog> {
+  int _rating = 3;
+  TextEditingController _descriptionController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16.0),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            const Center(
+              child: Text(
+                'Rate Driver',
+                style: TextStyle(
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            const SizedBox(height: 16.0),
+            const Text(
+              'Review',
+              style: TextStyle(
+                  fontSize: 16.0,
+                  color: colors.blackTemp,
+                  fontWeight: FontWeight.w500),
+            ),
+            Align(
+              alignment: Alignment.topLeft,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: List.generate(5, (index) {
+                  return SizedBox(
+                    width: 25,
+                    child: IconButton(
+                      icon: Icon(
+                        index < _rating ? Icons.star : Icons.star_border,
+                        color: Colors.orange,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          _rating = index + 1;
+                        });
+                      },
+                    ),
+                  );
+                }),
+              ),
+            ),
+            const Text(
+              'Description',
+              style: TextStyle(
+                  fontSize: 16.0,
+                  color: colors.blackTemp,
+                  fontWeight: FontWeight.w500),
+            ),
+            const SizedBox(height: 8.0),
+            TextField(
+              controller: _descriptionController,
+              decoration: InputDecoration(
+                border: OutlineInputBorder(
+                    borderSide:
+                        BorderSide(color: colors.greenTemp.withOpacity(0.2))),
+                hintText: 'Write here...',
+              ),
+              maxLines: 3,
+            ),
+            const SizedBox(height: 10.0),
+            InkWell(
+                onTap: () {
+                  Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const Home(),
+                      ));
+                },
+                child: const SizedBox(
+                    height: 40, child: MyButton(text: 'Submit Review')))
+          ],
         ),
       ),
     );
