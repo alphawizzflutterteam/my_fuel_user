@@ -82,7 +82,7 @@ class _VenderDetailsState extends State<VenderDetails> {
                   borderRadius: BorderRadius.circular(10),
                 ),
                 margin: EdgeInsets.only(right: 10),
-           child: Image.asset('assets/petrol.png'),
+                child: Image.asset('assets/petrol.png'),
               ),
               Expanded(
                 child: Padding(
@@ -159,19 +159,21 @@ class _VenderDetailsState extends State<VenderDetails> {
       SizedBox(
         height: 30,
       ),
-
       Container(
-        color:Color(0xffFFF3EC),
-      child: Padding(
-        padding: const EdgeInsets.all(12.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('Delivery Required an OTP') ,
-            Text('Share the otp to delivey boy 01562, after receive the fuel',style: TextStyle(fontWeight: FontWeight.bold),)
-          ],
+        color: Color(0xffFFF3EC),
+        child: Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('Delivery Required an OTP'),
+              Text(
+                'Share the otp to delivey boy 01562, after receive the fuel',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              )
+            ],
+          ),
         ),
-      ),
       ),
       Container(
         decoration: BoxDecoration(color: Colors.white),
@@ -366,7 +368,10 @@ class _VenderDetailsState extends State<VenderDetails> {
                     borderRadius: BorderRadius.circular(16),
                     color: colors.primary,
                   ),
-                  child: Icon(Icons.check, color: colors.whiteTemp,),
+                  child: Icon(
+                    Icons.check,
+                    color: colors.whiteTemp,
+                  ),
                 );
               },
               controlsBuilder: (BuildContext context, ControlsDetails details) {
@@ -374,15 +379,19 @@ class _VenderDetailsState extends State<VenderDetails> {
               },
               steps: <Step>[
                 Step(
-                  title: const Text('Order Saturday, 13 Oct, 10:10 PM', style: TextStyle(color: colors.greyTemp)),
+                  title: const Text('Order Saturday, 13 Oct, 10:10 PM',
+                      style: TextStyle(color: colors.greyTemp)),
                   content: Container(),
                 ),
                 const Step(
-                  title: Text('Out for delivery', style: TextStyle(color: colors.greyTemp)),
-                  content: Text('Saturday, 13 Oct, between 11:00 PM to 12:00 PM'),
+                  title: Text('Out for delivery',
+                      style: TextStyle(color: colors.greyTemp)),
+                  content:
+                      Text('Saturday, 13 Oct, between 11:00 PM to 12:00 PM'),
                 ),
                 const Step(
-                  title: Text('Saturday, 13 Oct, between 11:00 PM to 12:00 PM', style: TextStyle(color: colors.greyTemp)),
+                  title: Text('Saturday, 13 Oct, between 11:00 PM to 12:00 PM',
+                      style: TextStyle(color: colors.greyTemp)),
                   content: Text(''),
                 ),
               ],
@@ -562,8 +571,8 @@ class _VenderDetailsState extends State<VenderDetails> {
               height: 20,
             ),
             InkWell(
-              onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>CancelOrder()));
+              onTap: () {
+                showReviewDialog(context);
               },
               child: Container(
                 alignment: Alignment.bottomCenter,
@@ -580,5 +589,142 @@ class _VenderDetailsState extends State<VenderDetails> {
         ),
       ),
     ])));
+  }
+
+  int selectedValue = 1;
+
+  Widget customRadio(String text, int value) {
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          selectedValue = value;
+        });
+      },
+      child: Row(
+        children: [
+          Radio<int>(
+            value: value,
+            groupValue: selectedValue,
+            onChanged: (int? newValue) {
+              dialogState!(() {
+                selectedValue = newValue!;
+              });
+            },
+            activeColor: Colors.red,
+          ),
+          Text(
+            text,
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight:
+                  selectedValue == value ? FontWeight.bold : FontWeight.normal,
+              color: selectedValue == value ? Colors.black : Colors.black,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Function? dialogState;
+
+  void showReviewDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return StatefulBuilder(builder: (context, seatate) {
+          dialogState = seatate;
+          return AlertDialog(
+            contentPadding: EdgeInsets.zero,
+            content: SizedBox(
+              height: MediaQuery.of(context).size.height / 1.8,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      // Container(
+                      //   height: 120,
+                      //   decoration: BoxDecoration(
+                      //     gradient: LinearGradient(
+                      //       begin: Alignment.topCenter,
+                      //       end: Alignment.center,
+                      //       colors: [
+                      //         Color.fromRGBO(211, 83, 7, 1),
+                      //         Color.fromRGBO(252, 130, 59, 1),
+                      //         Color.fromRGBO(252, 130, 59, 1),
+                      //       ],
+                      //     ),
+                      //     borderRadius: BorderRadius.only(
+                      //       bottomLeft: Radius.circular(23),
+                      //       bottomRight: Radius.circular(23),
+                      //     ),
+                      //   ),
+                      //   child: Row(
+                      //     children: [
+                      //       Padding(
+                      //         padding: const EdgeInsets.only(top: 45.0, left: 20),
+                      //         child: Icon(
+                      //           Icons.arrow_back,
+                      //           color: Colors.white,
+                      //         ),
+                      //       ),
+                      //       Padding(
+                      //         padding: const EdgeInsets.only(top: 45.0, left: 60),
+                      //         child: Text(
+                      //           'Cancel Order Reasons',
+                      //           style: TextStyle(
+                      //             color: Colors.white,
+                      //             fontSize: 18,
+                      //             fontWeight: FontWeight.w500,
+                      //           ),
+                      //         ),
+                      //       ),
+                      //     ],
+                      //   ),
+                      // ),
+                      Center(
+                        child: Text(
+                          'Cancel Order Reason',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 25),
+                        ),
+                      ),
+                      SizedBox(height: 20),
+                      Padding(
+                        padding: const EdgeInsets.only(right: 23.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            customRadio("Changed My Mind", 1),
+                            customRadio("Found a Better Deal", 2),
+                            customRadio("Delay in Delivery", 3),
+                            customRadio("No Longer Need the Item", 4),
+                            customRadio("Technical Issues", 5),
+                            customRadio("Personal Emergency", 6),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: ((context) => OrderDetails())));
+                          },
+                          child: MyButton(text: 'Done'),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          );
+        });
+      },
+    );
   }
 }
