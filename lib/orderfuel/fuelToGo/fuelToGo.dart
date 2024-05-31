@@ -4,6 +4,8 @@ import 'package:test_prj/orderfuel/EV/evVehicle.dart';
 import 'package:test_prj/components/my_button.dart';
 import 'package:test_prj/orderfuel/fuelToGo/addVehicles.dart';
 
+import '../doorStepDelivery/forLooking.dart';
+
 class FuelToGo extends StatefulWidget {
   const FuelToGo({super.key});
 
@@ -19,11 +21,11 @@ class _FuelToGoState extends State<FuelToGo> {
       onPressed: () {
         setState(() {
           selected = index;
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => EvVehicle(),
-              ));
+          // Navigator.push(
+          //     context,
+          //     MaterialPageRoute(
+          //       builder: (context) => EvVehicle(),
+          //     ));
         });
       },
       child: Align(
@@ -41,7 +43,7 @@ class _FuelToGoState extends State<FuelToGo> {
           borderRadius: BorderRadiusDirectional.circular(10),
         ),
         side: BorderSide(
-          color: (selected == index) ? Colors.yellow : Colors.black,
+          color: (selected == index) ? Colors.black : Colors.yellow,
         ),
       ),
     );
@@ -184,17 +186,35 @@ class _FuelToGoState extends State<FuelToGo> {
             //     ],
             //   ),
             // ),
-        
             Padding(
               padding: const EdgeInsets.all(10.0),
               child: GestureDetector(
-                  onTap: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const AddVehicles(),
-                      )),
+                  onTap: () => Navigator.push(context,
+                      MaterialPageRoute(builder: (context){
+                        if(selected==1){
+                          return const AddVehicles();
+                        }
+                        else if(selected==2){
+                          return const EvVehicle();
+                        }else if(selected==2){
+                          return const EvVehicle();
+                        }else{
+                          return const LookingForCompany();
+                        }
+                      })),
                   child: const MyButton(text: 'Next')),
             ),
+        
+            // Padding(
+            //   padding: const EdgeInsets.all(10.0),
+            //   child: GestureDetector(
+            //       onTap: () => Navigator.push(
+            //           context,
+            //           MaterialPageRoute(
+            //             builder: (context) => const AddVehicles(),
+            //           )),
+            //       child: const MyButton(text: 'Next')),
+            // ),
             SizedBox(height: 100),
           ],
         ),

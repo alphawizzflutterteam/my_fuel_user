@@ -39,12 +39,12 @@ class _AddFuelQuantityState extends State<AddFuelQuantity> {
               height: 40,
             ),
             InkWell(
-              // onTap: () {
-              //   showModalBottomSheet(
-              //     context: context,
-              //     builder: (context) => BottamSheet(),
-              //   );
-              // },
+              onTap: () {
+                showModalBottomSheet(
+                  context: context,
+                  builder: (context) => BottamSheet(),
+                );
+              },
               child: Container(
                 child: MyButton(
                   text: "Add Quantity",

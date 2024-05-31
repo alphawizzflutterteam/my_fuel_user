@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:test_prj/Home/fuel_ontab_checkout.dart';
 import 'package:test_prj/components/my_button.dart';
 import 'package:test_prj/orderfuel/doorStepDelivery/vendors_page.dart';
+
+import '../Home/Evcheckout.dart';
 
 class BottamSheet extends StatefulWidget {
   const BottamSheet({super.key});
@@ -144,12 +147,13 @@ class _BottamSheetState extends State<BottamSheet> {
             ],
           ),
           SizedBox(height: 30),
+
           Container(
             alignment: Alignment.bottomCenter,
             width: 330,
             child: GestureDetector(
                 onTap: () => Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => VendorsPage())),
+                    MaterialPageRoute(builder: (context) => Evcheckout())),
                 child: MyButton(text: 'Book Now')),
           ),
         ],

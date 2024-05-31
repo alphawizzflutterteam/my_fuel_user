@@ -1,5 +1,6 @@
 
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:test_prj/components/my_appbar.dart';
 import 'package:test_prj/components/my_button.dart';
@@ -159,21 +160,88 @@ class _AssetsPageState extends State<AssetsPage> {
                                   ),
                                 ),
                               ),
-                              Container(
-                                height: 40,
-                                width: 148,
-                                decoration: BoxDecoration(
-                                    border: Border.all(),
-                                    borderRadius: BorderRadius.circular(8)),
-                                child: const Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Icon(Icons.delete_outline),
-                                    Text(
-                                      "Delete Assets",
-                                      style: TextStyle(fontWeight: FontWeight.w500),
+                              GestureDetector(
+                                onTap: () {
+                                  showDialog(context: context, builder: (context) => Dialog(
+                                    child: Container(
+                                      height: 292,
+                                      decoration: BoxDecoration(
+                                          color: Colors.white, borderRadius: BorderRadius.circular(20)),
+                                      child: Center(
+                                        child: Column(
+                                          children: [
+                                            SizedBox(height: 32),
+                                            CircleAvatar(
+                                              radius: 40,
+                                              backgroundColor: Color(0xFFFFF7EF),
+                                              child: Icon(
+                                                Icons.delete,
+                                                size: 44,
+                                                color: Colors.red,
+                                              )
+                                            ),
+                                            SizedBox(height: 20),
+                                            Text(
+                                              "Are you Sure you want to",
+                                              style: TextStyle(
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.w700,
+                                              ),
+                                            ),
+                                            Text(
+                                              "delete",
+                                              style: TextStyle(
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.w700,
+                                              ),
+                                            ),
+                                            SizedBox(height: 24),
+                                            Container(
+                                              height: 48,
+                                              padding: EdgeInsets.symmetric(horizontal: 24),
+                                              child: GestureDetector(
+                                                onTap: (){},
+                                                child: Container(
+                                                  height: 56,
+                                                  decoration: BoxDecoration(
+                                                    gradient: LinearGradient(
+                                                      colors: [Color(0xFFF3B781F),Color(0xFF8AB402)],
+                                                      stops: [0, 1],
+                                                      begin: AlignmentDirectional(0.94, -1),
+                                                      end: AlignmentDirectional(-0.94, 1),
+                                                    ),
+                                                    borderRadius: BorderRadius.circular(12),
+                                                  ),
+                                                  alignment: Alignment.center,
+                                                  child: Text(
+                                                    "Done",
+                                                    style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
+                                                  ),
+                                                ),
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                      ),
                                     ),
-                                  ],
+                                  ),);
+                                },
+                                child: Container(
+                                  height: 40,
+                                  width: 148,
+                                  decoration: BoxDecoration(
+                                      border: Border.all(),
+                                      borderRadius: BorderRadius.circular(8)),
+                                  child: const Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(Icons.delete_outline),
+                                      Text(
+                                        "Delete Assets",
+                                        style: TextStyle(fontWeight: FontWeight.w500),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               )
                             ],
@@ -182,6 +250,7 @@ class _AssetsPageState extends State<AssetsPage> {
                       ),
                     ),
                   ),
+
                   InkWell(
                     onTap: () {
                       Navigator.push(

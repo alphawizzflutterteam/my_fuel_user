@@ -10,7 +10,9 @@ class AddVehicles extends StatefulWidget {
 }
 
 class _AddVehiclesState extends State<AddVehicles> {
+  final TextEditingController _controller = TextEditingController();
   String? selectedValue;
+
   final List<String> items = [
     "Four Wheeler",
     "Heavy Vehicle",
@@ -58,6 +60,7 @@ class _AddVehiclesState extends State<AddVehicles> {
                     ),
                   ),
                 ),
+                SizedBox(height: 10,),
               ],
             ),
           ),
@@ -92,12 +95,29 @@ class _AddVehiclesState extends State<AddVehicles> {
               ),
             ),
           ),
+          SizedBox(height: 10,),
+          Center(
+            child:
+            TextFormField(
+              controller: _controller,
+              decoration: InputDecoration(
+                contentPadding: const EdgeInsets.symmetric(vertical: 2,horizontal: 16),
+                hintText: 'Vehicles Registration number',
+                fillColor: Colors.white,
+                border: new OutlineInputBorder(
+                  borderRadius: new BorderRadius.circular(10.0),
+                  borderSide: new BorderSide(),
+                ),
+              )
+            ),
+          ),
+          SizedBox(height: 400,),
           Padding(
             padding: EdgeInsets.all(10.0),
             child: GestureDetector(
                 onTap: () => Navigator.push(context,
                     MaterialPageRoute(builder: (context) => MyAssets2())),
-                child: MyButton(text: 'Add Vehicles')),
+                child: MyButton(text: 'Next')),
           ),
         ],
       ),
