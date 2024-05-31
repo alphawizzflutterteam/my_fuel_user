@@ -2,11 +2,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:test_prj/authPages/language_page.dart';
+import 'package:test_prj/profile/My_Address.dart';
 import 'package:test_prj/profile/change_password.dart';
 import 'package:test_prj/profile/myfuels_card.dart';
 import 'package:test_prj/profile/notification1.dart';
 import 'package:test_prj/profile/log_out.dart';
 import 'package:test_prj/profile/profile_assets.dart';
+import 'package:test_prj/staticpage/about_us.dart';
+import 'package:test_prj/staticpage/privacy_policy.dart';
+import 'package:test_prj/staticpage/terms_condition.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -74,8 +78,11 @@ class ProfilePageState extends State<ProfilePage> {
                       ),
                       Row(
                         children: [
-
-                          Icon(Icons.search,color: Colors.white,size: 25,),
+                          Icon(
+                            Icons.search,
+                            color: Colors.white,
+                            size: 25,
+                          ),
                           // Image.asset(
                           //   "assets/Group 2979.png",
                           //   height: 24,
@@ -126,7 +133,6 @@ class ProfilePageState extends State<ProfilePage> {
                             padding: const EdgeInsets.all(16.0),
                             child: Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
-
                               children: [
                                 Image.asset("assets/profile.png", height: 68),
                                 const Padding(
@@ -151,16 +157,20 @@ class ProfilePageState extends State<ProfilePage> {
                                     ],
                                   ),
                                 ),
-                                SizedBox(width: 35,),
-
+                                SizedBox(
+                                  width: 35,
+                                ),
                                 Container(
-                                  height: 30,
+                                    height: 30,
                                     width: 30,
                                     decoration: BoxDecoration(
                                       color: Colors.green,
                                       borderRadius: BorderRadius.circular(20),
                                     ),
-                                    child: Icon(Icons.edit_outlined,color: Colors.white,))
+                                    child: Icon(
+                                      Icons.edit_outlined,
+                                      color: Colors.white,
+                                    ))
                               ],
                             ),
                           ),
@@ -195,7 +205,15 @@ class ProfilePageState extends State<ProfilePage> {
                                   ),
                                   const Divider(),
                                   settingsCard(
-                                      title: "My Location", onTap: () {}),
+                                      title: "My Location",
+                                      onTap: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const MyAddressScreen(),
+                                            ));
+                                      }),
                                   const Divider(),
                                   settingsCard(
                                       title: "My Assets",
@@ -204,7 +222,6 @@ class ProfilePageState extends State<ProfilePage> {
                                           MaterialPageRoute(
                                               builder: (context) =>
                                                   ProfileAssets()))),
-
                                   const Divider(),
                                   settingsCard(
                                       title: "Change Language",
@@ -213,7 +230,6 @@ class ProfilePageState extends State<ProfilePage> {
                                           MaterialPageRoute(
                                               builder: (context) =>
                                                   LanguagePage()))),
-
                                   const Divider(),
                                   settingsCard(
                                     title: "Change Password",
@@ -221,23 +237,42 @@ class ProfilePageState extends State<ProfilePage> {
                                         context,
                                         MaterialPageRoute(
                                           builder: (context) =>
-                                          const ChangePassword(),
+                                              const ChangePassword(),
                                         )),
                                   ),
                                   const Divider(),
-
-                                  settingsCard(title: "Privacy Policy", onTap: () {
-
-                                  }),   const Divider(),
-
-                                  settingsCard(title: "Terms and Conditions", onTap: () {
-
-                                  }),   const Divider(),
-
-                                  settingsCard(title: "FAQS", onTap: () {
-
-                                  }),
-
+                                  settingsCard(
+                                      title: "Privacy Policy",
+                                      onTap: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const PrivacyolicyScreen(),
+                                            ));
+                                      }),
+                                  const Divider(),
+                                  settingsCard(
+                                      title: "Terms and Conditions",
+                                      onTap: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const TermsConditionScreen(),
+                                            ));
+                                      }),
+                                  const Divider(),
+                                  settingsCard(
+                                      title: "FAQS",
+                                      onTap: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const FAQScreen(),
+                                            ));
+                                      }),
                                   const Divider(),
                                 ],
                               ),
