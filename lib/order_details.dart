@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:test_prj/helper/colors.dart';
 
 // import 'MyButtan.dart';
 
@@ -37,8 +38,9 @@ class OrderDetails extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(top: 45.0, left: 20),
                     child: Icon(
-                      Icons.arrow_back,
+                      Icons.arrow_back_ios,
                       color: Colors.white,
+                      size: 20,
                     ),
                   ),
                   Padding(
@@ -56,12 +58,13 @@ class OrderDetails extends StatelessWidget {
               ),
             ),
             Card(
-              color: Colors.white,
+              elevation: 0,
+              // color: Colors.white,
               // elevation: 3,
               //  margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
 
               child: Padding(
-                padding: EdgeInsets.all(4),
+                padding: const EdgeInsets.all(4),
                 child: Row(
                   children: [
                     Container(
@@ -70,7 +73,7 @@ class OrderDetails extends StatelessWidget {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      margin: EdgeInsets.only(right: 10),
+                      margin: const EdgeInsets.only(right: 10),
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(10),
                         child: Image.network(
@@ -139,46 +142,61 @@ class OrderDetails extends StatelessWidget {
             SizedBox(
               height: 15,
             ),
-            SizedBox(height: 15),
+            const SizedBox(height: 15),
             Padding(
               padding: const EdgeInsets.only(left: 20),
-              child: Container(
-                child: Row(
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Colors.grey,
-                        borderRadius: BorderRadius.circular(50),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey,
-                            spreadRadius: 1,
-                          )
-                        ],
-                      ),
-                      child: Icon(
-                        CupertinoIcons.right_chevron,
-                        size: 18,
-                        color: Colors.white,
-                      ),
+              child: Row(
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Colors.grey,
+                      borderRadius: BorderRadius.circular(50),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey,
+                          spreadRadius: 1,
+                        )
+                      ],
                     ),
-                    SizedBox(
-                        width:
-                            10), // Add some spacing between the icon and the text
-                    Text(
-                      "Ordered Saturday, 13 Oct, 10:10 PM",
-                      style: TextStyle(fontSize: 14, color: Colors.black54),
+                    child: Icon(
+                      CupertinoIcons.check_mark,
+                      size: 18,
+                      color: Colors.white,
                     ),
-                  ],
-                ),
+                  ),
+                  SizedBox(
+                      width:
+                          10), // Add some spacing between the icon and the text
+                  Text(
+                    "Ordered Saturday, 13 Oct, 10:10 PM",
+                    style: TextStyle(fontSize: 14, color: Colors.black54),
+                  ),
+                ],
               ),
             ),
-            VerticalDivider(
-              thickness: 2,
-              color: Colors.blue,
-              indent: 30,
-              endIndent: 30,
+            Padding(
+              padding: const EdgeInsets.only(left: 28),
+              child: Row(
+                children: [
+                  Container(
+                    alignment: Alignment.topLeft,
+                    width: 2,
+                    height: 40,
+                    color: colors.greyTemp,
+                  ),
+                ],
+              ),
             ),
+
+            /*IntrinsicHeight(
+              child: const VerticalDivider(
+                thickness: 2,
+                width: 20,
+                color: colors.blackTemp,
+                indent: 30,
+                endIndent: 30,
+              ),
+            ),*/
             Padding(
               padding: const EdgeInsets.only(left: 20),
               child: Container(
@@ -196,7 +214,7 @@ class OrderDetails extends StatelessWidget {
                         ],
                       ),
                       child: Icon(
-                        CupertinoIcons.right_chevron,
+                        Icons.clear,
                         size: 18,
                         color: Colors.white,
                       ),

@@ -11,8 +11,9 @@ import 'helper/colors.dart';
 // import 'MyButtan.dart';
 
 class VenderDetails3 extends StatelessWidget {
+  VenderDetails3({super.key, this.title});
   // List<step.Step> steps=[
-
+  String? title;
   //]
   @override
   Widget build(BuildContext context) {
@@ -23,7 +24,7 @@ class VenderDetails3 extends StatelessWidget {
           children: [
             Container(
               height: 100,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.center,
@@ -40,17 +41,23 @@ class VenderDetails3 extends StatelessWidget {
               ),
               child: Row(
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 45.0, left: 20),
-                    child: Icon(
-                      Icons.arrow_back,
-                      color: Colors.white,
+                  InkWell(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 45.0, left: 20),
+                      child: Icon(
+                        Icons.arrow_back_ios,
+                        color: Colors.white,
+                        size: 20,
+                      ),
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 45.0, left: 70),
                     child: Text(
-                      'Vendor Details',
+                      title ?? 'Vendor Details',
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 20,
@@ -121,7 +128,7 @@ class VenderDetails3 extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Row(
@@ -206,19 +213,25 @@ class VenderDetails3 extends StatelessWidget {
                 children: [
                   Container(
                     child: Padding(
-                      padding: const EdgeInsets.only(right: 180),
-                      child: Text(
-                        "Delivery Required an OTP",
-                        style: TextStyle(fontSize: 14, color: Colors.black54),
+                      padding: const EdgeInsets.only(left: 10),
+                      child: Align(
+                        alignment: Alignment.topLeft,
+                        child: Text(
+                          "Delivery Required an OTP",
+                          style: TextStyle(fontSize: 14, color: Colors.black54),
+                        ),
                       ),
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(left: 10),
-                    child: Text(
-                      "Share the otp to delivery boy 01562,after recive the fuel",
-                      style:
-                          TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                    child: Align(
+                      alignment: Alignment.topLeft,
+                      child: Text(
+                        "Share the otp to delivery boy 01562",
+                        style: TextStyle(
+                            fontSize: 14, fontWeight: FontWeight.bold),
+                      ),
                     ),
                   ),
                 ],
@@ -238,21 +251,20 @@ class VenderDetails3 extends StatelessWidget {
             //     Icon(Icons.download),
             //   ],),
             // ),
-            SizedBox(
+            const SizedBox(
               height: 5,
             ),
             InkWell(
-              onTap: (){
-
+              onTap: () {
                 AlertDialog(
-                  title: Text('Alert Dialog'),
-                  content: Text('This is an example of an alert dialog.'),
+                  title: const Text('Alert Dialog'),
+                  content: const Text('This is an example of an alert dialog.'),
                   actions: <Widget>[
                     TextButton(
                       onPressed: () {
                         Navigator.of(context).pop();
                       },
-                      child: Text('Close'),
+                      child: const Text('Close'),
                     ),
                   ],
                 );
@@ -260,54 +272,65 @@ class VenderDetails3 extends StatelessWidget {
               },
               child: Container(
                 height: 60,
-                decoration: BoxDecoration(color: Color(0xffFFF3EC)),
+                decoration: const BoxDecoration(color: Color(0xffFFF3EC)),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-
-
-                    Row(
-                      children: [
-                        RatingBar.builder(
-                          initialRating: 3,
-                          minRating: 1,
-                          direction: Axis.horizontal,
-                          allowHalfRating: true,
-                          itemCount: 5,
-                          itemSize: 40,
-                          itemBuilder: (context, _) => Icon(
-                            Icons.star,
-                            color: Colors.amber,
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10.0),
+                      child: Row(
+                        children: [
+                          RatingBar.builder(
+                            initialRating: 3,
+                            minRating: 1,
+                            direction: Axis.horizontal,
+                            allowHalfRating: true,
+                            itemCount: 5,
+                            itemSize: 25,
+                            itemBuilder: (context, _) => const Icon(
+                              Icons.star,
+                              color: Colors.amber,
+                            ),
+                            onRatingUpdate: (rating) {
+                              print(rating);
+                            },
                           ),
-                          onRatingUpdate: (rating) {
-                            print(rating);
-                          },
-                        ),
-                        SizedBox(width: 20,),
-                        Icon(Icons.edit_outlined,color: Colors.orange,),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 15),
-                          child: InkWell(
-                            onTap: (){
+                          const SizedBox(
+                            width: 20,
+                          ),
+                          InkWell(
+                            onTap: () {
                               showReviewDialog(context);
                             },
-                            child: Text(
-                              "Write Review",
-                              style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.orange),
+                            child: const Icon(
+                              Icons.edit_outlined,
+                              color: Colors.orange,
                             ),
                           ),
-                        ),
-                      ],
+                          Padding(
+                            padding: const EdgeInsets.only(left: 15),
+                            child: InkWell(
+                              onTap: () {
+                                showReviewDialog(context);
+                              },
+                              child: const Text(
+                                "Write Review",
+                                style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.orange),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 20, right: 250,left: 10),
+              padding: const EdgeInsets.only(top: 20, right: 250, left: 10),
               child: Text(
                 "Price Detail",
                 style: TextStyle(
@@ -362,8 +385,8 @@ class VenderDetails3 extends StatelessWidget {
             Divider(
               color: Colors.black54,
               thickness: 0.2,
-              //indent: 5,
-              // endIndent: 10,
+              indent: 10,
+              endIndent: 10,
             ),
             Padding(
               padding: const EdgeInsets.only(left: 15, right: 10, top: 7),
@@ -392,8 +415,8 @@ class VenderDetails3 extends StatelessWidget {
             Divider(
               color: Colors.black,
               thickness: 0.2,
-              //indent: 5,
-              // endIndent: 10,
+              indent: 10,
+              endIndent: 10,
             ),
             SizedBox(
               height: 15,
@@ -423,7 +446,7 @@ class VenderDetails3 extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 5,left: 10),
+              padding: const EdgeInsets.only(top: 5, left: 10),
               child: Text(
                 "Indore",
                 style: TextStyle(fontSize: 14, color: Colors.black54),
@@ -443,13 +466,11 @@ class VenderDetails3 extends StatelessWidget {
                 style: TextStyle(fontSize: 14, color: Colors.black54),
               ),
             ),
-
           ],
         ),
       ),
     );
   }
-
 
   void showReviewDialog(BuildContext context) {
     showDialog(
@@ -470,7 +491,8 @@ class VenderDetails3 extends StatelessWidget {
                       child: Center(
                         child: Text(
                           "Write Review",
-                          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold),
                         ),
                       ),
                     ),
@@ -482,7 +504,8 @@ class VenderDetails3 extends StatelessWidget {
                     padding: const EdgeInsets.only(right: 10),
                     child: Text(
                       "Review",
-                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                     ),
                   ),
                   SizedBox(
@@ -513,39 +536,42 @@ class VenderDetails3 extends StatelessWidget {
                     padding: const EdgeInsets.only(right: 10),
                     child: Text(
                       "Description",
-                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                     ),
                   ),
 
-                  Container(height: 150,
-                  decoration: BoxDecoration(
-                      border:Border.all( color: Colors.grey, // Change color as needed
-                        width: 2.0, 
-                      ) ,
-                  borderRadius: BorderRadius.circular(10)),
-                  child: TextField(
-                    maxLines: null, // Allow unlimited lines
-                    keyboardType: TextInputType.multiline,
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      // contentPadding: EdgeInsets.only(bottom: 100),
-                      hintText: 'Write here...',
-                      contentPadding: EdgeInsets.only(left: 10)
-                      // enabledBorder: OutlineInputBorder(
-                      //   borderRadius: BorderRadius.circular(15),
-                      //   // borderSide: BorderSide(
-                      //   //   color: Colors.grey, // Change color as needed
-                      //   //   width: 2.0, // Border width
-                      //   // ),
-                      // ),
-                      // focusedBorder: OutlineInputBorder(
-                      //   borderSide: BorderSide(
-                      //     color: Colors.grey, // Change color as needed
-                      //     width: 2.0, // Border width
-                      //   ),
-                      // ),
+                  Container(
+                    height: 150,
+                    decoration: BoxDecoration(
+                        border: Border.all(
+                          color: Colors.grey, // Change color as needed
+                          width: 2.0,
+                        ),
+                        borderRadius: BorderRadius.circular(10)),
+                    child: TextField(
+                      maxLines: null, // Allow unlimited lines
+                      keyboardType: TextInputType.multiline,
+                      decoration: InputDecoration(
+                          border: InputBorder.none,
+                          // contentPadding: EdgeInsets.only(bottom: 100),
+                          hintText: 'Write here...',
+                          contentPadding: EdgeInsets.only(left: 10)
+                          // enabledBorder: OutlineInputBorder(
+                          //   borderRadius: BorderRadius.circular(15),
+                          //   // borderSide: BorderSide(
+                          //   //   color: Colors.grey, // Change color as needed
+                          //   //   width: 2.0, // Border width
+                          //   // ),
+                          // ),
+                          // focusedBorder: OutlineInputBorder(
+                          //   borderSide: BorderSide(
+                          //     color: Colors.grey, // Change color as needed
+                          //     width: 2.0, // Border width
+                          //   ),
+                          // ),
+                          ),
                     ),
-                  ),
                   ),
                   // Padding(
                   //   padding: const EdgeInsets.all(10),
@@ -575,12 +601,20 @@ class VenderDetails3 extends StatelessWidget {
                     height: 10,
                   ),
                   InkWell(
-                    onTap: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=>CancelOrder()));
+                    onTap: () {
+                      if (title != null) {
+                        Navigator.pop(context);
+                      } else {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const CancelOrder()));
+                      }
                     },
                     child: Container(
                       // alignment: Alignment.bottomCenter,
                       width: 300,
+                      height: 50,
                       child: MyButton(
                         text: 'Submit Review',
                       ),
@@ -601,5 +635,4 @@ class VenderDetails3 extends StatelessWidget {
       },
     );
   }
-
 }
