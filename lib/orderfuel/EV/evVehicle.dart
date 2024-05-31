@@ -7,6 +7,7 @@ import 'package:test_prj/components/my_button.dart';
 import '../../components/my_hinttext_field.dart';
 import '../../vehicle_number.dart';
 import '../bottom_sheet.dart';
+import 'Fuelbottom.dart';
 
 class EvVehicle extends StatefulWidget {
   const EvVehicle({super.key});
@@ -134,7 +135,7 @@ class _EvVehicleState extends State<EvVehicle> {
                                 child:  InkWell(
                                   child:  InkWell(
                                     onTap: () {
-                                      showModalBottomSheet(context: context, builder: (context) =>  BottamSheet(),);
+                                      showModalBottomSheet(context: context, builder: (context) =>  Fuelbottom(),);
                                     },
                                     child: Container(
                                       child: MyButton(

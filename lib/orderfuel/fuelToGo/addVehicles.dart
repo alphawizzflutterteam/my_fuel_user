@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:test_prj/components/my_button.dart';
 import 'package:test_prj/orderfuel/fuelToGo/my_assets2.dart';
 
+import '../../Home/FuelAddQuantity.dart';
+import '../add_fuel_quantity.dart';
+
 class AddVehicles extends StatefulWidget {
   const AddVehicles({super.key});
 
@@ -115,8 +118,13 @@ class _AddVehiclesState extends State<AddVehicles> {
           Padding(
             padding: EdgeInsets.all(10.0),
             child: GestureDetector(
-                onTap: () => Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => MyAssets2())),
+                onTap: () {
+                  showModalBottomSheet(
+                    context: context,
+                    builder: (context) => const FueladdQuantity(),
+                  );
+                },
+                // onTap: () =>showBottomSheet(builder: (context) => AddFuelQuantity,context: context),
                 child: MyButton(text: 'Next')),
           ),
         ],

@@ -1,18 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:test_prj/Home/Evcheckout.dart';
 import 'package:test_prj/Home/fuel_ontab_checkout.dart';
 import 'package:test_prj/components/my_button.dart';
 import 'package:test_prj/orderfuel/doorStepDelivery/vendors_page.dart';
 
-import '../Home/Evcheckout.dart';
+import '../../charging_stations.dart';
+import 'Evdoor.dart';
+import 'charginStationDetails.dart';
 
-class BottamSheet extends StatefulWidget {
-  const BottamSheet({super.key});
+
+
+class Fuelbottom extends StatefulWidget {
+  const Fuelbottom({super.key});
 
   @override
-  State<BottamSheet> createState() => _BottamSheetState();
+  State<Fuelbottom> createState() => _FuelbottomState();
 }
 
-class _BottamSheetState extends State<BottamSheet> {
+class _FuelbottomState extends State<Fuelbottom> {
   DateTime? selectedDate;
   TextEditingController dateController = TextEditingController();
   @override
@@ -147,13 +152,12 @@ class _BottamSheetState extends State<BottamSheet> {
             ],
           ),
           SizedBox(height: 30),
-
           Container(
             alignment: Alignment.bottomCenter,
             width: 330,
             child: GestureDetector(
                 onTap: () => Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => VendorsPage())),
+                    MaterialPageRoute(builder: (context) => ChargingStations())),
                 child: MyButton(text: 'Book Now')),
           ),
         ],

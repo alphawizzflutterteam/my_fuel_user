@@ -8,6 +8,7 @@ import 'package:test_prj/components/my_button2.dart';
 import 'package:test_prj/orderfuel/add_fuel_quantity.dart';
 import 'package:test_prj/orderfuel/doorStepDelivery/vendors_page.dart';
 
+import '../../Home/FullAssets.dart';
 import 'forLooking.dart';
 import 'my_assets.dart';
 
@@ -213,9 +214,18 @@ class _AssetsPageState extends State<AssetsPage> {
                                                     borderRadius: BorderRadius.circular(12),
                                                   ),
                                                   alignment: Alignment.center,
-                                                  child: Text(
-                                                    "Done",
-                                                    style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
+                                                  child:  InkWell(
+                                                    onTap: () {
+                                                      Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                            builder: (context) => const MyFullAssets()),
+                                                      );
+                                                    },
+                                                    child: Text(
+                                                      "Done",
+                                                      style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
+                                                    ),
                                                   ),
                                                 ),
                                               ),
