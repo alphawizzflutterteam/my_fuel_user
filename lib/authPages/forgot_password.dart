@@ -1,0 +1,152 @@
+import 'package:flutter/material.dart';
+import 'package:test_prj/authPages/otpScreen1.dart';
+import 'package:test_prj/components/my_background2.dart';
+import 'package:test_prj/components/my_button.dart';
+import 'package:test_prj/components/my_textfield.dart';
+
+class ForgetPassword extends StatelessWidget {
+  ForgetPassword({super.key});
+  final _formKey = GlobalKey<FormState>();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        body: Container(
+          decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.center,
+                  colors: [
+                    Color.fromRGBO(252, 130, 59, 1),
+                    Color.fromRGBO(211, 83, 7, 1),
+                  ])),
+          child: Stack(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 120.0),
+                child: Container(
+                  decoration: const BoxDecoration(
+                    color: Colors.white38,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(35),
+                      topRight: Radius.circular(35),
+                    ),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 10),
+                    child: Container(
+                      decoration: const BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(35),
+                          topRight: Radius.circular(35),
+                        ),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                        child: SingleChildScrollView(
+                          child: Form(
+                            key: _formKey,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SizedBox(height: 66),
+                                // App Icon
+                                Image.asset(
+                                  "assets/login-logo.png",
+                                  height: 62,
+                                ),
+                                SizedBox(height: 20),
+                                Text(
+                                  "Enter your Phone No",
+                                  style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+                                ),
+                                Text(
+                                  "Or Email",
+                                  style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+                                ),
+                                SizedBox(height: 10),
+                                Text(
+                                  "We Have sent the 4 digit Verification code",
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                  ),
+                                ),
+                                SizedBox(height: 32),
+
+                                SizedBox(
+                                  height: 56,
+                                  child: TextFormField(
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Please enter "Phone No Or Email';
+                                      }
+                                      return null;
+                                    },
+                                    decoration: InputDecoration(
+                                      label: Text('Phone No Or Email'),
+                                      labelStyle: TextStyle(color: Colors.grey.shade700),
+                                      enabled: true,
+                                      enabledBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(color: Colors.grey.shade200),
+                                          borderRadius: BorderRadius.circular(8)),
+                                      focusedBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(color: Colors.grey.shade700),
+                                          borderRadius: BorderRadius.circular(8)),
+                                    ),
+                                  ),
+                                ),
+                                // MyTextField(
+                                //   labelText: Text("Phone No Or Email"),
+                                // ),
+                                SizedBox(height: 32),
+                                GestureDetector(
+                                    onTap: (){
+                                      if(_formKey.currentState!.validate())
+                                      {
+                                        Navigator.push(context, MaterialPageRoute(builder: (context) => const OTPScreen()));
+                                      }
+
+                                    },
+                                    child: MyButton(text: "Verify")),
+                                SizedBox(height: 24),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text("Didn't recieved Otp? "),
+                                    Text(
+                                      "Resend OTP",
+                                      style: TextStyle(
+                                        color: Color.fromRGBO(138, 180, 2, 1),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              Positioned(
+                  top: 50,
+                  left: 20,
+                  child: Row(
+                    children: [
+                      Icon(Icons.arrow_back,color: Colors.white,),
+                      SizedBox(width: 80,),
+                      Text('Forgot Password',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: Colors.white),),
+                    ],
+                  ))
+            ],
+          ),
+        )
+
+
+
+    );
+  }
+}
