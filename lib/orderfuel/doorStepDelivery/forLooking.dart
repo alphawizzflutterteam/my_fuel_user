@@ -165,7 +165,7 @@ class _LookingForCompanyState extends State<LookingForCompany> {
                 onTap: () => Navigator.push(context,
                     MaterialPageRoute(builder: (context){
                       if(selected==1){
-                        return const SelectNewAddress();
+                        return const SelectNewAddress(isFromForLooking: true,);
                       }
                       else if(selected==2){
                         return const EvVehicle();

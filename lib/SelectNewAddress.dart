@@ -13,8 +13,9 @@ import 'orderfuel/EV/charginStationDetails.dart';
 import 'orderfuel/doorStepDelivery/my_assets.dart';
 
 class SelectNewAddress extends StatefulWidget {
-  const SelectNewAddress({super.key, this.isFromFuelOnTab});
+  const SelectNewAddress({super.key, this.isFromFuelOnTab, this.isFromForLooking});
   final bool? isFromFuelOnTab;
+  final bool? isFromForLooking;
   @override
   State<SelectNewAddress> createState() => _SelectNewAddressState();
 }
@@ -434,6 +435,7 @@ class _SelectNewAddressState extends State<SelectNewAddress> {
               //     ),
               //   ),
               // ),
+
               Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: Align(
@@ -441,11 +443,28 @@ class _SelectNewAddressState extends State<SelectNewAddress> {
                   child: GestureDetector(
                     child: const MyButton(text: 'Save Address'),
                     onTap: () {
-                 Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  MyAssets()));
+                      if (widget.isFromFuelOnTab != null &&
+                          widget.isFromFuelOnTab!) {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => FuelOnTabCheckoutScreen(
+                                  isFromFuelOnTap: widget.isFromFuelOnTab,
+                                )));
+                      } else if(widget.isFromForLooking ?? false) {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    MyAssets()));
+                      }else {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                const PaymentScreenTree()));
+                      }
+
                     },
                   ),
                 ),
