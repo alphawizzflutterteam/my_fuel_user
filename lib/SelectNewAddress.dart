@@ -7,6 +7,7 @@ import 'package:test_prj/payment/paymentScreen.dart';
 import 'package:test_prj/payment/payment_form.dart';
 import 'package:test_prj/payment/payment_page.dart';
 
+import 'Home/Genset_checkOut.dart';
 import 'Home/checkout_car_service.dart';
 import 'Home/fuel_ontab_checkout.dart';
 import 'orderfuel/EV/charginStationDetails.dart';
@@ -14,9 +15,13 @@ import 'orderfuel/doorStepDelivery/my_assets.dart';
 
 class SelectNewAddress extends StatefulWidget {
   const SelectNewAddress(
-      {super.key, this.isFromFuelOnTab, this.isFromForLooking});
+      {super.key,
+      this.isFromFuelOnTab,
+      this.isFromForLooking,
+      this.isFromFGenSet});
   final bool? isFromFuelOnTab;
   final bool? isFromForLooking;
+  final bool? isFromFGenSet;
   @override
   State<SelectNewAddress> createState() => _SelectNewAddressState();
 }
@@ -456,6 +461,12 @@ class _SelectNewAddressState extends State<SelectNewAddress> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => const MyAssets()));
+                      } else if (widget.isFromFGenSet ?? false) {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    const GetSetCheckoutScreen()));
                       } else {
                         Navigator.push(
                             context,

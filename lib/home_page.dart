@@ -1171,7 +1171,9 @@ class _HomePageState extends State<HomePage> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          const SelectNewAddress()));
+                                          const SelectNewAddress(
+                                            isFromFGenSet: true,
+                                          )));
                               // _showBottomSheet(context);
                             },
                             child: const MyButton(
