@@ -3,6 +3,9 @@ import 'package:test_prj/components/my_button.dart';
 import 'package:test_prj/orderfuel/fuelToGo/fuelToGo.dart';
 import 'package:test_prj/orderfuel/doorStepDelivery/my_assets.dart';
 
+import '../../SelectNewAddress.dart';
+import '../EV/evVehicle.dart';
+
 class LookingForCompany extends StatefulWidget {
   const LookingForCompany({super.key});
 
@@ -160,7 +163,18 @@ class _LookingForCompanyState extends State<LookingForCompany> {
             padding: const EdgeInsets.all(10.0),
             child: GestureDetector(
                 onTap: () => Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const MyAssets())),
+                    MaterialPageRoute(builder: (context){
+                      if(selected==1){
+                        return const SelectNewAddress();
+                      }
+                      else if(selected==2){
+                        return const EvVehicle();
+                      }else if(selected==3){
+                        return const LookingForCompany();
+                      }else{
+                          return const LookingForCompany();
+                      }
+                    })),
                 child: const MyButton(text: 'Next')),
           ),
         ],

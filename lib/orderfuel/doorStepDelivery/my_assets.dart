@@ -36,7 +36,7 @@ class _AssetsState extends State<MyAssets> {
                 selectedValue = value!;
               });
             },
-            activeColor: Colors.black,
+            activeColor: Colors.orange,
           ),
         ],
       ),
@@ -87,7 +87,7 @@ class _AssetsState extends State<MyAssets> {
                   Padding(
                     padding: EdgeInsets.only(top: 45.0, left: 100),
                     child: Text(
-                      'Looking For',
+                      'Assets',
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 18,
