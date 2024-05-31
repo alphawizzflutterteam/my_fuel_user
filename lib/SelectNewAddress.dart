@@ -2,23 +2,26 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:test_prj/components/my_button.dart';
 import 'package:test_prj/helper/colors.dart';
+import 'package:test_prj/orderfuel/EV/checkout_page.dart';
 import 'package:test_prj/payment/paymentScreen.dart';
 import 'package:test_prj/payment/payment_form.dart';
 import 'package:test_prj/payment/payment_page.dart';
 
+import 'Home/checkout_car_service.dart';
+import 'Home/fuel_ontab_checkout.dart';
 import 'orderfuel/EV/charginStationDetails.dart';
 import 'orderfuel/doorStepDelivery/my_assets.dart';
 
 class SelectNewAddress extends StatefulWidget {
-  const SelectNewAddress({super.key});
-
+  const SelectNewAddress({super.key, this.isFromFuelOnTab});
+  final bool? isFromFuelOnTab;
   @override
   State<SelectNewAddress> createState() => _SelectNewAddressState();
 }
 
 class _SelectNewAddressState extends State<SelectNewAddress> {
   int selectedValue = 1;
-  bool isChecked=false;
+  bool isChecked = false;
 
   Widget customRadio(String text, int value) {
     return GestureDetector(
@@ -54,10 +57,13 @@ class _SelectNewAddressState extends State<SelectNewAddress> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: Icon(Icons.arrow_back_ios_new_outlined),
+        leading: const Icon(
+          Icons.arrow_back_ios_new_outlined,
+          size: 20,
+        ),
         foregroundColor: Colors.white,
         flexibleSpace: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment.topCenter,
               end: Alignment.center,
@@ -67,29 +73,33 @@ class _SelectNewAddressState extends State<SelectNewAddress> {
                 Color.fromRGBO(252, 130, 59, 1),
               ],
             ),
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(23),
-                  bottomRight: Radius.circular(23),
-                ),
+            borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(23),
+              bottomRight: Radius.circular(23),
+            ),
           ),
         ),
-        title: Text('Select Address'),
+        title: const Text('Select Address'),
         centerTitle: true,
-    shape: RoundedRectangleBorder(
-    borderRadius: BorderRadius.only(
-    bottomLeft: Radius.circular(20),
-    bottomRight: Radius.circular(20),
-    ),
-      ),),
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            bottomLeft: Radius.circular(20),
+            bottomRight: Radius.circular(20),
+          ),
+        ),
+      ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 8),
-                child: Text('Shipping Address',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),
+              const Padding(
+                padding: EdgeInsets.only(left: 8),
+                child: Text(
+                  'Shipping Address',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.all(10.0),
@@ -102,7 +112,7 @@ class _SelectNewAddressState extends State<SelectNewAddress> {
                           height: 50,
                           width: 155,
                           decoration: BoxDecoration(
-                            gradient: LinearGradient(
+                            gradient: const LinearGradient(
                               colors: [
                                 Color.fromRGBO(138, 180, 2, 1),
                                 Color.fromRGBO(59, 120, 31, 1),
@@ -113,23 +123,31 @@ class _SelectNewAddressState extends State<SelectNewAddress> {
                           alignment: Alignment.center,
                           child: TextButton(
                               onPressed: () {},
-                              child: Row(
+                              child: const Row(
                                 children: [
-                                  Icon(Icons.my_location,color: colors.whiteTemp,),
-                                  SizedBox(width: 10,),
+                                  Icon(
+                                    Icons.my_location,
+                                    color: colors.whiteTemp,
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
                                   Text(
                                     'Use My Location',
-                                    style: TextStyle(color: Colors.white,fontSize: 12),
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 12),
                                   ) // MyButton(text: 'Use my location'),
                                 ],
                               )),
                         ),
-                        SizedBox(width: 10,),
+                        const SizedBox(
+                          width: 10,
+                        ),
                         Container(
                           height: 50,
                           width: 155,
                           decoration: BoxDecoration(
-                            gradient: LinearGradient(
+                            gradient: const LinearGradient(
                               colors: [
                                 Color.fromRGBO(138, 180, 2, 1),
                                 Color.fromRGBO(59, 120, 31, 1),
@@ -140,13 +158,19 @@ class _SelectNewAddressState extends State<SelectNewAddress> {
                           alignment: Alignment.center,
                           child: TextButton(
                               onPressed: () {},
-                              child: Row(
+                              child: const Row(
                                 children: [
-                                  Icon(Icons.add,color: colors.whiteTemp,),
-                                  SizedBox(width: 10,),
+                                  Icon(
+                                    Icons.add,
+                                    color: colors.whiteTemp,
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
                                   Text(
                                     'New Address',
-                                    style: TextStyle(color: Colors.white,fontSize: 12),
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 12),
                                   ) // MyButton(text: 'Use my location'),
                                 ],
                               )),
@@ -161,8 +185,8 @@ class _SelectNewAddressState extends State<SelectNewAddress> {
                 ),
               ),
               //SizedBox(height: 20),
-              Padding(
-                padding: const EdgeInsets.only(left: 10),
+              const Padding(
+                padding: EdgeInsets.only(left: 10),
                 child: Text(
                   'Select Delivery type',
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
@@ -171,12 +195,12 @@ class _SelectNewAddressState extends State<SelectNewAddress> {
               //SizedBox(height: 10),
 
               Padding(
-                padding: const EdgeInsets.only(left:10),
+                padding: const EdgeInsets.only(left: 10),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     customRadio("Home", 1),
-                    customRadio("Select", 2),
+                    customRadio("Office", 2),
                     customRadio("Other", 3),
                   ],
                 ),
@@ -186,13 +210,13 @@ class _SelectNewAddressState extends State<SelectNewAddress> {
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
-                    color: Color.fromARGB(255, 231, 229, 229),
+                    color: const Color.fromARGB(255, 231, 229, 229),
                   ),
                   height: 65,
-             width: MediaQuery.sizeOf(context).width,
-             //     width: 500,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+                  width: MediaQuery.sizeOf(context).width,
+                  //     width: 500,
+                  child: const Padding(
+                    padding: EdgeInsets.all(8.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -223,23 +247,28 @@ class _SelectNewAddressState extends State<SelectNewAddress> {
                   ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(left: 8),
-                child: Text('Billing Address',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),
+              const Padding(
+                padding: EdgeInsets.only(left: 8),
+                child: Text(
+                  'Billing Address',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                ),
               ),
 
               Row(
                 children: [
-                  Checkbox(value: isChecked, onChanged: (value) {
-                    isChecked=value!;
-                    setState(() {
-
-                    });
-
-                  },),
-                  Text('Same as Shipping address',style: TextStyle(color: colors.greyTemp),)
+                  Checkbox(
+                    value: isChecked,
+                    onChanged: (value) {
+                      isChecked = value!;
+                      setState(() {});
+                    },
+                  ),
+                  const Text(
+                    'Same as Shipping address',
+                    style: TextStyle(color: colors.greyTemp),
+                  )
                 ],
-                
               ),
               SizedBox(
                 height: 70,
@@ -247,12 +276,12 @@ class _SelectNewAddressState extends State<SelectNewAddress> {
                   padding: const EdgeInsets.all(10.0),
                   child: TextFormField(
                     decoration: InputDecoration(
-                      label: Text('Name'),
+                      label: const Text('Name'),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
                       ),
                       hintText: 'Enter your name',
-                      hintStyle: TextStyle(color: Colors.grey),
+                      hintStyle: const TextStyle(color: Colors.grey),
                     ),
                   ),
                 ),
@@ -264,12 +293,12 @@ class _SelectNewAddressState extends State<SelectNewAddress> {
                   child: TextFormField(
                     keyboardType: TextInputType.number,
                     decoration: InputDecoration(
-                      label: Text('Mobile Number'),
+                      label: const Text('Mobile Number'),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
                       ),
                       hintText: 'Enter your Mobile number',
-                      hintStyle: TextStyle(color: Colors.grey),
+                      hintStyle: const TextStyle(color: Colors.grey),
                     ),
                   ),
                 ),
@@ -280,12 +309,12 @@ class _SelectNewAddressState extends State<SelectNewAddress> {
                   padding: const EdgeInsets.all(10.0),
                   child: TextFormField(
                     decoration: InputDecoration(
-                      label: Text('Alternate Mobile number'),
+                      label: const Text('Alternate Mobile number'),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
                       ),
                       hintText: 'Enter your Alternate Mobile number',
-                      hintStyle: TextStyle(color: Colors.grey),
+                      hintStyle: const TextStyle(color: Colors.grey),
                     ),
                   ),
                 ),
@@ -296,12 +325,12 @@ class _SelectNewAddressState extends State<SelectNewAddress> {
                   padding: const EdgeInsets.all(10.0),
                   child: TextFormField(
                     decoration: InputDecoration(
-                      label: Text('House no., Building Name'),
+                      label: const Text('House no., Building Name'),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
                       ),
                       hintText: 'Enter your Home no.. Building Name',
-                      hintStyle: TextStyle(color: Colors.grey),
+                      hintStyle: const TextStyle(color: Colors.grey),
                     ),
                   ),
                 ),
@@ -312,12 +341,12 @@ class _SelectNewAddressState extends State<SelectNewAddress> {
                   padding: const EdgeInsets.all(10.0),
                   child: TextFormField(
                     decoration: InputDecoration(
-                      label: Text('Road name ,Area Colony'),
+                      label: const Text('Road name ,Area Colony'),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
                       ),
                       hintText: 'Enter your Road name ,area colony',
-                      hintStyle: TextStyle(color: Colors.grey),
+                      hintStyle: const TextStyle(color: Colors.grey),
                     ),
                   ),
                 ),
@@ -329,13 +358,13 @@ class _SelectNewAddressState extends State<SelectNewAddress> {
                   padding: const EdgeInsets.all(10.0),
                   child: TextFormField(
                     decoration: InputDecoration(
-                      label: Text('Country'),
+                      label: const Text('Country'),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
-                        borderSide: BorderSide(color: Colors.red), //
+                        borderSide: const BorderSide(color: Colors.red), //
                       ),
                       hintText: 'Enter your country name',
-                      hintStyle: TextStyle(color: Colors.grey),
+                      hintStyle: const TextStyle(color: Colors.grey),
                     ),
                   ),
                 ),
@@ -347,12 +376,12 @@ class _SelectNewAddressState extends State<SelectNewAddress> {
                   child: TextFormField(
                     keyboardType: TextInputType.number,
                     decoration: InputDecoration(
-                      label: Text('State'),
+                      label: const Text('State'),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
                       ),
                       hintText: 'Enter your State name',
-                      hintStyle: TextStyle(color: Colors.grey),
+                      hintStyle: const TextStyle(color: Colors.grey),
                     ),
                   ),
                 ),
@@ -363,12 +392,12 @@ class _SelectNewAddressState extends State<SelectNewAddress> {
                   padding: const EdgeInsets.all(10.0),
                   child: TextFormField(
                     decoration: InputDecoration(
-                      label: Text('City '),
+                      label: const Text('City '),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
                       ),
                       hintText: 'Enter your city name',
-                      hintStyle: TextStyle(color: Colors.grey),
+                      hintStyle: const TextStyle(color: Colors.grey),
                     ),
                   ),
                 ),
@@ -379,12 +408,12 @@ class _SelectNewAddressState extends State<SelectNewAddress> {
                   padding: const EdgeInsets.all(10.0),
                   child: TextFormField(
                     decoration: InputDecoration(
-                      label: Text('Pincode'),
+                      label: const Text('Pincode'),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
                       ),
                       hintText: 'Enter your Pincode ',
-                      hintStyle: TextStyle(color: Colors.grey),
+                      hintStyle: const TextStyle(color: Colors.grey),
                     ),
                   ),
                 ),
@@ -410,9 +439,9 @@ class _SelectNewAddressState extends State<SelectNewAddress> {
                 child: Align(
                   alignment: Alignment.centerRight,
                   child: GestureDetector(
-                    child: MyButton(text: 'Save Address'),
+                    child: const MyButton(text: 'Save Address'),
                     onTap: () {
-                      Navigator.push(
+                 Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (context) =>
@@ -421,7 +450,7 @@ class _SelectNewAddressState extends State<SelectNewAddress> {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 30,
               ),
             ],

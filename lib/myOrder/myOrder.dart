@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:test_prj/helper/colors.dart';
 import 'package:test_prj/myOrder/CarWash.dart';
 import 'package:test_prj/myOrder/VendorDetail.dart';
+import 'package:test_prj/profile/notification1.dart';
 
 import '../VenderDetails4.dart';
 import '../carwash_vendordet.dart';
@@ -72,13 +74,23 @@ class _MyOrderState extends State<MyOrder> {
                       Row(
                         children: [
                           Image.asset(
-                            "assets/Group 2979.png",
+                            "assets/Search.png",
                             height: 24,
+                            color: colors.whiteTemp,
                           ),
                           const SizedBox(width: 8),
-                          Image.asset(
-                            "assets/Notification.png",
-                            height: 24,
+                          InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const Notification1(),
+                                  ));
+                            },
+                            child: Image.asset(
+                              "assets/Notification.png",
+                              height: 24,
+                            ),
                           ),
                         ],
                       )
@@ -204,7 +216,11 @@ class _MyOrderState extends State<MyOrder> {
                                                       BorderRadius.circular(6),
                                                   color: Colors.amber),
                                               child: Center(
-                                                  child: Text('On the way')),
+                                                  child: Text(
+                                                'On the way',
+                                                style: TextStyle(
+                                                    color: colors.whiteTemp),
+                                              )),
                                             ),
                                           ],
                                         ),
@@ -215,8 +231,12 @@ class _MyOrderState extends State<MyOrder> {
                               ),
                             ),
                             InkWell(
-                              onTap: (){
-                           Navigator.push(context, MaterialPageRoute(builder: (context)=>VenderDetails2()));
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            VenderDetails2()));
                               },
                               child: Container(
                                 height: 110,
@@ -262,10 +282,12 @@ class _MyOrderState extends State<MyOrder> {
                                               decoration: BoxDecoration(
                                                   borderRadius:
                                                       BorderRadius.circular(6),
-                                                  color: const Color.fromARGB(
-                                                      255, 247, 137, 174)),
+                                                  color: colors.darkYellow),
                                               child: Center(
-                                                  child: Text('Fuel to go')),
+                                                  child: Text('Fuel to go',
+                                                      style: TextStyle(
+                                                          color: colors
+                                                              .whiteTemp))),
                                             ),
                                           ],
                                         ),
@@ -319,8 +341,7 @@ class _MyOrderState extends State<MyOrder> {
                                             decoration: BoxDecoration(
                                                 borderRadius:
                                                     BorderRadius.circular(6),
-                                                color: Colors.red
-                                            ),
+                                                color: Colors.red),
                                             child: Center(
                                                 child: Text(
                                               'Order Concelled',
@@ -336,8 +357,12 @@ class _MyOrderState extends State<MyOrder> {
                               ),
                             ),
                             InkWell(
-                              onTap: (){
-                                Navigator.push(context, MaterialPageRoute(builder: (context)=>VenderDetails4()));
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            VenderDetails4()));
                               },
                               child: Container(
                                 height: 110,
@@ -441,11 +466,16 @@ class CategoryProducts extends StatelessWidget {
               // width: 2,
             ),
           ),
-          child:  Padding(
+          child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Center(child: Text(text,style: TextStyle(color: isSelected ? Colors.orange : Colors.grey,),)),
+            child: Center(
+                child: Text(
+              text,
+              style: TextStyle(
+                color: isSelected ? Colors.orange : Colors.grey,
+              ),
+            )),
           ),
-
         ),
       ),
     );
@@ -462,54 +492,33 @@ class CategoryPage extends StatefulWidget {
 class _CategoryPageState extends State<CategoryPage> {
   int selectedIndex = -1;
 
+  List category = [
+    "Fuels",
+    "Car Wash",
+    "Rescue fuel",
+    "Tyres",
+    "Battery",
+    "Insurance",
+  ];
+
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 52,
-      child: ListView(
+      child: ListView.builder(
+        itemCount: category.length,
         scrollDirection: Axis.horizontal,
-        children: [
-          CategoryProducts(
-            text: 'Fuels',
+        itemBuilder: (context, index) {
+          return CategoryProducts(
+            text: category[index],
             press: () {
               setState(() {
-                selectedIndex = 0;
+                selectedIndex = index;
               });
             },
-            isSelected: selectedIndex == 0,
-          ),
-          CategoryProducts(
-            text: 'Car Wash',
-            press: () {
-              setState(() {
-                selectedIndex = 1;
-              });
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (context) => CarWash()),
-              );
-            },
-            isSelected: selectedIndex == 1,
-          ),
-          CategoryProducts(
-            text: 'Rescue fuel',
-            press: () {
-              setState(() {
-                selectedIndex = 2;
-              });
-            },
-            isSelected: selectedIndex == 2,
-          ),
-          CategoryProducts(
-            text: 'Tyres',
-            press: () {
-              setState(() {
-                selectedIndex = 3;
-              });
-            },
-            isSelected: selectedIndex == 3,
-          ),
-        ],
+            isSelected: selectedIndex == index,
+          );
+        },
       ),
     );
   }
