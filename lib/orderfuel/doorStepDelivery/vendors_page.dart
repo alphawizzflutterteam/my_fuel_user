@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:test_prj/Home/checkout_car_service.dart';
 import 'package:test_prj/components/my_appbar.dart';
 import 'package:test_prj/orderfuel/doorStepDelivery/checkout_page1.dart';
+import 'package:test_prj/orderfuel/fuelToGo/checkout_page2.dart';
+
+import '../../Home/checkout_battery.dart';
 
 class VendorsPage extends StatelessWidget {
   const VendorsPage({super.key});
@@ -31,25 +35,35 @@ class VendorsPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      const Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            "My Fuels Price",
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
+                      InkWell(
+
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const Checkout_Battery()),
+                          );
+                        },
+                        child: const Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "My Fuels Price",
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                          ),
-                          Text(
-                            "₹89.00",
-                            style: TextStyle(
-                                fontSize: 20,
-                                color: Color.fromRGBO(138, 180, 2, 1),
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ],
+                            Text(
+                              "₹89.00",
+                              style: TextStyle(
+                                  fontSize: 20,
+                                  color: Color.fromRGBO(138, 180, 2, 1),
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        ),
                       ),
                       Image.asset(
                         "assets/Arrow - Down 2.png",
