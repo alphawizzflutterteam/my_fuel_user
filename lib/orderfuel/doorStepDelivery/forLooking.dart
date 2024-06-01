@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:test_prj/components/my_button.dart';
 import 'package:test_prj/orderfuel/fuelToGo/fuelToGo.dart';
 import 'package:test_prj/orderfuel/doorStepDelivery/my_assets.dart';
-
 import '../../SelectNewAddress.dart';
 import '../EV/evVehicle.dart';
 
@@ -66,13 +65,18 @@ class _LookingForCompanyState extends State<LookingForCompany> {
                 bottomRight: Radius.circular(23),
               ),
             ),
-            child: const Row(
+            child:Row(
               children: [
-                Padding(
-                  padding: EdgeInsets.only(top: 45.0, left: 20),
-                  child: Icon(
-                    Icons.arrow_back_ios_new_rounded,
-                    color: Colors.white,
+                InkWell(
+                  onTap: (){
+                    Navigator.pop(context);
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 45.0, left: 20),
+                    child: Icon(
+                      Icons.arrow_back_ios_new_rounded,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
                 Padding(
@@ -118,8 +122,10 @@ class _LookingForCompanyState extends State<LookingForCompany> {
                   ),
                 ),
                 GestureDetector(
-                  onTap: () => Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => const FuelToGo())),
+                  onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const FuelToGo())),
                   child: Container(
                     height: 45,
                     width: 160,
@@ -163,16 +169,19 @@ class _LookingForCompanyState extends State<LookingForCompany> {
             padding: const EdgeInsets.all(10.0),
             child: GestureDetector(
                 onTap: () => Navigator.push(context,
-                    MaterialPageRoute(builder: (context){
-                      if(selected==1){
-                        return const SelectNewAddress(isFromForLooking: true,);
-                      }
-                      else if(selected==2){
-                        return const EvVehicle();
-                      }else if(selected==3){
+                        MaterialPageRoute(builder: (context) {
+                      if (selected == 1) {
+                        return const SelectNewAddress(
+                          isFromForLooking: true,
+                        );
+                      } else if (selected == 2) {
+                        return EvVehicle(
+                          selectedIndex: 0,
+                        );
+                      } else if (selected == 3) {
                         return const LookingForCompany();
-                      }else{
-                          return const LookingForCompany();
+                      } else {
+                        return const LookingForCompany();
                       }
                     })),
                 child: const MyButton(text: 'Next')),

@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:test_prj/Home/Evcheckout.dart';
+import 'package:test_prj/Home/checkout_car_service.dart';
 import 'package:test_prj/Home/fuel_ontab_checkout.dart';
 import 'package:test_prj/components/my_button.dart';
 import 'package:test_prj/orderfuel/doorStepDelivery/vendors_page.dart';
-
 import '../../charging_stations.dart';
-import 'Evdoor.dart';
-import 'charginStationDetails.dart';
+
 
 
 
@@ -26,13 +25,11 @@ class _FuelbottomState extends State<Fuelbottom> {
       height: 400,
       child: Column(
         children: [
-          Container(
-            child: Padding(
-              padding: const EdgeInsets.only(top: 20, left: 30, right: 20),
-              child: Text(
-                "Schedule data and timing",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              ),
+          const Padding(
+            padding: EdgeInsets.only(top: 20, left: 30, right: 20),
+            child: Text(
+              "Schedule data and timing",
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
           ),
           SizedBox(
@@ -158,7 +155,7 @@ class _FuelbottomState extends State<Fuelbottom> {
             child: GestureDetector(
                 onTap: () {
                   Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const ChargingStations()));
+                      MaterialPageRoute(builder: (context) => const Checkout_Car_Service()));
 
                 },
                 child: MyButton(text: 'Book Now')),

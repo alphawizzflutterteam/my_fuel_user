@@ -64,9 +64,14 @@ class _SelectNewAddressState extends State<SelectNewAddress> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: const Icon(
-          Icons.arrow_back_ios_new_outlined,
-          size: 20,
+        leading: InkWell(
+          onTap: () {
+            Navigator.pop(context);
+          },
+          child: const Icon(
+            Icons.arrow_back_ios_new_outlined,
+            size: 20,
+          ),
         ),
         foregroundColor: Colors.white,
         flexibleSpace: Container(

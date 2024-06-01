@@ -1,16 +1,18 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:test_prj/Home/Evdoorbottom.dart';
 import 'package:test_prj/orderfuel/EV/cartPage.dart';
 import 'package:test_prj/components/my_button.dart';
-
 import '../../components/my_hinttext_field.dart';
 import '../../vehicle_number.dart';
 import '../bottom_sheet.dart';
 import 'Fuelbottom.dart';
 
 class EvVehicle extends StatefulWidget {
-  const EvVehicle({super.key});
+  final int selectedIndex;
+  EvVehicle({super.key, required this.selectedIndex});
 
   @override
   State<EvVehicle> createState() => _EvVehicleState();
@@ -65,17 +67,22 @@ class _EvVehicleState extends State<EvVehicle> {
               ),
               child: Row(
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 45.0, left: 20),
-                    child: Icon(
-                      Icons.arrow_back,
-                      color: Colors.white,
+                  InkWell(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 45.0, left: 20),
+                      child: Icon(
+                        Icons.arrow_back,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 45.0, left: 100),
                     child: Text(
-                      'Vendors',
+                      'EV Vehicle',
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 18,
@@ -89,6 +96,26 @@ class _EvVehicleState extends State<EvVehicle> {
             // SizedBox(
             //   height: 30,
             // ),
+            SizedBox(
+              height: 10,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: TextFormField(
+                decoration: InputDecoration(
+                  contentPadding: EdgeInsets.symmetric(vertical: 8),
+                  hintText: 'Search',
+                  prefixIcon: Icon(Icons.search),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide.none,
+                  ),
+                  filled: true,
+                  fillColor: Colors.grey.shade100,
+                ),
+                onChanged: (value) {},
+              ),
+            ),
             GridView.builder(
               physics: NeverScrollableScrollPhysics(),
               shrinkWrap: true,
@@ -100,7 +127,7 @@ class _EvVehicleState extends State<EvVehicle> {
               itemBuilder: (_, index) {
                 final item = gridMap[index];
                 return InkWell(
-                  onTap: () =>showModalBottomSheet(
+                  onTap: () => showModalBottomSheet(
                     context: context,
                     builder: (BuildContext context) {
                       return Container(
@@ -123,19 +150,35 @@ class _EvVehicleState extends State<EvVehicle> {
                               ),
                               MyHintTextField(
                                   hintText: Text(
-                                    "Vehicle Number",
-                                    style: TextStyle(
-                                        color: Colors.grey, fontWeight: FontWeight.w500),
-                                  )),
+                                "Vehicle Number",
+                                style: TextStyle(
+                                    color: Colors.grey,
+                                    fontWeight: FontWeight.w500),
+                              )),
                               const SizedBox(
                                 height: 40,
                               ),
                               InkWell(
                                 onTap: () {},
-                                child:  InkWell(
-                                  child:  InkWell(
+                                child: InkWell(
+                                  child: InkWell(
                                     onTap: () {
-                                      showModalBottomSheet(context: context, builder: (context) =>  Fuelbottom(),);
+                                      if (widget.selectedIndex == 0) {
+                                        showModalBottomSheet(
+                                          context: context,
+                                          builder: (context) => Evdoorbottom(),
+                                        );
+                                      } else {
+                                        showModalBottomSheet(
+                                          context: context,
+                                          builder: (context) => Fuelbottom(),
+                                        );
+                                      }
+
+                                      // showModalBottomSheet(
+                                      //   context: context,
+                                      //   builder: (context) => Fuelbottom(),
+                                      // );
                                     },
                                     child: Container(
                                       child: MyButton(
@@ -202,6 +245,28 @@ class _EvVehicleState extends State<EvVehicle> {
           ],
         ),
       ),
+      // bottomSheet: Container(
+      //   color: Colors.white,
+      //   child: Container(
+      //     margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+      //     decoration: BoxDecoration(
+      //         border: Border.all(color: Colors.black), color: Colors.white),
+      //     child: TextFormField(
+      //       readOnly: true,
+      //       decoration: InputDecoration(
+      //         contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 20),
+      //         hintText: 'Add EV Vehicles for development',
+      //         border: OutlineInputBorder(
+      //           borderRadius: BorderRadius.circular(12),
+      //           borderSide: BorderSide.none,
+      //         ),
+      //         filled: true,
+      //         fillColor: Colors.white,
+      //       ),
+      //       onChanged: (value) {},
+      //     ),
+      //   ),
+      // ),
     );
   }
 }

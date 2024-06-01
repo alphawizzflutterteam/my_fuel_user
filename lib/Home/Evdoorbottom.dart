@@ -1,23 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:test_prj/Home/Evcheckout.dart';
 import 'package:test_prj/Home/fuel_ontab_checkout.dart';
 import 'package:test_prj/components/my_button.dart';
 import 'package:test_prj/orderfuel/doorStepDelivery/vendors_page.dart';
 
-import '../../charging_stations.dart';
-import 'Evdoor.dart';
-import 'charginStationDetails.dart';
+import '../Home/Evcheckout.dart';
 
-
-
-class Fuelbottom extends StatefulWidget {
-  const Fuelbottom({super.key});
+class Evdoorbottom extends StatefulWidget {
+  const Evdoorbottom({super.key});
 
   @override
-  State<Fuelbottom> createState() => _FuelbottomState();
+  State<Evdoorbottom> createState() => _EvdoorbottomState();
 }
 
-class _FuelbottomState extends State<Fuelbottom> {
+class _EvdoorbottomState extends State<Evdoorbottom> {
   DateTime? selectedDate;
   TextEditingController dateController = TextEditingController();
   @override
@@ -156,11 +151,8 @@ class _FuelbottomState extends State<Fuelbottom> {
             alignment: Alignment.bottomCenter,
             width: 330,
             child: GestureDetector(
-                onTap: () {
-                  Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const ChargingStations()));
-
-                },
+                onTap: () => Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => Evcheckout())),
                 child: MyButton(text: 'Book Now')),
           ),
         ],

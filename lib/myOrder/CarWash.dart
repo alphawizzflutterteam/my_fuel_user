@@ -132,14 +132,14 @@ class _CarWashState extends State<CarWash> {
                                                 245, 245, 245, 1),
                                             filled: true,
                                             enabledBorder: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(12),
+                                              borderRadius: BorderRadius.circular(12),
                                               borderSide: BorderSide.none,
                                             ),
                                             hintText: "Search"),
                                       ),
                                     ),
                                   ),
+
                                   const SizedBox(width: 8), // Added spacing
                                   const Icon(Icons.format_align_right_rounded)
                                 ],

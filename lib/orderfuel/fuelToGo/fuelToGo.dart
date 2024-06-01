@@ -195,10 +195,12 @@ class _FuelToGoState extends State<FuelToGo> {
                           return const AddVehicles();
                         }
                         else if(selected==2){
-                          return const EvVehicle();
-                        }else if(selected==2){
-                          return const EvVehicle();
-                        }else{
+                          return  EvVehicle( selectedIndex: 1,);
+                        }
+                        // else if(selected==2){
+                        //   return const EvVehicle();
+                        // }
+                        else{
                           return const LookingForCompany();
                         }
                       })),

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:test_prj/authPages/language_page.dart';
+import 'package:test_prj/profile/ContactUs.dart';
 import 'package:test_prj/profile/My_Address.dart';
 import 'package:test_prj/profile/change_password.dart';
 import 'package:test_prj/profile/myfuels_card.dart';
@@ -232,6 +233,14 @@ class ProfilePageState extends State<ProfilePage> {
                                                   LanguagePage()))),
                                   const Divider(),
                                   settingsCard(
+                                      title: "Contact Us",
+                                      onTap: () => Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  ContactUs()))),
+                                  const Divider(),
+                                  settingsCard(
                                     title: "Change Password",
                                     onTap: () => Navigator.push(
                                         context,
@@ -248,7 +257,7 @@ class ProfilePageState extends State<ProfilePage> {
                                             context,
                                             MaterialPageRoute(
                                               builder: (context) =>
-                                                  const PrivacyolicyScreen(),
+                                                   PrivacyolicyScreen(),
                                             ));
                                       }),
                                   const Divider(),
@@ -278,6 +287,7 @@ class ProfilePageState extends State<ProfilePage> {
                               ),
 
                               // Tap to Logout
+
                               GestureDetector(
                                 onTap: () {
                                   showModalBottomSheet(

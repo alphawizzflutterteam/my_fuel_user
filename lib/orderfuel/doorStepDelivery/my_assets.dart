@@ -75,13 +75,18 @@ class _AssetsState extends State<MyAssets> {
                   bottomRight: Radius.circular(23),
                 ),
               ),
-              child: const Row(
+              child:  Row(
                 children: [
-                  Padding(
-                    padding: EdgeInsets.only(top: 45.0, left: 20),
-                    child: Icon(
-                      Icons.arrow_back,
-                      color: Colors.white,
+                  InkWell(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: Padding(
+                      padding: EdgeInsets.only(top: 45.0, left: 20),
+                      child: Icon(
+                        Icons.arrow_back,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                   Padding(

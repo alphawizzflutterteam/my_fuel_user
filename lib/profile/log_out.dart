@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:test_prj/components/my_button.dart';
+import 'package:test_prj/authPages/login_page.dart';
+import 'package:test_prj/orderfuel/doorStepDelivery/forLooking.dart';
+import '../components/my_button.dart';
 
 class LogoutPage extends StatefulWidget {
   const LogoutPage({super.key});
@@ -17,19 +19,20 @@ class _LogoutPageState extends State<LogoutPage> {
         padding: const EdgeInsets.all(20.0),
         child: Column(
           mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
+          children: [
             const SizedBox(
               height: 10,
             ),
             Image.asset(
               "assets/logout.png",
-              height: 60,
-              width: 60,
+              color: Colors.black,
+              height: 55,
+              width: 55,
             ),
             // const SizedBox(height: 10),
             const Text(
               "Logout",
-              style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
             const SizedBox(
               height: 10,
@@ -68,9 +71,15 @@ class _LogoutPageState extends State<LogoutPage> {
                     width: 150,
                     alignment: Alignment.center,
                     decoration:
-                        BoxDecoration(borderRadius: BorderRadius.circular(8)),
-                    child: const MyButton(
-                      text: "Logout",
+                    BoxDecoration(borderRadius: BorderRadius.circular(8)),
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) => LoginPage()));
+                      },
+                      child: const MyButton(
+                        text: "Logout",
+                      ),
                     ),
                   ),
                 ),

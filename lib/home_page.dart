@@ -784,7 +784,7 @@ class _HomePageState extends State<HomePage> {
                     },
                     child: Container(
                       child: const MyButton(
-                        text: "Submit",
+                        text: "Continue",
                       ),
                     ),
                   ),
@@ -1054,7 +1054,7 @@ class _HomePageState extends State<HomePage> {
                           context,
                           MaterialPageRoute(
                               builder: (context) => TyresScreen(
-                                    page: 3,
+                                    page: 3,title: "carWash",
                                   )));
 
                       // Add your onTap logic here

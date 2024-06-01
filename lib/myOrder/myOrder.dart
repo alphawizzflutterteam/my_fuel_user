@@ -6,7 +6,6 @@ import 'package:test_prj/helper/colors.dart';
 import 'package:test_prj/myOrder/CarWash.dart';
 import 'package:test_prj/myOrder/VendorDetail.dart';
 import 'package:test_prj/profile/notification1.dart';
-
 import '../VenderDetails4.dart';
 import '../carwash_vendordet.dart';
 import '../myorder_vendordet2.dart';

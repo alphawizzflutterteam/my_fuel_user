@@ -39,7 +39,7 @@ class _ChangePasswordState extends State<ChangePassword> {
           Padding(
             padding: const EdgeInsets.only(left: 16, right: 16, bottom: 40),
             child:
-                Container(height: 48, child: MyButton(text: "Chage Password")),
+                Container(height: 48, child: MyButton(text: "Change Password")),
           )
         ],
       ),

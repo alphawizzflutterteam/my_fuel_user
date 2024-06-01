@@ -22,9 +22,14 @@ class _EvcheckoutState extends State<Evcheckout> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: Icon(
-          Icons.arrow_back_ios_new_outlined,
-          size: 20,
+        leading: InkWell(
+          onTap: () {
+            Navigator.pop(context);
+          },
+          child: Icon(
+            Icons.arrow_back_ios_new_outlined,
+            size: 20,
+          ),
         ),
         foregroundColor: Colors.white,
         flexibleSpace: Container(
@@ -61,7 +66,7 @@ class _EvcheckoutState extends State<Evcheckout> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => const PaymentScreen()),
+                  builder: (context) =>  PaymentScreen()),
             );
           },
           child: Padding(
