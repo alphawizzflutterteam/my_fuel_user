@@ -30,12 +30,12 @@ class _GetSetCheckoutScreenState extends State<GetSetCheckoutScreen> {
         flexibleSpace: Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.center,
+              begin: Alignment.centerLeft,
+              end: Alignment.centerRight,
               colors: [
+                Color.fromRGBO(252, 130, 59, 1),
+                Color.fromRGBO(252, 130, 59, 1),
                 Color.fromRGBO(211, 83, 7, 1),
-                Color.fromRGBO(252, 130, 59, 1),
-                Color.fromRGBO(252, 130, 59, 1),
               ],
             ),
             borderRadius: BorderRadius.only(

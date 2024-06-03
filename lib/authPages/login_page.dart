@@ -26,7 +26,6 @@ class _LoginPageState extends State<LoginPage> {
             padding: const EdgeInsets.symmetric(horizontal: 18.0),
             child: Form(
               key: _formKey,
-
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

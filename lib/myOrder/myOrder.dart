@@ -35,15 +35,16 @@ class _MyOrderState extends State<MyOrder> {
       body: SingleChildScrollView(
         child: Container(
           decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.center,
-                  colors: [
+            gradient: LinearGradient(
+              begin: Alignment.centerLeft,
+              end: Alignment.centerRight,
+              colors: [
+                Color.fromRGBO(252, 130, 59, 1),
                 Color.fromRGBO(252, 130, 59, 1),
                 Color.fromRGBO(211, 83, 7, 1),
-                Color.fromRGBO(211, 83, 7, 1),
-                Color.fromRGBO(211, 83, 7, 1),
-              ])),
+              ],
+            ),
+          ),
           child: Padding(
             padding: const EdgeInsets.only(top: 48),
             child: Column(

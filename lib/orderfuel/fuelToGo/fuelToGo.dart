@@ -123,6 +123,7 @@ class _FuelToGoState extends State<FuelToGo> {
                     height: 45,
                     width: 160,
                     decoration: BoxDecoration(
+
                       gradient: const LinearGradient(
                         colors: [
                           Color.fromRGBO(138, 180, 2, 1),
@@ -136,7 +137,7 @@ class _FuelToGoState extends State<FuelToGo> {
                     alignment: Alignment.center,
                     child: const Text(
                       "Fuel to Go",
-                      style: TextStyle(color: Color.fromARGB(255, 1, 1, 1)),
+                      style: TextStyle(color: Colors.white),
                     ),
                   ),
                 ],
