@@ -8,7 +8,7 @@ class MyAppbar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 105,
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.centerLeft,
           end: Alignment.centerRight,
@@ -30,7 +30,7 @@ class MyAppbar extends StatelessWidget {
           children: [
             GestureDetector(
               onTap: () => Navigator.pop(context),
-              child: Icon(
+              child: const Icon(
                 Icons.arrow_back_ios,
                 color: Colors.white,
                 size: 20,
@@ -38,13 +38,13 @@ class MyAppbar extends StatelessWidget {
             ),
             Text(
               title,
-              style: TextStyle(
+              style: const TextStyle(
                 color: Colors.white,
                 fontSize: 20,
                 fontWeight: FontWeight.w400,
               ),
             ),
-            SizedBox(width: 20)
+            const SizedBox(width: 20)
           ],
         ),
       ),
