@@ -42,15 +42,16 @@ class _HomePageState extends State<HomePage> {
       child: SingleChildScrollView(
         child: Container(
           decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.center,
-                  colors: [
+            gradient: LinearGradient(
+              begin: Alignment.centerLeft,
+              end: Alignment.centerRight,
+              colors: [
+                Color.fromRGBO(252, 130, 59, 1),
                 Color.fromRGBO(252, 130, 59, 1),
                 Color.fromRGBO(211, 83, 7, 1),
-                Color.fromRGBO(211, 83, 7, 1),
-                Color.fromRGBO(211, 83, 7, 1),
-              ])),
+              ],
+            ),
+          ),
           child: Padding(
             padding: const EdgeInsets.only(top: 48),
             child: Column(
@@ -784,7 +785,7 @@ class _HomePageState extends State<HomePage> {
                     },
                     child: Container(
                       child: const MyButton(
-                        text: "Submit",
+                        text: "Continue",
                       ),
                     ),
                   ),
@@ -1054,7 +1055,7 @@ class _HomePageState extends State<HomePage> {
                           context,
                           MaterialPageRoute(
                               builder: (context) => TyresScreen(
-                                    page: 3,
+                                    page: 3,title: "carWash",
                                   )));
 
                       // Add your onTap logic here

@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:test_prj/Home/checkout_car_service.dart';
 
 import '../helper/colors.dart';
 import 'car_wish_list.dart';
 class TyresListing extends StatefulWidget {
-  const TyresListing({super.key});
+
+  final int? index ;
+  const TyresListing({super.key,this.index});
 
   @override
   State<TyresListing> createState() => _TyresListingState();
@@ -25,12 +28,12 @@ class _TyresListingState extends State<TyresListing> {
 
           decoration: BoxDecoration(
             gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.center,
+              begin: Alignment.centerLeft,
+              end: Alignment.centerRight,
               colors: [
+                Color.fromRGBO(252, 130, 59, 1),
+                Color.fromRGBO(252, 130, 59, 1),
                 Color.fromRGBO(211, 83, 7, 1),
-                Color.fromRGBO(252, 130, 59, 1),
-                Color.fromRGBO(252, 130, 59, 1),
               ],
             ),
             borderRadius: BorderRadius.only(
@@ -52,9 +55,16 @@ class _TyresListingState extends State<TyresListing> {
         itemBuilder: (context, index) {
         return Padding(
           padding: const EdgeInsets.all(8.0),
-          child: InkWell(
+          child:
+          InkWell(
             onTap: (){
-              Navigator.push(context, MaterialPageRoute(builder: (context)=>CarWashList()));
+              if(widget.index == 1){
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>Checkout_Car_Service()));
+
+              }else {
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>CarWashList()));
+              }
+
             },
             child: Container(
               decoration: BoxDecoration(borderRadius: BorderRadius.circular(10),

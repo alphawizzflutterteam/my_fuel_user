@@ -225,9 +225,14 @@ class _MyFuelsCardState extends State<MyFuelsCard> {
       floatingActionButton: Padding(
         padding: const EdgeInsets.all(16.0),
         child: GestureDetector(
-            onTap: () => Navigator.push(context,
-                MaterialPageRoute(builder: (context) => PaymentScreenTree())),
-            child: MyButton(text: "Add Money")),
+            onTap: () {
+
+              Navigator.push(context,
+                MaterialPageRoute(builder: (context) {
+                  return const PaymentScreenTree();
+                }));
+            },
+            child: const MyButton(text: "Add Money")),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );

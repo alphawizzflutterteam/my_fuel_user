@@ -45,11 +45,16 @@ class _AddVehiclesState extends State<AddVehicles> {
             ),
             child: Row(
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(top: 45.0, left: 20),
-                  child: Icon(
-                    Icons.arrow_back,
-                    color: Colors.white,
+                InkWell(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 45.0, left: 20),
+                    child: Icon(
+                      Icons.arrow_back,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
                 Padding(

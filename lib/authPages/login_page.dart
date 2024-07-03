@@ -26,7 +26,6 @@ class _LoginPageState extends State<LoginPage> {
             padding: const EdgeInsets.symmetric(horizontal: 18.0),
             child: Form(
               key: _formKey,
-
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -44,7 +43,7 @@ class _LoginPageState extends State<LoginPage> {
                   const Text(
                     "Please Sign in to your account",
                     style: TextStyle(
-                      // fontSize: 26,
+                      fontSize: 16,
                       // fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -67,7 +66,7 @@ class _LoginPageState extends State<LoginPage> {
                         alignment: Alignment.center,
                         child: const Text(
                           "Personal",
-                          style: TextStyle(color: Colors.white),
+                          style: TextStyle(color: Colors.white,),
                         ),
                       ),
                       GestureDetector(
@@ -112,7 +111,6 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   const SizedBox(height: 15),
                   TextFormField(
-
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please enter password';
@@ -120,6 +118,12 @@ class _LoginPageState extends State<LoginPage> {
                       return null;
                     },
                     decoration: InputDecoration(
+                      suffixIcon: IconButton(
+                          onPressed: () {
+                            setState(() {
+                            });
+                          },
+                          icon: Icon(Icons.remove_red_eye)),
                       label: Text('Password'),
                       labelStyle: TextStyle(color: Colors.grey.shade700),
                       enabled: true,
@@ -135,7 +139,7 @@ class _LoginPageState extends State<LoginPage> {
                   const SizedBox(height: 15),
                   Row(
                     children: [
-                      Text("Forgot Password? "),
+                      Text("Forgot Password? ",style:TextStyle(color: Colors.black,fontSize: 14,fontWeight: FontWeight.bold),),
                       GestureDetector(
                         onTap: () => Navigator.push(
                             context,

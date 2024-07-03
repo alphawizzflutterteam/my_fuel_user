@@ -3,10 +3,13 @@ import 'package:flutter/material.dart';
 
 import '../components/my_button.dart';
 import '../helper/colors.dart';
+import 'car_wish_list.dart';
 import 'checkout_battery.dart';
+import 'checkout_car_service.dart';
 
 class BatteryListing extends StatefulWidget {
-  const BatteryListing({super.key});
+  final int? index ;
+  const BatteryListing({super.key,this.index});
 
   @override
   State<BatteryListing> createState() => _BatteryListingState();
@@ -26,12 +29,12 @@ class _BatteryListingState extends State<BatteryListing> {
         flexibleSpace: Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.center,
+              begin: Alignment.centerLeft,
+              end: Alignment.centerRight,
               colors: [
+                Color.fromRGBO(252, 130, 59, 1),
+                Color.fromRGBO(252, 130, 59, 1),
                 Color.fromRGBO(211, 83, 7, 1),
-                Color.fromRGBO(252, 130, 59, 1),
-                Color.fromRGBO(252, 130, 59, 1),
               ],
             ),
             borderRadius: BorderRadius.only(
@@ -62,12 +65,15 @@ class _BatteryListingState extends State<BatteryListing> {
                 itemBuilder: (context, index) {
                   return Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: InkWell(
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => Checkout_Battery()));
+                    child:
+                    InkWell(
+                      onTap: (){
+                        if(widget.index == 1){
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=>Checkout_Car_Service()));
+
+                        }else {
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=>CarWashList()));
+                        }
                       },
                       child:  Container(
                         decoration: BoxDecoration(borderRadius: BorderRadius.circular(10),

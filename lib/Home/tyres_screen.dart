@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:test_prj/Home/car_wish_list.dart';
+import 'package:test_prj/Home/checkout_car_service.dart';
 import 'package:test_prj/Home/tyres_listing_scr.dart';
 import 'package:test_prj/helper/colors.dart';
 
@@ -13,7 +15,8 @@ import 'battery_listing.dart';
 class TyresScreen extends StatefulWidget {
 
   int page;
-   TyresScreen({super.key,required this.page});
+  final String? title;
+   TyresScreen({super.key,required this.page, this.title});
   @override
   State<TyresScreen> createState() => _TyresScreenState();
 }
@@ -27,18 +30,22 @@ class _TyresScreenState extends State<TyresScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: Icon(Icons.arrow_back_ios_new_outlined),
+        leading: InkWell(
+            onTap: () {
+              Navigator.pop(context);
+            },
+            child: Icon(Icons.arrow_back_ios_new_outlined)),
         foregroundColor: Colors.white,
         flexibleSpace: Container(
 
           decoration: BoxDecoration(
             gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.center,
+              begin: Alignment.centerLeft,
+              end: Alignment.centerRight,
               colors: [
+                Color.fromRGBO(252, 130, 59, 1),
+                Color.fromRGBO(252, 130, 59, 1),
                 Color.fromRGBO(211, 83, 7, 1),
-                Color.fromRGBO(252, 130, 59, 1),
-                Color.fromRGBO(252, 130, 59, 1),
               ],
             ),
             borderRadius: BorderRadius.only(
@@ -47,7 +54,7 @@ class _TyresScreenState extends State<TyresScreen> {
             ),
           ),
         ),
-        title:  Text( widget.page ==1 ? 'Tyres' : widget.page ==1 ?'Battery' : 'Schedule Day'),
+        title:  Text( widget.page ==1 ? 'Tyres' : widget.page ==1 ?'Battery' : widget.title == "carWash" ? "Schedule Day" : 'Battery'),
         centerTitle: true,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
@@ -57,47 +64,6 @@ class _TyresScreenState extends State<TyresScreen> {
         ),),
       body: Column(
         children: [
-          // Container(
-          //   height: 100,
-          //   decoration: BoxDecoration(
-          //     gradient: LinearGradient(
-          //       begin: Alignment.topCenter,
-          //       end: Alignment.center,
-          //       colors: [
-          //         Color.fromRGBO(211, 83, 7, 1),
-          //         Color.fromRGBO(252, 130, 59, 1),
-          //         Color.fromRGBO(252, 130, 59, 1),
-          //       ],
-          //     ),
-          //     borderRadius: BorderRadius.only(
-          //       bottomLeft: Radius.circular(23),
-          //       bottomRight: Radius.circular(23),
-          //     ),
-          //   ),
-          //   child: Row(
-          //     children: [
-          //       Padding(
-          //         padding: const EdgeInsets.only(top: 45.0, left: 20),
-          //         child: Icon(
-          //           Icons.arrow_back,
-          //           color: Colors.white,
-          //         ),
-          //       ),
-          //       Padding(
-          //         padding: const EdgeInsets.only(top: 45.0, left: 65),
-          //         child: Text(
-          //           'Tyres',
-          //           style: TextStyle(
-          //             color: Colors.white,
-          //             fontSize: 20,
-          //             fontWeight: FontWeight.w500,
-          //           ),
-          //         ),
-          //       ),
-          //     ],
-          //   ),
-          // ),
-
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Row(
@@ -110,12 +76,7 @@ class _TyresScreenState extends State<TyresScreen> {
                         onTap: () {
                           selectIndex=1;
                           setState(() {
-
                           });
-                          // showModalBottomSheet(
-                          //   context: context,
-                          //   builder: (context) => const AddFuelQuantity(),
-                          // );
                         },
                         child:  selectIndex == 1 ?  MyButton(text: "Door Step ") : DisButton(text: "Door Step") )),
                 InkWell(
@@ -128,12 +89,11 @@ class _TyresScreenState extends State<TyresScreen> {
                   child: SizedBox(
                       height: 48,
                       width: 160,
-                      child: selectIndex == 2 ?  MyButton(text: "Outlet") : DisButton(text: "Outlet")),
+                      child: selectIndex == 2 ?  MyButton(text: widget.title == "carWash" ? "Self Service": "Outlet") :   DisButton(text:  widget.title == "carWash" ? "Self Service": "Outlet")),
                 ),
               ],
             ),
           ),
-
           Container(
             decoration: BoxDecoration(
               color: Colors.white,
@@ -144,8 +104,6 @@ class _TyresScreenState extends State<TyresScreen> {
             ),
             child: Column(
               children: [
-
-
                 Padding(
                   padding: const EdgeInsets.only(right:190),
                   child: Text("Select Date & Slot",style:TextStyle(
@@ -303,18 +261,32 @@ class _TyresScreenState extends State<TyresScreen> {
                 InkWell(
                   onTap: (){
 
-                    if(widget.page==1)
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>TyresListing()));
-                    else if (widget.page==2)
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=>BatteryListing()));
-                    else
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=>Summary1()));
-
+                    if(widget.page==1) {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => TyresListing(
+                                    index: selectIndex,
+                                  )));
+                    } else if (widget.page==2) {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => BatteryListing(
+                                    index: selectIndex,
+                                  )));
+                    } else if(selectIndex == 2 && widget.title == 'carWash'){
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => CarWashList()));
+                    } else{
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => Summary1()));
+                    }
                   },
                   child: Container(
                     alignment: Alignment.bottomCenter,
                     width: 330,
-                    child: MyButton(text: 'Continue'),
+                    child: const MyButton(text: 'Continue'),
                   ),
                 ),
               ],

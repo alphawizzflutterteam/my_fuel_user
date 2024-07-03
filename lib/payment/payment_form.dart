@@ -4,12 +4,14 @@ import 'package:flutter/widgets.dart';
 import 'package:test_prj/components/my_appbar.dart';
 import 'package:test_prj/components/my_button.dart';
 import 'package:test_prj/components/my_hinttext_field.dart';
+import 'package:test_prj/orderfuel/EV/AddMoneyplaced.dart';
 import 'package:test_prj/payment/pay_success_page.dart';
 
 class PaymentForm extends StatelessWidget {
+ bool? isAdd;
   final bool? isFromFuelOnTap;
 
-  const PaymentForm({super.key, this.isFromFuelOnTap});
+  PaymentForm({super.key, this.isFromFuelOnTap, this.isAdd});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,7 +33,8 @@ class PaymentForm extends StatelessWidget {
                         style: TextStyle(
                             color: Colors.grey.shade500,
                             fontWeight: FontWeight.w600),
-                      )),
+                        ) ,
+                      ),
                       const SizedBox(
                         height: 20,
                       ),
@@ -75,20 +78,27 @@ class PaymentForm extends StatelessWidget {
                   ),
                 ),
                 InkWell(
-                  onTap: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
+                  onTap: () =>
+                  isAdd == true ?
+                  Navigator.push(
+                    context, MaterialPageRoute(
+                    builder: (context) => AddMoneyplaced(),
+                         ),
+                      ):
+                      Navigator.push(
+                      context, MaterialPageRoute(
                         builder: (context) => OrderPlaced(
                           isFromFuelOnTap: isFromFuelOnTap,
+                          ),
                         ),
-                      )),
+                      ),
                   child: Container(
                     alignment: Alignment.bottomCenter,
                     child: const MyButton(
                       text: "Pay Now",
                     ),
                   ),
-                )
+                ),
               ],
             ),
           ),
