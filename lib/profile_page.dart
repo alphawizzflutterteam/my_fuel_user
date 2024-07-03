@@ -231,7 +231,7 @@ class ProfilePageState extends State<ProfilePage> {
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  LanguagePage()))),
+                                                  LanguageScreen()))),
                                   const Divider(),
                                   settingsCard(
                                       title: "Contact Us",
