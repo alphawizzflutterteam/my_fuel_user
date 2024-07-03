@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:test_prj/components/my_button.dart';
 import 'package:test_prj/payment/payment_form.dart';
+import 'package:test_prj/payment/payment_page.dart';
 
 class PaymentScreenTree extends StatefulWidget {
   final bool? isFromFuelOnTap;
@@ -14,6 +15,8 @@ class PaymentScreenTree extends StatefulWidget {
 class _PaymentScreenTreeState extends State<PaymentScreenTree> {
   int _type = 1;
 
+
+
   void _handleRadio(Object? e) => setState(() {
         _type = e as int;
       });
@@ -23,22 +26,28 @@ class _PaymentScreenTreeState extends State<PaymentScreenTree> {
     super.initState();
   }
 
+   late bool? isAddoMoney;
+
   @override
   Widget build(BuildContext context) {
     //Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        leading: const Icon(Icons.arrow_back_ios_new_outlined),
+        leading: InkWell(
+            onTap: () {
+              Navigator.pop(context);
+            },
+            child: const Icon(Icons.arrow_back_ios_new_outlined)),
         foregroundColor: Colors.white,
         flexibleSpace: Container(
           decoration: const BoxDecoration(
             gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.center,
+              begin: Alignment.centerLeft,
+              end: Alignment.centerRight,
               colors: [
+                Color.fromRGBO(252, 130, 59, 1),
+                Color.fromRGBO(252, 130, 59, 1),
                 Color.fromRGBO(211, 83, 7, 1),
-                Color.fromRGBO(252, 130, 59, 1),
-                Color.fromRGBO(252, 130, 59, 1),
               ],
             ),
             borderRadius: BorderRadius.only(
@@ -188,16 +197,31 @@ class _PaymentScreenTreeState extends State<PaymentScreenTree> {
                                   activeColor: Colors.orange,
                                 ),
                               ),
-                              const Text(
-                                'Add Money',
-                                style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w500,
-                                    color: Colors.green),
+                InkWell(
+                  onTap: () {
+                    _type == 1
+                    ?   Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>  PaymentScreen(isAddoMoney: true)),
+                    ):
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>  PaymentScreen()),
+                    );
+                  },
+                  child: const Text(
+                    'Add Money',
+                    style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.green),
+                               ),
                               ),
-                            ],
-                          ),
-                        ],
+                             ],
+                           ),
+                         ],
                       ))),
                 ),
               ),
@@ -499,7 +523,9 @@ class _PaymentScreenTreeState extends State<PaymentScreenTree> {
                       MaterialPageRoute(
                           builder: (context) => PaymentForm(
                                 isFromFuelOnTap: widget.isFromFuelOnTap,
-                              )));
+                              ),
+                      ),
+                  );
                 },
                 child: Container(
                   alignment: Alignment.bottomCenter,

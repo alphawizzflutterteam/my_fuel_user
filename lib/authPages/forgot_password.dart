@@ -13,13 +13,16 @@ class ForgetPassword extends StatelessWidget {
     return Scaffold(
         body: Container(
           decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.center,
-                  colors: [
-                    Color.fromRGBO(252, 130, 59, 1),
-                    Color.fromRGBO(211, 83, 7, 1),
-                  ])),
+            gradient: LinearGradient(
+              begin: Alignment.centerLeft,
+              end: Alignment.centerRight,
+              colors: [
+                Color.fromRGBO(252, 130, 59, 1),
+                Color.fromRGBO(252, 130, 59, 1),
+                Color.fromRGBO(211, 83, 7, 1),
+              ],
+            ),
+          ),
           child: Stack(
             children: [
               Padding(

@@ -22,20 +22,25 @@ class _EvcheckoutState extends State<Evcheckout> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: Icon(
-          Icons.arrow_back_ios_new_outlined,
-          size: 20,
+        leading: InkWell(
+          onTap: () {
+            Navigator.pop(context);
+          },
+          child: Icon(
+            Icons.arrow_back_ios_new_outlined,
+            size: 20,
+          ),
         ),
         foregroundColor: Colors.white,
         flexibleSpace: Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.center,
+              begin: Alignment.centerLeft,
+              end: Alignment.centerRight,
               colors: [
+                Color.fromRGBO(252, 130, 59, 1),
+                Color.fromRGBO(252, 130, 59, 1),
                 Color.fromRGBO(211, 83, 7, 1),
-                Color.fromRGBO(252, 130, 59, 1),
-                Color.fromRGBO(252, 130, 59, 1),
               ],
             ),
             borderRadius: BorderRadius.only(
@@ -61,7 +66,7 @@ class _EvcheckoutState extends State<Evcheckout> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => const PaymentScreen()),
+                  builder: (context) =>  PaymentScreen()),
             );
           },
           child: Padding(

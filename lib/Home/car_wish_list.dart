@@ -1,8 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:test_prj/orderfuel/EV/charginStationDetails.dart';
 
 import '../components/my_button.dart';
 import '../helper/colors.dart';
+import '../myOrder/CarWash.dart';
+import '../staticpage/Carwashdetails.dart';
 
 class CarWashList extends StatefulWidget {
   const CarWashList({super.key});
@@ -25,12 +28,12 @@ class _CarWashListState extends State<CarWashList> {
         flexibleSpace: Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.center,
+              begin: Alignment.centerLeft,
+              end: Alignment.centerRight,
               colors: [
+                Color.fromRGBO(252, 130, 59, 1),
+                Color.fromRGBO(252, 130, 59, 1),
                 Color.fromRGBO(211, 83, 7, 1),
-                Color.fromRGBO(252, 130, 59, 1),
-                Color.fromRGBO(252, 130, 59, 1),
               ],
             ),
             borderRadius: BorderRadius.only(
@@ -94,7 +97,7 @@ class _CarWashListState extends State<CarWashList> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => CarWashList()));
+                                builder: (context) => Carwashdetails()));
                       },
                       child: Container(
                         decoration: BoxDecoration(

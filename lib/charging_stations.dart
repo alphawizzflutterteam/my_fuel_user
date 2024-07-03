@@ -13,12 +13,12 @@ class ChargingStations extends StatelessWidget {
             height: 120,
             decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.center,
+                  begin: Alignment.centerLeft,
+                  end: Alignment.centerRight,
                   colors: [
+                    Color.fromRGBO(252, 130, 59, 1),
+                    Color.fromRGBO(252, 130, 59, 1),
                     Color.fromRGBO(211, 83, 7, 1),
-                    Color.fromRGBO(252, 130, 59, 1),
-                    Color.fromRGBO(252, 130, 59, 1),
                   ],
                 ),
                 borderRadius: BorderRadius.only(
@@ -26,11 +26,16 @@ class ChargingStations extends StatelessWidget {
                     bottomRight: Radius.circular(23))),
             child: Row(
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(top: 45.0, left: 20),
-                  child: Icon(
-                    Icons.arrow_back,
-                    color: Colors.white,
+                InkWell(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 45.0, left: 20),
+                    child: Icon(
+                      Icons.arrow_back,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
                 Padding(

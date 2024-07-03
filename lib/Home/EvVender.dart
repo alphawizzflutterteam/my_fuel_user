@@ -7,8 +7,8 @@ import 'package:test_prj/orderfuel/fuelToGo/checkout_page2.dart';
 import '../../Home/Genset_checkOut.dart';
 import '../../Home/checkout_battery.dart';
 
-class VendorsPage extends StatelessWidget {
-  const VendorsPage({super.key});
+class EvVender extends StatelessWidget {
+  const EvVender({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +37,7 @@ class VendorsPage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       InkWell(
+
                         onTap: () {
                           Navigator.push(
                             context,
@@ -96,7 +97,7 @@ class VendorsPage extends StatelessWidget {
                           Image.asset("assets/indianoil.png", height: 94),
                           Padding(
                             padding:
-                                const EdgeInsets.symmetric(horizontal: 12.0),
+                            const EdgeInsets.symmetric(horizontal: 12.0),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [

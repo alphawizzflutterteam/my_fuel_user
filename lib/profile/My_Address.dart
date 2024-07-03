@@ -15,62 +15,66 @@ class MyAddressScreen extends StatefulWidget {
 }
 
 class _MyAddressScreenState extends State<MyAddressScreen> {
+
   @override
+
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          const MyAppbar(title: 'Address'),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              children: [
-                AddressCard(
-                  name: "Navin Yadav, 452010",
-                  address: "G-14 1st sabari nagar, sukhliya...",
-                  label: "Home",
-                ),
-                const SizedBox(height: 10.0),
-                AddressCard(
-                  name: "Navin Yadav, 452010",
-                  address: "G-14 1st sabari nagar, sukhliya...",
-                  label: "Office",
-                ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height / 1.9,
-                ),
-                Stack(
-                  children: [
-                    InkWell(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => AddAddressScreen(),
-                              ));
-                        },
-                        child: const MyButton(text: 'New Address')),
-                    Positioned(
-                        top: 14,
-                        left: 85,
-                        child: Container(
-                            height: 24,
-                            width: 24,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(5),
-                                border: Border.all(color: colors.whiteTemp)),
-                            child: Center(
-                                child: Icon(
-                              Icons.add,
-                              size: 18,
-                              color: colors.whiteTemp,
-                            ))))
-                  ],
-                )
-              ],
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            const MyAppbar(title: 'Address'),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                children: [
+                  AddressCard(
+                    name: "Navin Yadav, 452010",
+                    address: "G-14 1st sabari nagar, sukhliya...",
+                    label: "Home",
+                  ),
+                  const SizedBox(height: 10.0),
+                  AddressCard(
+                    name: "Navin Yadav, 452010",
+                    address: "G-14 1st sabari nagar, sukhliya...",
+                    label: "Office",
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height / 1.9,
+                  ),
+                  Stack(
+                    children: [
+                      InkWell(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => AddAddressScreen(),
+                                ));
+                          },
+                          child: const MyButton(text: 'New Address')),
+                      Positioned(
+                          top: 14,
+                          left: 85,
+                          child: Container(
+                              height: 24,
+                              width: 24,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5),
+                                  border: Border.all(color: colors.whiteTemp)),
+                              child: Center(
+                                  child: Icon(
+                                Icons.add,
+                                size: 18,
+                                color: colors.whiteTemp,
+                              ))))
+                    ],
+                  )
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
