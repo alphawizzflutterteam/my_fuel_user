@@ -93,7 +93,8 @@ class LanguageScreen extends StatelessWidget {
                                 controller
                                     .setLanguage(const Locale('kn', 'IN'));
                               } else if (index == 5) {
-                                controller.setLanguage(Locale('bn', 'BD'));
+                                controller
+                                    .setLanguage(const Locale('bn', 'IN'));
                               } else {
                                 controller
                                     .setLanguage(const Locale('en', 'US'));

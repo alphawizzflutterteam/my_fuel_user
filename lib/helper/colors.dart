@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 // Color getColor(number) {
@@ -11,13 +10,16 @@ import 'package:flutter/material.dart';
 
 var milestoneCount;
 
-List milestoneList = [1,2,3,4];
+List milestoneList = [1, 2, 3, 4];
 
-Color getColor(double item) {if (item < milestoneCount) {
-  return colors.primary;}
-else if (item > milestoneCount && item == item++) {return Colors.teal;}
-return Colors.red; }
-
+Color getColor(double item) {
+  if (item < milestoneCount) {
+    return colors.primary;
+  } else if (item > milestoneCount && item == item++) {
+    return Colors.teal;
+  }
+  return Colors.red;
+}
 
 extension colors on ColorScheme {
   static MaterialColor primary_app = const MaterialColor(
@@ -33,14 +35,13 @@ extension colors on ColorScheme {
       700: primary,
       800: primary,
       900: primary,
-      1000 : primary,
+      1000: primary,
     },
   );
 
-  static const Color primary =Color(0xffFF8A0D);
+  static const Color primary = Color(0xffFF8A0D);
   static const Color secondary = Color(0xffFE5F55);
   static const Color appbarColor = Color(0xFFE9E9E9);
-
 
   // bool get apcolor  =>
   //      this.apcolor == number > 0 && number < 100;
@@ -65,11 +66,25 @@ extension colors on ColorScheme {
 
   static Color darkIcon = Color(0xff9B9B9B);
 
+  static const Color green1 = Color.fromRGBO(138, 180, 2, 1);
+  static const Color green2 = Color.fromRGBO(59, 120, 31, 1);
+
+  static const LinearGradient buttonGradient = LinearGradient(
+    colors: [green1, green1],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+  );
+
+  static const LinearGradient unselectGradient = LinearGradient(
+    colors: [lightWhite2, lightWhite2],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+  );
+
   static const Color grad1Color = Color(0xffB7281D);
   static const Color grad2Color = Color(0xffB7281D);
   static const Color lightWhite2 = Color(0xffEEF2F3);
   static const Color splashColor = Color(0xff292728);
-
 
   static const Color transparent = Color(0xFFFBFBFB);
   static const Color darkBlue = Color(0xffB7281D);
@@ -81,7 +96,6 @@ extension colors on ColorScheme {
   static const Color blackTemp = Color(0xFF161616);
   static const Color greenTemp = Color(0xFF8AB402);
   static const Color greyTemp = Color(0xFF898989);
-
 
   static const Color yellow = Color(0xfffdb403);
 

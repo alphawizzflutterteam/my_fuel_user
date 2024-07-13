@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:test_prj/authPages/forgot_password.dart';
 import 'package:test_prj/authPages/login_page_2.dart';
 import 'package:test_prj/components/my_background.dart';
 import 'package:test_prj/components/my_button.dart';
-import 'package:test_prj/components/my_textfield.dart';
+import 'package:test_prj/controller/login_controller.dart';
+import 'package:test_prj/helper/app_images.dart';
+import 'package:test_prj/helper/colors.dart';
 import 'package:test_prj/home.dart';
 import 'package:test_prj/authPages/sign_up.dart';
+import 'package:test_prj/routes/app_pages.dart';
+import 'package:test_prj/routes/app_routes.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -15,214 +20,291 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: MyBackground(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 18.0),
-            child: Form(
-              key: _formKey,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(height: 50),
-                  Image.asset(
-                    "assets/login-logo.png",
-                    height: 62,
-                  ),
-                  const SizedBox(height: 10),
-                  const Text(
-                    "Login",
-                    style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(height: 8),
-                  const Text(
-                    "Please Sign in to your account",
-                    style: TextStyle(
-                      fontSize: 16,
-                      // fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(
-                        height: 45,
-                        width: 160,
-                        decoration: BoxDecoration(
-                          gradient: const LinearGradient(
-                            colors: [
-                              Color.fromRGBO(138, 180, 2, 1),
-                              Color.fromRGBO(59, 120, 31, 1),
+    return GetBuilder<LoginController>(
+        init: LoginController(),
+        builder: (controller) {
+          return Scaffold(
+            body: SingleChildScrollView(
+              child: MyBackground(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SizedBox(height: 50),
+                        Image.asset(
+                          AppImages.appLogo,
+                          height: 62,
+                        ),
+                        const SizedBox(height: 10),
+                        Text(
+                          "Login".tr,
+                          style: TextStyle(
+                              fontSize: 26, fontWeight: FontWeight.bold),
+                        ),
+                        const SizedBox(height: 8),
+                        Text(
+                          "Please Sign in to your account".tr,
+                          style: TextStyle(
+                            fontSize: 16,
+                            // fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        Obx(() {
+                          return Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              GestureDetector(
+                                onTap: () {
+                                  controller.changeIndexMethod(0);
+                                },
+                                child: Container(
+                                  height: 45,
+                                  width: 160,
+                                  decoration: BoxDecoration(
+                                    gradient: controller.changeIndex.value == 0
+                                        ? colors.buttonGradient
+                                        : colors.unselectGradient,
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    "Personal".tr,
+                                    style: TextStyle(
+                                      color: controller.changeIndex.value == 0
+                                          ? colors.whiteTemp
+                                          : colors.blackTemp,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  controller.changeIndexMethod(1);
+                                },
+                                child: Container(
+                                  height: 45,
+                                  width: 160,
+                                  decoration: BoxDecoration(
+                                    gradient: controller.changeIndex.value == 1
+                                        ? colors.buttonGradient
+                                        : colors.unselectGradient,
+                                    border: Border.all(
+                                        width: 1, color: Colors.grey.shade100),
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  alignment: Alignment.center,
+                                  child: Text("Business".tr,
+                                      style: TextStyle(
+                                        color: controller.changeIndex.value == 1
+                                            ? colors.whiteTemp
+                                            : colors.blackTemp,
+                                      )),
+                                ),
+                              ),
                             ],
-                          ),
-                          borderRadius: BorderRadius.circular(12),
+                          );
+                        }),
+                        const SizedBox(height: 15),
+                        Obx(() {
+                          return controller.changeIndex.value == 0
+                              ? showPersonal()
+                              : showBusiness();
+                        }),
+                        const SizedBox(height: 15),
+                        Row(
+                          children: [
+                            Text(
+                              "Forgot Password? ".tr,
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            GestureDetector(
+                              onTap: () => Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => ForgetPassword(),
+                                  )),
+                              child: Text(
+                                "Reset It".tr,
+                                style: TextStyle(
+                                  color: Color.fromRGBO(138, 180, 2, 1),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
-                        alignment: Alignment.center,
-                        child: const Text(
-                          "Personal",
-                          style: TextStyle(color: Colors.white,),
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () => Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => const LoginPage2())),
-                        child: Container(
-                          height: 45,
-                          width: 160,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            border: Border.all(width: 1, color: Colors.grey.shade100),
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          alignment: Alignment.center,
-                          child: const Text(
-                            "Business",
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 15),
-                  TextFormField(
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter Phone No. Or Email';
-                      }
-                      return null;
-                    },
-                    decoration: InputDecoration(
-                      label: Text('Phone No. Or Email'),
-                      labelStyle: TextStyle(color: Colors.grey.shade700),
-                      enabled: true,
-                      isDense: true,
-                      enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey.shade200),
-                          borderRadius: BorderRadius.circular(8)),
-                      focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey.shade700),
-                          borderRadius: BorderRadius.circular(8)),
-                    ),
-                  ),
-                  const SizedBox(height: 15),
-                  TextFormField(
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter password';
-                      }
-                      return null;
-                    },
-                    decoration: InputDecoration(
-                      suffixIcon: IconButton(
-                          onPressed: () {
-                            setState(() {
-                            });
+                        const SizedBox(height: 20),
+                        GestureDetector(
+                          onTap: () {
+                            if (_formKey.currentState!.validate()) {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => const Home()));
+                            }
                           },
-                          icon: Icon(Icons.remove_red_eye)),
-                      label: Text('Password'),
-                      labelStyle: TextStyle(color: Colors.grey.shade700),
-                      enabled: true,
-                      isDense: true,
-                      enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey.shade200),
-                          borderRadius: BorderRadius.circular(8)),
-                      focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey.shade700),
-                          borderRadius: BorderRadius.circular(8)),
+                          child: MyButton(text: "Login".tr),
+                        ),
+                        const SizedBox(height: 100),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text("Don't Have an account? ".tr),
+                            GestureDetector(
+                              onTap: () => Get.toNamed(Routes.REGISTER),
+                              child: Text(
+                                "Sign Up".tr,
+                                style: TextStyle(
+                                  color: Color.fromRGBO(138, 180, 2, 1),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
                   ),
-                  const SizedBox(height: 15),
-                  Row(
-                    children: [
-                      Text("Forgot Password? ",style:TextStyle(color: Colors.black,fontSize: 14,fontWeight: FontWeight.bold),),
-                      GestureDetector(
-                        onTap: () => Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => ForgetPassword(),
-                            )),
-                        child: Text(
-                          "Reset It",
-                          style: TextStyle(
-                            color: Color.fromRGBO(138, 180, 2, 1),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 20),
-                  GestureDetector(
-                    onTap: (){
-                      if(_formKey.currentState!.validate())
-                      {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => const Home()));
-                      }
-
-                    },
-                    child: const MyButton(text: "Login"),
-                  ),
-                  const SizedBox(height: 100),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Text("Don't Have an account? "),
-                      GestureDetector(
-                        onTap: () => Navigator.push(context,
-                            MaterialPageRoute(builder: (context) =>  SignUp())),
-                        child: const Text(
-                          "Sign Up",
-                          style: TextStyle(
-                            color: Color.fromRGBO(138, 180, 2, 1),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
+                ),
               ),
+            ),
+          );
+        });
+  }
+
+  Widget showPersonal() {
+    return Column(
+      children: [
+        TextFormField(
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return 'Please enter Phone No. Or Email';
+            }
+            return null;
+          },
+          decoration: InputDecoration(
+            label: Text('Phone No. Or Email'),
+            labelStyle: TextStyle(color: Colors.grey.shade700),
+            enabled: true,
+            isDense: true,
+            enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.grey.shade200),
+                borderRadius: BorderRadius.circular(8)),
+            focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.grey.shade700),
+                borderRadius: BorderRadius.circular(8)),
+          ),
+        ),
+        const SizedBox(height: 15),
+        TextFormField(
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return 'Please enter password';
+            }
+            return null;
+          },
+          decoration: InputDecoration(
+            suffixIcon: IconButton(
+                onPressed: () {
+                  setState(() {});
+                },
+                icon: Icon(Icons.remove_red_eye)),
+            label: Text('Password'),
+            labelStyle: TextStyle(color: Colors.grey.shade700),
+            enabled: true,
+            isDense: true,
+            enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.grey.shade200),
+                borderRadius: BorderRadius.circular(8)),
+            focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.grey.shade700),
+                borderRadius: BorderRadius.circular(8)),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget showBusiness() {
+    return Column(
+      children: [
+        SizedBox(
+          height: 56,
+          child: TextFormField(
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Please enter Membership No.';
+              }
+              return null;
+            },
+            decoration: InputDecoration(
+              label: Text('Membership No.'),
+              labelStyle: TextStyle(color: Colors.grey.shade700),
+              enabled: true,
+              enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.grey.shade200),
+                  borderRadius: BorderRadius.circular(8)),
+              focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.grey.shade700),
+                  borderRadius: BorderRadius.circular(8)),
             ),
           ),
         ),
-        // child: Container(
-        //   decoration: const BoxDecoration(
-        //       gradient: LinearGradient(
-        //           begin: Alignment.topCenter,
-        //           end: Alignment.center,
-        //           colors: [
-        //         Color.fromRGBO(252, 130, 59, 1),
-        //         Color.fromRGBO(211, 83, 7, 1),
-        //       ])),
-        //   child: Padding(
-        //     padding: const EdgeInsets.only(top: 80.0),
-        //     child: Container(
-        //       decoration: const BoxDecoration(
-        //         color: Colors.white38,
-        //         borderRadius: BorderRadius.only(
-        //           topLeft: Radius.circular(35),
-        //           topRight: Radius.circular(35),
-        //         ),
-        //       ),
-        //       child: Padding(
-        //         padding: const EdgeInsets.only(top: 10),
-        //         child: Container(
-        //           decoration: const BoxDecoration(
-        //             color: Colors.white,
-        //             borderRadius: BorderRadius.only(
-        //               topLeft: Radius.circular(35),
-        //               topRight: Radius.circular(35),
-        //             ),
-        //           ),
-        //           ),
-        //       ),
-        //     ),
-        //   ),
-        // ),
-      ),
+        const SizedBox(height: 15),
+        SizedBox(
+          height: 56,
+          child: TextFormField(
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Please enter User name';
+              }
+              return null;
+            },
+            decoration: InputDecoration(
+              label: Text('User name'),
+              labelStyle: TextStyle(color: Colors.grey.shade700),
+              enabled: true,
+              enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.grey.shade200),
+                  borderRadius: BorderRadius.circular(8)),
+              focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.grey.shade700),
+                  borderRadius: BorderRadius.circular(8)),
+            ),
+          ),
+        ),
+        const SizedBox(height: 15),
+        SizedBox(
+          height: 56,
+          child: TextFormField(
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Password';
+              }
+              return null;
+            },
+            decoration: InputDecoration(
+              label: Text('Password'),
+              labelStyle: TextStyle(color: Colors.grey.shade700),
+              enabled: true,
+              enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.grey.shade200),
+                  borderRadius: BorderRadius.circular(8)),
+              focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.grey.shade700),
+                  borderRadius: BorderRadius.circular(8)),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
