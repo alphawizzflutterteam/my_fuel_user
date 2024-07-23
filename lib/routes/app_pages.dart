@@ -1,5 +1,7 @@
 import 'package:get/get_navigation/src/routes/get_route.dart';
 import 'package:test_prj/authPages/language_page.dart';
+import 'package:test_prj/authPages/login_page.dart';
+import 'package:test_prj/authPages/sign_up.dart';
 import 'package:test_prj/routes/app_routes.dart';
 import 'package:test_prj/routes/bindings/inial_binding.dart';
 import 'package:test_prj/splashScreen.dart';
@@ -15,6 +17,16 @@ class AppPages {
     GetPage(
       name: Routes.LANGUAGE,
       page: () => const LanguageScreen(),
+      binding: InitialBinding(),
+    ),
+    GetPage(
+      name: Routes.LOGIN,
+      page: () => const LoginPage(),
+      binding: InitialBinding(),
+    ),
+    GetPage(
+      name: Routes.REGISTER,
+      page: () => const SignUp(),
       binding: InitialBinding(),
     ),
 //     GetPage(name: Routes.ROOT, page: () => RootView(), binding: RootBinding(), middlewares: [AuthMiddleware(), SalonOwnerMiddleware()]),

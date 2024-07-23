@@ -2,8 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:test_prj/language/language_transtation.dart';
 import 'package:test_prj/routes/app_pages.dart';
+import 'package:test_prj/service/provider/lavavel_provider.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  //await Get.putAsync(() => AuthService().init());
+  await Get.putAsync(() => LaravelApiClient().init());
   runApp(const MyApp());
 }
 
