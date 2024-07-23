@@ -35,4 +35,22 @@ class LaravelApiClient extends GetxService with ApiClient {
       throw Exception(response.data['message']);
     }
   }
+
+  Future<String> getSettings() async {
+    /*var _queryParameters = {
+      'api_token': authService.apiToken,
+    };
+     Uri _uri =
+        getApiBaseUri("options").replace(queryParameters: _queryParameters);*/
+    // print(option.toJson());
+    var response = await httpClient.get(
+      ApiConstants.getSettingUri,
+      options: optionsNetwork,
+    );
+    if (response.statusCode == 200) {
+      return response.data['temporary_token'];
+    } else {
+      throw Exception(response.data['message']);
+    }
+  }
 }
