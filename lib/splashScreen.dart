@@ -6,6 +6,8 @@ import 'package:test_prj/controller/splash_controller.dart';
 import 'package:test_prj/helper/colors.dart';
 import 'package:test_prj/language/language_global_var.dart';
 
+import 'data/model/response/setting_model.dart';
+
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
@@ -13,12 +15,21 @@ class SplashScreen extends StatefulWidget {
   _SplashScreenState createState() => _SplashScreenState();
 }
 
+SettingModel? configModel;
+
 class _SplashScreenState extends State<SplashScreen> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder<SplashController>(
         init: SplashController(),
         builder: (controller) {
+          // controller.getSettingAPi();
           return Scaffold(
             backgroundColor: colors
                 .splashColor, //Color.fromRGBO(27, 27, 27, 1),// Set your desired background color

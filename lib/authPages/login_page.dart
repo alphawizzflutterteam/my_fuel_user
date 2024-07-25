@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:test_prj/authPages/forgot_password.dart';
 import 'package:test_prj/authPages/login_page_2.dart';
@@ -12,6 +13,8 @@ import 'package:test_prj/authPages/sign_up.dart';
 import 'package:test_prj/routes/app_pages.dart';
 import 'package:test_prj/routes/app_routes.dart';
 
+import '../helper/utils/shared_preference.dart';
+
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
@@ -21,6 +24,11 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
+
+  TextEditingController phoneEmailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController memberShipController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder<LoginController>(
@@ -143,16 +151,44 @@ class _LoginPageState extends State<LoginPage> {
                           ],
                         ),
                         const SizedBox(height: 20),
-                        GestureDetector(
-                          onTap: () {
-                            if (_formKey.currentState!.validate()) {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => const Home()));
-                            }
-                          },
-                          child: MyButton(text: "Login".tr),
+                        Obx(
+                          () => controller.isLoading.value == true
+                              ? Center(child: CircularProgressIndicator())
+                              : GestureDetector(
+                                  onTap: () {
+                                    if (_formKey.currentState!.validate()) {
+                                      controller
+                                          .login(
+                                              memberShipController.text
+                                                  .toString(),
+                                              phoneEmailController.text
+                                                  .toString(),
+                                              passwordController.text
+                                                  .toString())
+                                          .then((value) async {
+                                        if (value.containsKey("errors")) {
+                                          Fluttertoast.showToast(msg: "$value");
+                                        } else if (value['token'] != "") {
+                                          SharedPreferencesService? instance =
+                                              await SharedPreferencesService
+                                                  .getInstance();
+                                          instance.saveData(
+                                              SharedPreferencesService
+                                                  .kTokenKey,
+                                              value['token'].toString());
+
+                                          Navigator.pushReplacement(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      Home()));
+                                        }
+                                        // return null;
+                                      });
+                                    }
+                                  },
+                                  child: MyButton(text: "Login".tr),
+                                ),
                         ),
                         const SizedBox(height: 100),
                         Row(
@@ -160,7 +196,13 @@ class _LoginPageState extends State<LoginPage> {
                           children: [
                             Text("Don't Have an account? ".tr),
                             GestureDetector(
-                              onTap: () => Get.toNamed(Routes.REGISTER),
+                              onTap: () {
+                                String argumentData =
+                                    controller.changeIndex.value.toString();
+                                Get.toNamed(Routes.REGISTER,
+                                    arguments: argumentData);
+                                // Get.toNamed(Routes.REGISTER);
+                              },
                               child: Text(
                                 "Sign Up".tr,
                                 style: TextStyle(
@@ -170,6 +212,7 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                           ],
                         ),
+                        const SizedBox(height: 30),
                       ],
                     ),
                   ),
@@ -184,6 +227,7 @@ class _LoginPageState extends State<LoginPage> {
     return Column(
       children: [
         TextFormField(
+          controller: phoneEmailController,
           validator: (value) {
             if (value == null || value.isEmpty) {
               return 'Please enter Phone No. Or Email';
@@ -205,6 +249,7 @@ class _LoginPageState extends State<LoginPage> {
         ),
         const SizedBox(height: 15),
         TextFormField(
+          controller: passwordController,
           validator: (value) {
             if (value == null || value.isEmpty) {
               return 'Please enter password';
@@ -239,6 +284,7 @@ class _LoginPageState extends State<LoginPage> {
         SizedBox(
           height: 56,
           child: TextFormField(
+            controller: memberShipController,
             validator: (value) {
               if (value == null || value.isEmpty) {
                 return 'Please enter Membership No.';
@@ -262,6 +308,7 @@ class _LoginPageState extends State<LoginPage> {
         SizedBox(
           height: 56,
           child: TextFormField(
+            controller: phoneEmailController,
             validator: (value) {
               if (value == null || value.isEmpty) {
                 return 'Please enter User name';
@@ -269,7 +316,7 @@ class _LoginPageState extends State<LoginPage> {
               return null;
             },
             decoration: InputDecoration(
-              label: Text('User name'),
+              label: Text('Phone No. Or Email'),
               labelStyle: TextStyle(color: Colors.grey.shade700),
               enabled: true,
               enabledBorder: OutlineInputBorder(
@@ -285,6 +332,7 @@ class _LoginPageState extends State<LoginPage> {
         SizedBox(
           height: 56,
           child: TextFormField(
+            controller: passwordController,
             validator: (value) {
               if (value == null || value.isEmpty) {
                 return 'Password';

@@ -1,8 +1,7 @@
-
 class AppConstants {
   static const String appName = 'My Fuel';
   static const String appVersion = '14.0';
-  static const String baseUrl = 'https://eatoz.developmentalphawizz.com';
+  static const String baseUrl = 'https://fuel-booking.alphawizzserver.com';
   static const String androidLink =
       'https://play.google.com/store/apps/details?id=';
 
@@ -49,5 +48,4 @@ class AppConstants {
   static const String theme = 'theme';
   static const String topic = 'sixvalley';
   static const String userAddress = 'user_address';
-
 }

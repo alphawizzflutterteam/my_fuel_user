@@ -1,26 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:get/get.dart';
+import 'package:get/get_state_manager/src/simple/get_state.dart';
+import 'package:test_prj/splashScreen.dart';
 
 import '../components/my_appbar.dart';
-
+import '../controller/splash_controller.dart';
 
 class PrivacyolicyScreen extends StatelessWidget {
   PrivacyolicyScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            const MyAppbar(title: 'Privacy Policy'),
-            Html(
-              data: htmlContent,
-            )
-          ],
+    print(" Data Show ${configModel!.privacyPolicy}");
+    return GetBuilder<SplashController>(builder: (controller) {
+      return Scaffold(
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              const MyAppbar(title: 'Privacy Policy'),
+              Html(
+                // data: htmlContent,
+                data: '''
+                    <!DOCTYPE html> ${configModel!.privacyPolicy} </html>
+    ''',
+              )
+            ],
+          ),
         ),
-      ),
-    );
+      );
+    });
   }
 
   String htmlContent = '''

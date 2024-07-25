@@ -3,6 +3,9 @@ class Routes {
   static const REGISTER = '/register';
   static const FORGOT_PASSWORD = '/forgot_password';
   static const PHONE_VERIFICATION = '/phone_verification';
+  static const PASSWORD_VERIFICATION = '/password_verification';
+  static const MEMBERCARD = '/Membercard';
+  static const CREATEPASSWORD = '/createpassword';
 
   static const ROOT = '/root';
   static const RATING = '/rating';
@@ -12,6 +15,7 @@ class Routes {
   static const SETTINGS_THEME_MODE = '/settings/theme_mode';
   static const LANGUAGE = '/language';
 
+  static const HOME = '/home';
   static const PROFILE = '/profile';
   static const E_SERVICES = '/e-services';
   static const E_SERVICE = '/e-service';

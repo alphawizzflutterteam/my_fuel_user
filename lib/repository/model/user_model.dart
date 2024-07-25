@@ -9,6 +9,7 @@ class User {
   String? msme;
   String? gst;
   String? profile;
+  String? guest_id;
 
   User(
       {this.fName,
@@ -20,7 +21,8 @@ class User {
       this.pan,
       this.msme,
       this.gst,
-      this.profile});
+      this.profile,
+      this.guest_id});
 
   User.fromJson(Map<String, dynamic> json) {
     fName = json['f_name'];
@@ -29,10 +31,12 @@ class User {
     phone = json['phone'];
     password = json['password'];
     address = json['address'];
+    guest_id = json['guest_id'];
     pan = json['pan'];
     msme = json['msme'];
     gst = json['gst'];
     profile = json['profile'];
+    guest_id = json['guest_id'];
   }
 
   Map<String, dynamic> toJson() {
@@ -43,6 +47,7 @@ class User {
     data['phone'] = phone;
     data['password'] = password;
     data['address'] = address;
+    data['guest_id'] = guest_id;
     data['pan'] = pan;
     data['msme'] = msme;
     data['gst'] = gst;

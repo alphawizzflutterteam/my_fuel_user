@@ -1,10 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:get/get.dart';
+import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:test_prj/components/home_slider.dart';
+import 'package:test_prj/controller/home_controller.dart';
+import 'package:test_prj/home.dart';
 import 'package:test_prj/profile/notification1.dart';
 import 'package:test_prj/orderfuel/doorStepDelivery/forLooking.dart';
 import 'package:test_prj/schedule_day.dart';
+import 'package:test_prj/splashScreen.dart';
 import 'Home/car_service.dart';
 import 'Home/fuel_on_tab.dart';
 import 'Home/insurance_scr.dart';
@@ -13,6 +18,7 @@ import 'Home/tyres_screen.dart';
 import 'SelectNewAddress.dart';
 import 'components/my_button.dart';
 import 'components/my_hinttext_field.dart';
+import 'controller/splash_controller.dart';
 import 'helper/colors.dart';
 
 class HomePage extends StatefulWidget {
@@ -37,534 +43,632 @@ class _HomePageState extends State<HomePage> {
   int count = 0;
 
   @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: SingleChildScrollView(
-        child: Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.centerLeft,
-              end: Alignment.centerRight,
-              colors: [
-                Color.fromRGBO(252, 130, 59, 1),
-                Color.fromRGBO(252, 130, 59, 1),
-                Color.fromRGBO(211, 83, 7, 1),
-              ],
-            ),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.only(top: 48),
-            child: Column(
-              children: [
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8),
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
 
-                  // Top App bar
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          Image.asset(
-                            "assets/mingcute_location-fill.png",
-                            // scale: 20,
-                            height: 24,
-                          ),
-                          const SizedBox(width: 8),
-                          const Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "Ward 35",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 16,
-                                ),
-                              ),
-                              Text(
-                                "Ratan Lok Colony Indore",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 12,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          // Image.asset(
-                          //   "assets/Group 2979.png",
-                          //   height: 24,
-                          // ),
-                          const Icon(
-                            Icons.search,
-                            color: Colors.white,
-                            size: 30,
-                          ),
-                          const SizedBox(width: 8),
-                          GestureDetector(
-                            onTap: () => Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const Notification1(),
-                                )),
-                            child: Image.asset(
-                              "assets/Notification.png",
-                              height: 24,
-                            ),
-                          ),
-                        ],
-                      )
+  @override
+  Widget build(BuildContext context) {
+    return GetBuilder<HomeController>(
+        init: HomeController(),
+        builder: (controller) {
+          controller.getBanner();
+          controller.getHomeList();
+          return Container(
+            child: SingleChildScrollView(
+              child: Container(
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.centerLeft,
+                    end: Alignment.centerRight,
+                    colors: [
+                      Color.fromRGBO(252, 130, 59, 1),
+                      Color.fromRGBO(252, 130, 59, 1),
+                      Color.fromRGBO(211, 83, 7, 1),
                     ],
                   ),
                 ),
-                const SizedBox(height: 20),
-                Container(
-                  decoration: const BoxDecoration(
-                    color: Colors.white38,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(35),
-                      topRight: Radius.circular(35),
-                    ),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 10),
-                    child: Container(
-                      decoration: const BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(35),
-                          topRight: Radius.circular(35),
-                        ),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const SizedBox(height: 27),
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 48),
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 15.0, vertical: 8),
 
-                          // search bar
-                          // Padding(
-                          //   padding:
-                          //       const EdgeInsets.symmetric(horizontal: 16.0),
-                          //   child: SizedBox(
-                          //     height: 55,
-                          //     child: TextFormField(
-                          //       decoration: InputDecoration(
-                          //           prefixIcon: Image.asset(
-                          //             "assets/Search.png",
-                          //             scale: 20,
-                          //           ),
-                          //           fillColor: Color.fromRGBO(245, 245, 245, 1),
-                          //           filled: true,
-                          //           enabledBorder: OutlineInputBorder(
-                          //             borderRadius: BorderRadius.circular(12),
-                          //             borderSide: BorderSide.none,
-                          //           ),
-                          //           // enabled: true,
-                          //           hintText: "Search"),
-                          //     ),
-                          //   ),
-                          // ),
-                          // SizedBox(height: 16),
-
-                          // Order fuel section
-                          InkWell(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        const LookingForCompany()),
-                              );
-                            },
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 16.0),
-                              child: Container(
-                                height: 59,
-                                decoration: BoxDecoration(
-                                  color: const Color.fromRGBO(138, 180, 2, 200),
-                                  border: Border.all(
-                                    color:
-                                        const Color.fromRGBO(138, 180, 2, 10),
-                                  ),
-                                  borderRadius: BorderRadius.circular(8),
+                        // Top App bar
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              children: [
+                                Image.asset(
+                                  "assets/mingcute_location-fill.png",
+                                  // scale: 20,
+                                  height: 24,
                                 ),
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 16),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                const SizedBox(width: 8),
+                                const Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Image.asset("assets/login-logo.png",
-                                        height: 36),
-                                    const SizedBox(width: 13),
-                                    const Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          "Order Fuel",
-                                          style: TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                        Text(
-                                          "Door Step Delivery",
-                                          style: TextStyle(
-                                            fontSize: 12,
-                                            color:
-                                                Color.fromRGBO(89, 89, 89, 1),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    const SizedBox(width: 124),
-                                    GestureDetector(
-                                      // onTap: () => Navigator.push(
-                                      //     context,
-                                      //     MaterialPageRoute(
-                                      //       builder: (context) =>
-                                      //           const LookingForCompany(),
-                                      //     )),
-                                      child: Image.asset(
-                                        "assets/Arrow - Down 2.png",
-                                        height: 24,
+                                    Text(
+                                      "Ward 35",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 16,
                                       ),
-                                    )
+                                    ),
+                                    Text(
+                                      "Ratan Lok Colony Indore",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 12,
+                                      ),
+                                    ),
                                   ],
                                 ),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                // Image.asset(
+                                //   "assets/Group 2979.png",
+                                //   height: 24,
+                                // ),
+                                const Icon(
+                                  Icons.search,
+                                  color: Colors.white,
+                                  size: 30,
+                                ),
+                                const SizedBox(width: 8),
+                                GestureDetector(
+                                  onTap: () => Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            const Notification1(),
+                                      )),
+                                  child: Image.asset(
+                                    "assets/Notification.png",
+                                    height: 24,
+                                  ),
+                                ),
+                              ],
+                            )
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      Container(
+                        decoration: const BoxDecoration(
+                          color: Colors.white38,
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(35),
+                            topRight: Radius.circular(35),
+                          ),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 10),
+                          child: Container(
+                            decoration: const BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(35),
+                                topRight: Radius.circular(35),
                               ),
                             ),
-                          ),
-
-                          // Padding(
-                          //   padding:
-                          //       const EdgeInsets.symmetric(horizontal: 20.0),
-                          //   child: Divider(
-                          //     color: Color.fromRGBO(138, 180, 2, 100),
-                          //     thickness: 2,
-                          //   ),
-                          // ),
-                          const SizedBox(height: 24),
-
-                          // slider
-                          const SliderHome(),
-                          const SizedBox(height: 30),
-
-                          // Products & Services
-                          Container(
-                            decoration: const BoxDecoration(
-                                color: Color.fromRGBO(255, 243, 236, 1)),
-                            padding: const EdgeInsets.symmetric(horizontal: 16),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                const SizedBox(height: 28),
-                                const Text(
-                                  "Products & Services",
-                                  style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold),
-                                ),
+                                const SizedBox(height: 27),
 
-                                GridView.builder(
-                                    physics:
-                                        const NeverScrollableScrollPhysics(),
-                                    shrinkWrap: true,
-                                    primary: false,
-                                    padding: const EdgeInsets.all(10),
-                                    itemCount: productsAndServices.length,
-                                    gridDelegate:
-                                        const SliverGridDelegateWithFixedCrossAxisCount(
-                                      crossAxisCount: 2,
-                                      childAspectRatio: 95 / 120,
-                                      crossAxisSpacing: 10,
-                                      mainAxisSpacing: 10.0,
-                                    ),
-                                    itemBuilder: (BuildContext context, int i) {
-                                      return Stack(children: [
-                                        InkWell(
-                                          child: Container(
-                                            // child: Image.asset('assets/fuel.png',fit: BoxFit.cover,),
-                                            decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(20),
-                                                image: const DecorationImage(
-                                                    image: AssetImage(
-                                                        'assets/fuel.png'),
-                                                    fit: BoxFit.cover)),
-                                            height: MediaQuery.of(context)
-                                                    .size
-                                                    .height /
-                                                2.4,
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width /
-                                                2.4,
-                                          ),
-                                          onTap: () {
-                                            if (i == 0) {
-                                              genesetMaintenance(context);
-                                            } else if (i == 1) {
-                                              fuelManagmentServices(context);
-                                            } else if (i == 2) {
-                                              Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        const FuelOnTabScreen(),
-                                                  ));
-                                            } else {
-                                              Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        const FuelOnTabScreen(
-                                                            title:
-                                                                "My Fuel Jerry Can"),
-                                                  ));
-                                            }
-                                          },
+                                // search bar
+                                // Padding(
+                                //   padding:
+                                //       const EdgeInsets.symmetric(horizontal: 16.0),
+                                //   child: SizedBox(
+                                //     height: 55,
+                                //     child: TextFormField(
+                                //       decoration: InputDecoration(
+                                //           prefixIcon: Image.asset(
+                                //             "assets/Search.png",
+                                //             scale: 20,
+                                //           ),
+                                //           fillColor: Color.fromRGBO(245, 245, 245, 1),
+                                //           filled: true,
+                                //           enabledBorder: OutlineInputBorder(
+                                //             borderRadius: BorderRadius.circular(12),
+                                //             borderSide: BorderSide.none,
+                                //           ),
+                                //           // enabled: true,
+                                //           hintText: "Search"),
+                                //     ),
+                                //   ),
+                                // ),
+                                // SizedBox(height: 16),
+
+                                // Order fuel section
+                                InkWell(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const LookingForCompany()),
+                                    );
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 16.0),
+                                    child: Container(
+                                      height: 59,
+                                      decoration: BoxDecoration(
+                                        color: const Color.fromRGBO(
+                                            138, 180, 2, 200),
+                                        border: Border.all(
+                                          color: const Color.fromRGBO(
+                                              138, 180, 2, 10),
                                         ),
-                                        Positioned(
-                                          bottom: 10,
-                                          left: 5,
-                                          child: Column(
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 16),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Image.asset("assets/login-logo.png",
+                                              height: 36),
+                                          const SizedBox(width: 13),
+                                          const Column(
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
                                             children: [
-                                              SizedBox(
-                                                width: 100,
-                                                child: Text(
-                                                  productsAndServices[i],
-                                                  maxLines: 2,
-                                                  style: const TextStyle(
-                                                      color: Colors.white,
-                                                      fontWeight:
-                                                          FontWeight.w700),
-                                                  overflow:
-                                                      TextOverflow.visible,
+                                              Text(
+                                                "Order Fuel",
+                                                style: TextStyle(
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.bold,
                                                 ),
                                               ),
-                                              i % 4 == 2 || i % 4 == 3
-                                                  ? const Text(
-                                                      '0.5 kl/LK/2KI',
-                                                      style: TextStyle(
-                                                          color: Colors.grey),
-                                                      overflow:
-                                                          TextOverflow.visible,
-                                                    )
-                                                  : const SizedBox()
+                                              Text(
+                                                "Door Step Delivery",
+                                                style: TextStyle(
+                                                  fontSize: 12,
+                                                  color: Color.fromRGBO(
+                                                      89, 89, 89, 1),
+                                                ),
+                                              ),
                                             ],
                                           ),
-                                        ),
-                                      ]);
-                                    }),
+                                          const SizedBox(width: 124),
+                                          GestureDetector(
+                                            // onTap: () => Navigator.push(
+                                            //     context,
+                                            //     MaterialPageRoute(
+                                            //       builder: (context) =>
+                                            //           const LookingForCompany(),
+                                            //     )),
+                                            child: Image.asset(
+                                              "assets/Arrow - Down 2.png",
+                                              height: 24,
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
 
-                                // const SizedBox(height: 20),
-                                // productTile(),
-                                // const SizedBox(height: 12),
-                                // productTile(),
-                                // const SizedBox(height: 12),
-                                // productTile(),
-                                // const SizedBox(height: 50),
+                                // Padding(
+                                //   padding:
+                                //       const EdgeInsets.symmetric(horizontal: 20.0),
+                                //   child: Divider(
+                                //     color: Color.fromRGBO(138, 180, 2, 100),
+                                //     thickness: 2,
+                                //   ),
+                                // ),
+                                const SizedBox(height: 24),
+
+                                // slider
+                                const SliderHome(),
+                                const SizedBox(height: 30),
+
+                                // Products & Services
+                                Container(
+                                  decoration: const BoxDecoration(
+                                      color: Color.fromRGBO(255, 243, 236, 1)),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 16),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      const SizedBox(height: 28),
+                                      const Text(
+                                        "Products & Services",
+                                        style: TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+
+                                      Obx(() {
+                                        print(
+                                            "controller.serviceList ${controller.serviceList} ");
+                                        return controller.serviceList.isNotEmpty
+                                            ? GridView.builder(
+                                                physics:
+                                                    const NeverScrollableScrollPhysics(),
+                                                shrinkWrap: true,
+                                                primary: false,
+                                                padding:
+                                                    const EdgeInsets.all(10),
+                                                itemCount: controller
+                                                    .serviceList.length,
+                                                gridDelegate:
+                                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                                                  crossAxisCount: 2,
+                                                  childAspectRatio: 95 / 120,
+                                                  crossAxisSpacing: 10,
+                                                  mainAxisSpacing: 10.0,
+                                                ),
+                                                itemBuilder:
+                                                    (BuildContext context,
+                                                        int i) {
+                                                  return Stack(children: [
+                                                    InkWell(
+                                                      child: Container(
+                                                        // child: Image.asset('assets/fuel.png',fit: BoxFit.cover,),
+                                                        decoration:
+                                                            BoxDecoration(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            20),
+                                                                image:
+                                                                    DecorationImage(
+                                                                        image:
+                                                                            NetworkImage(
+                                                                          "${configModel?.baseUrls?.categoryImageUrl}/${controller.serviceList[i].icon}",
+                                                                        ),
+                                                                        fit: BoxFit
+                                                                            .cover)),
+                                                        height: MediaQuery.of(
+                                                                    context)
+                                                                .size
+                                                                .height /
+                                                            2.4,
+                                                        width: MediaQuery.of(
+                                                                    context)
+                                                                .size
+                                                                .width /
+                                                            2.4,
+                                                      ),
+                                                      onTap: () {
+                                                        if (i == 0) {
+                                                          genesetMaintenance(
+                                                              context);
+                                                        } else if (i == 1) {
+                                                          fuelManagmentServices(
+                                                              context);
+                                                        } else if (i == 2) {
+                                                          Navigator.push(
+                                                              context,
+                                                              MaterialPageRoute(
+                                                                builder:
+                                                                    (context) =>
+                                                                        const FuelOnTabScreen(),
+                                                              ));
+                                                        } else {
+                                                          Navigator.push(
+                                                              context,
+                                                              MaterialPageRoute(
+                                                                builder: (context) =>
+                                                                    const FuelOnTabScreen(
+                                                                        title:
+                                                                            "My Fuel Jerry Can"),
+                                                              ));
+                                                        }
+                                                      },
+                                                    ),
+                                                    Positioned(
+                                                      bottom: 10,
+                                                      left: 5,
+                                                      child: Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          SizedBox(
+                                                            width: 100,
+                                                            child: Text(
+                                                              "${controller.serviceList[i].name}",
+                                                              maxLines: 2,
+                                                              style: const TextStyle(
+                                                                  color: Colors
+                                                                      .white,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w700),
+                                                              overflow:
+                                                                  TextOverflow
+                                                                      .visible,
+                                                            ),
+                                                          ),
+                                                          i % 4 == 2 ||
+                                                                  i % 4 == 3
+                                                              ? const Text(
+                                                                  '0.5 kl/LK/2KI',
+                                                                  style: TextStyle(
+                                                                      color: Colors
+                                                                          .grey),
+                                                                  overflow:
+                                                                      TextOverflow
+                                                                          .visible,
+                                                                )
+                                                              : const SizedBox()
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ]);
+                                                })
+                                            : Container(
+                                                child: Text(
+                                                    "No Self Service Found"),
+                                              );
+                                      }),
+
+                                      // const SizedBox(height: 20),
+                                      // productTile(),
+                                      // const SizedBox(height: 12),
+                                      // productTile(),
+                                      // const SizedBox(height: 12),
+                                      // productTile(),
+                                      // const SizedBox(height: 50),
+                                    ],
+                                  ),
+                                ),
+
+                                Obx(() => controller.otherList.length == 0
+                                    ? Container()
+                                    : GridView.builder(
+                                        physics:
+                                            const NeverScrollableScrollPhysics(),
+                                        shrinkWrap: true,
+                                        primary: false,
+                                        padding: const EdgeInsets.all(10),
+                                        itemCount: controller.otherList.length,
+                                        gridDelegate:
+                                            const SliverGridDelegateWithFixedCrossAxisCount(
+                                          crossAxisCount: 3,
+                                          childAspectRatio: 95 / 108,
+                                          crossAxisSpacing: 10,
+                                          mainAxisSpacing: 5.0,
+                                        ),
+                                        itemBuilder:
+                                            (BuildContext context, int i) {
+                                          return Container(
+                                            height: 80,
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical: 15),
+                                            child: Column(
+                                              children: [
+                                                Image.network(
+                                                  "${configModel?.baseUrls?.categoryImageUrl}/${controller.otherList[i].icon}",
+                                                  height: 60,
+                                                  errorBuilder: (context, error,
+                                                          stackTrace) =>
+                                                      Image.asset(
+                                                    "assets/rescue.png",
+                                                    height: 60,
+                                                  ),
+                                                ),
+                                                const SizedBox(height: 10),
+                                                Text(
+                                                  "${controller.otherList[i].name}",
+                                                  style: TextStyle(
+                                                    color: Color.fromRGBO(
+                                                        89, 89, 89, 1),
+                                                  ),
+                                                )
+                                              ],
+                                            ),
+                                          );
+                                        })),
+
+                                // Category section
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 20.0, vertical: 10),
+                                  child: Container(
+                                    height: 20,
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 20),
+                                    // child: Column(
+                                    //   mainAxisAlignment:
+                                    //       MainAxisAlignment.spaceBetween,
+                                    //   children: [
+                                    //     Row(
+                                    //       mainAxisAlignment:
+                                    //           MainAxisAlignment.spaceBetween,
+                                    //       children: [
+                                    //         InkWell(
+                                    //           onTap: () {
+                                    //             Navigator.push(
+                                    //                 context,
+                                    //                 MaterialPageRoute(
+                                    //                     builder: (context) =>
+                                    //                         const RescueMe()));
+                                    //           },
+                                    //           child: Container(
+                                    //             child: Column(
+                                    //               children: [
+                                    //                 Image.asset(
+                                    //                   "assets/rescue.png",
+                                    //                   height: 60,
+                                    //                 ),
+                                    //                 const SizedBox(height: 10),
+                                    //                 const Text(
+                                    //                   "Rescue Me",
+                                    //                   style: TextStyle(
+                                    //                     color: Color.fromRGBO(
+                                    //                         89, 89, 89, 1),
+                                    //                   ),
+                                    //                 )
+                                    //               ],
+                                    //             ),
+                                    //           ),
+                                    //         ),
+                                    //         InkWell(
+                                    //           onTap: () {
+                                    //             _showBottomSheet(context);
+                                    //           },
+                                    //           child: Container(
+                                    //             child: Column(
+                                    //               children: [
+                                    //                 Image.asset(
+                                    //                   "assets/dummy.png",
+                                    //                   height: 60,
+                                    //                 ),
+                                    //                 const SizedBox(height: 10),
+                                    //                 const Text(
+                                    //                   "Car Service",
+                                    //                   style: TextStyle(
+                                    //                     color: Color.fromRGBO(
+                                    //                         89, 89, 89, 1),
+                                    //                   ),
+                                    //                 )
+                                    //               ],
+                                    //             ),
+                                    //           ),
+                                    //         ),
+                                    //         InkWell(
+                                    //           onTap: () {
+                                    //             Navigator.push(
+                                    //                 context,
+                                    //                 MaterialPageRoute(
+                                    //                     builder: (context) =>
+                                    //                         const Insurance_Scr()));
+                                    //           },
+                                    //           child: Container(
+                                    //             child: Column(
+                                    //               children: [
+                                    //                 Image.asset(
+                                    //                   "assets/insurance.png",
+                                    //                   height: 60,
+                                    //                 ),
+                                    //                 const SizedBox(height: 10),
+                                    //                 const Text(
+                                    //                   "Insurance",
+                                    //                   style: TextStyle(
+                                    //                     color: Color.fromRGBO(
+                                    //                         89, 89, 89, 1),
+                                    //                   ),
+                                    //                 )
+                                    //               ],
+                                    //             ),
+                                    //           ),
+                                    //         ),
+                                    //       ],
+                                    //     ),
+                                    //     Row(
+                                    //       mainAxisAlignment:
+                                    //           MainAxisAlignment.spaceBetween,
+                                    //       children: [
+                                    //         InkWell(
+                                    //           onTap: () {
+                                    //             tyresBottomSheet(context);
+                                    //           },
+                                    //           child: Container(
+                                    //             child: Column(
+                                    //               children: [
+                                    //                 Image.asset(
+                                    //                   "assets/tyres.png",
+                                    //                   height: 60,
+                                    //                 ),
+                                    //                 const SizedBox(height: 10),
+                                    //                 const Text(
+                                    //                   "Tyres",
+                                    //                   style: TextStyle(
+                                    //                     color: Color.fromRGBO(
+                                    //                         89, 89, 89, 1),
+                                    //                   ),
+                                    //                 )
+                                    //               ],
+                                    //             ),
+                                    //           ),
+                                    //         ),
+                                    //         InkWell(
+                                    //           onTap: () {
+                                    //             batteryBottomSheet(context);
+                                    //           },
+                                    //           child: Container(
+                                    //             child: Column(
+                                    //               children: [
+                                    //                 Image.asset(
+                                    //                   "assets/insurance.png",
+                                    //                   height: 60,
+                                    //                 ),
+                                    //                 const SizedBox(height: 10),
+                                    //                 const Text(
+                                    //                   "Battery",
+                                    //                   style: TextStyle(
+                                    //                     color: Color.fromRGBO(
+                                    //                         89, 89, 89, 1),
+                                    //                   ),
+                                    //                 )
+                                    //               ],
+                                    //             ),
+                                    //           ),
+                                    //         ),
+                                    //         InkWell(
+                                    //           onTap: () {
+                                    //             carwashBottomShee(context);
+                                    //           },
+                                    //           child: Container(
+                                    //             child: Column(
+                                    //               children: [
+                                    //                 Image.asset(
+                                    //                   "assets/carwash.png",
+                                    //                   height: 60,
+                                    //                 ),
+                                    //                 const SizedBox(height: 10),
+                                    //                 const Text(
+                                    //                   "Car Wash",
+                                    //                   style: TextStyle(
+                                    //                     color: Color.fromRGBO(
+                                    //                         89, 89, 89, 1),
+                                    //                   ),
+                                    //                 )
+                                    //               ],
+                                    //             ),
+                                    //           ),
+                                    //         ),
+                                    //       ],
+                                    //     ),
+                                    //   ],
+                                    // ),
+                                  ),
+                                ),
+
+                                const Row(),
                               ],
                             ),
                           ),
-
-                          // Category section
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 20.0, vertical: 10),
-                            child: Container(
-                              height: 240,
-                              padding: const EdgeInsets.symmetric(vertical: 20),
-                              child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      InkWell(
-                                        onTap: () {
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      const RescueMe()));
-                                        },
-                                        child: Container(
-                                          child: Column(
-                                            children: [
-                                              Image.asset(
-                                                "assets/rescue.png",
-                                                height: 60,
-                                              ),
-                                              const SizedBox(height: 10),
-                                              const Text(
-                                                "Rescue Me",
-                                                style: TextStyle(
-                                                  color: Color.fromRGBO(
-                                                      89, 89, 89, 1),
-                                                ),
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                      InkWell(
-                                        onTap: () {
-                                          _showBottomSheet(context);
-                                        },
-                                        child: Container(
-                                          child: Column(
-                                            children: [
-                                              Image.asset(
-                                                "assets/dummy.png",
-                                                height: 60,
-                                              ),
-                                              const SizedBox(height: 10),
-                                              const Text(
-                                                "Car Service",
-                                                style: TextStyle(
-                                                  color: Color.fromRGBO(
-                                                      89, 89, 89, 1),
-                                                ),
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                      InkWell(
-                                        onTap: () {
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      const Insurance_Scr()));
-                                        },
-                                        child: Container(
-                                          child: Column(
-                                            children: [
-                                              Image.asset(
-                                                "assets/insurance.png",
-                                                height: 60,
-                                              ),
-                                              const SizedBox(height: 10),
-                                              const Text(
-                                                "Insurance",
-                                                style: TextStyle(
-                                                  color: Color.fromRGBO(
-                                                      89, 89, 89, 1),
-                                                ),
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      InkWell(
-                                        onTap: () {
-                                          tyresBottomSheet(context);
-                                        },
-                                        child: Container(
-                                          child: Column(
-                                            children: [
-                                              Image.asset(
-                                                "assets/tyres.png",
-                                                height: 60,
-                                              ),
-                                              const SizedBox(height: 10),
-                                              const Text(
-                                                "Tyres",
-                                                style: TextStyle(
-                                                  color: Color.fromRGBO(
-                                                      89, 89, 89, 1),
-                                                ),
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                      InkWell(
-                                        onTap: () {
-                                          batteryBottomSheet(context);
-                                        },
-                                        child: Container(
-                                          child: Column(
-                                            children: [
-                                              Image.asset(
-                                                "assets/insurance.png",
-                                                height: 60,
-                                              ),
-                                              const SizedBox(height: 10),
-                                              const Text(
-                                                "Battery",
-                                                style: TextStyle(
-                                                  color: Color.fromRGBO(
-                                                      89, 89, 89, 1),
-                                                ),
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                      InkWell(
-                                        onTap: () {
-                                          carwashBottomShee(context);
-                                        },
-                                        child: Container(
-                                          child: Column(
-                                            children: [
-                                              Image.asset(
-                                                "assets/carwash.png",
-                                                height: 60,
-                                              ),
-                                              const SizedBox(height: 10),
-                                              const Text(
-                                                "Car Wash",
-                                                style: TextStyle(
-                                                  color: Color.fromRGBO(
-                                                      89, 89, 89, 1),
-                                                ),
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-
-                          const Row(),
-                        ],
+                        ),
                       ),
-                    ),
+                    ],
                   ),
                 ),
-              ],
+              ),
             ),
-          ),
-        ),
-      ),
-    );
+          );
+        });
   }
 
   void _showBottomSheet(BuildContext context) {
@@ -1055,7 +1159,8 @@ class _HomePageState extends State<HomePage> {
                           context,
                           MaterialPageRoute(
                               builder: (context) => TyresScreen(
-                                    page: 3,title: "carWash",
+                                    page: 3,
+                                    title: "carWash",
                                   )));
 
                       // Add your onTap logic here

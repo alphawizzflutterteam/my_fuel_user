@@ -4,6 +4,7 @@ import 'package:test_prj/language/language_transtation.dart';
 import 'package:test_prj/routes/app_pages.dart';
 import 'package:test_prj/service/provider/lavavel_provider.dart';
 
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -18,6 +19,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      key: navigatorKey,
       title: "My Fuels User",
       translations: Languages(),
       locale: const Locale('en', 'US'),

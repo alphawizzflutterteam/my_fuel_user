@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:test_prj/home.dart';
 import 'package:test_prj/home_page.dart';
+
+import '../data/model/verify_otp_model.dart';
 
 class RegisterComplete extends StatelessWidget {
   const RegisterComplete({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final List<VerifyData> receivedList = Get.arguments;
+
     return GestureDetector(
       onTap: () => Navigator.push(
           context,

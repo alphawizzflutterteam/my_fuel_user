@@ -19,7 +19,7 @@ class SettingModel {
   String? aboutUs;
   String? privacyPolicy;
   String? termsConditions;
-  List<Null>? faq;
+
   String? vendorAboutUs;
   String? vendorPrivacyPolicy;
   String? vendorTermsConditions;
@@ -52,12 +52,12 @@ class SettingModel {
   int? loyaltyPointStatus;
   int? loyaltyPointExchangeRate;
   int? loyaltyPointMinimumPoint;
-  List<Null>? paymentMethods;
+
   dynamic offlinePayment;
   String? paymentMethodImagePath;
   String? refEarningStatus;
   String? activeTheme;
-  List<Null>? popularTags;
+
   int? guestCheckout;
   dynamic uploadPictureOnDelivery;
   UserAppVersionControl? userAppVersionControl;
@@ -106,7 +106,6 @@ class SettingModel {
       this.aboutUs,
       this.privacyPolicy,
       this.termsConditions,
-      this.faq,
       this.vendorAboutUs,
       this.vendorPrivacyPolicy,
       this.vendorTermsConditions,
@@ -139,12 +138,10 @@ class SettingModel {
       this.loyaltyPointStatus,
       this.loyaltyPointExchangeRate,
       this.loyaltyPointMinimumPoint,
-      this.paymentMethods,
       this.offlinePayment,
       this.paymentMethodImagePath,
       this.refEarningStatus,
       this.activeTheme,
-      this.popularTags,
       this.guestCheckout,
       this.uploadPictureOnDelivery,
       this.userAppVersionControl,
@@ -180,7 +177,7 @@ class SettingModel {
     cashOnDelivery = json['cash_on_delivery'];
     sellerRegistration = json['seller_registration'];
     posActive = json['pos_active'];
-    companyPhone = json['company_phone'];
+    companyPhone = json['company_phone'].toString();
     companyEmail = json['company_email'];
     companyLogo = json['company_logo'];
     companyCoverImage = json['company_cover_image'];
@@ -196,12 +193,7 @@ class SettingModel {
     aboutUs = json['about_us'];
     privacyPolicy = json['privacy_policy'];
     termsConditions = json['terms_&_conditions'];
-    if (json['faq'] != null) {
-      faq = <Null>[];
-      json['faq'].forEach((v) {
-        faq!.add(v.fromJson(v));
-      });
-    }
+
     vendorAboutUs = json['vendor_about_us'];
     vendorPrivacyPolicy = json['vendor_privacy_policy'];
     vendorTermsConditions = json['vendor_terms_&_conditions'];
@@ -267,22 +259,12 @@ class SettingModel {
     loyaltyPointStatus = json['loyalty_point_status'];
     loyaltyPointExchangeRate = json['loyalty_point_exchange_rate'];
     loyaltyPointMinimumPoint = json['loyalty_point_minimum_point'];
-    if (json['payment_methods'] != null) {
-      paymentMethods = <Null>[];
-      json['payment_methods'].forEach((v) {
-        paymentMethods!.add(v.fromJson(v));
-      });
-    }
+
     offlinePayment = json['offline_payment'];
     paymentMethodImagePath = json['payment_method_image_path'];
     refEarningStatus = json['ref_earning_status'];
     activeTheme = json['active_theme'];
-    if (json['popular_tags'] != null) {
-      popularTags = <Null>[];
-      json['popular_tags'].forEach((v) {
-        popularTags!.add(v.fromJson(v));
-      });
-    }
+
     guestCheckout = json['guest_checkout'];
     uploadPictureOnDelivery = json['upload_picture_on_delivery'];
     userAppVersionControl = json['user_app_version_control'] != null
@@ -315,8 +297,8 @@ class SettingModel {
     orderVerification = json['order_verification'];
     referralCustomerSignupUrl = json['referral_customer_signup_url'];
     systemTimezone = json['system_timezone'];
-    refundDayLimit = json['refund_day_limit'];
-    mapApiStatus = json['map_api_status'];
+    refundDayLimit = json['refund_day_limit'].toString();
+    mapApiStatus = json['map_api_status'].toString();
     defaultLocation = json['default_location'] != null
         ? DefaultLocation.fromJson(json['default_location'])
         : null;
@@ -326,7 +308,8 @@ class SettingModel {
         slots!.add(Slots.fromJson(v));
       });
     }
-    days = json['days'].cast<String>();
+    if (json['days'] != null) days = json['days'].cast<String>();
+
     if (json['seller_services'] != null) {
       sellerServices = <SellerServices>[];
       json['seller_services'].forEach((v) {
@@ -505,6 +488,7 @@ class BaseUrls {
       this.chattingImageUrl});
 
   BaseUrls.fromJson(Map<String, dynamic> json) {
+    print("categoryImageUrl ${json['category_image_url']}");
     productImageUrl = json['product_image_url'];
     productThumbnailUrl = json['product_thumbnail_url'];
     digitalProductUrl = json['digital_product_url'];
@@ -637,7 +621,7 @@ class CurrencyList {
   String? symbol;
   String? code;
   String? exchangeRate;
-  bool? status;
+  String? status;
   String? createdAt;
   String? updatedAt;
 
@@ -656,10 +640,10 @@ class CurrencyList {
     name = json['name'];
     symbol = json['symbol'];
     code = json['code'];
-    exchangeRate = json['exchange_rate'];
-    status = json['status'];
+    exchangeRate = json['exchange_rate'].toString();
+    status = json['status'].toString();
     createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
+    updatedAt = json['updated_at'].toString();
   }
 
   Map<String, dynamic> toJson() {
@@ -959,22 +943,21 @@ class Data {
   int? priority;
   String? type;
   bool? isSelected;
-  List<Null>? translations;
 
-  Data(
-      {this.id,
-      this.name,
-      this.slug,
-      this.icon,
-      this.parentId,
-      this.position,
-      this.createdAt,
-      this.updatedAt,
-      this.homeStatus,
-      this.priority,
-      this.type,
-      this.isSelected,
-      this.translations});
+  Data({
+    this.id,
+    this.name,
+    this.slug,
+    this.icon,
+    this.parentId,
+    this.position,
+    this.createdAt,
+    this.updatedAt,
+    this.homeStatus,
+    this.priority,
+    this.type,
+    this.isSelected,
+  });
 
   Data.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -989,12 +972,6 @@ class Data {
     priority = json['priority'];
     type = json['type'];
     isSelected = json['is_selected'];
-    if (json['translations'] != null) {
-      translations = <Null>[];
-      json['translations'].forEach((v) {
-        translations!.add(v.fromJson(v));
-      });
-    }
   }
 
   Map<String, dynamic> toJson() {

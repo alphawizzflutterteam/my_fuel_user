@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:test_prj/authPages/login_page.dart';
 import 'package:test_prj/orderfuel/doorStepDelivery/forLooking.dart';
 import '../components/my_button.dart';
+import '../helper/utils/shared_preference.dart';
 
 class LogoutPage extends StatefulWidget {
   const LogoutPage({super.key});
@@ -71,11 +72,17 @@ class _LogoutPageState extends State<LogoutPage> {
                     width: 150,
                     alignment: Alignment.center,
                     decoration:
-                    BoxDecoration(borderRadius: BorderRadius.circular(8)),
+                        BoxDecoration(borderRadius: BorderRadius.circular(8)),
                     child: GestureDetector(
-                      onTap: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => LoginPage()));
+                      onTap: () async {
+                        SharedPreferencesService? instance =
+                            await SharedPreferencesService.getInstance();
+
+                        instance.clear();
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => LoginPage()));
                       },
                       child: const MyButton(
                         text: "Logout",

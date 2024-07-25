@@ -1,9 +1,17 @@
 import 'package:get/get.dart';
 import 'package:get/get_instance/src/bindings_interface.dart';
+import 'package:test_prj/controller/home_controller.dart';
 import 'package:test_prj/controller/language_controller.dart';
 import 'package:test_prj/controller/login_controller.dart';
+import 'package:test_prj/controller/otp_controller.dart';
+import 'package:test_prj/controller/profile_controller.dart';
 import 'package:test_prj/controller/singup_controller.dart';
 import 'package:test_prj/controller/splash_controller.dart';
+
+import '../../controller/address_controller.dart';
+import '../../controller/forget_controller.dart';
+import '../../controller/offers_controller.dart';
+import '../../controller/wallet_controller.dart';
 
 class InitialBinding implements Bindings {
   @override
@@ -13,6 +21,13 @@ class InitialBinding implements Bindings {
     Get.lazyPut(() => LanguageController());
     Get.lazyPut(() => LoginController());
     Get.lazyPut(() => SignupController());
+    Get.lazyPut(() => ProfileController());
+    Get.lazyPut(() => OtpController());
+    Get.lazyPut(() => HomeController());
+    Get.lazyPut(() => ForgetPasswordController());
+    Get.lazyPut(() => OfferController());
+    Get.lazyPut(() => WalletController());
+    Get.lazyPut(() => AddressController());
     // Get.lazyPut(() => LoginController() );
     // Get.lazyPut(() => ForgotPasswordController() );
     // Get.lazyPut(() => OTPVerifyController() );
