@@ -45,107 +45,112 @@ class _OTPScreenState extends State<OTPScreen2> {
 
   @override
   Widget build(BuildContext context) {
-    final arguments = Get.arguments ?? {};
-
-    otp = arguments['otp'];
-    phone = arguments['phone'];
-    type = arguments['type'];
-    token = arguments['token'];
+    // final arguments = Get.arguments ?? {};
+    //
+    // otp = arguments['otp'];
+    // phone = arguments['phone'];
+    // type = arguments['type'];
+    // token = arguments['token'];
 
     setState(() {});
-    print("initData ${arguments}");
-    return GetBuilder<ForgetPasswordController>(builder: (controller) {
-      return Scaffold(
-        body: MyBackground2(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(height: 50),
-                // App Icon
-                Image.asset("assets/login-logo.png", height: 62),
-                SizedBox(height: 10),
-                Text(
-                  "Enter verification code",
-                  style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
-                ),
-                SizedBox(height: 8),
-                Text(
-                  "Enter the OTP $token sent to +91 $phone",
-                  style: TextStyle(color: Colors.black.withOpacity(0.5)
-                      // fontSize: 26,
-                      // fontWeight: FontWeight.bold,
-                      ),
-                ),
-                SizedBox(
-                  height: 30,
-                ),
-                Container(
-                  child: Center(
-                    child: Pinput(
-                      controller: pinController,
-                      length: 4,
-                      defaultPinTheme: PinTheme(
-                          width: 68,
-                          height: 58,
-                          textStyle: TextStyle(
-                            fontSize: 22,
-                            color: Colors.black,
-                          ),
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.black12),
-                            borderRadius: BorderRadius.circular(13),
-                          )),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 30,
-                ),
-                GestureDetector(
-                    onTap: () {
-                      if (pinController.text == "$token") {
-                        controller
-                            .veriFyOtp(phone, pinController.text)
-                            .then((value) {
-                          Get.toNamed(Routes.CREATEPASSWORD, arguments: {
-                            'token': token,
-                            'type': token,
-                            'phone': '${phone}',
-                            'otp': '${token}'
-                          });
-                        });
-
-                        // Navigator.push(
-                        //     context,
-                        //     MaterialPageRoute(
-                        //       builder: (context) => CreatePasswordPage(),
-                        //     ));
-                      }
-                    },
-                    child: MyButton(text: "Verify")),
-                SizedBox(height: 20),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+    print("initData ${otp}");
+    print("initData ${phone}");
+    print("initData ${type}");
+    return GetBuilder<ForgetPasswordController>(
+        init: ForgetPasswordController(),
+        builder: (controller) {
+          return Scaffold(
+            body: MyBackground2(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Don't received Otp? "),
+                    SizedBox(height: 50),
+                    // App Icon
+                    Image.asset("assets/login-logo.png", height: 62),
+                    SizedBox(height: 10),
                     Text(
-                      "Resend OTP",
-                      style: TextStyle(
-                        color: Color.fromRGBO(138, 180, 2, 1),
+                      "Enter verification code",
+                      style:
+                          TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(height: 8),
+                    Text(
+                      "Enter the OTP $token sent to +91 $phone",
+                      style: TextStyle(color: Colors.black.withOpacity(0.5)
+                          // fontSize: 26,
+                          // fontWeight: FontWeight.bold,
+                          ),
+                    ),
+                    SizedBox(
+                      height: 30,
+                    ),
+                    Container(
+                      child: Center(
+                        child: Pinput(
+                          controller: pinController,
+                          length: 4,
+                          defaultPinTheme: PinTheme(
+                              width: 68,
+                              height: 58,
+                              textStyle: TextStyle(
+                                fontSize: 22,
+                                color: Colors.black,
+                              ),
+                              decoration: BoxDecoration(
+                                border: Border.all(color: Colors.black12),
+                                borderRadius: BorderRadius.circular(13),
+                              )),
+                        ),
                       ),
+                    ),
+                    SizedBox(
+                      height: 30,
+                    ),
+                    GestureDetector(
+                        onTap: () {
+                          if (pinController.text == "$token") {
+                            controller
+                                .veriFyOtp(phone, pinController.text)
+                                .then((value) {
+                              Get.toNamed(Routes.CREATEPASSWORD, arguments: {
+                                'token': token,
+                                'type': token,
+                                'phone': '${phone}',
+                                'otp': '${token}'
+                              });
+                            });
+
+                            // Navigator.push(
+                            //     context,
+                            //     MaterialPageRoute(
+                            //       builder: (context) => CreatePasswordPage(),
+                            //     ));
+                          }
+                        },
+                        child: MyButton(text: "Verify")),
+                    SizedBox(height: 20),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text("Don't received Otp? "),
+                        Text(
+                          "Resend OTP",
+                          style: TextStyle(
+                            color: Color.fromRGBO(138, 180, 2, 1),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 10,
                     ),
                   ],
                 ),
-                SizedBox(
-                  height: 10,
-                ),
-              ],
+              ),
             ),
-          ),
-        ),
-      );
-    });
+          );
+        });
   }
 }

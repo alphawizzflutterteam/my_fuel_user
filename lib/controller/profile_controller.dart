@@ -8,6 +8,8 @@ class ProfileController extends AppBaseController {
   LaravelApiClient _laravelApiClient = Get.find<LaravelApiClient>();
 
   var userInfoModel = UserInfoModel().obs;
+
+  RxBool isLoading = false.obs;
   @override
   void onInit() {
     // TODO: implement onInit
@@ -17,8 +19,9 @@ class ProfileController extends AppBaseController {
   }
 
   Future<void> getProfile() async {
+    isLoading(true);
     Map<String, dynamic> data = await _laravelApiClient.getProfile();
-
+    isLoading(false);
     userInfoModel(UserInfoModel.fromJson(data));
     // list.value = response;
 

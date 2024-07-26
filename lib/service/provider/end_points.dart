@@ -13,6 +13,25 @@ class ApiConstants {
   static const String offers = '/api/v1/coupon/list';
   static const String addAddress = '/api/v1/customer/address/add';
   static const String addList = '/api/v1/customer/address/list';
+  static const String serviceDetail = '/api/v1/products/filter';
+  static const String Enquiry = '/api/v1/customer/order/generate-enquiry';
   static const String walletTransactionHistory =
       '/api/v1/customer/wallet/list?offset=0&limit=10&transaction_type=all';
+  static const String addAsset = '/api/v1/customer/order/asset-store';
+  static const String updateAsset = '/api/v1/customer/order/asset-update';
+  static const String assetsList = '/api/v1/customer/order/asset-list';
+  static const String deleteAsset = '/api/v1/customer/order/asset-delete/';
+  static const String insuranceSubmit =
+      '/api/v1/customer/order/insurance-store';
+  static const String addToCart = '/api/v1/cart/add';
+  static const String MANAGECART = '/api/v1/cart?address_id=';
+  static const String UPDATEPROFILE = '/api/v1/customer/update-profile';
+  static const String ORDERLIST =
+      '/api/v1/customer/order/list?limit=10&offset=0';
+
+  ///2&category_id=1
+  static const String PLACEORDER =
+      '/api/v1/customer/order/place?billing_address_id=';
+
+  ///2&payment_method=cash_on_delivery&order_note=ABC Status
 }

@@ -30,10 +30,10 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: MyAppbar(title: 'Add Address'),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            MyAppbar(title: 'Add Address'),
             Padding(
               padding: const EdgeInsets.all(20.0),
               child: Form(
@@ -128,35 +128,38 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                     SizedBox(
                       height: 20,
                     ),
-                    GetBuilder<AddressController>(builder: (controller) {
-                      return InkWell(
-                          onTap: () {
-                            if (_formKeyReset.currentState!.validate()) {
-                              controller
-                                  .addAddress(
-                                      nameController.text,
-                                      mobileController.text,
-                                      "Home",
-                                      houseNoController.text.toString(),
-                                      roadNameController.text.toString(),
-                                      roadNameController.text.toString(),
-                                      countryController.text.toString(),
-                                      stateController.text.toString(),
-                                      cityController.text.toString(),
-                                      pincodeController.text.toString(),
-                                      "22.75",
-                                      "35.85",
-                                      "1")
-                                  .then((value) {
-                                Fluttertoast.showToast(
-                                    msg: "${value['message']}");
-                              });
+                    GetBuilder<AddressController>(
+                        init: AddressController(),
+                        builder: (controller) {
+                          return InkWell(
+                              onTap: () {
+                                if (_formKeyReset.currentState!.validate()) {
+                                  controller
+                                      .addAddress(
+                                          nameController.text,
+                                          mobileController.text,
+                                          "Home",
+                                          houseNoController.text.toString(),
+                                          roadNameController.text.toString(),
+                                          roadNameController.text.toString(),
+                                          countryController.text.toString(),
+                                          stateController.text.toString(),
+                                          cityController.text.toString(),
+                                          pincodeController.text.toString(),
+                                          "22.75",
+                                          "35.85",
+                                          "1")
+                                      .then((value) {
+                                    Fluttertoast.showToast(
+                                        msg: "${value['message']}");
+                                    controller.getAddRess();
+                                  });
 
-                              Navigator.pop(context);
-                            }
-                          },
-                          child: const MyButton(text: 'Save Address'));
-                    })
+                                  Navigator.pop(context);
+                                }
+                              },
+                              child: const MyButton(text: 'Save Address'));
+                        })
                   ],
                 ),
               ),

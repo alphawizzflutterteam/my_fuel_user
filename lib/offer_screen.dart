@@ -4,6 +4,7 @@ import 'package:test_prj/controller/offers_controller.dart';
 import 'package:test_prj/helper/colors.dart';
 import 'package:test_prj/profile/notification1.dart';
 
+import 'controller/internet_controller.dart';
 import 'helper/utils/shared_preference.dart';
 
 class OffersScreen extends StatefulWidget {
@@ -56,114 +57,122 @@ class _OffersScreenState extends State<OffersScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.centerLeft,
-              end: Alignment.centerRight,
-              colors: [
-                Color.fromRGBO(252, 130, 59, 1),
-                Color.fromRGBO(252, 130, 59, 1),
-                Color.fromRGBO(211, 83, 7, 1),
-              ],
-            ),
-          ),
-          padding: const EdgeInsets.only(top: 48),
-          child: Column(
-            children: [
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8),
-
-                // Top App bar
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        Image.asset(
-                          "assets/mingcute_location-fill.png",
-                          // scale: 20,
-                          height: 24,
-                        ),
-                        const SizedBox(width: 8),
-                        const Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Ward 35",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 16,
-                              ),
-                            ),
-                            Text(
-                              "Ratan Lok Colony Indore",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 12,
-                              ),
-                            ),
+    return GetBuilder<InternetController>(
+        init: InternetController(),
+        builder: (connectivityController) {
+          return Obx(() => connectivityController.isConnected
+              ? Scaffold(
+                  body: SingleChildScrollView(
+                    child: Container(
+                      decoration: const BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.centerLeft,
+                          end: Alignment.centerRight,
+                          colors: [
+                            Color.fromRGBO(252, 130, 59, 1),
+                            Color.fromRGBO(252, 130, 59, 1),
+                            Color.fromRGBO(211, 83, 7, 1),
                           ],
                         ),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        // Image.asset(
-                        //   "assets/Group 2979.png",
-                        //   height: 24,
-                        // ),
-                        const Icon(
-                          Icons.search,
-                          color: Colors.white,
-                          size: 30,
-                        ),
-                        const SizedBox(width: 8),
-                        GestureDetector(
-                          onTap: () => Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const Notification1(),
-                              )),
-                          child: Image.asset(
-                            "assets/Notification.png",
-                            height: 24,
+                      ),
+                      padding: const EdgeInsets.only(top: 48),
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 15.0, vertical: 8),
+
+                            // Top App bar
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  children: [
+                                    Image.asset(
+                                      "assets/mingcute_location-fill.png",
+                                      // scale: 20,
+                                      height: 24,
+                                    ),
+                                    const SizedBox(width: 8),
+                                    const Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          "Ward 35",
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 16,
+                                          ),
+                                        ),
+                                        Text(
+                                          "Ratan Lok Colony Indore",
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 12,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    // Image.asset(
+                                    //   "assets/Group 2979.png",
+                                    //   height: 24,
+                                    // ),
+                                    const Icon(
+                                      Icons.search,
+                                      color: Colors.white,
+                                      size: 30,
+                                    ),
+                                    const SizedBox(width: 8),
+                                    GestureDetector(
+                                      onTap: () => Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                const Notification1(),
+                                          )),
+                                      child: Image.asset(
+                                        "assets/Notification.png",
+                                        height: 24,
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ),
                           ),
-                        ),
-                      ],
-                    )
-                  ],
-                ),
-              ),
-              const SizedBox(height: 20),
-              Container(
-                decoration: const BoxDecoration(
-                  color: Colors.white38,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(35),
-                    topRight: Radius.circular(35),
-                  ),
-                ),
-                padding: const EdgeInsets.only(top: 10),
-                child: Container(
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(35),
-                      topRight: Radius.circular(35),
+                          const SizedBox(height: 20),
+                          Container(
+                            decoration: const BoxDecoration(
+                              color: Colors.white38,
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(35),
+                                topRight: Radius.circular(35),
+                              ),
+                            ),
+                            padding: const EdgeInsets.only(top: 10),
+                            child: Container(
+                              decoration: const BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(35),
+                                  topRight: Radius.circular(35),
+                                ),
+                              ),
+                              child: bodyWidget(),
+                            ),
+                          )
+                        ],
+                      ),
                     ),
                   ),
-                  child: bodyWidget(),
-                ),
-              )
-            ],
-          ),
-        ),
-      ),
-    );
+                )
+              : Center(child: Text("No internet connection")));
+        });
   }
 
   Widget bodyWidget() {

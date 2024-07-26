@@ -42,7 +42,7 @@ class _SignUpState extends State<SignUp> {
 
   @override
   Widget build(BuildContext context) {
-    data = Get.arguments ?? '';
+    // data = Get.arguments ?? '';
     print(" data Index  $data");
     return GetBuilder(
       init: SignupController(),
@@ -77,59 +77,66 @@ class _SignUpState extends State<SignUp> {
                     data == "1" ? showBussiness() : showUser(),
 
                     const SizedBox(height: 20),
-                    GetBuilder<SignupController>(builder: (controller) {
-                      return controller.isLoading.value == true
-                          ? CircularProgressIndicator()
-                          : GestureDetector(
-                              onTap: () {
-                                if (_formKeyReset!.currentState!.validate()) {
-                                  User user = User();
-                                  user.fName = nameController.text;
-                                  user.lName = nameController.text;
-                                  user.email = emailController.text;
-                                  user.phone = phoneController.text;
-                                  user.gst = gstController.text;
-                                  user.guest_id = "123";
-                                  user.address = addressController.text;
-                                  user.pan = panController.text;
-                                  user.msme = msmeController.text;
-                                  user.password = passwordController.text;
-                                  user.profile =
-                                      data == "0" ? "normal" : "bussiness";
+                    GetBuilder<SignupController>(
+                        init: SignupController(),
+                        builder: (controller) {
+                          return controller.isLoading.value == true
+                              ? CircularProgressIndicator()
+                              : GestureDetector(
+                                  onTap: () {
+                                    if (_formKeyReset!.currentState!
+                                        .validate()) {
+                                      User user = User();
+                                      user.fName = nameController.text;
+                                      user.lName = nameController.text;
+                                      user.email = emailController.text;
+                                      user.phone = phoneController.text;
+                                      user.gst = gstController.text;
+                                      user.guest_id = "123";
+                                      user.address = addressController.text;
+                                      user.pan = panController.text;
+                                      user.msme = msmeController.text;
+                                      user.password = passwordController.text;
+                                      user.profile =
+                                          data == "0" ? "normal" : "bussiness";
 
-                                  controller.Register(user).then((value) {
-                                    if (value.containsKey("errors")) {
-                                      Fluttertoast.showToast(msg: "$value");
-                                    } else if (value['temporary_token'] != "") {
-                                      String token =
-                                          value['temporary_token'].toString();
-                                      controller
-                                          .checkOtp(token, phoneController.text)
-                                          .then((value) {
-                                        Get.toNamed(Routes.PHONE_VERIFICATION,
-                                            arguments: {
-                                              'token': token,
-                                              'type': '${data}',
-                                              'phone':
-                                                  '${phoneController.text}',
-                                              'otp':
-                                                  '${controller.checkOtpval.value.otp}'
-                                            });
+                                      controller.Register(user).then((value) {
+                                        if (value.containsKey("errors")) {
+                                          Fluttertoast.showToast(msg: "$value");
+                                        } else if (value['temporary_token'] !=
+                                            "") {
+                                          String token =
+                                              value['temporary_token']
+                                                  .toString();
+                                          controller
+                                              .checkOtp(
+                                                  token, phoneController.text)
+                                              .then((value) {
+                                            Get.toNamed(
+                                                Routes.PHONE_VERIFICATION,
+                                                arguments: {
+                                                  'token': token,
+                                                  'type': '${data}',
+                                                  'phone':
+                                                      '${phoneController.text}',
+                                                  'otp':
+                                                      '${controller.checkOtpval.value.otp}'
+                                                });
+                                          });
+
+                                          // Navigator.pushReplacement(
+                                          //     context,
+                                          //     MaterialPageRoute(
+                                          //         builder: (context) =>
+                                          //             OTPScreen2(a )));
+                                        }
+
+                                        // return null;
                                       });
-
-                                      // Navigator.pushReplacement(
-                                      //     context,
-                                      //     MaterialPageRoute(
-                                      //         builder: (context) =>
-                                      //             OTPScreen2(a )));
                                     }
-
-                                    // return null;
-                                  });
-                                }
-                              },
-                              child: const MyButton(text: "Sign Up"));
-                    }),
+                                  },
+                                  child: const MyButton(text: "Sign Up"));
+                        }),
                     const SizedBox(height: 70),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -176,6 +183,7 @@ class _SignUpState extends State<SignUp> {
 
   void initUI() {
     data = Get.arguments ?? '';
+    setState(() {});
   }
 
   final _formKeyReset = GlobalKey<FormState>();
@@ -198,13 +206,13 @@ class _SignUpState extends State<SignUp> {
         ),
         SizedBox(height: 15),
         MyTextField(
-          validator: (value) => Validator.validateEmail(value),
+          validator: (value) => Validator.validateName(value),
           controller: nameController,
           labelText: Text("Company Name"),
         ),
         SizedBox(height: 15),
         MyTextField(
-          validator: (value) => Validator.validateName(value),
+          validator: (value) => null,
           controller: gstController,
           labelText: Text("Gst Number (optional)"),
         ),
@@ -222,7 +230,7 @@ class _SignUpState extends State<SignUp> {
         ),
         SizedBox(height: 15),
         MyTextField(
-          validator: (value) => Validator.validateAddress(value),
+          validator: (value) => null,
           controller: msmeController,
           labelText: Text("MSME No.(optional)"),
         ),
@@ -268,7 +276,7 @@ class _SignUpState extends State<SignUp> {
         ),
         SizedBox(height: 15),
         MyTextField(
-          validator: (value) => Validator.validateName(value),
+          validator: (value) => null,
           controller: gstController,
           labelText: Text("Gst Number (optional)"),
         ),

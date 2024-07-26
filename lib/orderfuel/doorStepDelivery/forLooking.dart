@@ -65,10 +65,10 @@ class _LookingForCompanyState extends State<LookingForCompany> {
                 bottomRight: Radius.circular(23),
               ),
             ),
-            child:Row(
+            child: Row(
               children: [
                 InkWell(
-                  onTap: (){
+                  onTap: () {
                     Navigator.pop(context);
                   },
                   child: Padding(
@@ -171,7 +171,7 @@ class _LookingForCompanyState extends State<LookingForCompany> {
                 onTap: () => Navigator.push(context,
                         MaterialPageRoute(builder: (context) {
                       if (selected == 1) {
-                        return const SelectNewAddress(
+                        return SelectNewAddress(
                           isFromForLooking: true,
                         );
                       } else if (selected == 2) {

@@ -15,12 +15,12 @@ class _HomeState extends State<Home> {
   int _selectedIndex = 0;
 
   void navigateBottomBar(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
+    _selectedIndex = index;
+    print("object _sele Index ${_selectedIndex}");
+    setState(() {});
   }
 
-  final List<Widget> pages = [
+  List<Widget> pages = [
     HomePage(),
     MyOrder(),
     OffersScreen(),
@@ -38,7 +38,7 @@ class _HomeState extends State<Home> {
         type: BottomNavigationBarType.fixed,
         fixedColor: Color.fromRGBO(237, 111, 37, 1),
         items: [
-          const BottomNavigationBarItem(
+          BottomNavigationBarItem(
               icon: Image(
                 image: AssetImage("assets/Home.png"),
                 height: 24,

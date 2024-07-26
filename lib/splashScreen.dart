@@ -16,6 +16,7 @@ class SplashScreen extends StatefulWidget {
 }
 
 SettingModel? configModel;
+String categoryId = "";
 
 class _SplashScreenState extends State<SplashScreen> {
   @override

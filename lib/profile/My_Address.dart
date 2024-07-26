@@ -25,6 +25,7 @@ class _MyAddressScreenState extends State<MyAddressScreen> {
         builder: (controller) {
           controller.getAddRess();
           return Scaffold(
+            appBar: const MyAppbar(title: 'Address'),
             bottomNavigationBar: Padding(
               padding: const EdgeInsets.all(12.0),
               child: Stack(
@@ -59,7 +60,6 @@ class _MyAddressScreenState extends State<MyAddressScreen> {
             body: SingleChildScrollView(
               child: Column(
                 children: [
-                  const MyAppbar(title: 'Address'),
                   Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: Column(
@@ -155,6 +155,7 @@ class AddressCard extends StatelessWidget {
           Text(
             label,
             style: TextStyle(
+              overflow: TextOverflow.ellipsis,
               fontSize: 14.0,
               color: Colors.grey[600],
             ),

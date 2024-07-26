@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
+import 'package:test_prj/Home/editprofile.dart';
 import 'package:test_prj/authPages/language_page.dart';
 import 'package:test_prj/controller/profile_controller.dart';
 import 'package:test_prj/profile/ContactUs.dart';
@@ -158,57 +159,81 @@ class ProfilePageState extends State<ProfilePage> {
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
-                                            Obx(() => Text(
-                                                  controller.userInfoModel !=
-                                                              null &&
-                                                          controller
-                                                                  .userInfoModel
-                                                                  .value !=
-                                                              null
-                                                      ? controller.userInfoModel
-                                                          .value.name
-                                                          .toString()
-                                                      : "",
-                                                  style: TextStyle(
-                                                      fontSize: 20,
-                                                      fontWeight:
-                                                          FontWeight.w700),
-                                                )),
-                                            Obx(() => Text(
-                                                  controller.userInfoModel !=
-                                                              null &&
-                                                          controller
-                                                                  .userInfoModel
-                                                                  .value !=
-                                                              null
-                                                      ? controller.userInfoModel
-                                                          .value.email
-                                                          .toString()
-                                                      : "",
-                                                  style: TextStyle(
-                                                      color: Color.fromRGBO(
-                                                          137, 137, 137, 1),
-                                                      fontWeight:
-                                                          FontWeight.w800),
-                                                )),
+                                            Obx(() => controller
+                                                        .isLoading.value ==
+                                                    true
+                                                ? CircularProgressIndicator(
+                                                    color: Colors.deepOrange,
+                                                  )
+                                                : Text(
+                                                    controller.userInfoModel !=
+                                                                null &&
+                                                            controller
+                                                                    .userInfoModel
+                                                                    .value !=
+                                                                null
+                                                        ? controller
+                                                            .userInfoModel
+                                                            .value
+                                                            .name
+                                                            .toString()
+                                                        : "",
+                                                    style: TextStyle(
+                                                        fontSize: 20,
+                                                        fontWeight:
+                                                            FontWeight.w700),
+                                                  )),
+                                            Obx(() => controller
+                                                        .isLoading.value ==
+                                                    true
+                                                ? CircularProgressIndicator(
+                                                    color: Colors.deepOrange,
+                                                  )
+                                                : Text(
+                                                    controller.userInfoModel !=
+                                                                null &&
+                                                            controller
+                                                                    .userInfoModel
+                                                                    .value !=
+                                                                null
+                                                        ? controller
+                                                            .userInfoModel
+                                                            .value
+                                                            .email
+                                                            .toString()
+                                                        : "",
+                                                    style: TextStyle(
+                                                        color: Color.fromRGBO(
+                                                            137, 137, 137, 1),
+                                                        fontWeight:
+                                                            FontWeight.w800),
+                                                  )),
                                           ],
                                         ),
                                       ),
-                                      SizedBox(
-                                        width: 35,
-                                      ),
-                                      Container(
-                                          height: 30,
-                                          width: 30,
-                                          decoration: BoxDecoration(
-                                            color: Colors.green,
-                                            borderRadius:
-                                                BorderRadius.circular(20),
-                                          ),
-                                          child: Icon(
-                                            Icons.edit_outlined,
-                                            color: Colors.white,
-                                          ))
+                                      Spacer(),
+                                      InkWell(
+                                        onTap: () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    EditProfile(),
+                                              ));
+                                        },
+                                        child: Container(
+                                            height: 30,
+                                            width: 30,
+                                            decoration: BoxDecoration(
+                                              color: Colors.green,
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
+                                            ),
+                                            child: Icon(
+                                              Icons.edit_outlined,
+                                              color: Colors.white,
+                                            )),
+                                      )
                                     ],
                                   ),
                                 ),

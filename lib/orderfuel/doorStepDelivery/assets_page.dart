@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:test_prj/components/my_appbar.dart';
@@ -24,13 +22,13 @@ class _AssetsPageState extends State<AssetsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+      appBar: const MyAppbar(
+        title: "Assets",
+      ),
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            const MyAppbar(
-              title: "Assets",
-            ),
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: TextFormField(
@@ -44,8 +42,7 @@ class _AssetsPageState extends State<AssetsPage> {
                   filled: true,
                   fillColor: Colors.grey.shade200,
                 ),
-                onChanged: (value) {
-                },
+                onChanged: (value) {},
               ),
             ),
             Padding(
@@ -60,8 +57,7 @@ class _AssetsPageState extends State<AssetsPage> {
                       color: Colors.grey.shade200,
                       borderRadius: BorderRadius.circular(12),
                     ),
-                    child:  InkWell(
-
+                    child: InkWell(
                       onTap: () {
                         Navigator.push(
                           context,
@@ -86,7 +82,8 @@ class _AssetsPageState extends State<AssetsPage> {
                                 children: [
                                   Text(
                                     "Asset Name",
-                                    style: TextStyle(color: Colors.grey.shade600),
+                                    style:
+                                        TextStyle(color: Colors.grey.shade600),
                                   ),
                                   const Text(
                                     "genset 1",
@@ -101,7 +98,8 @@ class _AssetsPageState extends State<AssetsPage> {
                                 children: [
                                   Text(
                                     "Asset Capacity/Power",
-                                    style: TextStyle(color: Colors.grey.shade600),
+                                    style:
+                                        TextStyle(color: Colors.grey.shade600),
                                   ),
                                   const Text(
                                     "120kva",
@@ -134,7 +132,6 @@ class _AssetsPageState extends State<AssetsPage> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               InkWell(
-
                                 onTap: () {
                                   Navigator.push(
                                     context,
@@ -154,8 +151,8 @@ class _AssetsPageState extends State<AssetsPage> {
                                       Icon(Icons.edit_outlined),
                                       Text(
                                         "Edit Assets",
-                                        style:
-                                            TextStyle(fontWeight: FontWeight.w500),
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w500),
                                       ),
                                     ],
                                   ),
@@ -163,78 +160,99 @@ class _AssetsPageState extends State<AssetsPage> {
                               ),
                               GestureDetector(
                                 onTap: () {
-                                  showDialog(context: context, builder: (context) => Dialog(
-                                    child: Container(
-                                      height: 292,
-                                      decoration: BoxDecoration(
-                                          color: Colors.white, borderRadius: BorderRadius.circular(20)),
-                                      child: Center(
-                                        child: Column(
-                                          children: [
-                                            SizedBox(height: 32),
-                                            CircleAvatar(
-                                              radius: 40,
-                                              backgroundColor: Color(0xFFFFF7EF),
-                                              child: Icon(
-                                                Icons.delete,
-                                                size: 44,
-                                                color: Colors.red,
-                                              )
-                                            ),
-                                            SizedBox(height: 20),
-                                            Text(
-                                              "Are you Sure you want to",
-                                              style: TextStyle(
-                                                fontSize: 20,
-                                                fontWeight: FontWeight.w700,
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) => Dialog(
+                                      child: Container(
+                                        height: 292,
+                                        decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            borderRadius:
+                                                BorderRadius.circular(20)),
+                                        child: Center(
+                                          child: Column(
+                                            children: [
+                                              SizedBox(height: 32),
+                                              CircleAvatar(
+                                                  radius: 40,
+                                                  backgroundColor:
+                                                      Color(0xFFFFF7EF),
+                                                  child: Icon(
+                                                    Icons.delete,
+                                                    size: 44,
+                                                    color: Colors.red,
+                                                  )),
+                                              SizedBox(height: 20),
+                                              Text(
+                                                "Are you Sure you want to",
+                                                style: TextStyle(
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.w700,
+                                                ),
                                               ),
-                                            ),
-                                            Text(
-                                              "delete",
-                                              style: TextStyle(
-                                                fontSize: 20,
-                                                fontWeight: FontWeight.w700,
+                                              Text(
+                                                "delete",
+                                                style: TextStyle(
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.w700,
+                                                ),
                                               ),
-                                            ),
-                                            SizedBox(height: 24),
-                                            Container(
-                                              height: 48,
-                                              padding: EdgeInsets.symmetric(horizontal: 24),
-                                              child: GestureDetector(
-                                                onTap: (){},
-                                                child: Container(
-                                                  height: 56,
-                                                  decoration: BoxDecoration(
-                                                    gradient: LinearGradient(
-                                                      colors: [Color(0xFFF3B781F),Color(0xFF8AB402)],
-                                                      stops: [0, 1],
-                                                      begin: AlignmentDirectional(0.94, -1),
-                                                      end: AlignmentDirectional(-0.94, 1),
+                                              SizedBox(height: 24),
+                                              Container(
+                                                height: 48,
+                                                padding: EdgeInsets.symmetric(
+                                                    horizontal: 24),
+                                                child: GestureDetector(
+                                                  onTap: () {},
+                                                  child: Container(
+                                                    height: 56,
+                                                    decoration: BoxDecoration(
+                                                      gradient: LinearGradient(
+                                                        colors: [
+                                                          Color(0xFFF3B781F),
+                                                          Color(0xFF8AB402)
+                                                        ],
+                                                        stops: [0, 1],
+                                                        begin:
+                                                            AlignmentDirectional(
+                                                                0.94, -1),
+                                                        end:
+                                                            AlignmentDirectional(
+                                                                -0.94, 1),
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              12),
                                                     ),
-                                                    borderRadius: BorderRadius.circular(12),
-                                                  ),
-                                                  alignment: Alignment.center,
-                                                  child:  InkWell(
-                                                    onTap: () {
-                                                      Navigator.push(
-                                                        context,
-                                                        MaterialPageRoute(
-                                                            builder: (context) => const MyFullAssets()),
-                                                      );
-                                                    },
-                                                    child: Text(
-                                                      "Done",
-                                                      style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
+                                                    alignment: Alignment.center,
+                                                    child: InkWell(
+                                                      onTap: () {
+                                                        Navigator.push(
+                                                          context,
+                                                          MaterialPageRoute(
+                                                              builder: (context) =>
+                                                                  MyFullAssets()),
+                                                        );
+                                                      },
+                                                      child: Text(
+                                                        "Done",
+                                                        style: TextStyle(
+                                                            color: Colors.white,
+                                                            fontSize: 16,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                      ),
                                                     ),
                                                   ),
                                                 ),
-                                              ),
-                                            )
-                                          ],
+                                              )
+                                            ],
+                                          ),
                                         ),
                                       ),
                                     ),
-                                  ),);
+                                  );
                                 },
                                 child: Container(
                                   height: 40,
@@ -248,7 +266,8 @@ class _AssetsPageState extends State<AssetsPage> {
                                       Icon(Icons.delete_outline),
                                       Text(
                                         "Delete Assets",
-                                        style: TextStyle(fontWeight: FontWeight.w500),
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w500),
                                       ),
                                     ],
                                   ),
@@ -260,7 +279,6 @@ class _AssetsPageState extends State<AssetsPage> {
                       ),
                     ),
                   ),
-
                   InkWell(
                     onTap: () {
                       Navigator.push(
@@ -281,17 +299,15 @@ class _AssetsPageState extends State<AssetsPage> {
                           SizedBox(
                               height: 48,
                               width: 160,
-                              child:
-                              InkWell(
+                              child: InkWell(
                                   onTap: () {
                                     showModalBottomSheet(
                                       context: context,
-                                      builder: (context) => const AddFuelQuantity(),
+                                      builder: (context) =>
+                                          const AddFuelQuantity(),
                                     );
                                   },
-                                  child: const MyButton(text: "Order")
-                              )
-                          ),
+                                  child: const MyButton(text: "Order"))),
                         ],
                       ),
                     ),

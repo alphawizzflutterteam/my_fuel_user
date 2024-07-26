@@ -6,6 +6,8 @@ class Routes {
   static const PASSWORD_VERIFICATION = '/password_verification';
   static const MEMBERCARD = '/Membercard';
   static const CREATEPASSWORD = '/createpassword';
+  static const GENSET_CHECKOUT = '/gensetcheckout';
+  static const FUEL_CHECKOUT = '/fuelcheckout';
 
   static const ROOT = '/root';
   static const RATING = '/rating';

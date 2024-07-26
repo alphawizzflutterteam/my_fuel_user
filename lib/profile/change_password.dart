@@ -22,51 +22,57 @@ class _ChangePasswordState extends State<ChangePassword> {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<ForgetPasswordController>(builder: (controller) {
-      return Scaffold(
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Column(
+    return GetBuilder<ForgetPasswordController>(
+        init: ForgetPasswordController(),
+        builder: (controller) {
+          return Scaffold(
+            body: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                MyAppbar(title: "Change Password"),
-                SizedBox(height: 16),
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: MyTextField(
-                      validator: (value) => Validator.validatePassword(value),
-                      controller: currentPassword,
-                      labelText: Text("Current Password")),
+                Column(
+                  children: [
+                    MyAppbar(title: "Change Password"),
+                    SizedBox(height: 16),
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: MyTextField(
+                          validator: (value) =>
+                              Validator.validatePassword(value),
+                          controller: currentPassword,
+                          labelText: Text("Current Password")),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: MyTextField(
+                          validator: (value) =>
+                              Validator.validatePassword(value),
+                          controller: newPassword,
+                          labelText: Text("New Password")),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: MyTextField(
+                          validator: (value) =>
+                              Validator.validatePassword(value),
+                          controller: confirmPassword,
+                          labelText: Text("Confirm Password")),
+                    ),
+                  ],
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: MyTextField(
-                      validator: (value) => Validator.validatePassword(value),
-                      controller: newPassword,
-                      labelText: Text("New Password")),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: MyTextField(
-                      validator: (value) => Validator.validatePassword(value),
-                      controller: confirmPassword,
-                      labelText: Text("Confirm Password")),
-                ),
+                  padding:
+                      const EdgeInsets.only(left: 16, right: 16, bottom: 40),
+                  child: Container(
+                      height: 48,
+                      child: InkWell(
+                          onTap: () {
+                            // controller.resetPassword()
+                          },
+                          child: MyButton(text: "Change Password"))),
+                )
               ],
             ),
-            Padding(
-              padding: const EdgeInsets.only(left: 16, right: 16, bottom: 40),
-              child: Container(
-                  height: 48,
-                  child: InkWell(
-                      onTap: () {
-                        // controller.resetPassword()
-                      },
-                      child: MyButton(text: "Change Password"))),
-            )
-          ],
-        ),
-      );
-    });
+          );
+        });
   }
 }

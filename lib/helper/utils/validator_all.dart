@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 class Validator {
   static String? validateName(String? value) {
     if (value!.isEmpty) {
@@ -52,6 +54,16 @@ class Validator {
       return 'Please enter a valid MSME number';
     }
     return null;
+  }
+
+  static String convertDateString(String inputDate) {
+    // Parse the input string into a DateTime object
+    DateTime dateTime = DateFormat('yyyy-MM-dd').parse(inputDate);
+
+    // Format the DateTime object into the desired output format
+    String formattedDate = DateFormat('dd MMMM yyyy').format(dateTime);
+
+    return formattedDate;
   }
 
 // Add more static methods for other validations as needed

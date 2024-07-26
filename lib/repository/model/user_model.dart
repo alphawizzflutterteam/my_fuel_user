@@ -55,3 +55,38 @@ class User {
     return data;
   }
 }
+
+class UpdateProfile {
+  String? fName;
+  String? lName;
+  String? email;
+  String? phone;
+  String? password;
+
+  UpdateProfile({
+    this.fName,
+    this.lName,
+    this.email,
+    this.phone,
+    this.password,
+  });
+
+  UpdateProfile.fromJson(Map<String, dynamic> json) {
+    fName = json['f_name'];
+    lName = json['l_name'];
+    email = json['email'];
+    phone = json['phone'];
+    password = json['password'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['f_name'] = fName;
+    data['l_name'] = lName;
+    data['email'] = email;
+    data['phone'] = phone;
+    data['password'] = password;
+
+    return data;
+  }
+}

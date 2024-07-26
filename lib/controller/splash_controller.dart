@@ -52,7 +52,10 @@ class SplashController extends AppBaseController {
     SettingModel response = await _laravelApiClient.getSettings();
 
     settingModel.value = response;
-    configModel = response;
+    if (response != null) {
+      configModel = response;
+    }
+
     print("getSettingAPi ${settingModel.value.shippingMethod}");
   }
 }

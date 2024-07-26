@@ -10,6 +10,8 @@ import 'package:test_prj/routes/app_routes.dart';
 import 'package:test_prj/routes/bindings/inial_binding.dart';
 import 'package:test_prj/splashScreen.dart';
 
+import '../Home/Genset_checkOut.dart';
+import '../Home/fuel_ontab_checkout.dart';
 import '../authPages/register_complete.dart';
 
 class AppPages {
@@ -43,6 +45,16 @@ class AppPages {
     GetPage(
       name: Routes.PHONE_VERIFICATION,
       page: () => const OTPScreen(),
+      binding: InitialBinding(),
+    ),
+    GetPage(
+      name: Routes.GENSET_CHECKOUT,
+      page: () => const GetSetCheckoutScreen(),
+      binding: InitialBinding(),
+    ),
+    GetPage(
+      name: Routes.FUEL_CHECKOUT,
+      page: () => FuelOnTabCheckoutScreen(),
       binding: InitialBinding(),
     ),
     GetPage(

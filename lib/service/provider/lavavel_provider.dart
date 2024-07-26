@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:get/get.dart';
+import 'package:test_prj/data/model/service_detail.dart';
 
 import 'package:test_prj/helper/utils/app_constants.dart';
 import 'package:test_prj/repository/model/user_model.dart';
@@ -114,10 +115,16 @@ class LaravelApiClient extends GetxService with ApiClient {
     }
   }
 
-  Future<Map<String, dynamic>> checkOtp(String token, String mobile) async {
-    var response = await httpClient.post(
-      ApiConstants.checkPhone,
-      data: {'token': "$token", "mobile": "$mobile"},
+  Future<Map<String, dynamic>> updateProfile(UpdateProfile user) async {
+    SharedPreferencesService? instance =
+        await SharedPreferencesService.getInstance();
+
+    String token = instance.getData(SharedPreferencesService.kTokenKey);
+    optionsNetwork.headers!['Authorization'] = "Bearer $token";
+
+    var response = await httpClient.put(
+      ApiConstants.UPDATEPROFILE,
+      data: user.toJson(),
       options: optionsNetwork,
     );
     if (response.statusCode == 200) {
@@ -128,11 +135,88 @@ class LaravelApiClient extends GetxService with ApiClient {
     }
   }
 
+  Future<Map<String, dynamic>> checkOtp(String token, String mobile) async {
+    Map data = {"temporary_token": "$token", "phone": "$mobile"};
+    print("object Data Request $data");
+    var response = await httpClient.post(
+      ApiConstants.checkPhone,
+      data: data,
+      options: optionsNetwork,
+    );
+    if (response.statusCode == 200) {
+      print("userRegister ${response.toString()} ");
+      return json.decode(response.toString());
+    } else {
+      throw Exception(response.data['message']);
+    }
+  }
+
+  // Future<Map<String, dynamic>> serviceDetail(
+  //     String token, String mobile) async {
+  //   var response = await httpClient.post(
+  //     ApiConstants.checkPhone,
+  //     data: {'token': "$token", "mobile": "$mobile"},
+  //     options: optionsNetwork,
+  //   );
+  //   if (response.statusCode == 200) {
+  //     print("userRegister ${response.toString()} ");
+  //     return json.decode(response.toString());
+  //   } else {
+  //     throw Exception(response.data['message']);
+  //   }
+  // }
+
+  Future<ServiceDetailsModel> getServiceDetail(String id) async {
+    SharedPreferencesService? instance =
+        await SharedPreferencesService.getInstance();
+
+    String token = instance.getData(SharedPreferencesService.kTokenKey);
+    optionsNetwork.headers!['Authorization'] = "Bearer $token";
+    print("category $id");
+    var response = await httpClient.post(
+      ApiConstants.serviceDetail,
+      data: {'category': "$id", "offset": "0", "limit": "20"},
+      options: optionsNetwork,
+    );
+    if (response.statusCode == 200) {
+      print("userRegister ${response.toString()} ");
+      return ServiceDetailsModel.fromJson(json.decode(response.toString()));
+      return json.decode(response.toString());
+    } else {
+      throw Exception(response.data['message']);
+    }
+  }
+
   Future<Map<String, dynamic>> verifyOtp(
       String token, String mobile, String otp) async {
     var response = await httpClient.post(
       ApiConstants.veriFyPhone,
-      data: {'token': "$token", "mobile": "$mobile", "otp": "$otp"},
+      data: {'temporary_token': "$token", "phone": "$mobile", "otp": "$otp"},
+      options: optionsNetwork,
+    );
+    if (response.statusCode == 200) {
+      print("userRegister ${response.toString()} ");
+      return json.decode(response.toString());
+    } else {
+      throw Exception(response.data['message']);
+    }
+  }
+
+  Future<Map<String, dynamic>> Enquiry(String id, String monthly_consumption,
+      String number_of_assets, String fuel_consumption) async {
+    SharedPreferencesService? instance =
+        await SharedPreferencesService.getInstance();
+
+    String token = instance.getData(SharedPreferencesService.kTokenKey);
+    optionsNetwork.headers!['Authorization'] = "Bearer $token";
+    var response = await httpClient.post(
+      ApiConstants.Enquiry,
+      data: {
+        'category_id': "$id",
+        "monthly_consumption": "$monthly_consumption",
+        "number_of_assets": "$number_of_assets",
+        "fuel_consumption": "$fuel_consumption"
+      },
       options: optionsNetwork,
     );
     if (response.statusCode == 200) {
@@ -154,6 +238,73 @@ class LaravelApiClient extends GetxService with ApiClient {
         // "guest_id": "$membNo"
         "guest_id": "123"
       },
+      options: optionsNetwork,
+    );
+    if (response.statusCode == 200) {
+      print("userRegister ${response.toString()} ");
+
+      return json.decode(response.toString());
+    } else {
+      throw Exception(response.data['message']);
+    }
+  }
+
+  Future<Map<String, dynamic>> AddToCart(
+    String ids,
+  ) async {
+    SharedPreferencesService? instance =
+        await SharedPreferencesService.getInstance();
+
+    String token = instance.getData(SharedPreferencesService.kTokenKey);
+    optionsNetwork.headers!['Authorization'] = "Bearer $token";
+    var response = await httpClient.post(
+      ApiConstants.addToCart,
+      data: {"id": "$ids", "quantity": "1"},
+      options: optionsNetwork,
+    );
+    if (response.statusCode == 200) {
+      print("userRegister ${response.toString()} ");
+
+      return json.decode(response.toString());
+    } else {
+      throw Exception(response.data['message']);
+    }
+  }
+
+  Future<Map<String, dynamic>> ManageCart(
+    String address_id,
+    String category_id,
+  ) async {
+    SharedPreferencesService? instance =
+        await SharedPreferencesService.getInstance();
+
+    String token = instance.getData(SharedPreferencesService.kTokenKey);
+    optionsNetwork.headers!['Authorization'] = "Bearer $token";
+    var response = await httpClient.get(
+      "${ApiConstants.MANAGECART}$address_id&category_id=$category_id",
+      options: optionsNetwork,
+    );
+    if (response.statusCode == 200) {
+      print("userRegister ${response.toString()} ");
+      print(
+          "userRegister ${ApiConstants.MANAGECART}$address_id&category_id=$category_id ");
+
+      return json.decode(response.toString());
+    } else {
+      throw Exception(response.data['message']);
+    }
+  }
+
+  Future<Map<String, dynamic>> placeOrder(
+    String address_id,
+  ) async {
+    SharedPreferencesService? instance =
+        await SharedPreferencesService.getInstance();
+
+    String token = instance.getData(SharedPreferencesService.kTokenKey);
+    optionsNetwork.headers!['Authorization'] = "Bearer $token";
+    var response = await httpClient.get(
+      "${ApiConstants.PLACEORDER}$address_id&payment_method=cash_on_delivery&order_note=ABC Status",
       options: optionsNetwork,
     );
     if (response.statusCode == 200) {
@@ -287,6 +438,25 @@ class LaravelApiClient extends GetxService with ApiClient {
     }
   }
 
+  Future<Map<String, dynamic>> getOrders() async {
+    SharedPreferencesService? instance =
+        await SharedPreferencesService.getInstance();
+
+    String token = instance.getData(SharedPreferencesService.kTokenKey);
+    optionsNetwork.headers!['Authorization'] = "Bearer $token";
+    var response = await httpClient.get(
+      ApiConstants.ORDERLIST,
+      options: optionsNetwork,
+    );
+    if (response.statusCode == 200) {
+      print("userRegister ${response.toString()} ");
+
+      return json.decode(response.toString());
+    } else {
+      throw Exception(response.data['message']);
+    }
+  }
+
   Future<Map<String, dynamic>> getOffer() async {
     SharedPreferencesService? instance =
         await SharedPreferencesService.getInstance();
@@ -295,6 +465,25 @@ class LaravelApiClient extends GetxService with ApiClient {
     optionsNetwork.headers!['Authorization'] = "Bearer $token";
     var response = await httpClient.get(
       ApiConstants.offers,
+      options: optionsNetwork,
+    );
+    if (response.statusCode == 200) {
+      print("userRegister ${response.toString()} ");
+
+      return json.decode(response.toString());
+    } else {
+      throw Exception(response.data['message']);
+    }
+  }
+
+  Future<Map<String, dynamic>> assetsList() async {
+    SharedPreferencesService? instance =
+        await SharedPreferencesService.getInstance();
+
+    String token = instance.getData(SharedPreferencesService.kTokenKey);
+    optionsNetwork.headers!['Authorization'] = "Bearer $token";
+    var response = await httpClient.get(
+      ApiConstants.assetsList,
       options: optionsNetwork,
     );
     if (response.statusCode == 200) {
@@ -338,6 +527,112 @@ class LaravelApiClient extends GetxService with ApiClient {
     optionsNetwork.headers!['Authorization'] = "Bearer $token";
     var response = await httpClient.get(
       ApiConstants.walletTransactionHistory,
+      options: optionsNetwork,
+    );
+    if (response.statusCode == 200) {
+      print("userRegister ${response.toString()} ");
+
+      return json.decode(response.toString());
+    } else {
+      throw Exception(response.data['message']);
+    }
+  }
+
+  Future<Map<String, dynamic>> submitInsurance(
+      String vehicle_number, String name, String email, String mobile) async {
+    SharedPreferencesService? instance =
+        await SharedPreferencesService.getInstance();
+
+    String token = instance.getData(SharedPreferencesService.kTokenKey);
+    optionsNetwork.headers!['Authorization'] = "Bearer $token";
+    var response = await httpClient.post(
+      ApiConstants.insuranceSubmit,
+      data: {
+        "vehicle_number": "$vehicle_number",
+        // "phone": "$emailPhone",
+        "name": "$name",
+        // "guest_id": "$membNo"
+        "email": "$email",
+        "mobile": "$mobile"
+      },
+      options: optionsNetwork,
+    );
+    if (response.statusCode == 200) {
+      print("userRegister ${response.toString()} ");
+
+      return json.decode(response.toString());
+    } else {
+      throw Exception(response.data['message']);
+    }
+  }
+
+  Future<Map<String, dynamic>> createAsset(String asset_type, String name,
+      String capacity, String fuel_capacity) async {
+    SharedPreferencesService? instance =
+        await SharedPreferencesService.getInstance();
+
+    String token = instance.getData(SharedPreferencesService.kTokenKey);
+    optionsNetwork.headers!['Authorization'] = "Bearer $token";
+    var response = await httpClient.post(
+      ApiConstants.addAsset,
+      data: {
+        "asset_type": "$asset_type",
+        // "phone": "$emailPhone",
+        "name": "$name",
+        // "guest_id": "$membNo"
+        "capacity": "$capacity",
+        "fuel_capacity": "$fuel_capacity"
+      },
+      options: optionsNetwork,
+    );
+    if (response.statusCode == 200) {
+      print("userRegister ${response.toString()} ");
+
+      return json.decode(response.toString());
+    } else {
+      throw Exception(response.data['message']);
+    }
+  }
+
+  Future<Map<String, dynamic>> updateAsset(String id, String asset_type,
+      String name, String capacity, String fuel_capacity) async {
+    SharedPreferencesService? instance =
+        await SharedPreferencesService.getInstance();
+
+    String token = instance.getData(SharedPreferencesService.kTokenKey);
+    optionsNetwork.headers!['Authorization'] = "Bearer $token";
+    var response = await httpClient.put(
+      ApiConstants.updateAsset,
+      data: {
+        "id": "$id",
+        "asset_type": "$asset_type",
+        // "phone": "$emailPhone",
+        "name": "$name",
+        // "guest_id": "$membNo"
+        "capacity": "$capacity",
+        "fuel_capacity": "$fuel_capacity"
+      },
+      options: optionsNetwork,
+    );
+    if (response.statusCode == 200) {
+      print("userRegister ${response.toString()} ");
+
+      return json.decode(response.toString());
+    } else {
+      throw Exception(response.data['message']);
+    }
+  }
+
+  Future<Map<String, dynamic>> deleteAsset(
+    String id,
+  ) async {
+    SharedPreferencesService? instance =
+        await SharedPreferencesService.getInstance();
+
+    String token = instance.getData(SharedPreferencesService.kTokenKey);
+    optionsNetwork.headers!['Authorization'] = "Bearer $token";
+    var response = await httpClient.delete(
+      "${ApiConstants.deleteAsset}$id",
       options: optionsNetwork,
     );
     if (response.statusCode == 200) {
