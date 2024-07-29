@@ -240,7 +240,7 @@ class _MyOrderState extends State<MyOrder> {
                                                                         placeholder:
                                                                             'assets/indianoil.png', // Placeholder image path
                                                                         image:
-                                                                            '${configModel!.baseUrls!.supportTicketImageUrl}${controller.ordersList[index].details![0].product!.thumbnail!.toUpperCase()}', // Network image URL
+                                                                            '${configModel!.baseUrls!.supportTicketImageUrl}/${controller.ordersList[index].details![0].product!.thumbnail!.toUpperCase()}', // Network image URL
                                                                         imageErrorBuilder: (context,
                                                                             error,
                                                                             stackTrace) {

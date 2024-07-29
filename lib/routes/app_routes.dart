@@ -8,6 +8,7 @@ class Routes {
   static const CREATEPASSWORD = '/createpassword';
   static const GENSET_CHECKOUT = '/gensetcheckout';
   static const FUEL_CHECKOUT = '/fuelcheckout';
+  static const ORDERPLACED = '/placeorder';
 
   static const ROOT = '/root';
   static const RATING = '/rating';

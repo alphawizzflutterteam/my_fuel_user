@@ -26,6 +26,7 @@ class ApiConstants {
   static const String addToCart = '/api/v1/cart/add';
   static const String MANAGECART = '/api/v1/cart?address_id=';
   static const String UPDATEPROFILE = '/api/v1/customer/update-profile';
+  static const String VENDORCHEKOUT = '/api/v1/customer/order/vendor-checkout';
   static const String ORDERLIST =
       '/api/v1/customer/order/list?limit=10&offset=0';
 
@@ -34,4 +35,8 @@ class ApiConstants {
       '/api/v1/customer/order/place?billing_address_id=';
 
   ///2&payment_method=cash_on_delivery&order_note=ABC Status
+  ///
+  static const String VEHICLETYPE = '/api/v1/customer/order/vehicle-type';
+  static const String VEHICLEMODEL = '/api/v1/customer/order/vehicle-model';
+  static const String TIMESLOTS = '/api/v1/customer/order/time-slots';
 }

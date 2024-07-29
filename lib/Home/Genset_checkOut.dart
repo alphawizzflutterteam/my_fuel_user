@@ -1,12 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:test_prj/controller/cart_controller.dart';
 import 'package:test_prj/payment/paymentScreen.dart';
 import 'package:test_prj/splashScreen.dart';
 
 import '../components/my_button.dart';
 import '../helper/colors.dart';
+import '../main.dart';
+import '../payment/pay_success_page.dart';
+import '../payment/payment_form.dart';
+import '../routes/app_routes.dart';
 
 class GetSetCheckoutScreen extends StatefulWidget {
   final bool? isfrom;
@@ -17,11 +23,84 @@ class GetSetCheckoutScreen extends StatefulWidget {
 }
 
 class _GetSetCheckoutScreenState extends State<GetSetCheckoutScreen> {
+  Razorpay? razorpay;
+  int? pricerazorpayy;
+  String payment_type = "";
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     initUI();
+  }
+
+  void openCheckout(amount) async {
+    double res = double.parse(amount.toString().replaceAll(",", ""));
+    pricerazorpayy = int.parse(res.toStringAsFixed(0)) * 100;
+    // Navigator.of(context).pop();
+    var options = {
+      'key': 'rzp_test_1DP5mmOlF5G5ag',
+      'amount': "$pricerazorpayy",
+      'name': 'My Fuel',
+      'image': 'assets/images/Group 165.png',
+      'description': 'My Fuel',
+    };
+    try {
+      razorpay?.open(options);
+    } catch (e) {
+      debugPrint('Error: e');
+    }
+  }
+
+  Future<void> handlePaymentSuccess(PaymentSuccessResponse response) async {
+    Fluttertoast.showToast(msg: "Payment successfully");
+
+    CartController controller = Get.find();
+    controller.placeOrder(address_id.toString(), "razorpay").then((value) {
+      Get.offAll(
+        OrderPlaced(
+          isFromFuelOnTap: true,
+          amount: "${controller.checkOutModel.value.total}",
+        ),
+      );
+
+      // Navigator.pushReplacement(
+      //   navigatorKey.currentState!.context!,
+      //   MaterialPageRoute(
+      //     builder: (context) => OrderPlaced(
+      //       isFromFuelOnTap: true,
+      //       amount: "${controller.checkOutModel.value.total}",
+      //     ),
+      //   ),
+      // );
+      // Navigator.push(context,
+      //     MaterialPageRoute(builder: (context) => const PaymentScreenTree()));
+    });
+
+    Navigator.pop(context);
+    // Navigator.push(context, MaterialPageRoute(builder: (context)=>HomeScreen()));
+  }
+
+  void handlePaymentError(PaymentFailureResponse response) {
+    Fluttertoast.showToast(msg: "Payment cancelled by user");
+  }
+
+  void handleExternalWallet(ExternalWalletResponse response) {}
+
+  String address_id = "";
+  String category_id = "";
+  void initUI() {
+    razorpay = Razorpay();
+    razorpay?.on(Razorpay.EVENT_PAYMENT_SUCCESS, handlePaymentSuccess);
+    razorpay?.on(Razorpay.EVENT_PAYMENT_ERROR, handlePaymentError);
+    razorpay?.on(Razorpay.EVENT_EXTERNAL_WALLET, handleExternalWallet);
+    final arguments = Get.arguments ?? {};
+    address_id = arguments['address_id'].toString();
+    category_id = arguments['category_id'].toString();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      CartController controller = Get.find();
+      controller.manageCart(address_id, category_id);
+    });
   }
 
   @override
@@ -174,7 +253,7 @@ class _GetSetCheckoutScreenState extends State<GetSetCheckoutScreen> {
                                                   borderRadius:
                                                       BorderRadius.circular(10),
                                                   child: Image.network(
-                                                    '${configModel!.baseUrls!.productThumbnailUrl}${controller.checkOutModel.value.data![index].thumbnail}',
+                                                    '${configModel!.baseUrls!.productThumbnailUrl}/${controller.checkOutModel.value.data![index].thumbnail}',
                                                     // 'https://media.istockphoto.com/id/1330589502/photo/electric-vehicle-charging-station.jpg?s=1024x1024&w=is&k=20&c=gwve61BLBc9djE8P9Qp-2KSxS-ehZtvlcTW6AKy4DOA=',
                                                     height: 130,
                                                     errorBuilder: (context,
@@ -555,19 +634,49 @@ class _GetSetCheckoutScreenState extends State<GetSetCheckoutScreen> {
                                                       child: GestureDetector(
                                                         child: const MyButton(
                                                             text: 'Checkout'),
-                                                        onTap: () {
-                                                          controller
-                                                              .placeOrder(
-                                                                  address_id
-                                                                      .toString())
-                                                              .then((value) {
-                                                            Navigator.push(
-                                                                context,
-                                                                MaterialPageRoute(
+                                                        onTap: () async {
+                                                          print(
+                                                              "l.value.total${controller.checkOutModel.value.total.toString()}");
+                                                          var data = await Navigator.push(
+                                                              context,
+                                                              MaterialPageRoute(
+                                                                  builder:
+                                                                      (context) =>
+                                                                          const PaymentScreenTree()));
+
+                                                          if (data != null) {
+                                                            if (data ==
+                                                                "payment") {
+                                                              openCheckout(controller
+                                                                  .checkOutModel
+                                                                  .value
+                                                                  .total
+                                                                  .toString());
+                                                            } else {
+                                                              controller
+                                                                  .placeOrder(
+                                                                      address_id
+                                                                          .toString(),
+                                                                      "cod")
+                                                                  .then(
+                                                                      (value) {
+                                                                Navigator
+                                                                    .pushReplacement(
+                                                                  context,
+                                                                  MaterialPageRoute(
                                                                     builder:
                                                                         (context) =>
-                                                                            const PaymentScreenTree()));
-                                                          });
+                                                                            OrderPlaced(
+                                                                      isFromFuelOnTap:
+                                                                          true,
+                                                                      amount:
+                                                                          "${controller.checkOutModel.value.total}",
+                                                                    ),
+                                                                  ),
+                                                                );
+                                                              });
+                                                            }
+                                                          }
                                                         },
                                                       ),
                                                     ),
@@ -612,7 +721,7 @@ class _GetSetCheckoutScreenState extends State<GetSetCheckoutScreen> {
                                         ),
                                       ),
                                       const SizedBox(height: 2),
-                                      const Padding(
+                                      Padding(
                                         padding: EdgeInsets.only(
                                             left: 15, right: 10),
                                         child: Row(
@@ -626,7 +735,7 @@ class _GetSetCheckoutScreenState extends State<GetSetCheckoutScreen> {
                                                   color: Colors.black54),
                                             ),
                                             Text(
-                                              "120.00",
+                                              "Rs.${controller.checkOutModel.value.subtotal.toString()}",
                                               style: TextStyle(
                                                 fontSize: 18,
                                                 color: Colors.black,
@@ -676,7 +785,7 @@ class _GetSetCheckoutScreenState extends State<GetSetCheckoutScreen> {
                                                   color: Colors.black54),
                                             ),
                                             Text(
-                                              "80",
+                                              "0",
                                               style: TextStyle(
                                                 fontSize: 18,
                                                 color: Colors.black,
@@ -693,7 +802,7 @@ class _GetSetCheckoutScreenState extends State<GetSetCheckoutScreen> {
                                         indent: 15,
                                         endIndent: 10,
                                       ),
-                                      const Padding(
+                                      Padding(
                                         padding: EdgeInsets.only(
                                             left: 15, right: 10),
                                         child: Row(
@@ -709,7 +818,7 @@ class _GetSetCheckoutScreenState extends State<GetSetCheckoutScreen> {
                                               ),
                                             ),
                                             Text(
-                                              "Rs.120.00",
+                                              "Rs.${controller.checkOutModel.value.total.toString()}",
                                               style: TextStyle(
                                                 fontSize: 18,
                                                 color: Colors.green,
@@ -733,17 +842,53 @@ class _GetSetCheckoutScreenState extends State<GetSetCheckoutScreen> {
                                           child: GestureDetector(
                                             child: const MyButton(
                                                 text: 'Checkout'),
-                                            onTap: () {
-                                              controller
-                                                  .placeOrder(
-                                                      address_id.toString())
-                                                  .then((value) {
-                                                Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            const PaymentScreenTree()));
-                                              });
+                                            onTap: () async {
+                                              print(
+                                                  "l.value.total${controller.checkOutModel.value.total.toString()}");
+                                              var data = await Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          const PaymentScreenTree()));
+
+                                              if (data != null) {
+                                                if (data == "payment") {
+                                                  openCheckout(controller
+                                                      .checkOutModel.value.total
+                                                      .toString());
+                                                } else {
+                                                  controller
+                                                      .placeOrder(
+                                                          address_id.toString(),
+                                                          "cod")
+                                                      .then((value) {
+                                                    Navigator.pushReplacement(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                        builder: (context) {
+                                                          return OrderPlaced(
+                                                            isFromFuelOnTap:
+                                                                true,
+                                                            amount:
+                                                                "${controller.checkOutModel.value.total}",
+                                                          );
+                                                        },
+                                                      ),
+                                                    );
+                                                  });
+                                                }
+                                              }
+                                              // d
+                                              // controller
+                                              //     .placeOrder(
+                                              //         address_id.toString(),"")
+                                              //     .then((value) {
+                                              //   Navigator.push(
+                                              //       context,
+                                              //       MaterialPageRoute(
+                                              //           builder: (context) =>
+                                              //               const PaymentScreenTree()));
+                                              // });
                                             },
                                           ),
                                         ),
@@ -757,18 +902,5 @@ class _GetSetCheckoutScreenState extends State<GetSetCheckoutScreen> {
             ),
           );
         });
-  }
-
-  String address_id = "";
-  String category_id = "";
-  void initUI() {
-    final arguments = Get.arguments ?? {};
-    address_id = arguments['address_id'].toString();
-    category_id = arguments['category_id'].toString();
-
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      CartController controller = Get.find();
-      controller.manageCart(address_id, category_id);
-    });
   }
 }

@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -23,8 +25,12 @@ import 'Home/tyres_screen.dart';
 import 'SelectNewAddress.dart';
 import 'components/my_button.dart';
 import 'components/my_hinttext_field.dart';
+import 'controller/carservice_controller.dart';
 import 'controller/internet_controller.dart';
 import 'controller/splash_controller.dart';
+import 'data/model/OtherCategoryModel.dart';
+import 'data/model/VehicleModel.dart';
+import 'data/model/VehicleType.dart';
 import 'helper/colors.dart';
 
 class HomePage extends StatefulWidget {
@@ -34,6 +40,8 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
+OtherCategory otherCategory = OtherCategory();
+
 class _HomePageState extends State<HomePage> {
   List<String> vehicles = ['Two Wheeler', 'Four Wheeler ,Heavy Vehicle'];
   List<String> productsAndServices = [
@@ -42,7 +50,7 @@ class _HomePageState extends State<HomePage> {
     'Fuel on Tap',
     'My Fuels Jerry...'
   ];
-  String? selectedVehicle;
+
   String? selectedVehicleManufacture;
   String? selectModel;
 
@@ -53,6 +61,14 @@ class _HomePageState extends State<HomePage> {
     // TODO: implement initState
     super.initState();
     initUI();
+  }
+
+  @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+    CarServiceController controller = Get.find();
+    controller.getVehiCleType();
   }
 
   @override
@@ -247,7 +263,7 @@ class _HomePageState extends State<HomePage> {
                                                           "assets/login-logo.png",
                                                           height: 36),
                                                       const SizedBox(width: 13),
-                                                      const Column(
+                                                      Column(
                                                         crossAxisAlignment:
                                                             CrossAxisAlignment
                                                                 .start,
@@ -256,7 +272,7 @@ class _HomePageState extends State<HomePage> {
                                                                 .center,
                                                         children: [
                                                           Text(
-                                                            "Order Fuel",
+                                                            "Order Fuel".tr,
                                                             style: TextStyle(
                                                               fontSize: 16,
                                                               fontWeight:
@@ -265,7 +281,8 @@ class _HomePageState extends State<HomePage> {
                                                             ),
                                                           ),
                                                           Text(
-                                                            "Door Step Delivery",
+                                                            "Door Step Delivery"
+                                                                .tr,
                                                             style: TextStyle(
                                                               fontSize: 12,
                                                               color: Color
@@ -325,8 +342,8 @@ class _HomePageState extends State<HomePage> {
                                                     CrossAxisAlignment.start,
                                                 children: [
                                                   const SizedBox(height: 28),
-                                                  const Text(
-                                                    "Products & Services",
+                                                  Text(
+                                                    "Products & Services".tr,
                                                     style: TextStyle(
                                                         fontSize: 20,
                                                         fontWeight:
@@ -504,26 +521,51 @@ class _HomePageState extends State<HomePage> {
                                                             int i) {
                                                       return InkWell(
                                                         onTap: () {
-                                                          if (i == 0) {
-                                                            _showBottomSheet(
-                                                                context);
-                                                          } else if (i == 1) {
-                                                            tyresBottomSheet(
-                                                                context);
-                                                          } else if (i == 2) {
-                                                            batteryBottomSheet(
-                                                                context);
-                                                          } else if (i == 3) {
-                                                            carwashBottomShee(
-                                                                context);
-                                                          } else if (i == 4) {
+                                                          print(
+                                                              "OtherId ${controller.otherList[i].id}");
+                                                          categoryId =
+                                                              controller
+                                                                  .otherList[i]
+                                                                  .id
+                                                                  .toString();
+                                                          if (controller
+                                                                  .otherList[i]
+                                                                  .id ==
+                                                              16) {
                                                             Navigator.push(
                                                                 context,
                                                                 MaterialPageRoute(
                                                                     builder:
                                                                         (context) =>
-                                                                            const RescueMe()));
-                                                          } else if (i == 5) {
+                                                                            RescueMe()));
+                                                          } else if (controller
+                                                                  .otherList[i]
+                                                                  .id ==
+                                                              9) {
+                                                            tyresBottomSheet(
+                                                                context);
+                                                          } else if (controller
+                                                                  .otherList[i]
+                                                                  .id ==
+                                                              10) {
+                                                            batteryBottomSheet(
+                                                                context);
+                                                          } else if (controller
+                                                                  .otherList[i]
+                                                                  .id ==
+                                                              11) {
+                                                            carwashBottomShee(
+                                                                context);
+                                                          } else if (controller
+                                                                  .otherList[i]
+                                                                  .id ==
+                                                              8) {
+                                                            _showBottomSheet(
+                                                                context);
+                                                          } else if (controller
+                                                                  .otherList[i]
+                                                                  .id ==
+                                                              17) {
                                                             Navigator.push(
                                                                 context,
                                                                 MaterialPageRoute(
@@ -768,7 +810,8 @@ class _HomePageState extends State<HomePage> {
                       children: [
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 16),
-                          child: Image.asset("assets/server-down.jpg"),
+                          child: Image.asset("assets/server-down.jpg",
+                              width: 200, height: 200),
                         ),
                         const SizedBox(height: 80),
                         const Text(
@@ -831,26 +874,32 @@ class _HomePageState extends State<HomePage> {
                       borderRadius: BorderRadius.circular(10),
                     ),
                     padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: DropdownButton<String>(
-                      hint: const Text('Vehicle Type'),
-                      value: selectedVehicle,
-                      underline: Container(),
-                      isExpanded: true,
-                      onChanged: (String? newValue) {
-                        if (newValue != null) {
-                          setState(() {
-                            selectedVehicle = newValue;
-                          });
-                        }
-                      },
-                      items: vehicles
-                          .map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
-                    ),
+                    child: GetBuilder<CarServiceController>(
+                        init: CarServiceController(),
+                        builder: (carserviceController) {
+                          return DropdownButton<VehicleData>(
+                            hint: const Text('Vehicle Type'),
+                            value: carserviceController.selectedVehicle.value,
+                            underline: Container(),
+                            isExpanded: true,
+                            onChanged: (VehicleData? newValue) {
+                              if (newValue != null) {
+                                setState(() {
+                                  carserviceController.selectedVehicle.value =
+                                      newValue;
+                                });
+                              }
+                            },
+                            items: carserviceController.vehicleList!
+                                .map<DropdownMenuItem<VehicleData>>(
+                                    (VehicleData value) {
+                              return DropdownMenuItem<VehicleData>(
+                                value: value,
+                                child: Text(value.name.toString()),
+                              );
+                            }).toList(),
+                          );
+                        }),
                   ),
                   const SizedBox(
                     height: 10,
@@ -897,133 +946,219 @@ class _HomePageState extends State<HomePage> {
   }
 
   void tyresBottomSheet(BuildContext context) {
+    TextEditingController tyreSizeController = TextEditingController();
+    final _formKeyReset = GlobalKey<FormState>();
     showModalBottomSheet(
       context: context,
       isScrollControlled: true, // Ensure the bottom sheet can scroll
       builder: (BuildContext context) {
-        return SingleChildScrollView(
-          // Wrap your content in SingleChildScrollView
-          child: Container(
-            padding: EdgeInsets.zero,
-            child: Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  const Text(
-                    'Select a Tyres For your Vehicle',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Container(
-                    height: 55,
-                    decoration: BoxDecoration(
-                      border: Border.all(color: colors.black12, width: 2),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: DropdownButton<String>(
-                      hint: const Text('Select Vehicle Manufacture Type'),
-                      value: selectedVehicleManufacture,
-                      underline: Container(),
-                      isExpanded: true,
-                      onChanged: (String? newValue) {
-                        if (newValue != null) {
-                          setState(() {
-                            selectedVehicleManufacture = newValue;
-                          });
-                        }
-                      },
-                      items: vehicles
-                          .map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Container(
-                    height: 55,
-                    decoration: BoxDecoration(
-                      border: Border.all(color: colors.black12, width: 2),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: DropdownButton<String>(
-                      hint: const Text('Select Model'),
-                      value: selectModel,
-                      underline: Container(),
-                      isExpanded: true,
-                      onChanged: (String? newValue) {
-                        if (newValue != null) {
-                          setState(() {
-                            selectModel = newValue;
-                          });
-                        }
-                      },
-                      items: vehicles
-                          .map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        border: Border.all(color: colors.black12, width: 2)),
-                    child: const MyHintTextField(
-                      hintText: Text(
-                        "Tyre Size",
-                        style: TextStyle(
-                          color: Colors.grey,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 40,
-                  ),
-                  InkWell(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => TyresScreen(
-                                    page: 1,
-                                  )));
+        return GetBuilder<CarServiceController>(
+            init: CarServiceController(),
+            builder: (carServiceController) {
+              return SingleChildScrollView(
+                // Wrap your content in SingleChildScrollView
+                child: Container(
+                  padding: EdgeInsets.zero,
+                  child: Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Form(
+                      key: _formKeyReset,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          const Text(
+                            'Select a Tyres For your Vehicle',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Container(
+                              height: 55,
+                              decoration: BoxDecoration(
+                                border:
+                                    Border.all(color: colors.black12, width: 2),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 10),
+                              child: Obx(() => DropdownButton<VehicleData>(
+                                    hint: Text(
+                                        'Select Vehicle Manufacture Type'.tr),
+                                    value: carServiceController
+                                        .selectedVehicleManufacture.value,
+                                    underline: Container(),
+                                    isExpanded: true,
+                                    onChanged: (VehicleData? newValue) {
+                                      if (newValue != null) {
+                                        carServiceController
+                                            .selectedVehicleManufacture
+                                            .value = newValue;
+                                        otherCategory.vehicleType =
+                                            newValue.id.toString();
+                                        carServiceController.getVehicleModel(
+                                            newValue.id.toString());
+                                        setState(() {});
+                                      }
+                                    },
+                                    items: carServiceController.vehicleList!
+                                        .map<DropdownMenuItem<VehicleData>>(
+                                            (VehicleData value) {
+                                      return DropdownMenuItem<VehicleData>(
+                                        value: value,
+                                        child: Text(value.name.toString()),
+                                      );
+                                    }).toList(),
+                                  ))
+                              // DropdownButton<String>(
+                              //   hint: const Text('Select Vehicle Manufacture Type'),
+                              //   value: selectedVehicleManufacture,
+                              //   underline: Container(),
+                              //   isExpanded: true,
+                              //   onChanged: (String? newValue) {
+                              //     if (newValue != null) {
+                              //       // otherCategory.vehicleType = newValue.
+                              //       setState(() {
+                              //         selectedVehicleManufacture = newValue;
+                              //       });
+                              //     }
+                              //   },
+                              //   items: vehicles
+                              //       .map<DropdownMenuItem<String>>((String value) {
+                              //     return DropdownMenuItem<String>(
+                              //       value: value,
+                              //       child: Text(value),
+                              //     );
+                              //   }).toList(),
+                              // ),
+                              ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Container(
+                            height: 55,
+                            decoration: BoxDecoration(
+                              border:
+                                  Border.all(color: colors.black12, width: 2),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                            child: carServiceController
+                                        .vehicleModelList!.isNotEmpty &&
+                                    carServiceController.selectedService !=
+                                        null &&
+                                    carServiceController
+                                            .selectedService.value !=
+                                        null
+                                ? Obx(() => DropdownButton<VehicleModelData>(
+                                      hint: Text('Select Model'.tr),
+                                      value: carServiceController
+                                          .selectedService.value,
+                                      underline: Container(),
+                                      isExpanded: true,
+                                      onChanged: (VehicleModelData? newValue) {
+                                        if (newValue != null) {
+                                          otherCategory.vehicleModel =
+                                              newValue.id.toString();
+                                          carServiceController
+                                              .selectedService.value = newValue;
+                                          // setState(() { });
+                                        }
+                                      },
+                                      items: carServiceController
+                                          .vehicleModelList!
+                                          .map<
+                                                  DropdownMenuItem<
+                                                      VehicleModelData>>(
+                                              (VehicleModelData value) {
+                                        return DropdownMenuItem<
+                                            VehicleModelData>(
+                                          value: value,
+                                          child: Text(value.name.toString()),
+                                        );
+                                      }).toList(),
+                                    ))
+                                : Container(),
+                            // DropdownButton<String>(
+                            //   hint: const Text('Select Model'),
+                            //   value: selectModel,
+                            //   underline: Container(),
+                            //   isExpanded: true,
+                            //   onChanged: (String? newValue) {
+                            //     if (newValue != null) {
+                            //       setState(() {
+                            //         selectModel = newValue;
+                            //       });
+                            //     }
+                            //   },
+                            //   items: vehicles
+                            //       .map<DropdownMenuItem<String>>((String value) {
+                            //     return DropdownMenuItem<String>(
+                            //       value: value,
+                            //       child: Text(value),
+                            //     );
+                            //   }).toList(),
+                            // ),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Container(
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                border: Border.all(
+                                    color: colors.black12, width: 2)),
+                            child: MyTextField(
+                              labelText: Text(
+                                "Tyre Size",
+                                style: TextStyle(
+                                  color: Colors.grey,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                              validator: (value) => Validator.validateWithhint(
+                                  value, "Tyre Size"),
+                              isAmount: true,
+                              controller: tyreSizeController,
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 40,
+                          ),
+                          InkWell(
+                            onTap: () {
+                              if (_formKeyReset!.currentState!.validate()) {
+                                otherCategory.tyreSize =
+                                    tyreSizeController.text.toString();
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => TyresScreen(
+                                              page: 1,
+                                            )));
+                              }
 
-                      // Add your onTap logic here
-                    },
-                    child: Container(
-                      child: const MyButton(
-                        text: "Continue",
+                              // Add your onTap logic here
+                            },
+                            child: Container(
+                              child: const MyButton(
+                                text: "Continue",
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
-                ],
-              ),
-            ),
-          ),
-        );
+                ),
+              );
+            });
       },
     );
   }
@@ -1239,26 +1374,32 @@ class _HomePageState extends State<HomePage> {
                       borderRadius: BorderRadius.circular(10),
                     ),
                     padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: DropdownButton<String>(
-                      hint: const Text('Select Your Vehicle Type'),
-                      value: selectedVehicle,
-                      underline: Container(),
-                      isExpanded: true,
-                      onChanged: (String? newValue) {
-                        if (newValue != null) {
-                          setState(() {
-                            selectedVehicle = newValue;
-                          });
-                        }
-                      },
-                      items: vehicles
-                          .map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
-                    ),
+                    child: GetBuilder<CarServiceController>(
+                        init: CarServiceController(),
+                        builder: (carController) {
+                          return DropdownButton<VehicleData>(
+                            hint: const Text('Select Your Vehicle Type'),
+                            value: carController.selectedVehicle!.value,
+                            underline: Container(),
+                            isExpanded: true,
+                            onChanged: (VehicleData? newValue) {
+                              if (newValue != null) {
+                                setState(() {
+                                  carController.selectedVehicle!.value =
+                                      newValue;
+                                });
+                              }
+                            },
+                            items: carController.vehicleList!
+                                .map<DropdownMenuItem<VehicleData>>(
+                                    (VehicleData value) {
+                              return DropdownMenuItem<VehicleData>(
+                                value: value,
+                                child: Text(value.name.toString()),
+                              );
+                            }).toList(),
+                          );
+                        }),
                   ),
                   // SizedBox(height: 10,),
                   // Container(
@@ -1328,8 +1469,8 @@ class _HomePageState extends State<HomePage> {
                           const SizedBox(
                             height: 10,
                           ),
-                          const Text(
-                            'Genset Maintenance',
+                          Text(
+                            'Genset Maintenance'.tr,
                             style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.w500,
@@ -1505,8 +1646,8 @@ class _HomePageState extends State<HomePage> {
 
                                           // _showBottomSheet(context);
                                         },
-                                        child: const MyButton(
-                                          text: "Next",
+                                        child: MyButton(
+                                          text: "Next".tr,
                                         ),
                                       );
                                     }),
@@ -1563,8 +1704,8 @@ class _HomePageState extends State<HomePage> {
                         const SizedBox(
                           height: 10,
                         ),
-                        const Text(
-                          'Fuel Management Services',
+                        Text(
+                          'Fuel Management Services'.tr,
                           style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.w500,
@@ -1593,7 +1734,7 @@ class _HomePageState extends State<HomePage> {
                                   height: 10,
                                 ),
                                 MyTextField(
-                                  labelText: Text("Monthly Consumption"),
+                                  labelText: Text("Monthly Consumption".tr),
                                   controller: monthcontroller,
                                   validator: (value) =>
                                       Validator.validateName(value),
@@ -1618,7 +1759,7 @@ class _HomePageState extends State<HomePage> {
                                   height: 20,
                                 ),
                                 MyTextField(
-                                  labelText: Text("Number of assets"),
+                                  labelText: Text("Number of assets".tr),
                                   controller: noofassetcontroller,
                                   isAmount: true,
                                   validator: (value) =>
@@ -1644,7 +1785,7 @@ class _HomePageState extends State<HomePage> {
                                   height: 20,
                                 ),
                                 MyTextField(
-                                  labelText: Text("Fuel Consumption"),
+                                  labelText: Text("Fuel Consumption".tr),
                                   controller: fuelConpcontroller,
                                   validator: (value) =>
                                       Validator.validateName(value),
@@ -1694,8 +1835,8 @@ class _HomePageState extends State<HomePage> {
 
                                           // _showBottomSheet(context);
                                         },
-                                        child: const MyButton(
-                                          text: "Next",
+                                        child: MyButton(
+                                          text: "Next".tr,
                                         ),
                                       )),
                               ],

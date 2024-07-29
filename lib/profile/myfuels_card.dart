@@ -82,8 +82,8 @@ class _MyFuelsCardState extends State<MyFuelsCard> {
                                                 "assets/login-logo.png",
                                                 height: 40,
                                               ),
-                                              const Text(
-                                                'Every Drop Matters',
+                                              Text(
+                                                'Every Drop Matters'.tr,
                                                 style: TextStyle(
                                                     color: Colors.white,
                                                     fontStyle: FontStyle.italic,
@@ -94,15 +94,16 @@ class _MyFuelsCardState extends State<MyFuelsCard> {
                                           ),
                                           Column(
                                             children: [
-                                              Text(
-                                                '${profileController.userInfoModel.value.wallet_id!.substring(0, 3)} ${profileController.userInfoModel.value.wallet_id!.substring(4, 7)} ${profileController.userInfoModel.value.wallet_id!.substring(7, 11)} ${profileController.userInfoModel.value.wallet_id!.substring(12, 16)}',
-                                                style: TextStyle(
-                                                  fontSize: 27,
-                                                  color: Color.fromRGBO(
-                                                      253, 225, 64, 1),
-                                                  fontWeight: FontWeight.w800,
-                                                ),
-                                              ),
+                                              Obx(() => Text(
+                                                    '${profileController.userInfoModel.value.wallet_id!.substring(0, 3)} ${profileController.userInfoModel.value.wallet_id!.substring(4, 7)} ${profileController.userInfoModel.value.wallet_id!.substring(7, 11)} ${profileController.userInfoModel.value.wallet_id!.substring(12, 16)}',
+                                                    style: TextStyle(
+                                                      fontSize: 27,
+                                                      color: Color.fromRGBO(
+                                                          253, 225, 64, 1),
+                                                      fontWeight:
+                                                          FontWeight.w800,
+                                                    ),
+                                                  )),
                                               Obx(() => Text(
                                                     '${profileController.userInfoModel.value.fName}',
                                                     style: TextStyle(
@@ -118,7 +119,7 @@ class _MyFuelsCardState extends State<MyFuelsCard> {
                                                 MainAxisAlignment.spaceBetween,
                                             children: [
                                               Text(
-                                                'Member Since',
+                                                'Member Since'.tr,
                                                 style: TextStyle(
                                                     color: Colors.white,
                                                     fontWeight:
@@ -138,7 +139,7 @@ class _MyFuelsCardState extends State<MyFuelsCard> {
                                                 MainAxisAlignment.spaceBetween,
                                             children: [
                                               Text(
-                                                'Available Points',
+                                                'Available Points'.tr,
                                                 style: TextStyle(
                                                     color: Colors.white,
                                                     fontWeight:
@@ -161,7 +162,7 @@ class _MyFuelsCardState extends State<MyFuelsCard> {
 
                                   SizedBox(height: 16),
                                   Text(
-                                    "History",
+                                    "History".tr,
                                     style: TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.w700,
@@ -173,7 +174,7 @@ class _MyFuelsCardState extends State<MyFuelsCard> {
                                           0
                                       ? Center(
                                           child: Container(
-                                          child: Text("No data Found"),
+                                          child: Text("No History Found".tr),
                                         ))
                                       : ListView.builder(
                                           physics:
@@ -335,7 +336,7 @@ class _MyFuelsCardState extends State<MyFuelsCard> {
                             return const PaymentScreenTree();
                           }));
                         },
-                        child: const MyButton(text: "Add Money")),
+                        child: MyButton(text: "Add Money".tr)),
                   ),
                   floatingActionButtonLocation:
                       FloatingActionButtonLocation.centerFloat,

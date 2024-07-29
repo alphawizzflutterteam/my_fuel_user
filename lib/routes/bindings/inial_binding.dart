@@ -10,6 +10,7 @@ import 'package:test_prj/controller/splash_controller.dart';
 
 import '../../controller/address_controller.dart';
 import '../../controller/asset_controller.dart';
+import '../../controller/carservice_controller.dart';
 import '../../controller/cart_controller.dart';
 import '../../controller/forget_controller.dart';
 import '../../controller/internet_controller.dart';
@@ -36,6 +37,7 @@ class InitialBinding implements Bindings {
     Get.lazyPut(() => AssetController());
     Get.lazyPut(() => OtherServiceController());
     Get.lazyPut(() => CartController());
+    Get.lazyPut(() => CarServiceController());
     // Get.lazyPut(() => LoginController() );
     // Get.lazyPut(() => ForgotPasswordController() );
     // Get.lazyPut(() => OTPVerifyController() );

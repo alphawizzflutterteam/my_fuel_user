@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:test_prj/components/my_button.dart';
 import 'package:test_prj/payment/payment_form.dart';
 import 'package:test_prj/payment/payment_page.dart';
@@ -13,9 +14,7 @@ class PaymentScreenTree extends StatefulWidget {
 }
 
 class _PaymentScreenTreeState extends State<PaymentScreenTree> {
-  int _type = 1;
-
-
+  int _type = -1;
 
   void _handleRadio(Object? e) => setState(() {
         _type = e as int;
@@ -26,7 +25,7 @@ class _PaymentScreenTreeState extends State<PaymentScreenTree> {
     super.initState();
   }
 
-   late bool? isAddoMoney;
+  late bool? isAddoMoney;
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +55,7 @@ class _PaymentScreenTreeState extends State<PaymentScreenTree> {
             ),
           ),
         ),
-        title: const Text('Payment Type'),
+        title:  Text('Payment Type'.tr),
         centerTitle: true,
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
@@ -110,121 +109,124 @@ class _PaymentScreenTreeState extends State<PaymentScreenTree> {
               //     ],
               //   ),
               // ),
-              const Padding(
+               Padding(
                 padding: EdgeInsets.only(top: 20, bottom: 20),
                 child: Text(
-                  'Select payment method',
+                  'Select payment method'.tr,
                   style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
                       color: Colors.black),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 10),
-                child: GestureDetector(
-                  onTap: () => _handleRadio(2),
-                  child: Container(
-                      width: 325,
-                      height: 85,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          border: _type == 1
-                              ? Border.all(width: 1, color: Colors.grey)
-                              : Border.all(width: 0.3, color: Colors.grey)),
-                      child: Center(
-                          child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Row(children: [
-                            Padding(
-                              padding: EdgeInsets.only(left: 5),
-                              child: Padding(
-                                padding: EdgeInsets.all(8.0),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      'Pay by My fuels card',
-                                      style: TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w500),
-                                    ),
-                                    Text(
-                                      'Available balance',
-                                      style: TextStyle(
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w500,
-                                          color: Colors.grey),
-                                    ),
-                                    Row(
-                                      children: [
-                                        Text(
-                                          'Rs.1000',
-                                          style: TextStyle(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.w500),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ]),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 20),
-                            child: Text("",
-                                style: _type == 1
-                                    ? const TextStyle(
-                                        fontSize: 17,
-                                        fontWeight: FontWeight.w500,
-                                        color: Colors.black)
-                                    : const TextStyle(
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.w500,
-                                        color: Colors.grey,
-                                      )),
-                          ),
-                          Column(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(left: 60),
-                                child: Radio(
-                                  value: 1,
-                                  groupValue: _type,
-                                  onChanged: _handleRadio,
-                                  activeColor: Colors.orange,
-                                ),
-                              ),
-                InkWell(
-                  onTap: () {
-                    _type == 1
-                    ?   Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>  PaymentScreen(isAddoMoney: true)),
-                    ):
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>  PaymentScreen()),
-                    );
-                  },
-                  child: const Text(
-                    'Add Money',
-                    style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.green),
-                               ),
-                              ),
-                             ],
-                           ),
-                         ],
-                      ))),
-                ),
-              ),
+              // Padding(
+              //   padding: const EdgeInsets.only(top: 10),
+              //   child: GestureDetector(
+              //     onTap: () => _handleRadio(2),
+              //     child: Container(
+              //         width: 325,
+              //         height: 85,
+              //         decoration: BoxDecoration(
+              //             borderRadius: BorderRadius.circular(5),
+              //             border: _type == 1
+              //                 ? Border.all(width: 1, color: Colors.grey)
+              //                 : Border.all(width: 0.3, color: Colors.grey)),
+              //         child: Center(
+              //             child: Row(
+              //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //           children: [
+              //             const Row(children: [
+              //               Padding(
+              //                 padding: EdgeInsets.only(left: 5),
+              //                 child: Padding(
+              //                   padding: EdgeInsets.all(8.0),
+              //                   child: Column(
+              //                     crossAxisAlignment: CrossAxisAlignment.start,
+              //                     children: [
+              //                       Text(
+              //                         'Pay by My fuels card',
+              //                         style: TextStyle(
+              //                             fontSize: 16,
+              //                             fontWeight: FontWeight.w500),
+              //                       ),
+              //                       Text(
+              //                         'Available balance',
+              //                         style: TextStyle(
+              //                             fontSize: 12,
+              //                             fontWeight: FontWeight.w500,
+              //                             color: Colors.grey),
+              //                       ),
+              //                       Row(
+              //                         children: [
+              //                           Text(
+              //                             'Rs.1000',
+              //                             style: TextStyle(
+              //                                 fontSize: 16,
+              //                                 fontWeight: FontWeight.w500),
+              //                           ),
+              //                         ],
+              //                       ),
+              //                     ],
+              //                   ),
+              //                 ),
+              //               ),
+              //             ]),
+              //             Padding(
+              //               padding: const EdgeInsets.only(left: 20),
+              //               child: Text("",
+              //                   style: _type == 1
+              //                       ? const TextStyle(
+              //                           fontSize: 17,
+              //                           fontWeight: FontWeight.w500,
+              //                           color: Colors.black)
+              //                       : const TextStyle(
+              //                           fontSize: 15,
+              //                           fontWeight: FontWeight.w500,
+              //                           color: Colors.grey,
+              //                         )),
+              //             ),
+              //             Column(
+              //               children: [
+              //                 Padding(
+              //                   padding: const EdgeInsets.only(left: 60),
+              //                   child: Radio(
+              //                     value: 1,
+              //                     groupValue: _type,
+              //                     onChanged: _handleRadio,
+              //                     activeColor: Colors.orange,
+              //                   ),
+              //                 ),
+              //                 InkWell(
+              //                   onTap: () {
+              //                     _type == 1
+              //                         ? Navigator.push(
+              //                             context,
+              //                             MaterialPageRoute(
+              //                                 builder: (context) =>
+              //                                     PaymentScreen(
+              //                                         isAddoMoney: true)),
+              //                           )
+              //                         : Navigator.push(
+              //                             context,
+              //                             MaterialPageRoute(
+              //                                 builder: (context) =>
+              //                                     PaymentScreen()),
+              //                           );
+              //                   },
+              //                   child: const Text(
+              //                     'Add Money',
+              //                     style: TextStyle(
+              //                         fontSize: 16,
+              //                         fontWeight: FontWeight.w500,
+              //                         color: Colors.green),
+              //                   ),
+              //                 ),
+              //               ],
+              //             ),
+              //           ],
+              //         ))),
+              //   ),
+              // ),
               Padding(
                 padding: const EdgeInsets.only(top: 9),
                 child: Container(
@@ -242,13 +244,13 @@ class _PaymentScreenTreeState extends State<PaymentScreenTree> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Image.asset(
-                            "assets/visa.png",
+                            "assets/images/cod.png",
                             height: 50,
                             width: 50,
                           ),
                           SizedBox(
                             width: 100,
-                            child: Text("Visa",
+                            child: Text("Cod",
                                 textAlign: TextAlign.start,
                                 style: _type == 2
                                     ? const TextStyle(
@@ -273,6 +275,8 @@ class _PaymentScreenTreeState extends State<PaymentScreenTree> {
                   ),
                 ),
               ),
+
+              ///
               Padding(
                 padding: const EdgeInsets.only(top: 9),
                 child: Container(
@@ -290,13 +294,13 @@ class _PaymentScreenTreeState extends State<PaymentScreenTree> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Image.asset(
-                            "assets/phonepy.png",
+                            "assets/images/razorpay.png",
                             height: 50,
                             width: 50,
                           ),
                           SizedBox(
                             width: 100,
-                            child: Text("PhonePe",
+                            child: Text("Razorpay",
                                 textAlign: TextAlign.start,
                                 style: _type == 3
                                     ? const TextStyle(
@@ -319,219 +323,225 @@ class _PaymentScreenTreeState extends State<PaymentScreenTree> {
                       ),
                     ))),
               ),
-              Padding(
-                  padding: const EdgeInsets.only(top: 9),
-                  child: Container(
-                    // width: 325,
-                    height: 55,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                        border: _type == 4
-                            ? Border.all(width: 1, color: Colors.black)
-                            : Border.all(width: 0.3, color: Colors.grey)),
-                    child: Center(
-                        child: Padding(
-                      padding: const EdgeInsets.only(left: 5, right: 5),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Image.asset(
-                            "assets/upi.png",
-                            height: 50,
-                            width: 50,
-                          ),
-                          SizedBox(
-                            width: 100,
-                            child: Text("UPI Payment",
-                                textAlign: TextAlign.start,
-                                style: _type == 4
-                                    ? const TextStyle(
-                                        fontSize: 17,
-                                        fontWeight: FontWeight.w500,
-                                        color: Colors.black)
-                                    : const TextStyle(
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.w500,
-                                        color: Colors.grey,
-                                      )),
-                          ),
-                          Radio(
-                            value: 4,
-                            groupValue: _type,
-                            onChanged: _handleRadio,
-                            activeColor: Colors.orange,
-                          ),
-                        ],
-                      ),
-                    )),
-                  )),
-              Padding(
-                  padding: const EdgeInsets.only(top: 9),
-                  child: Container(
-                    //   width: 325,
-                    height: 55,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                        border: _type == 5
-                            ? Border.all(width: 1, color: Colors.black)
-                            : Border.all(width: 0.3, color: Colors.grey)),
-                    child: Center(
-                        child: Padding(
-                      padding: const EdgeInsets.only(left: 5, right: 5),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Image.asset(
-                            "assets/googlepy.png",
-                            height: 50,
-                            width: 50,
-                          ),
-                          SizedBox(
-                            width: 100,
-                            child: Text("Google Pay",
-                                textAlign: TextAlign.start,
-                                style: _type == 5
-                                    ? const TextStyle(
-                                        fontSize: 17,
-                                        fontWeight: FontWeight.w500,
-                                        color: Colors.black)
-                                    : const TextStyle(
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.w500,
-                                        color: Colors.grey,
-                                      )),
-                          ),
-                          Radio(
-                            value: 5,
-                            groupValue: _type,
-                            onChanged: _handleRadio,
-                            activeColor: Colors.orange,
-                          ),
-                        ],
-                      ),
-                    )),
-                  )),
-              Padding(
-                padding: const EdgeInsets.only(top: 9),
-                child: GestureDetector(
-                  onTap: () => _handleRadio,
-                  child: Container(
-                    //   width: 325,
-                    height: 55,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                        border: _type == 6
-                            ? Border.all(width: 1, color: Colors.black)
-                            : Border.all(width: 0.3, color: Colors.grey)),
-                    child: Center(
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 5, right: 5),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Image.asset(
-                              "assets/paystation.png",
-                              height: 50,
-                              width: 50,
-                            ),
-                            SizedBox(
-                              width: 100,
-                              child: Text("Pay at Station",
-                                  textAlign: TextAlign.start,
-                                  style: _type == 6
-                                      ? const TextStyle(
-                                          fontSize: 17,
-                                          fontWeight: FontWeight.w500,
-                                          color: Colors.black)
-                                      : const TextStyle(
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.w500,
-                                          color: Colors.grey,
-                                        )),
-                            ),
-                            Radio(
-                              value: 6,
-                              groupValue: _type,
-                              onChanged: _handleRadio,
-                              activeColor: Colors.orange,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 9),
-                child: GestureDetector(
-                  onTap: () => _handleRadio,
-                  child: Container(
-                    //       width: 325,
-                    height: 55,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                        border: _type == 7
-                            ? Border.all(width: 1, color: Colors.black)
-                            : Border.all(width: 0.3, color: Colors.grey)),
-                    child: Center(
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 5, right: 5),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Image.asset(
-                              "assets/paystation.png",
-                              height: 50,
-                              width: 50,
-                            ),
-                            SizedBox(
-                              width: 100,
-                              child: Text("Buy now pay later",
-                                  textAlign: TextAlign.start,
-                                  style: _type == 7
-                                      ? const TextStyle(
-                                          fontSize: 17,
-                                          fontWeight: FontWeight.w500,
-                                          color: Colors.black)
-                                      : const TextStyle(
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.w500,
-                                          color: Colors.grey,
-                                        )),
-                            ),
-                            Radio(
-                              value: 7,
-                              groupValue: _type,
-                              onChanged: _handleRadio,
-                              activeColor: Colors.orange,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
+              // Padding(
+              //     padding: const EdgeInsets.only(top: 9),
+              //     child: Container(
+              //       // width: 325,
+              //       height: 55,
+              //       decoration: BoxDecoration(
+              //           borderRadius: BorderRadius.circular(5),
+              //           border: _type == 4
+              //               ? Border.all(width: 1, color: Colors.black)
+              //               : Border.all(width: 0.3, color: Colors.grey)),
+              //       child: Center(
+              //           child: Padding(
+              //         padding: const EdgeInsets.only(left: 5, right: 5),
+              //         child: Row(
+              //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //           children: [
+              //             Image.asset(
+              //               "assets/upi.png",
+              //               height: 50,
+              //               width: 50,
+              //             ),
+              //             SizedBox(
+              //               width: 100,
+              //               child: Text("UPI Payment",
+              //                   textAlign: TextAlign.start,
+              //                   style: _type == 4
+              //                       ? const TextStyle(
+              //                           fontSize: 17,
+              //                           fontWeight: FontWeight.w500,
+              //                           color: Colors.black)
+              //                       : const TextStyle(
+              //                           fontSize: 15,
+              //                           fontWeight: FontWeight.w500,
+              //                           color: Colors.grey,
+              //                         )),
+              //             ),
+              //             Radio(
+              //               value: 4,
+              //               groupValue: _type,
+              //               onChanged: _handleRadio,
+              //               activeColor: Colors.orange,
+              //             ),
+              //           ],
+              //         ),
+              //       )),
+              //     )),
+              // Padding(
+              //     padding: const EdgeInsets.only(top: 9),
+              //     child: Container(
+              //       //   width: 325,
+              //       height: 55,
+              //       decoration: BoxDecoration(
+              //           borderRadius: BorderRadius.circular(5),
+              //           border: _type == 5
+              //               ? Border.all(width: 1, color: Colors.black)
+              //               : Border.all(width: 0.3, color: Colors.grey)),
+              //       child: Center(
+              //           child: Padding(
+              //         padding: const EdgeInsets.only(left: 5, right: 5),
+              //         child: Row(
+              //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //           children: [
+              //             Image.asset(
+              //               "assets/googlepy.png",
+              //               height: 50,
+              //               width: 50,
+              //             ),
+              //             SizedBox(
+              //               width: 100,
+              //               child: Text("Google Pay",
+              //                   textAlign: TextAlign.start,
+              //                   style: _type == 5
+              //                       ? const TextStyle(
+              //                           fontSize: 17,
+              //                           fontWeight: FontWeight.w500,
+              //                           color: Colors.black)
+              //                       : const TextStyle(
+              //                           fontSize: 15,
+              //                           fontWeight: FontWeight.w500,
+              //                           color: Colors.grey,
+              //                         )),
+              //             ),
+              //             Radio(
+              //               value: 5,
+              //               groupValue: _type,
+              //               onChanged: _handleRadio,
+              //               activeColor: Colors.orange,
+              //             ),
+              //           ],
+              //         ),
+              //       )),
+              //     )),
+              // Padding(
+              //   padding: const EdgeInsets.only(top: 9),
+              //   child: GestureDetector(
+              //     onTap: () => _handleRadio,
+              //     child: Container(
+              //       //   width: 325,
+              //       height: 55,
+              //       decoration: BoxDecoration(
+              //           borderRadius: BorderRadius.circular(5),
+              //           border: _type == 6
+              //               ? Border.all(width: 1, color: Colors.black)
+              //               : Border.all(width: 0.3, color: Colors.grey)),
+              //       child: Center(
+              //         child: Padding(
+              //           padding: const EdgeInsets.only(left: 5, right: 5),
+              //           child: Row(
+              //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //             children: [
+              //               Image.asset(
+              //                 "assets/paystation.png",
+              //                 height: 50,
+              //                 width: 50,
+              //               ),
+              //               SizedBox(
+              //                 width: 100,
+              //                 child: Text("Pay at Station",
+              //                     textAlign: TextAlign.start,
+              //                     style: _type == 6
+              //                         ? const TextStyle(
+              //                             fontSize: 17,
+              //                             fontWeight: FontWeight.w500,
+              //                             color: Colors.black)
+              //                         : const TextStyle(
+              //                             fontSize: 15,
+              //                             fontWeight: FontWeight.w500,
+              //                             color: Colors.grey,
+              //                           )),
+              //               ),
+              //               Radio(
+              //                 value: 6,
+              //                 groupValue: _type,
+              //                 onChanged: _handleRadio,
+              //                 activeColor: Colors.orange,
+              //               ),
+              //             ],
+              //           ),
+              //         ),
+              //       ),
+              //     ),
+              //   ),
+              // ),
+              // Padding(
+              //   padding: const EdgeInsets.only(top: 9),
+              //   child: GestureDetector(
+              //     onTap: () => _handleRadio,
+              //     child: Container(
+              //       //       width: 325,
+              //       height: 55,
+              //       decoration: BoxDecoration(
+              //           borderRadius: BorderRadius.circular(5),
+              //           border: _type == 7
+              //               ? Border.all(width: 1, color: Colors.black)
+              //               : Border.all(width: 0.3, color: Colors.grey)),
+              //       child: Center(
+              //         child: Padding(
+              //           padding: const EdgeInsets.only(left: 5, right: 5),
+              //           child: Row(
+              //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //             children: [
+              //               Image.asset(
+              //                 "assets/paystation.png",
+              //                 height: 50,
+              //                 width: 50,
+              //               ),
+              //               SizedBox(
+              //                 width: 100,
+              //                 child: Text("Buy now pay later",
+              //                     textAlign: TextAlign.start,
+              //                     style: _type == 7
+              //                         ? const TextStyle(
+              //                             fontSize: 17,
+              //                             fontWeight: FontWeight.w500,
+              //                             color: Colors.black)
+              //                         : const TextStyle(
+              //                             fontSize: 15,
+              //                             fontWeight: FontWeight.w500,
+              //                             color: Colors.grey,
+              //                           )),
+              //               ),
+              //               Radio(
+              //                 value: 7,
+              //                 groupValue: _type,
+              //                 onChanged: _handleRadio,
+              //                 activeColor: Colors.orange,
+              //               ),
+              //             ],
+              //           ),
+              //         ),
+              //       ),
+              //     ),
+              //   ),
+              // ),
               const SizedBox(
                 height: 56,
               ),
               GestureDetector(
                 onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => PaymentForm(
-                                isFromFuelOnTap: widget.isFromFuelOnTap,
-                              ),
-                      ),
-                  );
+                  if (_type == 2) {
+                    Get.back(result: "cod");
+                  } else if (_type == 3) {
+                    Get.back(result: "payment");
+                  }
+
+                  // Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(
+                  //     builder: (context) => PaymentForm(
+                  //       isFromFuelOnTap: widget.isFromFuelOnTap,
+                  //     ),
+                  //   ),
+                  // );
                 },
                 child: Container(
                   alignment: Alignment.bottomCenter,
                   width: 330,
-                  child: const MyButton(
-                    text: 'Continue',
+                  child:  MyButton(
+                    text: 'Continue'.tr,
                   ),
                 ),
               ),

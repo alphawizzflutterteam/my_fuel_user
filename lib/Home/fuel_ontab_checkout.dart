@@ -1,12 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:test_prj/components/my_appbar.dart';
 import 'package:test_prj/components/my_button.dart';
 import 'package:test_prj/controller/cart_controller.dart';
 import 'package:test_prj/helper/colors.dart';
 import 'package:test_prj/payment/paymentScreen.dart';
 import 'package:test_prj/payment/payment_form.dart';
+
+import '../main.dart';
+import '../payment/pay_success_page.dart';
 
 class FuelOnTabCheckoutScreen extends StatefulWidget {
   final bool? isFromFuelOnTap;
@@ -26,6 +31,9 @@ class _FuelOnTabCheckoutScreenState extends State<FuelOnTabCheckoutScreen> {
     initUI();
   }
 
+  Razorpay? razorpay;
+  int? pricerazorpayy;
+  String payment_type = "";
   String address_id = "";
   String category_id = "";
   void initUI() {
@@ -39,7 +47,58 @@ class _FuelOnTabCheckoutScreenState extends State<FuelOnTabCheckoutScreen> {
       CartController controller = Get.find();
       controller.manageCart(address_id, category_id);
     });
+    razorpay = Razorpay();
+    razorpay?.on(Razorpay.EVENT_PAYMENT_SUCCESS, handlePaymentSuccess);
+    razorpay?.on(Razorpay.EVENT_PAYMENT_ERROR, handlePaymentError);
+    razorpay?.on(Razorpay.EVENT_EXTERNAL_WALLET, handleExternalWallet);
   }
+
+  void openCheckout(amount) async {
+    double res = double.parse(amount.toString().replaceAll(",", ""));
+    pricerazorpayy = int.parse(res.toStringAsFixed(0)) * 100;
+    // Navigator.of(context).pop();
+    var options = {
+      'key': 'rzp_test_1DP5mmOlF5G5ag',
+      'amount': "$pricerazorpayy",
+      'name': 'My Fuel',
+      'image': 'assets/images/Group 165.png',
+      'description': 'My Fuel',
+    };
+    try {
+      razorpay?.open(options);
+    } catch (e) {
+      debugPrint('Error: e');
+    }
+  }
+
+  Future<void> handlePaymentSuccess(PaymentSuccessResponse response) async {
+    Fluttertoast.showToast(msg: "Payment successfully");
+
+    CartController controller = Get.find();
+    controller.placeOrder(address_id.toString(), "razorpay").then((value) {
+      // Get.toNamed(Routes.ORDERPLACED,
+      //     arguments: controller
+      //         .verifyModel.value.data);
+
+      Get.offAll(
+        OrderPlaced(
+          isFromFuelOnTap: true,
+          amount: "${controller.checkOutModel.value.total}",
+        ),
+      );
+      // Navigator.push(context,
+      //     MaterialPageRoute(builder: (context) => const PaymentScreenTree()));
+    });
+
+    Navigator.pop(context);
+    // Navigator.push(context, MaterialPageRoute(builder: (context)=>HomeScreen()));
+  }
+
+  void handlePaymentError(PaymentFailureResponse response) {
+    Fluttertoast.showToast(msg: "Payment cancelled by user");
+  }
+
+  void handleExternalWallet(ExternalWalletResponse response) {}
 
   @override
   void didChangeDependencies() {
@@ -100,16 +159,49 @@ class _FuelOnTabCheckoutScreenState extends State<FuelOnTabCheckoutScreen> {
                         )
                       : GestureDetector(
                           child: MyButton(text: 'Checkout'),
-                          onTap: () {
-                            controller.placeOrder(address_id).then((value) {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => PaymentScreenTree(
-                                            isFromFuelOnTap:
-                                                widget.isFromFuelOnTap,
-                                          )));
-                            });
+                          onTap: () async {
+                            // controller
+                            //     .placeOrder(address_id, "cod")
+                            //     .then((value) {
+                            //   Navigator.push(
+                            //       context,
+                            //       MaterialPageRoute(
+                            //           builder: (context) => PaymentScreenTree(
+                            //                 isFromFuelOnTap:
+                            //                     widget.isFromFuelOnTap,
+                            //               )));
+                            // });
+
+                            print(
+                                "l.value.total${controller.checkOutModel.value.total.toString()}");
+                            var data = await Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const PaymentScreenTree()));
+
+                            if (data != null) {
+                              if (data == "payment") {
+                                openCheckout(controller
+                                    .checkOutModel.value.total
+                                    .toString());
+                              } else {
+                                controller
+                                    .placeOrder(address_id.toString(), "cod")
+                                    .then((value) {
+                                  Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => OrderPlaced(
+                                        isFromFuelOnTap: true,
+                                        amount:
+                                            "${controller.checkOutModel.value.total}",
+                                      ),
+                                    ),
+                                  );
+                                });
+                              }
+                            }
                           },
                         )),
                 ),

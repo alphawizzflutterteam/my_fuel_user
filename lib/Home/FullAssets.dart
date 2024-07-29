@@ -155,10 +155,10 @@ class _AssetsState extends State<MyFullAssets> {
                         ],
                       ),
                     ),
-                    const Padding(
+                    Padding(
                       padding: EdgeInsets.only(right: 219),
                       child: Text(
-                        'Add Details',
+                        'Add Details'.tr,
                         style: TextStyle(
                             fontSize: 20, fontWeight: FontWeight.w500),
                       ),
@@ -265,7 +265,7 @@ class _AssetsState extends State<MyFullAssets> {
                                     }
                                   }
                                 },
-                                child: const MyButton(text: 'Add Asset type'))),
+                                child: MyButton(text: 'Add Asset type'.tr))),
                       ),
                     ),
                     const SizedBox(height: 20),

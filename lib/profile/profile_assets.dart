@@ -98,8 +98,9 @@ class _ProfileAssetsState extends State<ProfileAssets> {
                                     // );
                                   },
                                   child: selectIndex == 1
-                                      ? MyButton(text: "Door Step Delivery")
-                                      : DisButton(text: "Door Step Delivery"))),
+                                      ? MyButton(text: "Door Step Delivery".tr)
+                                      : DisButton(
+                                          text: "Door Step Delivery".tr))),
                           InkWell(
                             onTap: () {
                               selectIndex = 2;
@@ -109,8 +110,8 @@ class _ProfileAssetsState extends State<ProfileAssets> {
                                 height: 48,
                                 width: 160,
                                 child: selectIndex == 2
-                                    ? MyButton(text: "Fuel to Go")
-                                    : DisButton(text: "Fuel to Go")),
+                                    ? MyButton(text: "Fuel to Go".tr)
+                                    : DisButton(text: "Fuel to Go".tr)),
                           ),
                         ],
                       ),
@@ -152,7 +153,7 @@ class _ProfileAssetsState extends State<ProfileAssets> {
                                                     CrossAxisAlignment.start,
                                                 children: [
                                                   Text(
-                                                    "Asset Name",
+                                                    "Asset Name".tr,
                                                     style: TextStyle(
                                                         color: Colors
                                                             .grey.shade600),
@@ -171,7 +172,7 @@ class _ProfileAssetsState extends State<ProfileAssets> {
                                                     CrossAxisAlignment.start,
                                                 children: [
                                                   Text(
-                                                    "Asset Capacity/Power",
+                                                    "Asset Capacity/Power".tr,
                                                     style: TextStyle(
                                                         color: Colors
                                                             .grey.shade600),
@@ -193,7 +194,7 @@ class _ProfileAssetsState extends State<ProfileAssets> {
                                                 CrossAxisAlignment.start,
                                             children: [
                                               Text(
-                                                "Fuel capacity",
+                                                "Fuel capacity".tr,
                                                 style: TextStyle(
                                                     color:
                                                         Colors.grey.shade600),
@@ -256,7 +257,7 @@ class _ProfileAssetsState extends State<ProfileAssets> {
                                                         width: 5,
                                                       ),
                                                       Text(
-                                                        'Edit Assets',
+                                                        'Edit Assets'.tr,
                                                         style: TextStyle(
                                                             fontWeight:
                                                                 FontWeight.w700,
@@ -324,7 +325,8 @@ class _ProfileAssetsState extends State<ProfileAssets> {
                                                                 SizedBox(
                                                                     height: 20),
                                                                 Text(
-                                                                  "Are you Sure you want to",
+                                                                  "Are you Sure you want to"
+                                                                      .tr,
                                                                   style:
                                                                       TextStyle(
                                                                     fontSize:
@@ -335,7 +337,7 @@ class _ProfileAssetsState extends State<ProfileAssets> {
                                                                   ),
                                                                 ),
                                                                 Text(
-                                                                  "delete",
+                                                                  "delete".tr,
                                                                   style:
                                                                       TextStyle(
                                                                     fontSize:
@@ -409,7 +411,8 @@ class _ProfileAssetsState extends State<ProfileAssets> {
                                                                         },
                                                                         child:
                                                                             Text(
-                                                                          "Done",
+                                                                          "Done"
+                                                                              .tr,
                                                                           style: TextStyle(
                                                                               color: Colors.white,
                                                                               fontSize: 16,

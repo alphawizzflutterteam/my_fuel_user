@@ -276,7 +276,13 @@ class Malayalam extends Translations {
           "Your order had been ship": "നിങ്ങളുടെ ഓർഡർ കപ്പൽ കൊണ്ടിരിക്കുന്നു",
           "Fuel to Go": "ഫ്യൂൾ ടു ഗോ",
           "Four Wheeler": "ഫോർ വീലർ",
-          "Vehicles Registration Number": "വാഹനങ്ങളുടെ രജിസ്ട്രേഷൻ നമ്പർ"
+          "Vehicles Registration Number": "വാഹനങ്ങളുടെ രജിസ്ട്രേഷൻ നമ്പർ",
+          "Profile": "പ്രൊഫൈൽ",
+          "Offers": "ഓഫറുകൾ",
+          "My Orders": "എൻ്റെ ഉത്തരവുകൾ",
+          "No History Found": "ചരിത്രമൊന്നും കണ്ടെത്തിയില്ല",
+          "Fuel Quantity(Min 5 ltrs - Max 20 ltrs":
+              "Fuel Quantity(Min 5 ltrs - Max 20 ltrs"
         }
       };
 }

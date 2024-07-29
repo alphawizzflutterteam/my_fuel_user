@@ -56,11 +56,11 @@ class CartController extends AppBaseController {
   }
 
   Future<Map<String, dynamic>> placeOrder(
-    String address_id,
-  ) async {
+      String address_id, String paymentType) async {
     isLoading(true);
 
-    Map<String, dynamic> value = await _laravelApiClient.placeOrder(address_id);
+    Map<String, dynamic> value =
+        await _laravelApiClient.placeOrder(address_id, paymentType);
 
     // checkOutModel(GenSetCheckOutModel.fromJson(value));
 

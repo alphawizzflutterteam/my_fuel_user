@@ -273,7 +273,12 @@ class Telugu extends Translations {
           "Your order had been ship": "మీ ఆర్డర్ షిప్ చేయబడింది",
           "Fuel to Go": "ఫ్యూయల్ టు గో",
           "Four Wheeler": "ఫోర్ వీలర్",
-          "Vehicles Registration Number": "వాహనాల రిజిస్ట్రేషన్ నంబర్"
+          "Vehicles Registration Number": "వాహనాల రిజిస్ట్రేషన్ నంబర్",
+          "Profile": "ప్రొఫైల్",
+          "Offers": "ఆఫర్లు",
+          "My Orders": "నా ఆదేశాలు",
+          "No History Found": "কোন ইতিহাস পাওয়া যায়নি",
+          "Fuel Quantity(Min 5 ltrs - Max 20 ltrs":"Fuel Quantity(Min 5 ltrs - Max 20 ltrs"
         }
       };
 }

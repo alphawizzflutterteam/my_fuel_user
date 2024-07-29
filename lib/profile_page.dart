@@ -244,11 +244,11 @@ class ProfilePageState extends State<ProfilePage> {
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    const Padding(
+                                    Padding(
                                       padding: EdgeInsets.symmetric(
                                           horizontal: 16.0, vertical: 10),
                                       child: Text(
-                                        "Settings",
+                                        "Settings".tr,
                                         style: TextStyle(
                                           fontSize: 20,
                                           fontWeight: FontWeight.w700,
@@ -258,7 +258,7 @@ class ProfilePageState extends State<ProfilePage> {
                                     Column(
                                       children: [
                                         settingsCard(
-                                          title: "My Fuels Card",
+                                          title: "My Fuels Card".tr,
                                           onTap: () => Navigator.push(
                                               context,
                                               MaterialPageRoute(
@@ -268,7 +268,7 @@ class ProfilePageState extends State<ProfilePage> {
                                         ),
                                         const Divider(),
                                         settingsCard(
-                                            title: "My Location",
+                                            title: "My Location".tr,
                                             onTap: () {
                                               Navigator.push(
                                                   context,
@@ -287,7 +287,7 @@ class ProfilePageState extends State<ProfilePage> {
                                                         ProfileAssets()))),
                                         const Divider(),
                                         settingsCard(
-                                            title: "Change Language",
+                                            title: "Change Language".tr,
                                             onTap: () => Navigator.push(
                                                 context,
                                                 MaterialPageRoute(
@@ -295,7 +295,7 @@ class ProfilePageState extends State<ProfilePage> {
                                                         LanguageScreen()))),
                                         const Divider(),
                                         settingsCard(
-                                            title: "Contact Us",
+                                            title: "Contact Us".tr,
                                             onTap: () => Navigator.push(
                                                 context,
                                                 MaterialPageRoute(
@@ -303,7 +303,7 @@ class ProfilePageState extends State<ProfilePage> {
                                                         ContactUs()))),
                                         const Divider(),
                                         settingsCard(
-                                          title: "Change Password",
+                                          title: "Change Password".tr,
                                           onTap: () => Navigator.push(
                                               context,
                                               MaterialPageRoute(
@@ -313,7 +313,7 @@ class ProfilePageState extends State<ProfilePage> {
                                         ),
                                         const Divider(),
                                         settingsCard(
-                                            title: "Privacy Policy",
+                                            title: "Privacy Policy".tr,
                                             onTap: () {
                                               Navigator.push(
                                                   context,
@@ -324,7 +324,7 @@ class ProfilePageState extends State<ProfilePage> {
                                             }),
                                         const Divider(),
                                         settingsCard(
-                                            title: "Terms and Conditions",
+                                            title: "Terms and Conditions".tr,
                                             onTap: () {
                                               Navigator.push(
                                                   context,
@@ -361,8 +361,8 @@ class ProfilePageState extends State<ProfilePage> {
                                         height: 48,
                                         margin: const EdgeInsets.symmetric(
                                             horizontal: 16, vertical: 8),
-                                        child: const Text(
-                                          "Logout",
+                                        child: Text(
+                                          "Logout".tr,
                                           style: TextStyle(
                                             fontSize: 16,
                                             fontWeight: FontWeight.w700,
