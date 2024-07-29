@@ -37,7 +37,7 @@ class _Checkout_Car_ServiceState extends State<Checkout_Car_Service> {
           title: "Checkout".tr,
         ),
         body: Obx(() => carController.isLoading.value == true
-            ? Center(
+            ? const Center(
                 child: CircularProgressIndicator(),
               )
             : Column(
@@ -73,12 +73,12 @@ class _Checkout_Car_ServiceState extends State<Checkout_Car_Service> {
                                     style:
                                         TextStyle(fontWeight: FontWeight.bold),
                                   ),
-                                  Container(
+                                  SizedBox(
                                     width:
                                         MediaQuery.of(context).size.width * 0.7,
                                     child: Text(
                                       '${carController.batterTyreCheckOut.value.data!.shippingAddressData!.building} ${carController.batterTyreCheckOut.value.data!.shippingAddressData!.landmark},${carController.batterTyreCheckOut.value.data!.shippingAddressData!.city}..',
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                           color:
                                               Color.fromRGBO(118, 118, 128, 1),
                                           fontSize: 12,
