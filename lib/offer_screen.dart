@@ -171,7 +171,38 @@ class _OffersScreenState extends State<OffersScreen> {
                     ),
                   ),
                 )
-              : Center(child: Text("No internet connection")));
+              : Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: Image.asset("assets/server-down.jpg",
+                            width: 200, height: 200),
+                      ),
+                      const SizedBox(height: 80),
+                      const Text(
+                        'No Internet Connection',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.w800,
+                          fontSize: 18,
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      const Text(
+                        'No internet connection found. Check your \n connection or try again!',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.w400,
+                          fontSize: 14,
+                        ),
+                      ),
+                      const SizedBox(height: 50),
+                    ],
+                  ),
+                ));
         });
   }
 
@@ -186,8 +217,8 @@ class _OffersScreenState extends State<OffersScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 const SizedBox(height: 27),
-                const Text(
-                  'Best Offers',
+                Text(
+                  'Best Offers'.tr,
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,

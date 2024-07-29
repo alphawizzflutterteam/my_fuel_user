@@ -270,6 +270,25 @@ class English extends Translations {
           "Fuel to Go": "Fuel to Go",
           "Four Wheeler": "Four Wheeler",
           "Vehicles Registration Number": "Vehicles Registration Number",
+          "Profile": "Profile",
+          "Offers": "Offers",
+          "My Orders": "My Orders",
+          "No History Found": "No History Found",/// Here To  setLanguage
+          "Fuel Quantity(Min 5 ltrs - Max 20 ltrs":
+              "Fuel Quantity(Min 5 ltrs - Max 20 ltrs",
+          "Add Address": "Add Address",
+          "My Assets": "My Assets",
+          "Asset Capacity/Power": "Asset Capacity/Power",
+          "Edit Assets": "Edit Assets",
+          "Are you Sure you want to": "Are you Sure you want to",
+          "delete": "delete",
+          "Asset Name (eg: genset1)": "Asset Name (eg: genset1)",
+          "Asset Capacity/Power (eg: 120kva)":"Asset Capacity/Power (eg: 120kva)",
+          "Fuel capacity(eg: 200 litres)":"Fuel capacity(eg: 200 litres)",
+          "Fuel Consumption":"Fuel Consumption",
+          "Office":"Office",
+          "Other":"Other",
+          "No Address Found":"No Address Found",
         }
       };
 }

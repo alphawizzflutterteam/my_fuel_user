@@ -35,7 +35,7 @@ class _Insurance_ScrState extends State<Insurance_Scr> {
         builder: (controller) {
           return Scaffold(
             appBar: MyAppFinalbar(
-              title: "Insurance",
+              title: "Insurance".tr,
             ),
             // AppBar(
             //   leading: Icon(Icons.arrow_back_ios_new_outlined),
@@ -74,7 +74,7 @@ class _Insurance_ScrState extends State<Insurance_Scr> {
                   children: [
                     MyTextField(
                       labelText: Text(
-                        "Vehicle No.",
+                        "Vehicle No.".tr,
                         style: TextStyle(
                             color: colors.greyTemp,
                             fontWeight: FontWeight.bold),
@@ -101,7 +101,7 @@ class _Insurance_ScrState extends State<Insurance_Scr> {
                     ),
                     MyTextField(
                       labelText: Text(
-                        "Full Name",
+                        "Full Name".tr,
                         style: TextStyle(
                             color: colors.greyTemp,
                             fontWeight: FontWeight.bold),
@@ -128,7 +128,7 @@ class _Insurance_ScrState extends State<Insurance_Scr> {
                     ),
                     MyTextField(
                       labelText: Text(
-                        "Email",
+                        "Email".tr,
                         style: TextStyle(
                             color: colors.greyTemp,
                             fontWeight: FontWeight.bold),
@@ -156,7 +156,7 @@ class _Insurance_ScrState extends State<Insurance_Scr> {
                     MyTextField(
                       isAmount: true,
                       labelText: Text(
-                        "Mobile No.",
+                        "Mobile No.".tr,
                         style: TextStyle(
                             color: colors.greyTemp,
                             fontWeight: FontWeight.bold),
@@ -201,8 +201,8 @@ class _Insurance_ScrState extends State<Insurance_Scr> {
                                 });
                               }
                             },
-                            child: const MyButton(
-                              text: "Submit",
+                            child:  MyButton(
+                              text: "Submit".tr,
                             ),
                           )),
                   ],

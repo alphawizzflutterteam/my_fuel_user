@@ -275,7 +275,13 @@ class Bangla extends Translations {
           "Your order had been ship": "আপনার অর্ডার চালান হয়েছে",
           "Fuel to Go": "জ্বালানি নিন",
           "Four Wheeler": "চার চাকা",
-          "Vehicles Registration Number": "যানবাহন নিবন্ধন নম্বর"
+          "Vehicles Registration Number": "যানবাহন নিবন্ধন নম্বর",
+          "Profile": "প্রোফাইল",
+          "Offers": "অফার",
+          "My Orders": "আমার আদেশ",
+          "No History Found": "చరిత్ర కనుగొనబడలేదు",
+          "Fuel Quantity(Min 5 ltrs - Max 20 ltrs":
+              "Fuel Quantity(Min 5 ltrs - Max 20 ltrs"
         }
       };
 }

@@ -5,6 +5,7 @@ import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:test_prj/components/my_button.dart';
 import 'package:test_prj/controller/address_controller.dart';
 import 'package:test_prj/helper/colors.dart';
+import 'package:test_prj/home_page.dart';
 import 'package:test_prj/orderfuel/EV/checkout_page.dart';
 import 'package:test_prj/payment/paymentScreen.dart';
 import 'package:test_prj/payment/payment_form.dart';
@@ -105,7 +106,7 @@ class _SelectNewAddressState extends State<SelectNewAddress> {
                   ),
                 ),
               ),
-              title: const Text('Select Address'),
+              title: Text('Select Address'.tr),
               centerTitle: true,
               shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.only(
@@ -120,10 +121,10 @@ class _SelectNewAddressState extends State<SelectNewAddress> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Padding(
+                    Padding(
                       padding: EdgeInsets.only(left: 8),
                       child: Text(
-                        'Shipping Address',
+                        'Shipping Address'.tr,
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 20),
                       ),
@@ -150,7 +151,7 @@ class _SelectNewAddressState extends State<SelectNewAddress> {
                                 alignment: Alignment.center,
                                 child: TextButton(
                                     onPressed: () {},
-                                    child: const Row(
+                                    child: Row(
                                       children: [
                                         Icon(
                                           Icons.my_location,
@@ -160,7 +161,7 @@ class _SelectNewAddressState extends State<SelectNewAddress> {
                                           width: 10,
                                         ),
                                         Text(
-                                          'Use My Location',
+                                          'Use My Location'.tr,
                                           style: TextStyle(
                                               color: Colors.white,
                                               fontSize: 12),
@@ -231,10 +232,10 @@ class _SelectNewAddressState extends State<SelectNewAddress> {
                       ),
                     ),
                     //SizedBox(height: 20),
-                    const Padding(
+                    Padding(
                       padding: EdgeInsets.only(left: 10),
                       child: Text(
-                        'Select Delivery type',
+                        'Select Delivery type'.tr,
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 16),
                       ),
@@ -246,9 +247,9 @@ class _SelectNewAddressState extends State<SelectNewAddress> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          customRadio("Home", 1),
-                          customRadio("Office", 2),
-                          customRadio("Other", 3),
+                          customRadio("Home".tr, 1),
+                          customRadio("Office".tr, 2),
+                          customRadio("Other".tr, 3),
                         ],
                       ),
                     ),
@@ -340,7 +341,7 @@ class _SelectNewAddressState extends State<SelectNewAddress> {
                             },
                           )
                         : Center(
-                            child: Text("No Address Foound"),
+                            child: Text("No Address Found".tr),
                           )),
                     const Padding(
                       padding: EdgeInsets.only(left: 8),
@@ -360,8 +361,8 @@ class _SelectNewAddressState extends State<SelectNewAddress> {
                             setState(() {});
                           },
                         ),
-                        const Text(
-                          'Same as Shipping address',
+                        Text(
+                          'Same as Shipping address'.tr,
                           style: TextStyle(color: colors.greyTemp),
                         )
                       ],
@@ -523,7 +524,24 @@ class _SelectNewAddressState extends State<SelectNewAddress> {
                         child: GestureDetector(
                           child: const MyButton(text: 'Save Address & Next'),
                           onTap: () {
-                            if (widget.isFromFuelOnTab != null &&
+                            if (categoryId == "9") {
+                              otherCategory.billingAddressId = controller
+                                  .addressAList[selectedValueAddress].id
+                                  .toString();
+                              otherCategory.billingAddressId = controller
+                                  .addressAList[selectedValueAddress].id
+                                  .toString();
+                              otherCategory.shippingAddressId = controller
+                                  .addressAList[selectedValueAddress].id
+                                  .toString();
+                              otherCategory.billingSameAsShipping =
+                                  "1"; //if check Same
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          Checkout_Car_Service()));
+                            } else if (widget.isFromFuelOnTab != null &&
                                 widget.isFromFuelOnTab!) {
                               Get.toNamed(Routes.FUEL_CHECKOUT, arguments: {
                                 'address_id': controller

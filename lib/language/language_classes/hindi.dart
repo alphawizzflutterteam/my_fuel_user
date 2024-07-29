@@ -269,7 +269,12 @@ class Hindi extends Translations {
           "Your order had been ship": "आपका ऑर्डर शिप कर दिया गया है",
           "Fuel to Go": "फ्यूल टू गो",
           "Four Wheeler": "चार पहिया वाहन",
-          "Vehicles Registration Number": "वाहन पंजीकरण संख्या"
+          "Vehicles Registration Number": "वाहन पंजीकरण संख्या",
+          "Profile": "प्रोफ़ाइल",
+          "Offers": "ऑफर",
+          "My Orders": "मेरे आदेश",
+          "No History Found": "कोई इतिहास नहीं मिला",
+          "Fuel Quantity(Min 5 ltrs - Max 20 ltrs":"Fuel Quantity(Min 5 ltrs - Max 20 ltrs"
         }
       };
 }

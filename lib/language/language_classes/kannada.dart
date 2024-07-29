@@ -272,7 +272,12 @@ class Kannada extends Translations {
           "Your order had been ship": "ನಿಮ್ಮ ಆದೇಶ ಸಾಗಿಸಲಾಗಿದೆ",
           "Fuel to Go": "ಹೋಗಲು ಇಂಧನ",
           "Four Wheeler": "ನಾಲ್ಕು ಚಕ್ರದ ವಾಹನ",
-          "Vehicles Registration Number": "ವಾಹನಗಳ ನೋಂದಣಿ ಸಂಖ್ಯೆ"
+          "Vehicles Registration Number": "ವಾಹನಗಳ ನೋಂದಣಿ ಸಂಖ್ಯೆ",
+          "Profile": "ಪ್ರೊಫೈಲ್",
+          "Offers": "ಕೊಡುಗೆಗಳು",
+          "My Orders": "ನನ್ನ ಆಜ್ಞೆಗಳು",
+          "No History Found": "ಯಾವುದೇ ಇತಿಹಾಸ ಕಂಡುಬಂದಿಲ್ಲ",
+          "Fuel Quantity(Min 5 ltrs - Max 20 ltrs":"Fuel Quantity(Min 5 ltrs - Max 20 ltrs"
         }
       };
 }

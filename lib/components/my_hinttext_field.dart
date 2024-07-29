@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class MyHintTextField extends StatelessWidget {
   final Widget hintText;
+
   const MyHintTextField({super.key, required this.hintText});
 
   @override
@@ -9,7 +10,6 @@ class MyHintTextField extends StatelessWidget {
     return SizedBox(
       height: 56,
       child: TextFormField(
-
         decoration: InputDecoration(
           label: hintText,
           hintStyle: TextStyle(color: Colors.grey.shade700),

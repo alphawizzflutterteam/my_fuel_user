@@ -28,6 +28,13 @@ class Validator {
     return null;
   }
 
+  static String? validateWithhint(String? value, String hint) {
+    if (value!.isEmpty) {
+      return 'Please enter an $hint';
+    }
+    return null;
+  }
+
   static String? validateAddress(String? value) {
     if (value!.isEmpty) {
       return 'Please enter an address';

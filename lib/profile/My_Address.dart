@@ -25,7 +25,7 @@ class _MyAddressScreenState extends State<MyAddressScreen> {
         builder: (controller) {
           controller.getAddRess();
           return Scaffold(
-            appBar: const MyAppbar(title: 'Address'),
+            appBar: MyAppbar(title: 'Address'.tr),
             bottomNavigationBar: Padding(
               padding: const EdgeInsets.all(12.0),
               child: Stack(
@@ -38,7 +38,7 @@ class _MyAddressScreenState extends State<MyAddressScreen> {
                               builder: (context) => AddAddressScreen(),
                             ));
                       },
-                      child: const MyButton(text: 'New Address')),
+                      child: MyButton(text: 'New Address'.tr)),
                   Positioned(
                       top: 14,
                       left: 85,

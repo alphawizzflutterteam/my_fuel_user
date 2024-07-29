@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:test_prj/components/my_button.dart';
 import 'package:test_prj/payment/payment_form.dart';
 
 class PaymentScreen extends StatefulWidget {
   bool? isAddoMoney;
-   PaymentScreen({super.key, this.isAddoMoney});
+  PaymentScreen({super.key, this.isAddoMoney});
 
   @override
   State<PaymentScreen> createState() => _PaymentScreenState();
@@ -21,6 +23,19 @@ class _PaymentScreenState extends State<PaymentScreen> {
   void initState() {
     super.initState();
   }
+
+  Future<void> _handlePaymentSuccess(PaymentSuccessResponse response) async {
+    Fluttertoast.showToast(msg: "Payment successfully");
+    // addWallet();
+    Navigator.pop(context);
+    // Navigator.push(context, MaterialPageRoute(builder: (context)=>HomeScreen()));
+  }
+
+  void _handlePaymentError(PaymentFailureResponse response) {
+    Fluttertoast.showToast(msg: "Payment cancelled by user");
+  }
+
+  void _handleExternalWallet(ExternalWalletResponse response) {}
 
   @override
   Widget build(BuildContext context) {
@@ -144,43 +159,43 @@ class _PaymentScreenState extends State<PaymentScreen> {
                           : Border.all(width: 0.3, color: Colors.grey)),
                   child: Center(
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(children: [
-                            Padding(
-                              padding: const EdgeInsets.only(left: 5),
-                              child: Image.asset(
-                                "assets/phonepy.png",
-                                height: 50,
-                                width: 50,
-                              ),
-                            ),
-                          ]),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 20),
-                            child: Text("Phone Pay",
-                                style: _type == 2
-                                    ? TextStyle(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 5),
+                          child: Image.asset(
+                            "assets/phonepy.png",
+                            height: 50,
+                            width: 50,
+                          ),
+                        ),
+                      ]),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 20),
+                        child: Text("Phone Pay",
+                            style: _type == 2
+                                ? TextStyle(
                                     fontSize: 17,
                                     fontWeight: FontWeight.w500,
                                     color: Colors.black)
-                                    : TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.grey,
-                                )),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 110),
-                            child: Radio(
-                              value: 2,
-                              groupValue: _type,
-                              onChanged: _handleRadio,
-                              activeColor: Colors.orange,
-                            ),
-                          ),
-                        ],
-                      ))),
+                                : TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.grey,
+                                  )),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 110),
+                        child: Radio(
+                          value: 2,
+                          groupValue: _type,
+                          onChanged: _handleRadio,
+                          activeColor: Colors.orange,
+                        ),
+                      ),
+                    ],
+                  ))),
             ),
             Padding(
               padding: EdgeInsets.only(top: 15),
@@ -193,43 +208,43 @@ class _PaymentScreenState extends State<PaymentScreen> {
                           : Border.all(width: 0.3, color: Colors.grey)),
                   child: Center(
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(children: [
-                            Padding(
-                              padding: const EdgeInsets.only(left: 5),
-                              child: Image.asset(
-                                "assets/upi.png",
-                                height: 50,
-                                width: 50,
-                              ),
-                            ),
-                          ]),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 20),
-                            child: Text("UPI Payment",
-                                style: _type == 2
-                                    ? TextStyle(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 5),
+                          child: Image.asset(
+                            "assets/upi.png",
+                            height: 50,
+                            width: 50,
+                          ),
+                        ),
+                      ]),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 20),
+                        child: Text("UPI Payment",
+                            style: _type == 2
+                                ? TextStyle(
                                     fontSize: 17,
                                     fontWeight: FontWeight.w500,
                                     color: Colors.black)
-                                    : TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.grey,
-                                )),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 110),
-                            child: Radio(
-                              value: 2,
-                              groupValue: _type,
-                              onChanged: _handleRadio,
-                              activeColor: Colors.orange,
-                            ),
-                          ),
-                        ],
-                      ))),
+                                : TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.grey,
+                                  )),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 110),
+                        child: Radio(
+                          value: 2,
+                          groupValue: _type,
+                          onChanged: _handleRadio,
+                          activeColor: Colors.orange,
+                        ),
+                      ),
+                    ],
+                  ))),
             ),
             Padding(
               padding: EdgeInsets.only(top: 15),
@@ -242,43 +257,43 @@ class _PaymentScreenState extends State<PaymentScreen> {
                           : Border.all(width: 0.3, color: Colors.grey)),
                   child: Center(
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(children: [
-                            Padding(
-                              padding: const EdgeInsets.only(left: 5),
-                              child: Image.asset(
-                                "assets/googlepy.png",
-                                height: 50,
-                                width: 50,
-                              ),
-                            ),
-                          ]),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 20),
-                            child: Text("Google Pay",
-                                style: _type == 2
-                                    ? TextStyle(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 5),
+                          child: Image.asset(
+                            "assets/googlepy.png",
+                            height: 50,
+                            width: 50,
+                          ),
+                        ),
+                      ]),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 20),
+                        child: Text("Google Pay",
+                            style: _type == 2
+                                ? TextStyle(
                                     fontSize: 17,
                                     fontWeight: FontWeight.w500,
                                     color: Colors.black)
-                                    : TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.grey,
-                                )),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 110),
-                            child: Radio(
-                              value: 2,
-                              groupValue: _type,
-                              onChanged: _handleRadio,
-                              activeColor: Colors.orange,
-                            ),
-                          ),
-                        ],
-                      ))),
+                                : TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.grey,
+                                  )),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 110),
+                        child: Radio(
+                          value: 2,
+                          groupValue: _type,
+                          onChanged: _handleRadio,
+                          activeColor: Colors.orange,
+                        ),
+                      ),
+                    ],
+                  ))),
             ),
             // Padding(
             //     padding: EdgeInsets.only(top: 15),
@@ -440,8 +455,11 @@ class _PaymentScreenState extends State<PaymentScreen> {
               alignment: Alignment.bottomCenter,
               width: 330,
               child: InkWell(
-                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) =>
-                    PaymentForm(isAdd: widget.isAddoMoney))),
+                onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            PaymentForm(isAdd: widget.isAddoMoney))),
                 child: const MyButton(
                   text: 'Continue',
                 ),

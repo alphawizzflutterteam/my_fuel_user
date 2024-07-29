@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:test_prj/home_page.dart';
 import 'package:test_prj/myOrder/myOrder.dart';
 import 'package:test_prj/offer_screen.dart';
@@ -43,25 +44,25 @@ class _HomeState extends State<Home> {
                 image: AssetImage("assets/Home.png"),
                 height: 24,
               ),
-              label: "Home"),
-          const BottomNavigationBarItem(
+              label: "Home".tr),
+          BottomNavigationBarItem(
               icon: Image(
                 image: AssetImage("assets/login-logo.png"),
                 height: 24,
               ),
-              label: "My Orders"),
-          const BottomNavigationBarItem(
+              label: "My Orders".tr),
+          BottomNavigationBarItem(
               icon: Image(
                 image: AssetImage("assets/offers.png"),
                 height: 24,
               ),
-              label: "Offers"),
-          const BottomNavigationBarItem(
+              label: "Offers".tr),
+          BottomNavigationBarItem(
               icon: Image(
                 image: AssetImage("assets/2 User.png"),
                 height: 24,
               ),
-              label: "Profile"),
+              label: 'Profile'.tr),
         ],
       ),
     );

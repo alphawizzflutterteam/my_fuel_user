@@ -13,6 +13,7 @@ import 'package:test_prj/splashScreen.dart';
 import '../Home/Genset_checkOut.dart';
 import '../Home/fuel_ontab_checkout.dart';
 import '../authPages/register_complete.dart';
+import '../payment/pay_success_page.dart';
 
 class AppPages {
   static const INITIAL = Routes.ROOT;
@@ -70,6 +71,11 @@ class AppPages {
     GetPage(
       name: Routes.CREATEPASSWORD,
       page: () => CreatePasswordPage(),
+      binding: InitialBinding(),
+    ),
+    GetPage(
+      name: Routes.ORDERPLACED,
+      page: () => OrderPlaced(),
       binding: InitialBinding(),
     ),
 //     GetPage(name: Routes.ROOT, page: () => RootView(), binding: RootBinding(), middlewares: [AuthMiddleware(), SalonOwnerMiddleware()]),

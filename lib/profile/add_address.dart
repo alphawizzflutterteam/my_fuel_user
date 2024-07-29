@@ -30,7 +30,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppbar(title: 'Add Address'),
+      appBar: MyAppbar(title: 'Add Address'.tr),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -45,7 +45,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                       child: MyTextField(
                         validator: (value) => Validator.validateName(value),
                         controller: nameController,
-                        labelText: Text("Name"),
+                        labelText: Text("Name".tr),
                       ),
                     ),
                     Padding(
@@ -54,7 +54,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                         isAmount: true,
                         validator: (value) => Validator.validatePhone(value),
                         controller: mobileController,
-                        labelText: Text("Mobile Number"),
+                        labelText: Text("Mobile Number".tr),
                       ),
                     ),
                     Padding(
@@ -63,7 +63,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                         isAmount: true,
                         validator: (value) => Validator.validatePhone(value),
                         controller: alternatemobileController,
-                        labelText: Text("Alternate Mobile Number"),
+                        labelText: Text("Alternate Mobile Number".tr),
                       ),
                     ),
 
@@ -72,7 +72,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                       child: MyTextField(
                         validator: (value) => Validator.validateName(value),
                         controller: houseNoController,
-                        labelText: Text("House no., Building Name"),
+                        labelText: Text("House no., Building Name".tr),
                       ),
                     ),
                     Padding(
@@ -80,7 +80,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                       child: MyTextField(
                         validator: (value) => Validator.validateName(value),
                         controller: roadNameController,
-                        labelText: Text("Road name, Area Colony"),
+                        labelText: Text("Road name, Area Colony".tr),
                       ),
                     ),
                     Padding(
@@ -88,7 +88,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                       child: MyTextField(
                         validator: (value) => Validator.validateName(value),
                         controller: countryController,
-                        labelText: Text("Country"),
+                        labelText: Text("Country".tr),
                       ),
                     ),
                     Padding(
@@ -96,7 +96,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                       child: MyTextField(
                         validator: (value) => Validator.validateName(value),
                         controller: stateController,
-                        labelText: Text("State"),
+                        labelText: Text("State".tr),
                       ),
                     ),
                     Padding(
@@ -104,7 +104,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                       child: MyTextField(
                         validator: (value) => Validator.validateName(value),
                         controller: cityController,
-                        labelText: Text("City"),
+                        labelText: Text("City".tr),
                       ),
                     ),
                     Padding(
@@ -113,7 +113,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                         isAmount: true,
                         validator: (value) => Validator.validateName(value),
                         controller: pincodeController,
-                        labelText: Text("PinCode"),
+                        labelText: Text("PinCode".tr),
                       ),
                     ),
                     // _buildTextField(label: 'Name', hintText: 'Navin Pawa'),
@@ -158,7 +158,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                                   Navigator.pop(context);
                                 }
                               },
-                              child: const MyButton(text: 'Save Address'));
+                              child: MyButton(text: 'Save Address'.tr));
                         })
                   ],
                 ),
