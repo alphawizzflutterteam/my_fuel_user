@@ -1,5 +1,8 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import '../controller/home_controller.dart';
 
 class SliderHome extends StatefulWidget {
   const SliderHome({Key? key}) : super(key: key);
