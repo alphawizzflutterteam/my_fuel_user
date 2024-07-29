@@ -1,18 +1,41 @@
 import 'package:flutter/material.dart';
-import 'package:test_prj/home.dart';
+import 'package:get/get.dart';
+import 'package:test_prj/helper/utils/validator_all.dart';
+// import 'package:test_prj/home.dart';
 import 'package:test_prj/home_page.dart';
 
-class RegisterComplete extends StatelessWidget {
+import '../data/model/verify_otp_model.dart';
+import '../helper/utils/shared_preference.dart';
+import '../home.dart';
+
+class RegisterComplete extends StatefulWidget {
   const RegisterComplete({super.key});
 
   @override
+  State<RegisterComplete> createState() => _RegisterCompleteState();
+}
+
+class _RegisterCompleteState extends State<RegisterComplete> {
+  late List<VerifyData> receivedList = [];
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    initUI();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    // List<VerifyData> receivedList = Get.arguments;
+
     return GestureDetector(
-      onTap: () => Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const Home(),
-          )),
+      onTap: () async {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const Home(),
+            ));
+      },
       child: Scaffold(
         body: Container(
           decoration: const BoxDecoration(
@@ -90,10 +113,10 @@ class RegisterComplete extends StatelessWidget {
                           ),
                         ],
                       ),
-                      const Column(
+                      Column(
                         children: [
                           Text(
-                            '123 123 123 123',
+                            '${receivedList[0].walletId.toString().substring(0, 3)} ${receivedList[0].walletId.toString().substring(4, 7)} ${receivedList[0].walletId.toString().substring(8, 12)} ${receivedList[0].walletId.toString().substring(12, 16)}',
                             style: TextStyle(
                               fontSize: 27,
                               color: Color.fromRGBO(253, 225, 64, 1),
@@ -101,7 +124,7 @@ class RegisterComplete extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            'Rajat malakar',
+                            '${receivedList[0].name} ',
                             style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.w600,
@@ -109,7 +132,7 @@ class RegisterComplete extends StatelessWidget {
                           ),
                         ],
                       ),
-                      const Row(
+                      Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
@@ -119,7 +142,7 @@ class RegisterComplete extends StatelessWidget {
                                 fontWeight: FontWeight.w600),
                           ),
                           Text(
-                            '02 jan 2024',
+                            '${Validator.convertDateString(receivedList[0].createdAt.toString().substring(0, 10))}',
                             style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.w600),
@@ -167,5 +190,10 @@ class RegisterComplete extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void initUI() {
+    receivedList = Get.arguments;
+    setState(() {});
   }
 }

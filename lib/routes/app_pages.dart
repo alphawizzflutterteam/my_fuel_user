@@ -1,8 +1,19 @@
 import 'package:get/get_navigation/src/routes/get_route.dart';
+import 'package:test_prj/authPages/create_password.dart';
 import 'package:test_prj/authPages/language_page.dart';
+import 'package:test_prj/authPages/login_page.dart';
+import 'package:test_prj/authPages/otpScreen1.dart';
+import 'package:test_prj/authPages/otpScreen2.dart';
+import 'package:test_prj/authPages/sign_up.dart';
+import 'package:test_prj/home.dart';
 import 'package:test_prj/routes/app_routes.dart';
 import 'package:test_prj/routes/bindings/inial_binding.dart';
 import 'package:test_prj/splashScreen.dart';
+
+import '../Home/Genset_checkOut.dart';
+import '../Home/fuel_ontab_checkout.dart';
+import '../authPages/register_complete.dart';
+import '../payment/pay_success_page.dart';
 
 class AppPages {
   static const INITIAL = Routes.ROOT;
@@ -15,6 +26,56 @@ class AppPages {
     GetPage(
       name: Routes.LANGUAGE,
       page: () => const LanguageScreen(),
+      binding: InitialBinding(),
+    ),
+    GetPage(
+      name: Routes.LOGIN,
+      page: () => const LoginPage(),
+      binding: InitialBinding(),
+    ),
+    GetPage(
+      name: Routes.REGISTER,
+      page: () => const SignUp(),
+      binding: InitialBinding(),
+    ),
+    GetPage(
+      name: Routes.HOME,
+      page: () => const Home(),
+      binding: InitialBinding(),
+    ),
+    GetPage(
+      name: Routes.PHONE_VERIFICATION,
+      page: () => const OTPScreen(),
+      binding: InitialBinding(),
+    ),
+    GetPage(
+      name: Routes.GENSET_CHECKOUT,
+      page: () => const GetSetCheckoutScreen(),
+      binding: InitialBinding(),
+    ),
+    GetPage(
+      name: Routes.FUEL_CHECKOUT,
+      page: () => FuelOnTabCheckoutScreen(),
+      binding: InitialBinding(),
+    ),
+    GetPage(
+      name: Routes.MEMBERCARD,
+      page: () => const RegisterComplete(),
+      binding: InitialBinding(),
+    ),
+    GetPage(
+      name: Routes.PASSWORD_VERIFICATION,
+      page: () => OTPScreen2(),
+      binding: InitialBinding(),
+    ),
+    GetPage(
+      name: Routes.CREATEPASSWORD,
+      page: () => CreatePasswordPage(),
+      binding: InitialBinding(),
+    ),
+    GetPage(
+      name: Routes.ORDERPLACED,
+      page: () => OrderPlaced(),
       binding: InitialBinding(),
     ),
 //     GetPage(name: Routes.ROOT, page: () => RootView(), binding: RootBinding(), middlewares: [AuthMiddleware(), SalonOwnerMiddleware()]),

@@ -73,9 +73,9 @@ class _LoginPage2State extends State<LoginPage2> {
                           const Text(
                             "Please Sign in to your account",
                             style: TextStyle(
-                              // fontSize: 26,
-                              // fontWeight: FontWeight.bold,
-                            ),
+                                // fontSize: 26,
+                                // fontWeight: FontWeight.bold,
+                                ),
                           ),
                           const SizedBox(height: 8),
                           Row(
@@ -119,74 +119,6 @@ class _LoginPage2State extends State<LoginPage2> {
                             ],
                           ),
                           const SizedBox(height: 15),
-                          SizedBox(
-                            height: 56,
-                            child: TextFormField(
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Please enter Membership No.';
-                                }
-                                return null;
-                              },
-                              decoration: InputDecoration(
-                                label: Text('Membership No.'),
-                                labelStyle: TextStyle(color: Colors.grey.shade700),
-                                enabled: true,
-                                enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.grey.shade200),
-                                    borderRadius: BorderRadius.circular(8)),
-                                focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.grey.shade700),
-                                    borderRadius: BorderRadius.circular(8)),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 15),
-                          SizedBox(
-                            height: 56,
-                            child: TextFormField(
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Please enter User name';
-                                }
-                                return null;
-                              },
-                              decoration: InputDecoration(
-                                label: Text('User name'),
-                                labelStyle: TextStyle(color: Colors.grey.shade700),
-                                enabled: true,
-                                enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.grey.shade200),
-                                    borderRadius: BorderRadius.circular(8)),
-                                focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.grey.shade700),
-                                    borderRadius: BorderRadius.circular(8)),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 15),
-                          SizedBox(
-                            height: 56,
-                            child: TextFormField(
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Password';
-                                }
-                                return null;
-                              },
-                              decoration: InputDecoration(
-                                label: Text('Password'),
-                                labelStyle: TextStyle(color: Colors.grey.shade700),
-                                enabled: true,
-                                enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.grey.shade200),
-                                    borderRadius: BorderRadius.circular(8)),
-                                focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.grey.shade700),
-                                    borderRadius: BorderRadius.circular(8)),
-                              ),
-                            ),
-                          ),
                           const SizedBox(height: 15),
                           Row(
                             children: [
@@ -208,12 +140,13 @@ class _LoginPage2State extends State<LoginPage2> {
                           ),
                           const SizedBox(height: 20),
                           GestureDetector(
-                            onTap: (){
-                              if(_formKey.currentState!.validate())
-                              {
-                                Navigator.push(context, MaterialPageRoute(builder: (context) => const Home()));
+                            onTap: () {
+                              if (_formKey.currentState!.validate()) {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => const Home()));
                               }
-
                             },
                             child: const MyButton(text: "Login"),
                           ),
@@ -226,7 +159,7 @@ class _LoginPage2State extends State<LoginPage2> {
                                 onTap: () => Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) =>  SignUp())),
+                                        builder: (context) => SignUp())),
                                 child: const Text(
                                   "Sign Up",
                                   style: TextStyle(
@@ -249,4 +182,3 @@ class _LoginPage2State extends State<LoginPage2> {
     );
   }
 }
-

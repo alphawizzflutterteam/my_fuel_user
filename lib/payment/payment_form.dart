@@ -8,7 +8,7 @@ import 'package:test_prj/orderfuel/EV/AddMoneyplaced.dart';
 import 'package:test_prj/payment/pay_success_page.dart';
 
 class PaymentForm extends StatelessWidget {
- bool? isAdd;
+  bool? isAdd;
   final bool? isFromFuelOnTap;
 
   PaymentForm({super.key, this.isFromFuelOnTap, this.isAdd});
@@ -28,12 +28,12 @@ class PaymentForm extends StatelessWidget {
                   child: Column(
                     children: [
                       MyHintTextField(
-                          hintText: Text(
-                        "Name",
-                        style: TextStyle(
-                            color: Colors.grey.shade500,
-                            fontWeight: FontWeight.w600),
-                        ) ,
+                        hintText: Text(
+                          "Name",
+                          style: TextStyle(
+                              color: Colors.grey.shade500,
+                              fontWeight: FontWeight.w600),
+                        ),
                       ),
                       const SizedBox(
                         height: 20,
@@ -78,20 +78,21 @@ class PaymentForm extends StatelessWidget {
                   ),
                 ),
                 InkWell(
-                  onTap: () =>
-                  isAdd == true ?
-                  Navigator.push(
-                    context, MaterialPageRoute(
-                    builder: (context) => AddMoneyplaced(),
-                         ),
-                      ):
-                      Navigator.push(
-                      context, MaterialPageRoute(
-                        builder: (context) => OrderPlaced(
-                          isFromFuelOnTap: isFromFuelOnTap,
+                  onTap: () => isAdd == true
+                      ? Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => AddMoneyplaced(),
+                          ),
+                        )
+                      : Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => OrderPlaced(
+                                isFromFuelOnTap: isFromFuelOnTap,
+                                amount: "100"),
                           ),
                         ),
-                      ),
                   child: Container(
                     alignment: Alignment.bottomCenter,
                     child: const MyButton(

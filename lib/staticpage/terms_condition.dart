@@ -1,26 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
-
+import 'package:get/get.dart';
 
 import '../components/my_appbar.dart';
+import '../controller/splash_controller.dart';
+import '../splashScreen.dart';
 
 class TermsConditionScreen extends StatelessWidget {
   const TermsConditionScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            const MyAppbar(title: 'Terms & Conditions'),
-            Html(
-              data: htmlContent,
-            )
-          ],
-        ),
-      ),
-    );
+    print(" Data Show ${configModel!.termsConditions}");
+    return GetBuilder<SplashController>(
+        init: SplashController(),
+        builder: (controller) {
+          return Scaffold(
+            body: SingleChildScrollView(
+              child: Column(
+                children: [
+                  const MyAppbar(title: 'Terms & Conditions'),
+                  Html(
+                    // data: htmlContent,
+                    data: '''
+                    <!DOCTYPE html> ${configModel!.termsConditions} </html>
+    ''',
+                  )
+                ],
+              ),
+            ),
+          );
+        });
   }
 
   final String htmlContent = '''

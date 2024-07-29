@@ -5,4 +5,5 @@ class AppImages {
   static const malayalamImage = 'assets/malyalam.png';
   static const kannadaImage = 'assets/kannada.png';
   static const bengaliImage = 'assets/bengali.png';
+  static const appLogo = 'assets/login-logo.png';
 }
