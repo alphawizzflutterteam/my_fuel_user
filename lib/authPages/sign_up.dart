@@ -74,14 +74,14 @@ class _SignUpState extends State<SignUp> {
                       "Please Sign in to your account",
                     ),
 
-                    data == "1" ? showBussiness() : showUser(),
+                    data == "1" ? showBusiness() : showUser(),
 
                     const SizedBox(height: 20),
                     GetBuilder<SignupController>(
                         init: SignupController(),
                         builder: (controller) {
                           return controller.isLoading.value == true
-                              ? CircularProgressIndicator()
+                              ? const CircularProgressIndicator()
                               : GestureDetector(
                                   onTap: () {
                                     if (_formKeyReset!.currentState!
@@ -102,7 +102,9 @@ class _SignUpState extends State<SignUp> {
 
                                       controller.Register(user).then((value) {
                                         if (value.containsKey("errors")) {
-                                          Fluttertoast.showToast(msg: "$value");
+                                          Fluttertoast.showToast(
+                                              msg:
+                                                  "${value['errors'][0]['message']}");
                                         } else if (value['temporary_token'] !=
                                             "") {
                                           String token =
@@ -188,7 +190,7 @@ class _SignUpState extends State<SignUp> {
 
   final _formKeyReset = GlobalKey<FormState>();
 
-  Widget showBussiness() {
+  Widget showBusiness() {
     return Column(
       children: [
         const SizedBox(height: 25),
@@ -196,57 +198,58 @@ class _SignUpState extends State<SignUp> {
           validator: (value) => Validator.validatePhone(value),
           isAmount: true,
           controller: phoneController,
-          labelText: Text("Phone No "),
+          labelText: const Text("Phone No "),
         ),
-        SizedBox(height: 15),
+        const SizedBox(height: 15),
         MyTextField(
           validator: (value) => Validator.validateEmail(value),
           controller: emailController,
-          labelText: Text("Email"),
+          labelText: const Text("Email"),
         ),
-        SizedBox(height: 15),
+        const SizedBox(height: 15),
         MyTextField(
           validator: (value) => Validator.validateName(value),
           controller: nameController,
-          labelText: Text("Company Name"),
+          labelText: const Text("Company Name"),
         ),
-        SizedBox(height: 15),
+        const SizedBox(height: 15),
         MyTextField(
           validator: (value) => null,
           controller: gstController,
-          labelText: Text("Gst Number (optional)"),
+          labelText: const Text("Gst Number (optional)"),
         ),
-        SizedBox(height: 15),
+        const SizedBox(height: 15),
         MyTextField(
           validator: (value) => Validator.validateAddress(value),
           controller: addressController,
-          labelText: Text("Company Address"),
+          labelText: const Text("Company Address"),
         ),
-        SizedBox(height: 15),
+        const SizedBox(height: 15),
         MyTextField(
           validator: (value) => Validator.validateAddress(value),
           controller: panController,
-          labelText: Text("Pan No."),
+          labelText: const Text("Pan No."),
         ),
-        SizedBox(height: 15),
+        const SizedBox(height: 15),
         MyTextField(
           validator: (value) => null,
           controller: msmeController,
-          labelText: Text("MSME No.(optional)"),
+          labelText: const Text("MSME No.(optional)"),
         ),
-        SizedBox(height: 15),
+        const SizedBox(height: 15),
         MyTextField(
           validator: (value) => Validator.validatePassword(value),
           isPassword: true,
           controller: passwordController,
-          labelText: Text("Password"),
+          labelText: const Text("Password"),
         ),
-        SizedBox(height: 15),
+        const SizedBox(height: 15),
         MyTextField(
-          validator: (value) => Validator.validatePassword(value),
+          validator: (value) =>
+              Validator.validateConfirmPassword(value, passwordController.text),
           isPassword: true,
           controller: confirmpasswordController,
-          labelText: Text("Confirm Password"),
+          labelText: const Text("Confirm Password"),
         ),
       ],
     );
@@ -260,39 +263,40 @@ class _SignUpState extends State<SignUp> {
           validator: (value) => Validator.validatePhone(value),
           controller: phoneController,
           isAmount: true,
-          labelText: Text("Phone No "),
+          labelText: const Text("Phone No "),
         ),
-        SizedBox(height: 15),
+        const SizedBox(height: 15),
         MyTextField(
           validator: (value) => Validator.validateEmail(value),
           controller: emailController,
-          labelText: Text("Email"),
+          labelText: const Text("Email"),
         ),
-        SizedBox(height: 15),
+        const SizedBox(height: 15),
         MyTextField(
           validator: (value) => Validator.validateName(value),
           controller: nameController,
-          labelText: Text("Full Name"),
+          labelText: const Text("Full Name"),
         ),
-        SizedBox(height: 15),
+        const SizedBox(height: 15),
         MyTextField(
           validator: (value) => null,
           controller: gstController,
-          labelText: Text("Gst Number (optional)"),
+          labelText: const Text("Gst Number (optional)"),
         ),
-        SizedBox(height: 15),
+        const SizedBox(height: 15),
         MyTextField(
           validator: (value) => Validator.validatePassword(value),
           isPassword: true,
           controller: passwordController,
-          labelText: Text("Password"),
+          labelText: const Text("Password"),
         ),
-        SizedBox(height: 15),
+        const SizedBox(height: 15),
         MyTextField(
-          validator: (value) => Validator.validatePassword(value),
+          validator: (value) =>
+              Validator.validateConfirmPassword(value, passwordController.text),
           isPassword: true,
           controller: confirmpasswordController,
-          labelText: Text("Confirm Password"),
+          labelText: const Text("Confirm Password"),
         ),
       ],
     );

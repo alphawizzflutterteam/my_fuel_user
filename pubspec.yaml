@@ -45,7 +45,7 @@ dependencies:
   shared_preferences:
   get_storage: ^2.1.1
   fluttertoast: ^8.2.6
-  connectivity_plus:
+  connectivity_plus: 5.0.1
 
 #  rating_bar: ^0.2.0
 

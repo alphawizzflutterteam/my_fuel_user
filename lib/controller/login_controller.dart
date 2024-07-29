@@ -1,8 +1,11 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:get/get_rx/get_rx.dart';
 import 'package:test_prj/controller/appBase/appbase_controller.dart';
+import 'package:test_prj/helper/utils/app_constants.dart';
 
 import '../service/provider/lavavel_provider.dart';
 
@@ -25,7 +28,11 @@ class LoginController extends AppBaseController {
         await _laravelApiClient.Login(membNo, emailPhone, password);
     if (value.containsKey("errors")) {
       Fluttertoast.showToast(msg: "$value");
-    } else if (value['token'] != "") {}
+    } else if (value['token'] != null) {
+      await box.write(AppConstants.token, value['token']);
+    }
+    log('dsdsdsds ${value}');
+
     isLoading(false);
     return value;
   }
