@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:test_prj/language/language_transtation.dart';
+import 'package:test_prj/orderfuel/repository/order_fuel_repository.dart';
 import 'package:test_prj/routes/app_pages.dart';
 import 'package:test_prj/service/provider/lavavel_provider.dart';
-
-import 'orderfuel/doorStepDelivery/repository/order_fuel_repository.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 String tokenKey = '';

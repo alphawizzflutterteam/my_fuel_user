@@ -65,22 +65,24 @@ class ServiceListData {
   int? homeStatus;
   int? priority;
   String? type;
+  bool? isSelected;
   //List<Null>? translations;
 
-  ServiceListData({
-    this.id,
-    this.name,
-    this.slug,
-    this.icon,
-    this.parentId,
-    this.position,
-    this.createdAt,
-    this.updatedAt,
-    this.homeStatus,
-    this.priority,
-    this.type,
-    /*this.translations*/
-  });
+  ServiceListData(
+      {this.id,
+      this.name,
+      this.slug,
+      this.icon,
+      this.parentId,
+      this.position,
+      this.createdAt,
+      this.updatedAt,
+      this.homeStatus,
+      this.priority,
+      this.type,
+      this.isSelected
+      /*this.translations*/
+      });
 
   ServiceListData.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -94,6 +96,7 @@ class ServiceListData {
     homeStatus = json['home_status'];
     priority = json['priority'];
     type = json['type'];
+    isSelected = false;
     /*if (json['translations'] != null) {
       translations = <Null>[];
       json['translations'].forEach((v) {

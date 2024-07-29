@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:test_prj/components/my_appbar.dart';
 import 'package:test_prj/components/my_button.dart';
+import 'package:test_prj/data/model/OrderFuelModel.dart';
 import 'package:test_prj/helper/colors.dart';
 import 'package:test_prj/orderfuel/doorStepDelivery/controller/order_fuel_controller.dart';
-import 'package:test_prj/orderfuel/fuelToGo/fuelToGo.dart';
-import 'package:test_prj/orderfuel/doorStepDelivery/my_assets.dart';
+import 'package:test_prj/orderfuel/fuelToGo/addVehicles.dart';
 import '../../SelectNewAddress.dart';
 import '../EV/evVehicle.dart';
 
@@ -17,30 +17,50 @@ class LookingForCompany extends StatefulWidget {
 }
 
 class _LookingForCompanyState extends State<LookingForCompany> {
-  int selected = 0;
+  Widget customRadio(String text, int selectedTab,
+      OrderFuelController controller, int index, ServiceListData item) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 10),
+      child: OutlinedButton(
+        onPressed: () {
+          if (selectedTab == 0) {
+            controller.servicesList[0].data?.forEach((element) {
+              element.isSelected = false;
+            });
 
-  Widget customRadio(String text, int index) {
-    return OutlinedButton(
-      onPressed: () {
-        setState(() {
-          selected = index;
-        });
-      },
-      style: OutlinedButton.styleFrom(
-        minimumSize: const Size(280, 50), // Set a fixed width and height
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadiusDirectional.circular(10),
+            controller.servicesList[0].data?[index].isSelected = true;
+            controller.selectedData = controller.servicesList[0].data?[index];
+
+            controller.update();
+          } else {
+            controller.servicesList[1].data?.forEach((element) {
+              element.isSelected = false;
+            });
+
+            controller.servicesList[1].data?[index].isSelected = true;
+            controller.selectedData = controller.servicesList[1].data?[index];
+
+            controller.update();
+          }
+
+          // controller.selected.value = index;
+        },
+        style: OutlinedButton.styleFrom(
+          minimumSize: const Size(280, 50), // Set a fixed width and height
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadiusDirectional.circular(10),
+          ),
+          side: BorderSide(
+            color: item.isSelected ?? false ? Colors.black : Colors.yellow,
+          ),
         ),
-        side: BorderSide(
-          color: (selected == index) ? Colors.black : Colors.yellow,
-        ),
-      ),
-      child: Align(
-        alignment: Alignment.centerLeft,
-        child: Text(
-          text,
-          style: TextStyle(
-            color: (selected == index) ? Colors.blueGrey : Colors.black,
+        child: Align(
+          alignment: Alignment.centerLeft,
+          child: Text(
+            text,
+            style: TextStyle(
+              color: item.isSelected ?? false ? Colors.blueGrey : Colors.black,
+            ),
           ),
         ),
       ),
@@ -56,8 +76,72 @@ class _LookingForCompanyState extends State<LookingForCompany> {
           appBar: const MyAppbar(
             title: 'Order Fuel',
           ),
+          bottomNavigationBar: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: GestureDetector(
+                onTap: () {
+                  if (controller.selectedIndex.value == 0) {
+                    var item = controller.servicesList[0].data
+                        ?.where((element) => element.isSelected!);
+
+                    if ((item?.isNotEmpty ?? false) &&
+                        item!.first.slug == 'diesel') {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => SelectNewAddress(
+                                    isFromForLooking: true,
+                                  )));
+                    } else if ((item?.isNotEmpty ?? false) &&
+                        item!.first.slug == 'ev') {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => EvVehicle(
+                                    selectedIndex: 0,
+                                  )));
+                    } else {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => SelectNewAddress(
+                                    isFromForLooking: true,
+                                  )));
+                    }
+                  } else {
+                    var item = controller.servicesList[1].data
+                        ?.where((element) => element.isSelected!);
+
+                    print('${item?.first.slug}_____________');
+
+                    if ((item?.isNotEmpty ?? false) &&
+                        item!.first.slug == 'diesel') {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const AddVehicles()));
+                    } else if ((item?.isNotEmpty ?? false) &&
+                        item!.first.slug == 'ev') {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => EvVehicle(
+                                    selectedIndex: 1,
+                                  )));
+                    } else {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => SelectNewAddress(
+                                    isFromForLooking: true,
+                                  )));
+                    }
+                  }
+                },
+                child: const MyButton(text: 'Next')),
+          ),
           body: controller.isLoading
-              ? Center(
+              ? const Center(
                   child: CircularProgressIndicator(),
                 )
               : Column(
@@ -93,7 +177,11 @@ class _LookingForCompanyState extends State<LookingForCompany> {
                                     var item =
                                         controller.servicesList[0].data?[index];
                                     return customRadio(
-                                        item?.name ?? '', index + 1);
+                                        item?.name ?? '',
+                                        controller.selectedIndex.value,
+                                        controller,
+                                        index,
+                                        item!);
                                   },
                                 )
                               : ListView.builder(
@@ -105,8 +193,8 @@ class _LookingForCompanyState extends State<LookingForCompany> {
                                   itemBuilder: (context, index) {
                                     var item =
                                         controller.servicesList[1].data?[index];
-                                    return customRadio(
-                                        item?.name ?? '', index + 1);
+                                    return customRadio(item?.name ?? '',
+                                        index + 1, controller, index, item!);
                                   },
                                 )
                           /*customRadio("DIESEL", 1),
@@ -123,27 +211,6 @@ class _LookingForCompanyState extends State<LookingForCompany> {
                     ),
                     const SizedBox(
                       height: 200,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: GestureDetector(
-                          onTap: () => Navigator.push(context,
-                                  MaterialPageRoute(builder: (context) {
-                                if (selected == 1) {
-                                  return SelectNewAddress(
-                                    isFromForLooking: true,
-                                  );
-                                } else if (selected == 2) {
-                                  return EvVehicle(
-                                    selectedIndex: 0,
-                                  );
-                                } else if (selected == 3) {
-                                  return const LookingForCompany();
-                                } else {
-                                  return const LookingForCompany();
-                                }
-                              })),
-                          child: const MyButton(text: 'Next')),
                     ),
                   ],
                 ),

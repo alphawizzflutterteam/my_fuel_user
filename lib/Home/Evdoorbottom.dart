@@ -1,12 +1,27 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:test_prj/Home/fuel_ontab_checkout.dart';
 import 'package:test_prj/components/my_button.dart';
+import 'package:test_prj/data/model/TimeSlotModel.dart';
+import 'package:test_prj/helper/colors.dart';
 import 'package:test_prj/orderfuel/doorStepDelivery/vendors_page.dart';
 
 import '../Home/Evcheckout.dart';
 
 class Evdoorbottom extends StatefulWidget {
-  const Evdoorbottom({super.key});
+  const Evdoorbottom(
+      {super.key,
+      this.onTab,
+      required this.slotList,
+      required this.selectedSlot,
+      required this.onSelect,
+      required this.dateController});
+
+  final VoidCallback? onTab;
+  final Function(int) onSelect;
+  final List<TimeData> slotList;
+  final int selectedSlot;
+  final TextEditingController dateController;
 
   @override
   State<Evdoorbottom> createState() => _EvdoorbottomState();
@@ -14,148 +29,111 @@ class Evdoorbottom extends StatefulWidget {
 
 class _EvdoorbottomState extends State<Evdoorbottom> {
   DateTime? selectedDate;
-  TextEditingController dateController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: 400,
-      child: Column(
-        children: [
-          Container(
-            child: Padding(
-              padding: const EdgeInsets.only(top: 20, left: 30, right: 20),
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            const Padding(
+              padding: EdgeInsets.only(top: 20, left: 30, right: 20),
               child: Text(
                 "Schedule data and timing",
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
             ),
-          ),
-          SizedBox(
-            height: 5,
-          ),
-          Padding(
-            padding: const EdgeInsets.all(10),
-            child: TextField(
-                controller: dateController,
-                decoration: InputDecoration(
-                  // labelText: 'Schedule date and timing',
-                  hintText: 'Schedule date and timing',
-                  //filled: true,
-                  suffixIcon: const Icon(Icons.calendar_today),
-                  enabledBorder: const OutlineInputBorder(
-                    borderSide: BorderSide.none,
-                  ),
-                ),
-                readOnly: true,
-                onTap: () {
-                  _selectDate(context);
-                }),
-          ),
-          SizedBox(height: 7),
-          Padding(
-            padding: const EdgeInsets.only(right: 290),
-            child: Text(
-              "Slots",
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            const SizedBox(
+              height: 5,
             ),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Row(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 15),
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Colors.grey.withOpacity(0.1),
+            Padding(
+              padding: const EdgeInsets.all(10),
+              child: TextField(
+                  controller: widget.dateController,
+                  decoration: const InputDecoration(
+                    contentPadding: EdgeInsets.only(left: 10, top: 10),
+                    // labelText: 'Schedule date and timing',
+                    hintText: 'Schedule date and timing',
+
+                    //filled: true,
+                    suffixIcon: Icon(Icons.calendar_today),
+                    /*enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide.none,
+                    ),*/
                   ),
-                  height: 35,
-                  width: 160,
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 7, left: 15),
-                    child: Text(
-                      '1:00 PM - 1:30 PM',
-                      style: TextStyle(fontSize: 15, color: Colors.orange),
+                  readOnly: true,
+                  onTap: () {
+                    _selectDate(context);
+                  }),
+            ),
+            const SizedBox(height: 7),
+            const Padding(
+              padding: EdgeInsets.only(right: 290),
+              child: Text(
+                "Slots",
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: GridView.count(
+                physics: const NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                childAspectRatio: 5,
+                crossAxisCount: 2,
+                mainAxisSpacing: 5,
+                children: List.generate(
+                  widget.slotList.length,
+                  (index) => InkWell(
+                    onTap: () {
+                      widget.onSelect(index);
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.only(right: 10),
+                      child: Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: Colors.grey.withOpacity(0.1),
+                            border: Border.all(
+                                color: widget.selectedSlot == index
+                                    ? colors.orange
+                                    : colors.black54)),
+                        height: 35,
+                        width: 160,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8),
+                          child: Text(
+                            widget.slotList[index].title ?? '',
+                            style: TextStyle(
+                                fontSize: 15,
+                                color: widget.selectedSlot == index
+                                    ? colors.orange
+                                    : colors.black54),
+                          ),
+                        ),
+                      ),
                     ),
                   ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(left: 10),
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Colors.grey.withOpacity(0.1),
-                  ),
-                  height: 35,
-                  width: 160,
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 7, left: 15),
-                    child: Text(
-                      '2:00 PM - 2:30 PM',
-                      style: TextStyle(fontSize: 15, color: Colors.black54),
-                    ),
-                  ),
-                ),
-              )
-            ],
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          Row(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 15),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.grey.withOpacity(0.1),
-                    borderRadius: BorderRadius.circular(10),
-                    //color: Colors.grey.withOpacity(0.0),
-                  ),
-                  height: 35,
-                  width: 160,
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 7, left: 15),
-                    child: Text(
-                      '2:30 PM - 3:00 PM',
-                      style: TextStyle(fontSize: 15, color: Colors.black54),
-                    ),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 10),
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Colors.grey.withOpacity(0.1),
-                  ),
-                  height: 35,
-                  width: 160,
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 7, left: 15),
-                    child: Text(
-                      '3:00 PM - 3:30 PM',
-                      style: TextStyle(fontSize: 15, color: Colors.black54),
-                    ),
-                  ),
-                ),
-              )
-            ],
-          ),
-          SizedBox(height: 30),
-          Container(
-            alignment: Alignment.bottomCenter,
-            width: 330,
-            child: GestureDetector(
-                onTap: () => Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => Evcheckout())),
-                child: MyButton(text: 'Book Now')),
-          ),
-        ],
+            ),
+            const SizedBox(height: 30),
+            Container(
+              alignment: Alignment.bottomCenter,
+              width: 330,
+              child: GestureDetector(
+                  onTap: widget.onTab,
+                  /*Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const Evcheckout()))*/
+                  child: const MyButton(text: 'Book Now')),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -164,12 +142,12 @@ class _EvdoorbottomState extends State<Evdoorbottom> {
     final DateTime? picked = await showDatePicker(
         context: context,
         initialDate: selectedDate,
-        firstDate: DateTime(2000),
-        lastDate: DateTime(2024));
+        firstDate: DateTime.now(),
+        lastDate: DateTime(2030));
     if (picked != null && picked != selectedDate) {
       setState(() {
         //   selectedDate = picked;
-        dateController.text = picked.toString().split(" ")[0];
+        widget.dateController.text = picked.toString().split(" ")[0];
       });
     }
   }
