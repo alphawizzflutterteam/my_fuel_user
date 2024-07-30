@@ -1,8 +1,11 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:test_prj/components/my_button.dart';
 import 'package:test_prj/controller/offers_controller.dart';
 import 'package:test_prj/helper/colors.dart';
 import 'package:test_prj/profile/notification1.dart';
+import 'package:test_prj/splashScreen.dart';
 
 import 'controller/internet_controller.dart';
 import 'helper/utils/shared_preference.dart';
@@ -60,7 +63,9 @@ class _OffersScreenState extends State<OffersScreen> {
     return GetBuilder<InternetController>(
         init: InternetController(),
         builder: (connectivityController) {
-          return Obx(() => connectivityController.isConnected
+          print(
+              "_checkConnectivity offer ${connectivityController.isConnected.value}");
+          return Obx(() => connectivityController.isConnected.value == true
               ? Scaffold(
                   body: SingleChildScrollView(
                     child: Container(
@@ -94,7 +99,7 @@ class _OffersScreenState extends State<OffersScreen> {
                                       height: 24,
                                     ),
                                     const SizedBox(width: 8),
-                                    const Column(
+                                    Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
@@ -106,7 +111,7 @@ class _OffersScreenState extends State<OffersScreen> {
                                           ),
                                         ),
                                         Text(
-                                          "Ratan Lok Colony Indore",
+                                          "${address.toString()}",
                                           style: TextStyle(
                                             color: Colors.white,
                                             fontSize: 12,
@@ -199,6 +204,16 @@ class _OffersScreenState extends State<OffersScreen> {
                           fontSize: 14,
                         ),
                       ),
+                      GetBuilder<OfferController>(builder: (controller) {
+                        return GestureDetector(
+                            onTap: () {
+                              controller.getOffers();
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.all(12.0),
+                              child: MyButton(text: "Try Again "),
+                            ));
+                      }),
                       const SizedBox(height: 50),
                     ],
                   ),

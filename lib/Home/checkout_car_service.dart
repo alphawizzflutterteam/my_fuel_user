@@ -315,7 +315,7 @@ class _Checkout_Car_ServiceState extends State<Checkout_Car_Service> {
                                               MainAxisAlignment.spaceBetween,
                                           children: [
                                             Text(
-                                              "${carController.batterTyreCheckOut.value.data!.product!.name}",
+                                              "${carController.batterTyreCheckOut.value.data!.product![0].name}",
                                               style: TextStyle(
                                                 fontSize: 16,
                                                 fontWeight: FontWeight.bold,
@@ -327,7 +327,7 @@ class _Checkout_Car_ServiceState extends State<Checkout_Car_Service> {
                                                 Icon(Icons.location_on),
                                                 SizedBox(width: 5),
                                                 Text(
-                                                  "${carController.batterTyreCheckOut.value.data!.product!.name}",
+                                                  "${carController.batterTyreCheckOut.value.data!.product![0].name}",
                                                   style: TextStyle(
                                                     fontSize: 14,
                                                     color: Colors.black54,
@@ -342,7 +342,7 @@ class _Checkout_Car_ServiceState extends State<Checkout_Car_Service> {
                                                       const EdgeInsets.only(
                                                           left: 15),
                                                   child: Text(
-                                                    "Rs ${carController.batterTyreCheckOut.value.data!.product!.unitPrice}",
+                                                    "Rs ${carController.batterTyreCheckOut.value.data!.product![0].unitPrice}",
                                                     style: TextStyle(
                                                       fontSize: 20,
                                                       color: Colors.black,
@@ -435,7 +435,7 @@ class _Checkout_Car_ServiceState extends State<Checkout_Car_Service> {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
-                                    "${carController.batterTyreCheckOut.value.data!.product!.name}",
+                                    "${carController.batterTyreCheckOut.value.data!.product![0].name}",
                                     style: TextStyle(
                                         fontSize: 14, color: Colors.black54),
                                   ),
@@ -502,7 +502,7 @@ class _Checkout_Car_ServiceState extends State<Checkout_Car_Service> {
                                         fontSize: 14, color: Colors.black54),
                                   ),
                                   Text(
-                                    "Rs ${carController.batterTyreCheckOut.value.data!.product!.unitPrice.toString()}",
+                                    "Rs ${carController.batterTyreCheckOut.value.data!.product![0].unitPrice.toString()}",
                                     style: TextStyle(
                                       fontSize: 18,
                                       color: Colors.black,
@@ -1011,32 +1011,55 @@ class _Checkout_Car_ServiceState extends State<Checkout_Car_Service> {
                         ),
                       ),
                     ] else ...[
-                      Container(
-                        width: MediaQuery.sizeOf(context).width,
-                        color: colors.lightgray,
-                        child: Padding(
-                          padding: const EdgeInsets.only(
-                              left: 12, top: 8, bottom: 8),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Scheduled Date and Time',
-                                style: TextStyle(
-                                    color: Colors.black.withOpacity(0.5),
-                                    fontWeight: FontWeight.w500),
-                              ),
-                              Text(
-                                '${carController.batterTyreCheckOut.value.data!.timeSlot!.fromTime} to ${carController.batterTyreCheckOut.value.data!.timeSlot!.toTime}',
-                                style: TextStyle(fontWeight: FontWeight.w600),
-                              ),
-                              Text(
-                                '${Validator.convertDateString(carController.batterTyreCheckOut.value.data!.date.toString().substring(0, 10))}',
-                                style: TextStyle(fontWeight: FontWeight.w600),
-                              ),
-                            ],
+                      Column(
+                        children: [
+                          ListView.builder(
+                            itemCount: carController
+                                .batterTyreCheckOut.value.data!.product!.length,
+                            shrinkWrap: true,
+                            itemBuilder: (context, index) {
+                              return ListTile(
+                                title: Text(
+                                  "Service Type",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w700,
+                                      color: Colors.black),
+                                ),
+                                subtitle: Text(
+                                    "${carController.batterTyreCheckOut.value.data!.product![index].name}"),
+                              );
+                            },
                           ),
-                        ),
+                          Container(
+                            width: MediaQuery.sizeOf(context).width,
+                            color: colors.lightgray,
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 12, top: 8, bottom: 8),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Scheduled Date and Time',
+                                    style: TextStyle(
+                                        color: Colors.black.withOpacity(0.5),
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                  Text(
+                                    '${carController.batterTyreCheckOut.value.data!.timeSlot!.fromTime} to ${carController.batterTyreCheckOut.value.data!.timeSlot!.toTime}',
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.w600),
+                                  ),
+                                  Text(
+                                    '${Validator.convertDateString(carController.batterTyreCheckOut.value.data!.date.toString().substring(0, 10))}',
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.w600),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                       Container(
                         child: Column(

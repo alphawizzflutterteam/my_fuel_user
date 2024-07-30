@@ -4,6 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
@@ -32,6 +34,9 @@ import 'data/model/OtherCategoryModel.dart';
 import 'data/model/VehicleModel.dart';
 import 'data/model/VehicleType.dart';
 import 'helper/colors.dart';
+// import 'package:location/location.dart';
+// import 'package:geocoder/geocoder.dart';
+import 'package:flutter/services.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({super.key});
@@ -63,8 +68,9 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    controller = Get.find();
+
     initUI();
+    _determinePosition();
   }
 
   @override
@@ -78,6 +84,67 @@ class _HomePageState extends State<HomePage> {
     homecontroller.getHomeList();
   }
 
+  String? _latitude;
+  String? _longitude;
+
+  Future<Position> _determinePosition() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    // Test if location services are enabled.
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      // Location services are not enabled don't continue
+      // accessing the position and request users of the
+      // App to enable the location services.
+      return Future.error('Location services are disabled.');
+    }
+
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        // Permissions are denied, next time you could try
+        // requesting permissions again (this is also where
+        // Android's shouldShowRequestPermissionRationale
+        // returned true. According to Android guidelines
+        // your App should show an explanatory UI now.
+        return Future.error('Location permissions are denied');
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      // Permissions are denied forever, handle appropriately.
+      return Future.error(
+          'Location permissions are permanently denied, we cannot request permissions.');
+    }
+
+    Position position = await Geolocator.getCurrentPosition();
+    print("object position $position");
+    print("object position ${position.toJson()}");
+    List<Placemark> placemark = await placemarkFromCoordinates(
+        double.parse(position.latitude!.toString()),
+        double.parse(position.longitude!.toString()),
+        localeIdentifier: "en");
+
+    placemark.toList(growable: true);
+
+    Placemark place = placemark[0];
+
+    setState(() {
+      address =
+          "${place.street}, ${place.locality}, ${place.postalCode}, ${place.country}";
+    });
+    print(
+        "placemark.toList(growable: true); ${placemark.toList(growable: true)}");
+    // final coordinates = new Coordinates(position.latitude, position.longitude);
+    // var addresses =
+    //     await Geocoder.local.findAddressesFromCoordinates(coordinates);
+    // When we reach here, permissions are granted and we can
+    // continue accessing the position of the device.
+    return await Geolocator.getCurrentPosition();
+  }
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder<InternetController>(
@@ -85,7 +152,7 @@ class _HomePageState extends State<HomePage> {
         builder: (connectivityController) {
           return Obx(() {
             print("object Vlue $connectivityController");
-            return connectivityController.isConnected
+            return connectivityController.isConnected.value == true
                 ? GetBuilder<HomeController>(
                     init: HomeController(),
                     builder: (controller) {
@@ -125,7 +192,7 @@ class _HomePageState extends State<HomePage> {
                                             height: 24,
                                           ),
                                           const SizedBox(width: 8),
-                                          const Column(
+                                          Column(
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
                                             children: [
@@ -137,7 +204,7 @@ class _HomePageState extends State<HomePage> {
                                                 ),
                                               ),
                                               Text(
-                                                "Ratan Lok Colony Indore",
+                                                "${address.toString()}",
                                                 style: TextStyle(
                                                   color: Colors.white,
                                                   fontSize: 12,
@@ -878,6 +945,19 @@ class _HomePageState extends State<HomePage> {
                             fontSize: 14,
                           ),
                         ),
+                        GetBuilder<HomeController>(builder: (homecontroller) {
+                          return GestureDetector(
+                              onTap: () {
+                                controller.getVehiCleType();
+                                HomeController homecontroller = Get.find();
+                                homecontroller.getBanner();
+                                homecontroller.getHomeList();
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.all(12.0),
+                                child: MyButton(text: "Try Again "),
+                              ));
+                        }),
                         const SizedBox(height: 50),
                       ],
                     ),
@@ -1204,6 +1284,17 @@ class _HomePageState extends State<HomePage> {
                           ),
                           InkWell(
                             onTap: () {
+                              if (otherCategory.vehicleType == null) {
+                                Fluttertoast.showToast(
+                                    msg: "Please select Vehicle type");
+                                return;
+                              }
+                              if (otherCategory.vehicleModel == null) {
+                                Fluttertoast.showToast(
+                                    msg: "Please select Vehicle Model");
+                                return;
+                              }
+
                               if (_formKeyReset!.currentState!.validate()) {
                                 otherCategory.tyreSize =
                                     tyreSizeController.text.toString();
@@ -1255,7 +1346,7 @@ class _HomePageState extends State<HomePage> {
                           height: 10,
                         ),
                         const Text(
-                          'Select a Tyres For your Vehicle',
+                          'Select a battery For your Vehicle',
                           style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.w500,
@@ -1460,6 +1551,16 @@ class _HomePageState extends State<HomePage> {
                         ),
                         InkWell(
                           onTap: () {
+                            if (otherCategory.vehicleType == null) {
+                              Fluttertoast.showToast(
+                                  msg: "Please select Vehicle type");
+                              return;
+                            }
+                            if (otherCategory.vehicleModel == null) {
+                              Fluttertoast.showToast(
+                                  msg: "Please select Vehicle Model");
+                              return;
+                            }
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -1555,105 +1656,116 @@ class _HomePageState extends State<HomePage> {
       context: context,
       isScrollControlled: true, // Ensure the bottom sheet can scroll
       builder: (BuildContext context) {
-        return SingleChildScrollView(
-          // Wrap your content in SingleChildScrollView
-          child: Container(
-            padding: EdgeInsets.zero,
-            child: Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  const Text(
-                    'Select Car Type ',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w500,
+        return StatefulBuilder(builder: (context, carType) {
+          return SingleChildScrollView(
+            // Wrap your content in SingleChildScrollView
+            child: Container(
+              padding: EdgeInsets.zero,
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    const SizedBox(
+                      height: 10,
                     ),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Container(
-                    height: 55,
-                    decoration: BoxDecoration(
-                      border: Border.all(color: colors.black12, width: 2),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: GetBuilder<CarServiceController>(
-                        init: CarServiceController(),
-                        builder: (carController) {
-                          return DropdownButton<VehicleData>(
-                            hint: const Text('Select Your Vehicle Type'),
-                            value: carController.selectedVehicle!.value,
-                            underline: Container(),
-                            isExpanded: true,
-                            onChanged: (VehicleData? newValue) {
-                              // otherCategory = OtherCategory();
-                              carController.selectedVehicle!.value = newValue!;
-
-                              otherCategory.vehicleType =
-                                  newValue.id.toString();
-                              print("vehicleType ${otherCategory.vehicleType}");
-                              print("vehicleType ${newValue.id.toString()}");
-                            },
-                            items: carController.vehicleList!
-                                .map<DropdownMenuItem<VehicleData>>(
-                                    (VehicleData value) {
-                              return DropdownMenuItem<VehicleData>(
-                                value: value,
-                                child: Text(value.name.toString()),
-                              );
-                            }).toList(),
-                          );
-                        }),
-                  ),
-                  // SizedBox(height: 10,),
-                  // Container(
-                  //   decoration: BoxDecoration(
-                  //       borderRadius: BorderRadius.circular(10),
-                  //       border: Border.all(color: colors.black12,width: 2 )
-                  //   ),
-                  //   child: MyHintTextField(
-                  //     hintText: Text(
-                  //       "Vehicle Number",
-                  //       style: TextStyle(
-                  //         color: Colors.grey,
-                  //         fontWeight: FontWeight.w500,
-                  //       ),
-                  //     ),
-                  //   ),
-                  // ),
-                  const SizedBox(
-                    height: 40,
-                  ),
-                  InkWell(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => TyresScreen(
-                                    page: 3,
-                                    title: "carWash",
-                                  )));
-
-                      // Add your onTap logic here
-                    },
-                    child: Container(
-                      child: const MyButton(
-                        text: "Book Now",
+                    const Text(
+                      'Select Car Type ',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
-                  ),
-                ],
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Container(
+                      height: 55,
+                      decoration: BoxDecoration(
+                        border: Border.all(color: colors.black12, width: 2),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: GetBuilder<CarServiceController>(
+                          init: CarServiceController(),
+                          builder: (carController) {
+                            return DropdownButton<VehicleData>(
+                              hint: const Text('Select Your Vehicle Type'),
+                              value: carController.selectedVehicle!.value,
+                              underline: Container(),
+                              isExpanded: true,
+                              onChanged: (VehicleData? newValue) {
+                                // otherCategory = OtherCategory();
+                                carController.selectedVehicle!.value =
+                                    newValue!;
+
+                                otherCategory.vehicleType =
+                                    newValue.id.toString();
+                                print(
+                                    "vehicleType ${otherCategory.vehicleType}");
+                                print("vehicleType ${newValue.id.toString()}");
+                                carType(() {});
+                              },
+                              items: carController.vehicleList!
+                                  .map<DropdownMenuItem<VehicleData>>(
+                                      (VehicleData value) {
+                                return DropdownMenuItem<VehicleData>(
+                                  value: value,
+                                  child: Text(value.name.toString()),
+                                );
+                              }).toList(),
+                            );
+                          }),
+                    ),
+                    // SizedBox(height: 10,),
+                    // Container(
+                    //   decoration: BoxDecoration(
+                    //       borderRadius: BorderRadius.circular(10),
+                    //       border: Border.all(color: colors.black12,width: 2 )
+                    //   ),
+                    //   child: MyHintTextField(
+                    //     hintText: Text(
+                    //       "Vehicle Number",
+                    //       style: TextStyle(
+                    //         color: Colors.grey,
+                    //         fontWeight: FontWeight.w500,
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
+                    const SizedBox(
+                      height: 40,
+                    ),
+                    InkWell(
+                      onTap: () {
+                        if (otherCategory.vehicleType == null) {
+                          Fluttertoast.showToast(
+                              msg: "Please select Vehicle type");
+                          return;
+                        }
+
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => TyresScreen(
+                                      page: 3,
+                                      title: "carWash",
+                                    )));
+
+                        // Add your onTap logic here
+                      },
+                      child: Container(
+                        child: const MyButton(
+                          text: "Book Now",
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-        );
+          );
+        });
       },
     );
   }
@@ -2072,6 +2184,8 @@ class _HomePageState extends State<HomePage> {
   }
 
   void initUI() {
+    Get.lazyPut(() => CarServiceController());
+    controller = Get.find();
     // controller.getBanner();
     // controller.getHomeList();
   }

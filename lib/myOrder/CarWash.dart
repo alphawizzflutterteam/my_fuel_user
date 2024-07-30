@@ -5,6 +5,8 @@ import 'package:test_prj/carwash_vendordet.dart';
 import 'package:test_prj/myOrder/CarWash.dart';
 import 'package:test_prj/myOrder/myOrder.dart';
 
+import '../splashScreen.dart';
+
 class CarWash extends StatefulWidget {
   const CarWash({super.key});
 
@@ -46,7 +48,7 @@ class _CarWashState extends State<CarWash> {
                             height: 24,
                           ),
                           const SizedBox(width: 8),
-                          const Column(
+                          Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
@@ -57,7 +59,7 @@ class _CarWashState extends State<CarWash> {
                                 ),
                               ),
                               Text(
-                                "Ratan Lok Colony Indore",
+                                "${address.toString()}",
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 12,
@@ -133,7 +135,8 @@ class _CarWashState extends State<CarWash> {
                                                 245, 245, 245, 1),
                                             filled: true,
                                             enabledBorder: OutlineInputBorder(
-                                              borderRadius: BorderRadius.circular(12),
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
                                               borderSide: BorderSide.none,
                                             ),
                                             hintText: "Search"),
@@ -223,8 +226,12 @@ class _CarWashState extends State<CarWash> {
                               ),
                             ),
                             InkWell(
-                              onTap: (){
-                                Navigator.push(context, MaterialPageRoute(builder: (context)=>VenderDetails3()));
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            VenderDetails3()));
                               },
                               child: Container(
                                 height: 110,
@@ -407,18 +414,24 @@ class CategoryProducts extends StatelessWidget {
       child: GestureDetector(
         onTap: press,
         child: Container(
-            height: 5,
-            width: 100,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8),
-              border: Border.all(
-                color: isSelected ? Colors.orange : Colors.grey,
-                // width: 2,
-              ),
+          height: 5,
+          width: 100,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8),
+            border: Border.all(
+              color: isSelected ? Colors.orange : Colors.grey,
+              // width: 2,
             ),
-          child:  Padding(
+          ),
+          child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Center(child: Text(text,style: TextStyle(color: isSelected ? Colors.orange : Colors.grey,),)),
+            child: Center(
+                child: Text(
+              text,
+              style: TextStyle(
+                color: isSelected ? Colors.orange : Colors.grey,
+              ),
+            )),
           ),
         ),
       ),

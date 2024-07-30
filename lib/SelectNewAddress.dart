@@ -746,11 +746,13 @@ class _SelectNewAddressState extends State<SelectNewAddress> {
                               Fluttertoast.showToast(
                                   msg: "Please select Address");
                             }
+                            print("categoryId ${otherCategory.categoryId}");
                             if (categoryId == "9" ||
                                 categoryId == "16" ||
                                 categoryId == "10" ||
                                 categoryId == "11" ||
-                                categoryId == "10") {
+                                categoryId == "10" ||
+                                categoryId == "8") {
                               otherCategory.billingAddressId = controller
                                   .addressAList[selectedValueAddress].id
                                   .toString();

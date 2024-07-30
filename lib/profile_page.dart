@@ -14,6 +14,7 @@ import 'package:test_prj/profile/myfuels_card.dart';
 import 'package:test_prj/profile/notification1.dart';
 import 'package:test_prj/profile/log_out.dart';
 import 'package:test_prj/profile/profile_assets.dart';
+import 'package:test_prj/splashScreen.dart';
 import 'package:test_prj/staticpage/about_us.dart';
 import 'package:test_prj/staticpage/privacy_policy.dart';
 import 'package:test_prj/staticpage/terms_condition.dart';
@@ -64,8 +65,8 @@ class ProfilePageState extends State<ProfilePage> {
                                   // scale: 20,
                                   height: 24,
                                 ),
-                                const SizedBox(width: 8),
-                                const Column(
+                                SizedBox(width: 8),
+                                Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
@@ -76,7 +77,7 @@ class ProfilePageState extends State<ProfilePage> {
                                       ),
                                     ),
                                     Text(
-                                      "Ratan Lok Colony Indore",
+                                      "${address.toString()}",
                                       style: TextStyle(
                                         color: Colors.white,
                                         fontSize: 12,

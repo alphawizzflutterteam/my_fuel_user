@@ -38,6 +38,14 @@ class _RescueMeState extends State<RescueMe> {
   String? selectedfuelType;
 
   @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+    CarServiceController carServiceController = Get.find();
+    carServiceController.getVehiCleType();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return GetBuilder<CarServiceController>(
         init: CarServiceController(),
@@ -185,7 +193,7 @@ class _RescueMeState extends State<RescueMe> {
                             if (newValue != null) {
                               selectedServices = newValue;
                               otherCategory.service = newValue.toString();
-                              // setState(() { });
+                              setState(() {});
                             }
                           },
                           items: services!
