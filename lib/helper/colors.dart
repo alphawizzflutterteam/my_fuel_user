@@ -91,6 +91,8 @@ extension colors on ColorScheme {
   static const Color lightBlue = Color(0xFFADD8E6);
   static const Color purpleColor = Color(0xFF3E4095);
   static const Color darkYellow = Color(0xFFF58634);
+  static const Color orange = Colors.orange;
+
   static const Color darkRed = Color(0xFFED2F59);
   static const Color lightgray = Color(0xFFF5F5F5);
   static const Color blackTemp = Color(0xFF161616);

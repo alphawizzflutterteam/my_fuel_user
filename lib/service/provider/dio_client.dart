@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:dio/dio.dart' as dio;
@@ -7,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:test_prj/helper/common/custom_trace.dart';
 import 'package:test_prj/helper/utils/app_constants.dart';
+import 'package:test_prj/main.dart';
 import 'package:test_prj/service/exceptions/network_exceptions.dart';
 
 const _defaultConnectTimeout = Duration.millisecondsPerMinute;
@@ -42,6 +44,7 @@ class DioClient {
         'Authorization': 'Bearer $token',
         'Accept-Language': 'en'
       };
+    log('Token: $token');
     if (interceptors?.isNotEmpty ?? false) {
       _dio.interceptors.addAll(interceptors ?? []);
     }
@@ -152,6 +155,7 @@ class DioClient {
         onSendProgress: onSendProgress,
         onReceiveProgress: onReceiveProgress,
       );
+      log(data);
       return response;
     } on FormatException catch (_) {
       throw FormatException("Unable to process the data");

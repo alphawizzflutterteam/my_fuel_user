@@ -105,7 +105,7 @@ class _EvVehicleState extends State<EvVehicle> {
                 decoration: InputDecoration(
                   contentPadding: EdgeInsets.symmetric(vertical: 8),
                   hintText: 'Search',
-                  prefixIcon: Icon(Icons.search),
+                  prefixIcon: const Icon(Icons.search),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
                     borderSide: BorderSide.none,
@@ -117,9 +117,9 @@ class _EvVehicleState extends State<EvVehicle> {
               ),
             ),
             GridView.builder(
-              physics: NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisSpacing: 3.0,
                 mainAxisExtent: 160,
                 crossAxisCount: 2,
@@ -137,7 +137,7 @@ class _EvVehicleState extends State<EvVehicle> {
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
                             children: <Widget>[
-                              SizedBox(
+                              const SizedBox(
                                 height: 10,
                               ),
                               Text(
@@ -164,10 +164,10 @@ class _EvVehicleState extends State<EvVehicle> {
                                   child: InkWell(
                                     onTap: () {
                                       if (widget.selectedIndex == 0) {
-                                        showModalBottomSheet(
+                                        /*showModalBottomSheet(
                                           context: context,
                                           builder: (context) => Evdoorbottom(),
-                                        );
+                                        );*/
                                       } else {
                                         showModalBottomSheet(
                                           context: context,

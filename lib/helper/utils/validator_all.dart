@@ -19,7 +19,6 @@ class Validator {
 
   static String? validatePhone(String? value) {
     if (value!.isEmpty) {
-      return 'Please enter an valid phone';
     } else if (value.length < 10) {
       return 'Please enter a valid phone';
     } else if (value.length > 10) {
@@ -44,9 +43,18 @@ class Validator {
 
   static String? validatePassword(String? value) {
     if (value!.isEmpty) {
-      return 'Please enter an address';
+      return 'Please enter an password';
     } else if (value.length < 6) {
       return 'Please enter password of length 6 digits';
+    }
+    return null;
+  }
+
+  static String? validateConfirmPassword(String? value, String password) {
+    if (value!.isEmpty) {
+      return 'Please enter an password';
+    } else if (value != password) {
+      return 'Password does not match';
     }
     return null;
   }
