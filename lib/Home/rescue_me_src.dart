@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:test_prj/components/my_appbar.dart';
 import 'package:test_prj/controller/carservice_controller.dart';
+import 'package:test_prj/home_page.dart';
 
 import '../SelectNewAddress.dart';
 import '../components/my_button.dart';
@@ -26,10 +28,13 @@ class _RescueMeState extends State<RescueMe> {
     'Jump Start',
     'Towing(break down)'
   ];
+
+  TextEditingController fuelQuantityController = TextEditingController();
   List<String> vehicles = ['2 wheeler', '4 wheeler'];
   List<String> fuelTypes = ['Diesel', 'Petrol'];
 
   // String? selectedVehicle;
+  String? selectedServices;
   String? selectedfuelType;
 
   @override
@@ -105,6 +110,9 @@ class _RescueMeState extends State<RescueMe> {
                                       newValue;
                                   carServiceController
                                       .getVehicleModel(newValue.id.toString());
+
+                                  otherCategory.vehicleType =
+                                      newValue.id.toString();
                                   setState(() {});
                                 }
                               },
@@ -121,43 +129,74 @@ class _RescueMeState extends State<RescueMe> {
                       SizedBox(
                         height: 20,
                       ),
-                      carServiceController.vehicleModelList!.isNotEmpty &&
-                              carServiceController.selectedService != null &&
-                              carServiceController.selectedService.value != null
-                          ? Container(
-                              decoration: BoxDecoration(
-                                border:
-                                    Border.all(color: colors.black12, width: 2),
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              padding: EdgeInsets.symmetric(horizontal: 10),
-                              child: Obx(() => DropdownButton<VehicleModelData>(
-                                    hint: Text('Select Services'.tr),
-                                    value: carServiceController
-                                        .selectedService.value,
-                                    underline: Container(),
-                                    isExpanded: true,
-                                    onChanged: (VehicleModelData? newValue) {
-                                      if (newValue != null) {
-                                        carServiceController
-                                            .selectedService.value = newValue;
-                                        // setState(() { });
-                                      }
-                                    },
-                                    items: carServiceController
-                                        .vehicleModelList!
-                                        .map<
-                                                DropdownMenuItem<
-                                                    VehicleModelData>>(
-                                            (VehicleModelData value) {
-                                      return DropdownMenuItem<VehicleModelData>(
-                                        value: value,
-                                        child: Text(value.name.toString()),
-                                      );
-                                    }).toList(),
-                                  )),
-                            )
-                          : Container(),
+                      // carServiceController.vehicleModelList!.isNotEmpty &&
+                      //         carServiceController.selectedService != null &&
+                      //         carServiceController.selectedService.value != null
+                      //     ? Container(
+                      //         decoration: BoxDecoration(
+                      //           border:
+                      //               Border.all(color: colors.black12, width: 2),
+                      //           borderRadius: BorderRadius.circular(10),
+                      //         ),
+                      //         padding: EdgeInsets.symmetric(horizontal: 10),
+                      //         child: Obx(() => DropdownButton<VehicleModelData>(
+                      //               hint: Text('Select Services'.tr),
+                      //               value: carServiceController
+                      //                   .selectedService.value,
+                      //               underline: Container(),
+                      //               isExpanded: true,
+                      //               onChanged: (VehicleModelData? newValue) {
+                      //                 if (newValue != null) {
+                      //                   carServiceController
+                      //                       .selectedService.value = newValue;
+                      //                   otherCategory.service =
+                      //                       newValue.id.toString();
+                      //                   // setState(() { });
+                      //                 }
+                      //               },
+                      //               items: carServiceController
+                      //                   .vehicleModelList!
+                      //                   .map<
+                      //                           DropdownMenuItem<
+                      //                               VehicleModelData>>(
+                      //                       (VehicleModelData value) {
+                      //                 return DropdownMenuItem<VehicleModelData>(
+                      //                   value: value,
+                      //                   child: Text(value.name.toString()),
+                      //                 );
+                      //               }).toList(),
+                      //             )),
+                      //       )
+                      //     : Container(),
+                      /// Services
+
+                      Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(color: colors.black12, width: 2),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        padding: EdgeInsets.symmetric(horizontal: 10),
+                        child: DropdownButton<String>(
+                          hint: Text('Select Services'.tr),
+                          value: selectedServices,
+                          underline: Container(),
+                          isExpanded: true,
+                          onChanged: (String? newValue) {
+                            if (newValue != null) {
+                              selectedServices = newValue;
+                              otherCategory.service = newValue.toString();
+                              // setState(() { });
+                            }
+                          },
+                          items: services!
+                              .map<DropdownMenuItem<String>>((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(value.toString()),
+                            );
+                          }).toList(),
+                        ),
+                      ),
                       carServiceController.selectedService.value == null
                           ? Container()
                           : SizedBox(
@@ -181,6 +220,8 @@ class _RescueMeState extends State<RescueMe> {
                                   if (newValue != null) {
                                     setState(() {
                                       selectedfuelType = newValue;
+
+                                      otherCategory.notes = newValue.toString();
                                     });
                                   }
                                 },
@@ -209,6 +250,7 @@ class _RescueMeState extends State<RescueMe> {
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               child: TextFormField(
+                                controller: fuelQuantityController,
                                 decoration: InputDecoration(
                                     contentPadding: EdgeInsets.only(left: 5),
                                     hintText:
@@ -223,11 +265,32 @@ class _RescueMeState extends State<RescueMe> {
                         padding: const EdgeInsets.all(12.0),
                         child: GestureDetector(
                           onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: ((context) =>
-                                        SelectNewAddress())));
+                            if (otherCategory.vehicleType == null ||
+                                otherCategory.vehicleType!.isEmpty) {
+                              Fluttertoast.showToast(
+                                  msg: "PLease select Vehicle Type");
+                            } else if (otherCategory.notes == null ||
+                                otherCategory.notes!.isEmpty) {
+                              Fluttertoast.showToast(
+                                  msg: "PLease select Vehicle Model");
+                            } else if (otherCategory.service == null ||
+                                selectedfuelType!.isEmpty) {
+                              Fluttertoast.showToast(
+                                  msg: "Please select Fuel Type");
+                            } else if (fuelQuantityController.text.isEmpty) {
+                              Fluttertoast.showToast(
+                                  msg: "Please Enter Fuel Quantity");
+                            } else {
+                              otherCategory.tyreSize =
+                                  fuelQuantityController.text.toString();
+                              print(
+                                  "object Cate Id ${otherCategory.categoryId}");
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: ((context) =>
+                                          SelectNewAddress())));
+                            }
                           },
                           child: MyButton(text: 'Done'.tr),
                         ),

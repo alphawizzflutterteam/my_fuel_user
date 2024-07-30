@@ -19,7 +19,6 @@ class Validator {
 
   static String? validatePhone(String? value) {
     if (value!.isEmpty) {
-      return 'Please enter an phone no';
     } else if (value.length < 10) {
       return 'Please enter a valid phone';
     } else if (value.length > 10) {

@@ -11,6 +11,7 @@ import 'package:test_prj/routes/bindings/inial_binding.dart';
 import 'package:test_prj/splashScreen.dart';
 
 import '../Home/Genset_checkOut.dart';
+import '../Home/fuel_on_tab.dart';
 import '../Home/fuel_ontab_checkout.dart';
 import '../authPages/register_complete.dart';
 import '../payment/pay_success_page.dart';
@@ -76,6 +77,11 @@ class AppPages {
     GetPage(
       name: Routes.ORDERPLACED,
       page: () => OrderPlaced(),
+      binding: InitialBinding(),
+    ),
+    GetPage(
+      name: Routes.FUELONTAP,
+      page: () => FuelOnTabScreen(),
       binding: InitialBinding(),
     ),
 //     GetPage(name: Routes.ROOT, page: () => RootView(), binding: RootBinding(), middlewares: [AuthMiddleware(), SalonOwnerMiddleware()]),

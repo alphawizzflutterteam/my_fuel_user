@@ -25,6 +25,7 @@ class InitialBinding implements Bindings {
     Get.lazyPut(() => SplashController());
     Get.lazyPut(() => LanguageController());
     Get.lazyPut(() => LoginController());
+    Get.lazyPut(() => CarServiceController());
     Get.lazyPut(() => SignupController());
     Get.lazyPut(() => ProfileController());
     Get.lazyPut(() => OtpController());
@@ -37,7 +38,7 @@ class InitialBinding implements Bindings {
     Get.lazyPut(() => AssetController());
     Get.lazyPut(() => OtherServiceController());
     Get.lazyPut(() => CartController());
-    Get.lazyPut(() => CarServiceController());
+
     // Get.lazyPut(() => LoginController() );
     // Get.lazyPut(() => ForgotPasswordController() );
     // Get.lazyPut(() => OTPVerifyController() );

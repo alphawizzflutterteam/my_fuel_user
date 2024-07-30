@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:test_prj/Home/editprofile.dart';
 import 'package:test_prj/authPages/language_page.dart';
 import 'package:test_prj/controller/profile_controller.dart';
@@ -162,8 +163,24 @@ class ProfilePageState extends State<ProfilePage> {
                                             Obx(() => controller
                                                         .isLoading.value ==
                                                     true
-                                                ? CircularProgressIndicator(
-                                                    color: Colors.deepOrange,
+                                                ? SizedBox(
+                                                    width: 200.0,
+                                                    height: 30.0,
+                                                    child: Shimmer.fromColors(
+                                                      baseColor: Colors.white,
+                                                      highlightColor:
+                                                          Colors.white,
+                                                      child: Text(
+                                                        '     ',
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                        style: TextStyle(
+                                                          fontSize: 10.0,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                        ),
+                                                      ),
+                                                    ),
                                                   )
                                                 : Text(
                                                     controller.userInfoModel !=
@@ -186,8 +203,24 @@ class ProfilePageState extends State<ProfilePage> {
                                             Obx(() => controller
                                                         .isLoading.value ==
                                                     true
-                                                ? CircularProgressIndicator(
-                                                    color: Colors.deepOrange,
+                                                ? SizedBox(
+                                                    width: 200.0,
+                                                    height: 30.0,
+                                                    child: Shimmer.fromColors(
+                                                      baseColor: Colors.grey,
+                                                      highlightColor:
+                                                          Colors.grey,
+                                                      child: Text(
+                                                        '     ',
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                        style: TextStyle(
+                                                          fontSize: 10.0,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                        ),
+                                                      ),
+                                                    ),
                                                   )
                                                 : Text(
                                                     controller.userInfoModel !=

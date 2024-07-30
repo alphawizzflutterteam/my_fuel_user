@@ -9,6 +9,7 @@ import 'package:test_prj/helper/utils/app_constants.dart';
 import 'package:test_prj/repository/model/user_model.dart';
 import 'package:test_prj/service/provider/end_points.dart';
 
+import '../../data/model/CheckRequestModel.dart';
 import '../../data/model/addres_model.dart';
 import '../../data/model/response/BannerModel.dart';
 import '../../data/model/response/home_model.dart';
@@ -177,7 +178,7 @@ class LaravelApiClient extends GetxService with ApiClient {
     print("category $id");
     var response = await httpClient.post(
       ApiConstants.serviceDetail,
-      data: {'category': "$id", "offset": "0", "limit": "20"},
+      data: {'category': "$id", "offset": "0", "limit": "80"},
       options: optionsNetwork,
     );
     if (response.statusCode == 200) {
@@ -269,7 +270,7 @@ class LaravelApiClient extends GetxService with ApiClient {
 
       return json.decode(response.toString());
     } else {
-      throw Exception(response.data['message']);
+      return json.decode(response.toString());
     }
   }
 
@@ -293,7 +294,7 @@ class LaravelApiClient extends GetxService with ApiClient {
 
       return json.decode(response.toString());
     } else {
-      throw Exception(response.data['message']);
+      return json.decode(response.toString());
     }
   }
 
@@ -313,7 +314,7 @@ class LaravelApiClient extends GetxService with ApiClient {
 
       return json.decode(response.toString());
     } else {
-      throw Exception(response.data['message']);
+      return json.decode(response.toString());
     }
   }
 
@@ -374,7 +375,7 @@ class LaravelApiClient extends GetxService with ApiClient {
 
       return json.decode(response.toString());
     } else {
-      throw Exception(response.data['message']);
+      return json.decode(response.toString());
     }
   }
 
@@ -393,7 +394,7 @@ class LaravelApiClient extends GetxService with ApiClient {
 
       return json.decode(response.toString());
     } else {
-      throw Exception(response.data['message']);
+      return json.decode(response.toString());
     }
   }
 
@@ -416,7 +417,7 @@ class LaravelApiClient extends GetxService with ApiClient {
 
       return json.decode(response.toString());
     } else {
-      throw Exception(response.data['message']);
+      return json.decode(response.toString());
     }
   }
 
@@ -426,16 +427,18 @@ class LaravelApiClient extends GetxService with ApiClient {
 
     String token = instance.getData(SharedPreferencesService.kTokenKey);
     optionsNetwork.headers!['Authorization'] = "Bearer $token";
+    log("message Token $token");
     var response = await httpClient.get(
       ApiConstants.getProfile,
       options: optionsNetwork,
     );
+    log("message getProfile $response");
     if (response.statusCode == 200) {
-      print("userRegister ${response.toString()} ");
+      print("getProfile ${response.toString()} ");
 
       return json.decode(response.toString());
     } else {
-      throw Exception(response.data['message']);
+      return json.decode(response.toString());
     }
   }
 
@@ -454,7 +457,7 @@ class LaravelApiClient extends GetxService with ApiClient {
 
       return json.decode(response.toString());
     } else {
-      throw Exception(response.data['message']);
+      return json.decode(response.toString());
     }
   }
 
@@ -474,7 +477,7 @@ class LaravelApiClient extends GetxService with ApiClient {
 
       return json.decode(response.toString());
     } else {
-      throw Exception(response.data['message']);
+      return json.decode(response.toString());
     }
   }
 
@@ -494,7 +497,7 @@ class LaravelApiClient extends GetxService with ApiClient {
 
       return json.decode(response.toString());
     } else {
-      throw Exception(response.data['message']);
+      return json.decode(response.toString());
     }
   }
 
@@ -503,7 +506,9 @@ class LaravelApiClient extends GetxService with ApiClient {
         await SharedPreferencesService.getInstance();
 
     String token = instance.getData(SharedPreferencesService.kTokenKey);
+    print("object Rerquest ${otherCategory.toJson()}");
     optionsNetwork.headers!['Authorization'] = "Bearer $token";
+    log("tokentoken $token");
     var response = await httpClient.post(
       data: otherCategory.toJson(),
       ApiConstants.VENDORCHEKOUT,
@@ -515,6 +520,30 @@ class LaravelApiClient extends GetxService with ApiClient {
       return json.decode(response.toString());
     } else {
       throw Exception(response.data['message']);
+    }
+  }
+
+  Future<Map<String, dynamic>> getConfirmVendorService(
+      CheckOutRequest otherCategory) async {
+    SharedPreferencesService? instance =
+        await SharedPreferencesService.getInstance();
+
+    String token = instance.getData(SharedPreferencesService.kTokenKey);
+    print("object Rerquest ${otherCategory.toJson()}");
+    optionsNetwork.headers!['Authorization'] = "Bearer $token";
+    log("tokentoken $token");
+    var response = await httpClient.post(
+      data: otherCategory.toJson(),
+      ApiConstants.ConfirmPlaceOrder,
+      // ApiConstants.VENDORCHEKOUT,
+      options: optionsNetwork,
+    );
+    if (response.statusCode == 200) {
+      print("userRegister ${response.toString()} ");
+
+      return json.decode(response.toString());
+    } else {
+      return json.decode(response.toString());
     }
   }
 
@@ -533,7 +562,7 @@ class LaravelApiClient extends GetxService with ApiClient {
 
       return json.decode(response.toString());
     } else {
-      throw Exception(response.data['message']);
+      return json.decode(response.toString());
     }
   }
 
@@ -552,7 +581,7 @@ class LaravelApiClient extends GetxService with ApiClient {
 
       return json.decode(response.toString());
     } else {
-      throw Exception(response.data['message']);
+      return json.decode(response.toString());
     }
   }
 
@@ -571,7 +600,7 @@ class LaravelApiClient extends GetxService with ApiClient {
 
       return json.decode(response.toString());
     } else {
-      throw Exception(response.data['message']);
+      return json.decode(response.toString());
     }
   }
 
@@ -595,7 +624,7 @@ class LaravelApiClient extends GetxService with ApiClient {
 
       return addressList;
     } else {
-      throw Exception(response.data['message']);
+      return json.decode(response.toString());
     }
   }
 
@@ -614,7 +643,7 @@ class LaravelApiClient extends GetxService with ApiClient {
 
       return json.decode(response.toString());
     } else {
-      throw Exception(response.data['message']);
+      return json.decode(response.toString());
     }
   }
 
@@ -642,7 +671,7 @@ class LaravelApiClient extends GetxService with ApiClient {
 
       return json.decode(response.toString());
     } else {
-      throw Exception(response.data['message']);
+      return json.decode(response.toString());
     }
   }
 
@@ -670,7 +699,7 @@ class LaravelApiClient extends GetxService with ApiClient {
 
       return json.decode(response.toString());
     } else {
-      throw Exception(response.data['message']);
+      return json.decode(response.toString());
     }
   }
 
@@ -699,7 +728,7 @@ class LaravelApiClient extends GetxService with ApiClient {
 
       return json.decode(response.toString());
     } else {
-      throw Exception(response.data['message']);
+      return json.decode(response.toString());
     }
   }
 
@@ -720,7 +749,7 @@ class LaravelApiClient extends GetxService with ApiClient {
 
       return json.decode(response.toString());
     } else {
-      throw Exception(response.data['message']);
+      return json.decode(response.toString());
     }
   }
 }
