@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:test_prj/components/my_appbar.dart';
 import 'package:test_prj/controller/carservice_controller.dart';
+import 'package:test_prj/home_page.dart';
 
 import '../SelectNewAddress.dart';
 import '../components/my_button.dart';
@@ -105,6 +106,9 @@ class _RescueMeState extends State<RescueMe> {
                                       newValue;
                                   carServiceController
                                       .getVehicleModel(newValue.id.toString());
+
+                                  otherCategory.vehicleType =
+                                      newValue.id.toString();
                                   setState(() {});
                                 }
                               },
@@ -141,6 +145,8 @@ class _RescueMeState extends State<RescueMe> {
                                       if (newValue != null) {
                                         carServiceController
                                             .selectedService.value = newValue;
+                                        otherCategory.vehicleModel =
+                                            newValue.id.toString();
                                         // setState(() { });
                                       }
                                     },
