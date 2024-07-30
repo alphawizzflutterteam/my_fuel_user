@@ -21,7 +21,6 @@ class VendorController extends AppBaseController {
 
   Future<void> getVendors() async {
     isLoading.value = true;
-    update();
     VendorsModel response = await orderFuelRepo.getVendor(
         date: argument['date'].toString(),
         quantity: argument['quantity'],
@@ -30,11 +29,12 @@ class VendorController extends AppBaseController {
         slotId: argument['selectedSlot'].toString(),
         serviceType: orderFuelController.selectedIndex.value == 0
             ? 'Door Step'
-            : 'Fuel to Go',
-        id: orderFuelController.selectedData!.id.toString());
+            : 'At Your Station',
+        id: orderFuelController.selectedData!.id.toString(),
+        assetId: '',
+        vehicleType: argument['vehicleType'].toString());
 
     vendorList.value = response.data ?? [];
     isLoading.value = false;
-    update();
   }
 }

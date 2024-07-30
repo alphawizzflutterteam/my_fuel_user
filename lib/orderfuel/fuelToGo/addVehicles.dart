@@ -147,7 +147,8 @@ class _AddVehiclesState extends State<AddVehicles> {
                 Get.to(const VendorsPage(), arguments: {
                   'from': 'addVehicle',
                   'date': _dateController.text,
-                  'selectedSlot': controller.selectedSlot,
+                  'selectedSlot':
+                      controller.timeslotList[controller.selectedSlot].id,
                   'vehicleType': controller.selectedValue?.value,
                   'registration': _controller.text,
                   'quantity': _fuelQuantityController.text

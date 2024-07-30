@@ -62,18 +62,21 @@ class OrderFuelRepo extends GetxService with ApiClient {
       required String date,
       required String quantity,
       required String shipping,
-      required String billing}) async {
+      required String billing,
+      required String assetId,
+      required String vehicleType}) async {
     var response = await httpClient.post(
       '/api/v1/customer/order/service-vendor',
       data: jsonEncode({
-        "service_id": "",
-        'service_type': '',
-        'slot_id': '',
-        'date': '',
-        'asset_id': '',
-        "quantity": '',
-        'shipping_address_id': '',
-        'billing_address_id': ''
+        "service_id": id,
+        'service_type': serviceType,
+        'slot_id': slotId,
+        'date': date,
+        'asset_id': assetId,
+        'vehicle_type': vehicleType,
+        'quantity': quantity,
+        'shipping_address_id': shipping,
+        'billing_address_id': billing
       }),
       options: optionsNetwork,
     );

@@ -155,6 +155,7 @@ class DioClient {
         onSendProgress: onSendProgress,
         onReceiveProgress: onReceiveProgress,
       );
+      log(data);
       return response;
     } on FormatException catch (_) {
       throw FormatException("Unable to process the data");
