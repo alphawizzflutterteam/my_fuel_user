@@ -1,11 +1,13 @@
 import 'package:get/get.dart';
 import 'package:test_prj/controller/appBase/appbase_controller.dart';
+import 'package:test_prj/controller/splash_controller.dart';
 import 'package:test_prj/data/model/vendors_model.dart';
 import 'package:test_prj/orderfuel/doorStepDelivery/controller/order_fuel_controller.dart';
 
 class VendorController extends AppBaseController {
   RxList<VendorData> vendorList = <VendorData>[].obs;
   final orderFuelController = Get.find<OrderFuelController>();
+  final splashController = Get.find<SplashController>();
 
   Map<String, dynamic> argument = {};
 

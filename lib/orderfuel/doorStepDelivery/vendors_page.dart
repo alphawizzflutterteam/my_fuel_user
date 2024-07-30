@@ -102,6 +102,8 @@ class VendorsPage extends StatelessWidget {
                                   shrinkWrap: true,
                                   physics: const NeverScrollableScrollPhysics(),
                                   itemBuilder: (context, index) {
+                                    var item = controller.vendorList[index];
+
                                     return GestureDetector(
                                       onTap: () => Navigator.push(
                                           context,
@@ -122,8 +124,8 @@ class VendorsPage extends StatelessWidget {
                                           padding: const EdgeInsets.all(4.0),
                                           child: Row(
                                             children: [
-                                              Image.asset(
-                                                  "assets/indianoil.png",
+                                              Image.network(
+                                                  '${controller.splashController.settingModel.}',
                                                   height: 94),
                                               Padding(
                                                 padding:
