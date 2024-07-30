@@ -47,7 +47,8 @@ class BatteryTyreData {
   ShippingAddressData? shippingAddressData;
   BillingAddressData? billingAddressData;
   TmeSlotModel? timeSlot;
-  Product? product;
+  // Product? product;
+  List<Product>? product;
   String? vehicleTypeName;
   String? vehicleModelName;
   String? productName;
@@ -110,8 +111,15 @@ class BatteryTyreData {
     timeSlot = json['time_slot'] != null
         ? new TmeSlotModel.fromJson(json['time_slot'])
         : null;
-    product =
-        json['product'] != null ? new Product.fromJson(json['product']) : null;
+
+    // product =
+    //     json['product'] != null ? new Product.fromJson(json['product']) : null;
+    if (json['product'] != null) {
+      product = <Product>[];
+      json['product'].forEach((v) {
+        product!.add(new Product.fromJson(v));
+      });
+    }
     vehicleTypeName = json['vehicle_type_name'];
     vehicleModelName = json['vehicle_model_name'];
     productName = json['product_name'];
@@ -147,8 +155,11 @@ class BatteryTyreData {
     if (this.timeSlot != null) {
       data['time_slot'] = this.timeSlot!.toJson();
     }
+    // if (this.product != null) {
+    //   data['product'] = this.product!.toJson();
+    // }
     if (this.product != null) {
-      data['product'] = this.product!.toJson();
+      data['category_ids'] = this.product!.map((v) => v.toJson()).toList();
     }
     data['vehicle_type_name'] = this.vehicleTypeName;
     data['vehicle_model_name'] = this.vehicleModelName;
@@ -348,8 +359,8 @@ class Product {
   String? subSubCategoryId;
   String? brandId;
   String? unit;
-  int? minQty;
-  int? refundable;
+  String? minQty;
+  String? refundable;
   String? digitalProductType;
   String? digitalFileReady;
   String? images;
@@ -360,14 +371,14 @@ class Product {
   String? videoProvider;
   String? videoUrl;
   String? colors;
-  int? variantProduct;
+  String? variantProduct;
   String? attributes;
   String? choiceOptions;
   String? variation;
   int? published;
-  int? unitPrice;
-  int? purchasePrice;
-  int? tax;
+  String? unitPrice;
+  String? purchasePrice;
+  String? tax;
   String? taxType;
   String? taxModel;
   int? discount;
@@ -472,12 +483,12 @@ class Product {
     categoryId = json['category_id'];
     subCategoryId = json['sub_category_id'];
     subSubCategoryId = json['sub_sub_category_id'];
-    brandId = json['brand_id'];
-    unit = json['unit'];
-    minQty = json['min_qty'];
-    refundable = json['refundable'];
-    digitalProductType = json['digital_product_type'];
-    digitalFileReady = json['digital_file_ready'];
+    brandId = json['brand_id'].toString();
+    unit = json['unit'].toString();
+    minQty = json['min_qty'].toString();
+    refundable = json['refundable'].toString();
+    digitalProductType = json['digital_product_type'].toString();
+    digitalFileReady = json['digital_file_ready'].toString();
     try {
       images = json['images'];
     } catch (e) {
@@ -490,15 +501,15 @@ class Product {
     videoProvider = json['video_provider'];
     videoUrl = json['video_url'];
     colors = json['colors'];
-    variantProduct = json['variant_product'];
+    variantProduct = json['variant_product'].toString();
     attributes = json['attributes'];
     choiceOptions = json['choice_options'];
     variation = json['variation'];
     published = json['published'];
-    unitPrice = json['unit_price'];
-    purchasePrice = json['purchase_price'];
-    tax = json['tax'];
-    taxType = json['tax_type'];
+    unitPrice = json['unit_price'].toString();
+    purchasePrice = json['purchase_price'].toString();
+    tax = json['tax'].toString();
+    taxType = json['tax_type'].toString();
     taxModel = json['tax_model'];
     discount = json['discount'];
     discountType = json['discount_type'];
