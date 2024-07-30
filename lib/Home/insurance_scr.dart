@@ -201,7 +201,7 @@ class _Insurance_ScrState extends State<Insurance_Scr> {
                                 });
                               }
                             },
-                            child:  MyButton(
+                            child: MyButton(
                               text: "Submit".tr,
                             ),
                           )),

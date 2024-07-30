@@ -39,13 +39,14 @@ class BatteryTyreData {
   String? shippingAddressId;
   String? billingSameAsShipping;
   String? billingAddressId;
-  int? subtotal;
-  int? discount;
-  int? coupanDiscount;
-  int? serviceCharges;
-  int? total;
+  String? subtotal;
+  String? discount;
+  String? coupanDiscount;
+  String? serviceCharges;
+  String? total;
   ShippingAddressData? shippingAddressData;
   BillingAddressData? billingAddressData;
+  TmeSlotModel? timeSlot;
   Product? product;
   String? vehicleTypeName;
   String? vehicleModelName;
@@ -73,6 +74,7 @@ class BatteryTyreData {
       this.total,
       this.shippingAddressData,
       this.billingAddressData,
+      this.timeSlot,
       this.product,
       this.vehicleTypeName,
       this.vehicleModelName,
@@ -93,16 +95,20 @@ class BatteryTyreData {
     shippingAddressId = json['shipping_address_id'];
     billingSameAsShipping = json['billing_same_as_shipping'];
     billingAddressId = json['billing_address_id'];
-    subtotal = json['subtotal'];
-    discount = json['discount'];
-    coupanDiscount = json['coupan_discount'];
-    serviceCharges = json['service_charges'];
-    total = json['total'];
+    subtotal = json['subtotal'].toString();
+    discount = json['discount'].toString();
+    coupanDiscount = json['coupan_discount'].toString();
+    serviceCharges = json['service_charges'].toString();
+    total = json['total'].toString();
     shippingAddressData = json['shipping_address_data'] != null
         ? new ShippingAddressData.fromJson(json['shipping_address_data'])
         : null;
     billingAddressData = json['billing_address_data'] != null
         ? new BillingAddressData.fromJson(json['billing_address_data'])
+        : null;
+
+    timeSlot = json['time_slot'] != null
+        ? new TmeSlotModel.fromJson(json['time_slot'])
         : null;
     product =
         json['product'] != null ? new Product.fromJson(json['product']) : null;
@@ -137,6 +143,9 @@ class BatteryTyreData {
     }
     if (this.billingAddressData != null) {
       data['billing_address_data'] = this.billingAddressData!.toJson();
+    }
+    if (this.timeSlot != null) {
+      data['time_slot'] = this.timeSlot!.toJson();
     }
     if (this.product != null) {
       data['product'] = this.product!.toJson();
@@ -452,7 +461,14 @@ class Product {
     name = json['name'];
     slug = json['slug'];
     productType = json['product_type'];
-    categoryIds = json['category_ids'];
+    try {
+      if (json['category_ids'] != null) {
+        categoryIds = json['category_ids'];
+      }
+    } catch (e) {
+      print(e);
+    }
+
     categoryId = json['category_id'];
     subCategoryId = json['sub_category_id'];
     subSubCategoryId = json['sub_sub_category_id'];
@@ -462,7 +478,11 @@ class Product {
     refundable = json['refundable'];
     digitalProductType = json['digital_product_type'];
     digitalFileReady = json['digital_file_ready'];
-    images = json['images'];
+    try {
+      images = json['images'];
+    } catch (e) {
+      print(e);
+    }
     colorImage = json['color_image'];
     thumbnail = json['thumbnail'];
     featured = json['featured'];
@@ -578,6 +598,47 @@ class Product {
     // if (this.reviews != null) {
     //   data['reviews'] = this.reviews!.map((v) => v.toJson()).toList();
     // }
+    return data;
+  }
+}
+
+class TmeSlotModel {
+  int? id;
+  String? title;
+  String? fromTime;
+  String? toTime;
+  int? status;
+  String? createdAt;
+  String? updatedAt;
+
+  TmeSlotModel(
+      {this.id,
+      this.title,
+      this.fromTime,
+      this.toTime,
+      this.status,
+      this.createdAt,
+      this.updatedAt});
+
+  TmeSlotModel.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    title = json['title'];
+    fromTime = json['from_time'];
+    toTime = json['to_time'];
+    status = json['status'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['title'] = this.title;
+    data['from_time'] = this.fromTime;
+    data['to_time'] = this.toTime;
+    data['status'] = this.status;
+    data['created_at'] = this.createdAt;
+    data['updated_at'] = this.updatedAt;
     return data;
   }
 }

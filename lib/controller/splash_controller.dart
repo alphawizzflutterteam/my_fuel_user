@@ -27,7 +27,7 @@ class SplashController extends AppBaseController {
   }
 
   _navigateToHome() async {
-    await Future.delayed(const Duration(milliseconds: 3000), () async {});
+    await Future.delayed(const Duration(milliseconds: 6000), () async {});
     SharedPreferencesService? instance =
         await SharedPreferencesService.getInstance();
 

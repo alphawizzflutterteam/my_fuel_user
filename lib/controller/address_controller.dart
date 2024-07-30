@@ -8,6 +8,7 @@ import 'appBase/appbase_controller.dart';
 class AddressController extends AppBaseController {
   LaravelApiClient _laravelApiClient = Get.find<LaravelApiClient>();
 
+  bool isBillDeilivery = false;
   RxBool isLoading = false.obs;
   RxList<AddressListModel> addressAList = <AddressListModel>[].obs;
 
@@ -58,6 +59,7 @@ class AddressController extends AppBaseController {
 
   Future<void> getAddRess() async {
     isLoading(true);
+    addressAList = <AddressListModel>[].obs;
     List<AddressListModel> addressList = await _laravelApiClient.getAddress();
 
     addressAList.value = addressList;
