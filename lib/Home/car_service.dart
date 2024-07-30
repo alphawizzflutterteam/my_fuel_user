@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:test_prj/SelectNewAddress.dart';
 import 'package:test_prj/components/my_appbar.dart';
 import 'package:test_prj/helper/utils/validator_all.dart';
 import '../components/my_button.dart';
@@ -531,11 +532,17 @@ class _CarServiceState extends State<CarService> {
                                   }
                                   otherCategory.date =
                                       dateController.text.toString();
+
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) =>
-                                              Checkout_Car_Service()));
+                                          builder: ((context) =>
+                                              SelectNewAddress())));
+                                  // Navigator.push(
+                                  //     context,
+                                  //     MaterialPageRoute(
+                                  //         builder: (context) =>
+                                  //             Checkout_Car_Service()));
                                 }
                               },
                               child: MyButton(text: 'Book Now')),

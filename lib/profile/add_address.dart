@@ -26,6 +26,37 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
   TextEditingController cityController = TextEditingController();
   TextEditingController pincodeController = TextEditingController();
   final _formKeyReset = GlobalKey<FormState>();
+  int selectedValueAddress = -1;
+  int selectedValue = 1;
+  Widget customRadio(String text, int value) {
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          selectedValue = value;
+        });
+      },
+      child: Row(
+        children: [
+          Radio<int>(
+            value: value,
+            groupValue: selectedValue,
+            onChanged: (int? newValue) {
+              setState(() {
+                selectedValue = newValue!;
+              });
+            },
+            activeColor: Colors.red,
+          ),
+          Text(
+            text,
+            style: TextStyle(
+              color: selectedValue == value ? Colors.black : Colors.blueGrey,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +65,17 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
       body: SingleChildScrollView(
         child: Column(
           children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  customRadio("Home".tr, 1),
+                  customRadio("Office".tr, 2),
+                  customRadio("Other".tr, 3),
+                ],
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.all(20.0),
               child: Form(
