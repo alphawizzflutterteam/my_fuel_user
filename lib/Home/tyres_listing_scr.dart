@@ -57,7 +57,13 @@ class _TyresListingState extends State<TyresListing> {
                     ),
                   ),
                 ),
-                title: Text('Tyres Listing'),
+                title: Text(otherCategory.categoryId == "9"
+                    ? 'Tyres Listing'.tr
+                    : otherCategory.categoryId == "10"
+                        ? "Battery Listing"
+                        : otherCategory.categoryId == "11"
+                            ? "Car Wash"
+                            : ""),
                 centerTitle: true,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.only(
@@ -66,113 +72,119 @@ class _TyresListingState extends State<TyresListing> {
                   ),
                 ),
               ),
-              body: Obx(() => ListView.builder(
-                    itemCount: homeController
-                        .servicesDetailModel.value.products!.length,
-                    itemBuilder: (context, index) {
-                      return Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: InkWell(
-                          onTap: () {
-                            otherCategory.productId = homeController
-                                .servicesDetailModel.value.products![index].id
-                                .toString();
-                            if (widget.index == 1) {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          SelectNewAddress()));
-                              // Navigator.push(
-                              //     context,
-                              //     MaterialPageRoute(
-                              //         builder: (context) =>
-                              //             Checkout_Car_Service()));
-                            } else {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => CarWashList()));
-                            }
-                          },
-                          child: Container(
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: colors.lightgray),
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      // Add additional decoration properties here as needed
-                                    ),
-                                    width: 100,
-                                    height: 100,
-                                    child: ClipRRect(
-                                      // Use ClipRRect to clip the image with the specified border radius
-                                      borderRadius: BorderRadius.circular(10),
-                                      child: Image.network(
-                                        "${configModel!.baseUrls!.productThumbnailUrl}/${homeController.servicesDetailModel.value.products![index].thumbnail}",
-                                        errorBuilder:
-                                            (context, error, stackTrace) {
-                                          return Image.asset(
-                                            'assets/tyre.png',
-                                            fit: BoxFit.cover,
-                                          );
-                                        },
+              body: Obx(() => homeController.productsList!.isEmpty
+                  ? Center(child: CircularProgressIndicator())
+                  : ListView.builder(
+                      itemCount: homeController
+                          .servicesDetailModel.value.products!.length,
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: InkWell(
+                            onTap: () {
+                              otherCategory.productId = homeController
+                                  .servicesDetailModel.value.products![index].id
+                                  .toString();
+                              // otherCategory.productId = homeController
+                              //     .servicesDetailModel.value.products![index].id
+                              //     .toString();
+                              if (widget.index == 1) {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            SelectNewAddress()));
+                                // Navigator.push(
+                                //     context,
+                                //     MaterialPageRoute(
+                                //         builder: (context) =>
+                                //             Checkout_Car_Service()));
+                              } else {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => CarWashList()));
+                              }
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: colors.lightgray),
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        // Add additional decoration properties here as needed
+                                      ),
+                                      width: 100,
+                                      height: 100,
+                                      child: ClipRRect(
+                                        // Use ClipRRect to clip the image with the specified border radius
+                                        borderRadius: BorderRadius.circular(10),
+                                        child: Image.network(
+                                          "${configModel!.baseUrls!.brandImageUrl}/${homeController.servicesDetailModel.value.products![index].images![0]}",
+                                          errorBuilder:
+                                              (context, error, stackTrace) {
+                                            return Image.asset(
+                                              'assets/tyre.png',
+                                              fit: BoxFit.cover,
+                                            );
+                                          },
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                  SizedBox(
-                                    width: 20,
-                                  ),
-                                  Column(
-                                    // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      SizedBox(
-                                        height: 5,
-                                      ),
-                                      Text(
-                                        '${homeController.servicesDetailModel.value.products![index].name}',
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      SizedBox(
-                                        height: 5,
-                                      ),
-                                      Text(
-                                        '${homeController.servicesDetailModel.value.products![index].slug}',
-                                        style:
-                                            TextStyle(color: colors.greyTemp),
-                                      ),
-                                      SizedBox(
-                                        height: 5,
-                                      ),
-                                      Text(
-                                          '₹ ${homeController.servicesDetailModel.value.products![index].unitPrice}',
+                                    SizedBox(
+                                      width: 20,
+                                    ),
+                                    Column(
+                                      // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        SizedBox(
+                                          height: 5,
+                                        ),
+                                        Text(
+                                          '${homeController.servicesDetailModel.value.products![index].name}',
                                           style: TextStyle(
                                               fontSize: 16,
-                                              fontWeight: FontWeight.bold))
-                                    ],
-                                  )
-                                ],
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        SizedBox(
+                                          height: 5,
+                                        ),
+                                        Text(
+                                          '${homeController.servicesDetailModel.value.products![index].slug}',
+                                          style:
+                                              TextStyle(color: colors.greyTemp),
+                                        ),
+                                        SizedBox(
+                                          height: 5,
+                                        ),
+                                        Text(
+                                            '₹ ${homeController.servicesDetailModel.value.products![index].unitPrice}',
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.bold))
+                                      ],
+                                    )
+                                  ],
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                      );
-                    },
-                  )));
+                        );
+                      },
+                    )));
         });
   }
 
   void initUI() {
+    print("object ${otherCategory.categoryId}");
     HomeController controller = Get.find();
     controller
         .getServiceDetails(otherCategory.categoryId == null

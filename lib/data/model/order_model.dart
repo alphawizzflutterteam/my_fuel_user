@@ -577,7 +577,12 @@ class Product {
     name = json['name'];
     slug = json['slug'];
     productType = json['product_type'];
-    categoryIds = json['category_ids'];
+    try {
+      categoryIds = json['category_ids'];
+    } catch (e) {
+      print(e);
+    }
+
     categoryId = json['category_id'];
     subCategoryId = json['sub_category_id'];
     subSubCategoryId = json['sub_sub_category_id'];
@@ -587,7 +592,11 @@ class Product {
     refundable = json['refundable'];
     digitalProductType = json['digital_product_type'];
     digitalFileReady = json['digital_file_ready'];
-    images = json['images'];
+    try {
+      images = json['images'];
+    } catch (e) {
+      print(e);
+    }
     colorImage = json['color_image'];
     thumbnail = json['thumbnail'];
     featured = json['featured'];

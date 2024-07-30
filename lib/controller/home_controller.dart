@@ -14,6 +14,7 @@ class HomeController extends AppBaseController {
   var servicesDetailModel = ServiceDetailsModel().obs;
   RxList<Self> serviceList = <Self>[].obs;
   RxList<OtherData> otherList = <OtherData>[].obs;
+  RxList<Products>? productsList = <Products>[].obs;
   RxBool isLoading = false.obs;
   @override
   void onInit() {
@@ -47,6 +48,7 @@ class HomeController extends AppBaseController {
     ServiceDetailsModel response = await _laravelApiClient.getServiceDetail(id);
     isLoading(false);
     servicesDetailModel.value = response;
+    productsList!.value = servicesDetailModel.value.products!;
     // serviceList.value = homeServicesModel.value.data!.self!;
     // otherList.value = homeServicesModel.value.data!.other!;
     print("getBanner ${list.value.length}");

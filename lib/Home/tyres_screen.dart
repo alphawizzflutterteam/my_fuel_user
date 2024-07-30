@@ -179,71 +179,75 @@ class _TyresScreenState extends State<TyresScreen> {
                       SizedBox(
                         height: 10,
                       ),
-                      Obx(() => GridView.builder(
-                            physics: const NeverScrollableScrollPhysics(),
-                            shrinkWrap: true,
-                            primary: false,
-                            padding: const EdgeInsets.all(10),
-                            itemCount: carServiceController
-                                .timeSlotModel.value.data!.length,
-                            gridDelegate:
-                                const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
-                              childAspectRatio: 4.5,
-                              // crossAxisSpacing: 10,
-                              mainAxisSpacing: 10.0,
-                            ),
-                            itemBuilder: (BuildContext context, int index) {
-                              return InkWell(
-                                onTap: () {
-                                  carServiceController.selectTimeSlot.value =
-                                      index;
-                                  otherCategory.timeSlotId =
-                                      carServiceController
-                                          .timeSlotModel.value.data![index].id
-                                          .toString();
-                                  print(
-                                      "object Vali ${carServiceController.selectTimeSlot.value}");
-                                },
-                                child: Padding(
-                                  padding: const EdgeInsets.only(left: 15),
-                                  child: Container(
-                                    decoration: carServiceController
-                                                .selectTimeSlot.value ==
-                                            index
-                                        ? BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                            // color: Colors.grey.withOpacity(0.1),
-                                            border: Border.all(
-                                              color: Colors.orange,
-                                            ))
-                                        : BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                            color: Colors.grey.withOpacity(0.1),
-                                          ),
-                                    height: 35,
-                                    // width: 160,
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(
-                                          top: 7, left: 15),
-                                      child: Text(
-                                        '${carServiceController.timeSlotModel.value.data![index].title}',
-                                        style: TextStyle(
-                                            fontSize: 12,
-                                            color: carServiceController
-                                                        .selectTimeSlot.value ==
-                                                    index
-                                                ? Colors.orange
-                                                : Colors.black54),
+                      Obx(() => carServiceController.tileList!.isEmpty
+                          ? CircularProgressIndicator()
+                          : GridView.builder(
+                              physics: const NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              primary: false,
+                              padding: const EdgeInsets.all(10),
+                              itemCount: carServiceController
+                                  .timeSlotModel.value.data!.length,
+                              gridDelegate:
+                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2,
+                                childAspectRatio: 4.5,
+                                // crossAxisSpacing: 10,
+                                mainAxisSpacing: 10.0,
+                              ),
+                              itemBuilder: (BuildContext context, int index) {
+                                return InkWell(
+                                  onTap: () {
+                                    carServiceController.selectTimeSlot.value =
+                                        index;
+                                    otherCategory.timeSlotId =
+                                        carServiceController
+                                            .timeSlotModel.value.data![index].id
+                                            .toString();
+                                    print(
+                                        "object Vali ${carServiceController.selectTimeSlot.value}");
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(left: 15),
+                                    child: Container(
+                                      decoration: carServiceController
+                                                  .selectTimeSlot.value ==
+                                              index
+                                          ? BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              // color: Colors.grey.withOpacity(0.1),
+                                              border: Border.all(
+                                                color: Colors.orange,
+                                              ))
+                                          : BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              color:
+                                                  Colors.grey.withOpacity(0.1),
+                                            ),
+                                      height: 35,
+                                      // width: 160,
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(
+                                            top: 7, left: 15),
+                                        child: Text(
+                                          '${carServiceController.timeSlotModel.value.data![index].title}',
+                                          style: TextStyle(
+                                              fontSize: 12,
+                                              color: carServiceController
+                                                          .selectTimeSlot
+                                                          .value ==
+                                                      index
+                                                  ? Colors.orange
+                                                  : Colors.black54),
+                                        ),
                                       ),
                                     ),
                                   ),
-                                ),
-                              );
-                            },
-                          )),
+                                );
+                              },
+                            )),
                       // Row(
                       //   children: [
                       //     Padding(
@@ -411,7 +415,14 @@ class _TyresScreenState extends State<TyresScreen> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => Summary1()));
+                                      builder: (context) => TyresListing(
+                                            index: selectIndex,
+                                          )));
+
+                              // Navigator.push(
+                              //     context,
+                              //     MaterialPageRoute(
+                              //         builder: (context) => Summary1()));
                             }
                           }
                         },
@@ -436,7 +447,7 @@ class _TyresScreenState extends State<TyresScreen> {
     final DateTime? picked = await showDatePicker(
       context: context,
       initialDate: selectedDate,
-      firstDate: DateTime(2000),
+      firstDate: DateTime.now(),
       lastDate: DateTime(2027),
     );
 
@@ -448,9 +459,14 @@ class _TyresScreenState extends State<TyresScreen> {
     }
   }
 
-  void initUI() {
+  @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
     CarServiceController carServiceController = Get.find();
 
     carServiceController.getSlots();
   }
+
+  void initUI() {}
 }

@@ -27,6 +27,8 @@ class ApiConstants {
   static const String MANAGECART = '/api/v1/cart?address_id=';
   static const String UPDATEPROFILE = '/api/v1/customer/update-profile';
   static const String VENDORCHEKOUT = '/api/v1/customer/order/vendor-checkout';
+  static const String ConfirmPlaceOrder =
+      '/api/v1/customer/order/confirm-vendor-service';
   static const String ORDERLIST =
       '/api/v1/customer/order/list?limit=10&offset=0';
 

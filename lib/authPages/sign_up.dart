@@ -10,10 +10,7 @@ import 'package:test_prj/controller/singup_controller.dart';
 import 'package:test_prj/helper/utils/validator_all.dart';
 
 import '../repository/model/user_model.dart';
-<<<<<<< Updated upstream
 import '../routes/app_routes.dart';
-=======
->>>>>>> Stashed changes
 
 class SignUp extends StatefulWidget {
   const SignUp({super.key});
@@ -45,11 +42,7 @@ class _SignUpState extends State<SignUp> {
 
   @override
   Widget build(BuildContext context) {
-<<<<<<< Updated upstream
     // data = Get.arguments ?? '';
-=======
-    data = Get.arguments ?? '';
->>>>>>> Stashed changes
     print(" data Index  $data");
     return GetBuilder(
       init: SignupController(),
@@ -84,7 +77,6 @@ class _SignUpState extends State<SignUp> {
                     data == "1" ? showBussiness() : showUser(),
 
                     const SizedBox(height: 20),
-<<<<<<< Updated upstream
                     GetBuilder<SignupController>(
                         init: SignupController(),
                         builder: (controller) {
@@ -145,45 +137,6 @@ class _SignUpState extends State<SignUp> {
                                   },
                                   child: const MyButton(text: "Sign Up"));
                         }),
-=======
-                    GetBuilder<SignupController>(builder: (controller) {
-                      return controller.isLoading.value == true
-                          ? CircularProgressIndicator()
-                          : GestureDetector(
-                              onTap: () {
-                                if (_formKeyReset!.currentState!.validate()) {
-                                  User user = User();
-                                  user.fName = nameController.text;
-                                  user.lName = nameController.text;
-                                  user.email = emailController.text;
-                                  user.phone = phoneController.text;
-                                  user.gst = gstController.text;
-                                  user.guest_id = "123";
-                                  user.address = addressController.text;
-                                  user.pan = panController.text;
-                                  user.msme = msmeController.text;
-                                  user.password = passwordController.text;
-                                  user.profile =
-                                      data == "0" ? "normal" : "bussiness";
-
-                                  controller.Register(user).then((value) {
-                                    if (value.containsKey("errors")) {
-                                      Fluttertoast.showToast(msg: "$value");
-                                    } else if (value['temporary_token'] != "") {
-                                      Navigator.pushReplacement(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  OTPScreen2()));
-                                    }
-
-                                    // return null;
-                                  });
-                                }
-                              },
-                              child: const MyButton(text: "Sign Up"));
-                    }),
->>>>>>> Stashed changes
                     const SizedBox(height: 70),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -230,10 +183,7 @@ class _SignUpState extends State<SignUp> {
 
   void initUI() {
     data = Get.arguments ?? '';
-<<<<<<< Updated upstream
     setState(() {});
-=======
->>>>>>> Stashed changes
   }
 
   final _formKeyReset = GlobalKey<FormState>();
@@ -243,85 +193,58 @@ class _SignUpState extends State<SignUp> {
       children: [
         const SizedBox(height: 25),
         MyTextField(
-<<<<<<< Updated upstream
           validator: (value) => Validator.validatePhone(value),
           isAmount: true,
-=======
->>>>>>> Stashed changes
           controller: phoneController,
           labelText: Text("Phone No "),
         ),
         SizedBox(height: 15),
         MyTextField(
-<<<<<<< Updated upstream
           validator: (value) => Validator.validateEmail(value),
-=======
->>>>>>> Stashed changes
           controller: emailController,
           labelText: Text("Email"),
         ),
         SizedBox(height: 15),
         MyTextField(
-<<<<<<< Updated upstream
           validator: (value) => Validator.validateName(value),
-=======
->>>>>>> Stashed changes
           controller: nameController,
           labelText: Text("Company Name"),
         ),
         SizedBox(height: 15),
         MyTextField(
-<<<<<<< Updated upstream
           validator: (value) => null,
-=======
->>>>>>> Stashed changes
           controller: gstController,
           labelText: Text("Gst Number (optional)"),
         ),
         SizedBox(height: 15),
         MyTextField(
-<<<<<<< Updated upstream
           validator: (value) => Validator.validateAddress(value),
-=======
->>>>>>> Stashed changes
           controller: addressController,
           labelText: Text("Company Address"),
         ),
         SizedBox(height: 15),
         MyTextField(
-<<<<<<< Updated upstream
           validator: (value) => Validator.validateAddress(value),
-=======
->>>>>>> Stashed changes
           controller: panController,
           labelText: Text("Pan No."),
         ),
         SizedBox(height: 15),
         MyTextField(
-<<<<<<< Updated upstream
           validator: (value) => null,
-=======
->>>>>>> Stashed changes
           controller: msmeController,
           labelText: Text("MSME No.(optional)"),
         ),
         SizedBox(height: 15),
         MyTextField(
-<<<<<<< Updated upstream
           validator: (value) => Validator.validatePassword(value),
           isPassword: true,
-=======
->>>>>>> Stashed changes
           controller: passwordController,
           labelText: Text("Password"),
         ),
         SizedBox(height: 15),
         MyTextField(
-<<<<<<< Updated upstream
           validator: (value) => Validator.validatePassword(value),
           isPassword: true,
-=======
->>>>>>> Stashed changes
           controller: confirmpasswordController,
           labelText: Text("Confirm Password"),
         ),
@@ -334,59 +257,40 @@ class _SignUpState extends State<SignUp> {
       children: [
         const SizedBox(height: 25),
         MyTextField(
-<<<<<<< Updated upstream
           validator: (value) => Validator.validatePhone(value),
           controller: phoneController,
           isAmount: true,
-=======
-          controller: phoneController,
->>>>>>> Stashed changes
           labelText: Text("Phone No "),
         ),
         SizedBox(height: 15),
         MyTextField(
-<<<<<<< Updated upstream
           validator: (value) => Validator.validateEmail(value),
-=======
->>>>>>> Stashed changes
           controller: emailController,
           labelText: Text("Email"),
         ),
         SizedBox(height: 15),
         MyTextField(
-<<<<<<< Updated upstream
           validator: (value) => Validator.validateName(value),
-=======
->>>>>>> Stashed changes
           controller: nameController,
           labelText: Text("Full Name"),
         ),
         SizedBox(height: 15),
         MyTextField(
-<<<<<<< Updated upstream
           validator: (value) => null,
-=======
->>>>>>> Stashed changes
           controller: gstController,
           labelText: Text("Gst Number (optional)"),
         ),
         SizedBox(height: 15),
         MyTextField(
-<<<<<<< Updated upstream
           validator: (value) => Validator.validatePassword(value),
           isPassword: true,
-=======
->>>>>>> Stashed changes
           controller: passwordController,
           labelText: Text("Password"),
         ),
         SizedBox(height: 15),
         MyTextField(
-<<<<<<< Updated upstream
           validator: (value) => Validator.validatePassword(value),
           isPassword: true,
-=======
->>>>>>> Stashed changes
           controller: confirmpasswordController,
           labelText: Text("Confirm Password"),
         ),

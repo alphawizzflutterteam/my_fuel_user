@@ -8,10 +8,7 @@ import 'package:test_prj/service/provider/lavavel_provider.dart';
 
 import '../data/model/response/setting_model.dart';
 import '../helper/utils/shared_preference.dart';
-<<<<<<< Updated upstream
 import '../splashScreen.dart';
-=======
->>>>>>> Stashed changes
 
 class SplashController extends AppBaseController {
   LaravelApiClient _laravelApiClient = Get.find<LaravelApiClient>();
@@ -55,12 +52,9 @@ class SplashController extends AppBaseController {
     SettingModel response = await _laravelApiClient.getSettings();
 
     settingModel.value = response;
-<<<<<<< Updated upstream
     if (response != null) {
       configModel = response;
     }
-=======
->>>>>>> Stashed changes
 
     print("getSettingAPi ${settingModel.value.shippingMethod}");
   }
