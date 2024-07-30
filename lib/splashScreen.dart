@@ -32,22 +32,28 @@ class _SplashScreenState extends State<SplashScreen> {
         builder: (controller) {
           // controller.getSettingAPi();
           return Scaffold(
-            backgroundColor: colors
-                .splashColor, //Color.fromRGBO(27, 27, 27, 1),// Set your desired background color
-            body: Column(
-              children: [
-                Center(
-                  child: Image.asset(
-                    'assets/splash_gif.gif',
-                    //height: 73,
-                  ),
+              backgroundColor: colors
+                  .splashColor, //Color.fromRGBO(27, 27, 27, 1),// Set your desired background color
+              body: Center(
+                child: Image.asset(
+                  'assets/splash_gif.gif',
+                  //height: 73,
                 ),
-                Text(
-                  LanguageGlobalVar.HELLO_WORLD.tr,
-                )
-              ],
-            ),
-          );
+              )
+              // Column(
+              //   children: [
+              //     Center(
+              //       child: Image.asset(
+              //         'assets/splash_gif.gif',
+              //         //height: 73,
+              //       ),
+              //     ),
+              //     Text(
+              //       LanguageGlobalVar.HELLO_WORLD.tr,
+              //     )
+              //   ],
+              // ),
+              );
         });
   }
 }

@@ -43,19 +43,22 @@ class HomePage extends StatefulWidget {
 OtherCategory otherCategory = OtherCategory();
 
 class _HomePageState extends State<HomePage> {
-  List<String> vehicles = ['Two Wheeler', 'Four Wheeler ,Heavy Vehicle'];
-  List<String> productsAndServices = [
-    'Genset Maintenance',
-    'Fuel Management Services ',
-    'Fuel on Tap',
-    'My Fuels Jerry...'
-  ];
+  // List<String> vehicles = ['Two Wheeler', 'Four Wheeler ,Heavy Vehicle'];
+  // List<String> productsAndServices = [
+  //   'Genset Maintenance',
+  //   'Fuel Management Services ',
+  //   'Fuel on Tap',
+  //   'My Fuels Jerry...'
+  // ];
 
   String? selectedVehicleManufacture;
   String? selectModel;
 
   int count = 0;
   CarServiceController controller = Get.find();
+  int lastTimeClicked = 0;
+  final int intervalMs = 4000;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -399,6 +402,16 @@ class _HomePageState extends State<HomePage> {
                                                                           2.4,
                                                                     ),
                                                                     onTap: () {
+                                                                      final now =
+                                                                          DateTime.now()
+                                                                              .millisecondsSinceEpoch;
+                                                                      if (now -
+                                                                              lastTimeClicked <
+                                                                          intervalMs) {
+                                                                        return;
+                                                                      }
+                                                                      lastTimeClicked =
+                                                                          now;
                                                                       // Here Tap Sercice Detail
                                                                       if (i ==
                                                                           0) {
@@ -426,11 +439,13 @@ class _HomePageState extends State<HomePage> {
                                                                               .serviceList[i]
                                                                               .id
                                                                               .toString();
-                                                                          Navigator.push(
-                                                                              context,
-                                                                              MaterialPageRoute(
-                                                                                builder: (context) => FuelOnTabScreen(),
-                                                                              ));
+                                                                          Get.to(
+                                                                              FuelOnTabScreen());
+                                                                          // Navigator.push(
+                                                                          //     context,
+                                                                          //     MaterialPageRoute(
+                                                                          //       builder: (context) => FuelOnTabScreen(),
+                                                                          //     ));
                                                                         });
                                                                       } else {
                                                                         controller
@@ -442,11 +457,13 @@ class _HomePageState extends State<HomePage> {
                                                                               .toString();
                                                                           print(
                                                                               "object categoryId $categoryId");
-                                                                          Navigator.push(
-                                                                              context,
-                                                                              MaterialPageRoute(
-                                                                                builder: (context) => FuelOnTabScreen(title: "My Fuel Jerry Can"),
-                                                                              ));
+                                                                          // Navigator.push(
+                                                                          //     context,
+                                                                          //     MaterialPageRoute(
+                                                                          //       builder: (context) => FuelOnTabScreen(title: "My Fuel Jerry Can"),
+                                                                          //     ));
+                                                                          Get.to(
+                                                                              FuelOnTabScreen(title: "My Fuel Jerry Can"));
                                                                         });
                                                                       }
                                                                     },
@@ -529,6 +546,17 @@ class _HomePageState extends State<HomePage> {
                                                           int i) {
                                                     return InkWell(
                                                       onTap: () {
+                                                        final now = DateTime
+                                                                .now()
+                                                            .millisecondsSinceEpoch;
+                                                        if (now -
+                                                                lastTimeClicked <
+                                                            intervalMs) {
+                                                          return;
+                                                        }
+                                                        lastTimeClicked = now;
+                                                        otherCategory =
+                                                            OtherCategory();
                                                         print(
                                                             "OtherId ${controller.otherList[i].id}");
                                                         categoryId = controller
@@ -858,7 +886,10 @@ class _HomePageState extends State<HomePage> {
         });
   }
 
+  /// Car service
   void _showBottomSheet(BuildContext context) {
+    TextEditingController vehicleNoController = TextEditingController();
+    final _formKeyReset = GlobalKey<FormState>();
     showModalBottomSheet(
       context: context,
       isScrollControlled: true, // Ensure the bottom sheet can scroll
@@ -869,92 +900,114 @@ class _HomePageState extends State<HomePage> {
             padding: EdgeInsets.zero,
             child: Padding(
               padding: const EdgeInsets.all(20.0),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  const Text(
-                    'Enter Your Vehicle Number',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w500,
+              child: Form(
+                key: _formKeyReset,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    const SizedBox(
+                      height: 10,
                     ),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Container(
-                    height: 55,
-                    decoration: BoxDecoration(
-                      border: Border.all(color: colors.black12, width: 2),
-                      borderRadius: BorderRadius.circular(10),
+                    const Text(
+                      'Enter Your Vehicle Number AAA',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: GetBuilder<CarServiceController>(
-                        init: CarServiceController(),
-                        builder: (carserviceController) {
-                          return DropdownButton<VehicleData>(
-                            hint: const Text('Vehicle Type'),
-                            value: carserviceController.selectedVehicle.value,
-                            underline: Container(),
-                            isExpanded: true,
-                            onChanged: (VehicleData? newValue) {
-                              if (newValue != null) {
-                                setState(() {
-                                  carserviceController.selectedVehicle.value =
-                                      newValue;
-                                });
-                              }
-                            },
-                            items: carserviceController.vehicleList!
-                                .map<DropdownMenuItem<VehicleData>>(
-                                    (VehicleData value) {
-                              return DropdownMenuItem<VehicleData>(
-                                value: value,
-                                child: Text(value.name.toString()),
-                              );
-                            }).toList(),
-                          );
-                        }),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Container(
+                      height: 55,
+                      decoration: BoxDecoration(
+                        border: Border.all(color: colors.black12, width: 2),
                         borderRadius: BorderRadius.circular(10),
-                        border: Border.all(color: colors.black12, width: 2)),
-                    child: const MyHintTextField(
-                      hintText: Text(
-                        "Vehicle Number",
-                        style: TextStyle(
-                          color: Colors.grey,
-                          fontWeight: FontWeight.w500,
+                      ),
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: GetBuilder<CarServiceController>(
+                          init: CarServiceController(),
+                          builder: (carserviceController) {
+                            return DropdownButton<VehicleData>(
+                              hint: const Text('Vehicle Type'),
+                              value: carserviceController.selectedVehicle.value,
+                              underline: Container(),
+                              isExpanded: true,
+                              onChanged: (VehicleData? newValue) {
+                                if (newValue != null) {
+                                  setState(() {
+                                    carserviceController.selectedVehicle.value =
+                                        newValue;
+                                  });
+                                  otherCategory.vehicleType =
+                                      newValue.id.toString();
+                                }
+                              },
+                              items: carserviceController.vehicleList!
+                                  .map<DropdownMenuItem<VehicleData>>(
+                                      (VehicleData value) {
+                                return DropdownMenuItem<VehicleData>(
+                                  value: value,
+                                  child: Text(value.name.toString()),
+                                );
+                              }).toList(),
+                            );
+                          }),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(color: colors.black12, width: 2)),
+                      child: MyTextField(
+                        validator: (value) =>
+                            Validator.validateWithhint(value, "Vehicle Nubmer"),
+                        controller: vehicleNoController,
+                        labelText: Text("Vehicle Nubmer"),
+                      ),
+                      // MyTextField(
+                      //   hintText: Text(
+                      //     "Vehicle Number AAA",
+                      //     style: TextStyle(
+                      //       color: Colors.grey,
+                      //       fontWeight: FontWeight.w500,
+                      //     ),
+                      //   ),
+                      // ),
+                    ),
+                    const SizedBox(
+                      height: 40,
+                    ),
+                    InkWell(
+                      onTap: () {
+                        print(
+                            "vehicleType vehicleType ${otherCategory.vehicleType}");
+
+                        if (otherCategory.vehicleType == null) {
+                          Fluttertoast.showToast(
+                              msg: "Please select Vehicle Type");
+                          return;
+                        }
+
+                        if (_formKeyReset.currentState!.validate()) {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const CarService()));
+                        }
+
+                        // Add your onTap logic here
+                      },
+                      child: Container(
+                        child: const MyButton(
+                          text: "Submit ",
                         ),
                       ),
                     ),
-                  ),
-                  const SizedBox(
-                    height: 40,
-                  ),
-                  InkWell(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const CarService()));
-
-                      // Add your onTap logic here
-                    },
-                    child: Container(
-                      child: const MyButton(
-                        text: "Submit",
-                      ),
-                    ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),
@@ -1515,7 +1568,7 @@ class _HomePageState extends State<HomePage> {
                     height: 10,
                   ),
                   const Text(
-                    'Select Car Type AAAA',
+                    'Select Car Type ',
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w500,
@@ -1975,6 +2028,13 @@ class _HomePageState extends State<HomePage> {
                                         onTap: () {
                                           if (_formKeyReset.currentState!
                                               .validate()) {
+                                            final now = DateTime.now()
+                                                .millisecondsSinceEpoch;
+                                            if (now - lastTimeClicked <
+                                                intervalMs) {
+                                              return;
+                                            }
+                                            lastTimeClicked = now;
                                             controller
                                                 .getEnquiry(
                                                     id,

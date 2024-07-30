@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:test_prj/Home/car_wish_list.dart';
 import 'package:test_prj/Home/checkout_car_service.dart';
@@ -204,8 +205,11 @@ class _TyresScreenState extends State<TyresScreen> {
                                         carServiceController
                                             .timeSlotModel.value.data![index].id
                                             .toString();
+                                    setState(() {});
                                     print(
                                         "object Vali ${carServiceController.selectTimeSlot.value}");
+                                    print(
+                                        "object Vali ${otherCategory.timeSlotId}");
                                   },
                                   child: Padding(
                                     padding: const EdgeInsets.only(left: 15),
@@ -384,12 +388,18 @@ class _TyresScreenState extends State<TyresScreen> {
                         onTap: () {
                           //selectIndex == 1 ?  MyButton(text: "Door Step ") : DisButton(text: "Door Step")
 
+                          if (otherCategory.timeSlotId!.isEmpty ||
+                              otherCategory.timeSlotId == "") {
+                            Fluttertoast.showToast(msg: "PLease select Slot");
+                            return;
+                          }
+
                           if (_formKeyReset.currentState!.validate()) {
                             otherCategory.service =
                                 selectIndex == 1 ? "Door Step" : "Door Step";
                             otherCategory.notes =
                                 noteController.text.toString();
-                            otherCategory.timeSlotId = "1";
+                            // otherCategory.timeSlotId = "1";
                             otherCategory.date = dateController.text.toString();
                             if (widget.page == 1) {
                               Navigator.push(

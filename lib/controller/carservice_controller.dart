@@ -38,15 +38,21 @@ class CarServiceController extends AppBaseController {
 
   Future<void> getVehiCleType() async {
     isLoading(true);
+
     Map<String, dynamic> data = await _laravelApiClient.getVehicleType();
     isLoading(false);
     vehicletype(VehicleType.fromJson(data));
+    VehicleData v = VehicleData(name: "Select Vehicle ");
+    vehicleList = <VehicleData>[].obs;
+    vehicleList!.value.add(v);
+    vehicleList!.value.addAll(vehicletype.value.data!);
 
-    vehicleList!.value = vehicletype.value.data!;
     selectedVehicle.value = vehicleList!.value[0];
     selectedVehicleManufacture.value = vehicleList!.value[0];
+
     // list.value = response;
     getVehicleModel(selectedVehicle.value.id.toString());
+
     update();
 
     print("getBanner ${vehicletype.value}");
@@ -67,12 +73,15 @@ class CarServiceController extends AppBaseController {
 
   Future<void> getVehicleModel(String id) async {
     vehicleModelList = <VehicleModelData>[].obs;
+    vehicleModelList!.clear();
     isLoading(true);
     Map<String, dynamic> data = await _laravelApiClient.getVehicleModel(id);
     isLoading(false);
     vehicleModel(VehicleModel.fromJson(data));
-
-    vehicleModelList!.value = vehicleModel.value.data!;
+    VehicleModelData v = VehicleModelData(name: "Select Vehicle Model");
+    vehicleModelList!.value.add(v);
+    vehicleModelList!.value.addAll(vehicleModel.value.data!);
+    // vehicleModelList!.value = vehicleModel.value.data!;
     if (vehicleModelList!.value.isNotEmpty) {
       selectedService.value = vehicleModelList!.value[0];
       selectModel.value = vehicleModelList!.value[0];

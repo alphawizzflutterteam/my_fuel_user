@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:get/get_rx/get_rx.dart';
 
 import '../data/model/response/BannerModel.dart';
 import '../data/model/response/home_model.dart';
@@ -15,6 +16,7 @@ class HomeController extends AppBaseController {
   RxList<Self> serviceList = <Self>[].obs;
   RxList<OtherData> otherList = <OtherData>[].obs;
   RxList<Products>? productsList = <Products>[].obs;
+  RxInt selectedRadio = 0.obs;
   RxBool isLoading = false.obs;
   @override
   void onInit() {
@@ -51,7 +53,7 @@ class HomeController extends AppBaseController {
     productsList!.value = servicesDetailModel.value.products!;
     // serviceList.value = homeServicesModel.value.data!.self!;
     // otherList.value = homeServicesModel.value.data!.other!;
-    print("getBanner ${list.value.length}");
+    print("getServiceDetails ${list.value.length}");
   }
 
   Future<Map> getEnquiry(String id, String monthly_consumption,

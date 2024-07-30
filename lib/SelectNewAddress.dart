@@ -742,7 +742,12 @@ class _SelectNewAddressState extends State<SelectNewAddress> {
                         child: GestureDetector(
                           child: const MyButton(text: 'Save Address & Next'),
                           onTap: () {
+                            if (selectedValueAddress == -1) {
+                              Fluttertoast.showToast(
+                                  msg: "Please select Address");
+                            }
                             if (categoryId == "9" ||
+                                categoryId == "16" ||
                                 categoryId == "10" ||
                                 categoryId == "11" ||
                                 categoryId == "10") {

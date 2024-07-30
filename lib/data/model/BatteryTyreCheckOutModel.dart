@@ -106,6 +106,7 @@ class BatteryTyreData {
     billingAddressData = json['billing_address_data'] != null
         ? new BillingAddressData.fromJson(json['billing_address_data'])
         : null;
+
     timeSlot = json['time_slot'] != null
         ? new TmeSlotModel.fromJson(json['time_slot'])
         : null;

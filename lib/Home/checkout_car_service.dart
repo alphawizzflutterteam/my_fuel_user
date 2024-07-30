@@ -797,6 +797,219 @@ class _Checkout_Car_ServiceState extends State<Checkout_Car_Service> {
                           ],
                         ),
                       ),
+                    ] else if (otherCategory.categoryId == "16") ...[
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Container(
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Container(
+                                width: MediaQuery.sizeOf(context).width,
+                                color: colors.lightgray,
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 16, top: 12, bottom: 8),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      SizedBox(
+                                        height: 15,
+                                      ),
+                                      Row(
+                                        // mainAxisAlignment:
+                                        //     MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                'Services',
+                                                style: TextStyle(
+                                                    color: Colors.black
+                                                        .withOpacity(0.5),
+                                                    fontWeight:
+                                                        FontWeight.w500),
+                                              ),
+                                              Container(
+                                                width: 140,
+                                                child: Text(
+                                                  '${carController.batterTyreCheckOut.value.data!.service}',
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.w600),
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: 10,
+                                              ),
+                                              Text(
+                                                'Fuel Type',
+                                                style: TextStyle(
+                                                    color: Colors.black
+                                                        .withOpacity(0.5),
+                                                    fontWeight:
+                                                        FontWeight.w500),
+                                              ),
+                                              Text(
+                                                '${carController.batterTyreCheckOut.value.data!.notes}',
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.w600),
+                                              ),
+                                            ],
+                                          ),
+                                          SizedBox(
+                                            width: 90,
+                                          ),
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                'Vehicle',
+                                                style: TextStyle(
+                                                    color: Colors.black
+                                                        .withOpacity(0.5),
+                                                    fontWeight:
+                                                        FontWeight.w500),
+                                              ),
+                                              Text(
+                                                '${carController.batterTyreCheckOut.value.data!.vehicleTypeName}',
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.w600),
+                                              ),
+                                              SizedBox(
+                                                height: 10,
+                                              ),
+                                              Text(
+                                                'Fuel Quantity',
+                                                style: TextStyle(
+                                                    color: Colors.black
+                                                        .withOpacity(0.5),
+                                                    fontWeight:
+                                                        FontWeight.w500),
+                                              ),
+                                              Text(
+                                                '${carController.batterTyreCheckOut.value.data!.tyreSize.toString()}',
+                                                // 'Mon, Aug 17',
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.w600),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                            const Padding(
+                              padding: EdgeInsets.only(top: 10, right: 225),
+                              child: Text(
+                                "Price Detail",
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 2),
+                            Padding(
+                              padding: EdgeInsets.only(left: 15, right: 10),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    otherCategory.categoryId == "10"
+                                        ? "Battery Price"
+                                        : "Tyres Price",
+                                    style: TextStyle(
+                                        fontSize: 16, color: Colors.black54),
+                                  ),
+                                  Text(
+                                    "₹ ${carController.batterTyreCheckOut.value.data!.total}",
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(height: 2),
+                            Padding(
+                              padding: EdgeInsets.only(left: 15, right: 10),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    "Service",
+                                    style: TextStyle(
+                                        fontSize: 16, color: Colors.black54),
+                                  ),
+                                  Text(
+                                    "₹ ${carController.batterTyreCheckOut.value.data!.serviceCharges}",
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(height: 5),
+                            const Divider(
+                              // thickness: 2,
+                              color: Colors.black26,
+                              indent: 15,
+                              endIndent: 10,
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(left: 15, right: 10),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    "Total Amount",
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  Text(
+                                    "Rs.${carController.batterTyreCheckOut.value.data!.total}",
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      color: Colors.green,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const Divider(
+                              // thickness: 2,
+                              color: Colors.black26,
+                              indent: 15,
+                              endIndent: 10,
+                            ),
+                          ],
+                        ),
+                      ),
                     ] else ...[
                       Container(
                         width: MediaQuery.sizeOf(context).width,
