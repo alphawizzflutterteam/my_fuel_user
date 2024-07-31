@@ -26,7 +26,7 @@ class InternetController extends AppBaseController {
     isConnected.value = result != ConnectivityResult.none;
 
     if (result != ConnectivityResult.none) {
-      isConnected.value = false;
+      isConnected.value = true;
     } else {
       isConnected.value = true;
     }

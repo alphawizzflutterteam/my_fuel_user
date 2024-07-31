@@ -8,7 +8,8 @@ import 'appBase/appbase_controller.dart';
 class AddressController extends AppBaseController {
   LaravelApiClient _laravelApiClient = Get.find<LaravelApiClient>();
 
-  bool isBillDeilivery = false;
+  RxBool isBillDeilivery = false.obs;
+  RxBool isTab = true.obs;
   RxBool isLoading = false.obs;
   RxList<AddressListModel> addressAList = <AddressListModel>[].obs;
 

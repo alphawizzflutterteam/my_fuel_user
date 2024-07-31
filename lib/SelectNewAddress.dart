@@ -6,6 +6,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:test_prj/components/my_appbar.dart';
 import 'package:test_prj/components/my_button.dart';
 import 'package:test_prj/controller/address_controller.dart';
 import 'package:test_prj/helper/colors.dart';
@@ -26,21 +27,23 @@ import 'orderfuel/doorStepDelivery/my_assets.dart';
 
 class SelectNewAddress extends StatefulWidget {
   final bool? isFromFuelOnTab;
+  final bool? isFromOrderFuel;
   final bool? isFromForLooking;
   final bool? isFromFGenSet;
-  SelectNewAddress(
+  const SelectNewAddress(
       {super.key,
       this.isFromFuelOnTab = false,
       this.isFromForLooking = false,
-      this.isFromFGenSet = false});
+      this.isFromFGenSet = false,
+      this.isFromOrderFuel});
 
   @override
   State<SelectNewAddress> createState() => _SelectNewAddressState();
 }
 
 class _SelectNewAddressState extends State<SelectNewAddress> {
-  int selectedValue = 1;
-  int selectedValueAddress = -1;
+  RxInt selectedValue = 1.obs;
+  RxInt selectedValueAddress = 0.obs;
   final _formKeyReset = GlobalKey<FormState>();
   bool isCheckedAddress = false;
 
@@ -92,32 +95,34 @@ class _SelectNewAddressState extends State<SelectNewAddress> {
   }
 
   Widget customRadio(String text, int value) {
-    return GestureDetector(
-      onTap: () {
-        setState(() {
-          selectedValue = value;
-        });
+    return Obx(
+      () {
+        return GestureDetector(
+          onTap: () {
+            selectedValue.value = value;
+          },
+          child: Row(
+            children: [
+              Radio<int>(
+                value: value,
+                groupValue: selectedValue.value,
+                onChanged: (int? newValue) {
+                  selectedValue.value = newValue!;
+                },
+                activeColor: Colors.red,
+              ),
+              Text(
+                text,
+                style: TextStyle(
+                  color: selectedValue.value == value
+                      ? Colors.black
+                      : Colors.blueGrey,
+                ),
+              ),
+            ],
+          ),
+        );
       },
-      child: Row(
-        children: [
-          Radio<int>(
-            value: value,
-            groupValue: selectedValue,
-            onChanged: (int? newValue) {
-              setState(() {
-                selectedValue = newValue!;
-              });
-            },
-            activeColor: Colors.red,
-          ),
-          Text(
-            text,
-            style: TextStyle(
-              color: selectedValue == value ? Colors.black : Colors.blueGrey,
-            ),
-          ),
-        ],
-      ),
     );
   }
 
@@ -128,40 +133,154 @@ class _SelectNewAddressState extends State<SelectNewAddress> {
         builder: (controller) {
           controller.getAddRess();
           return Scaffold(
-            appBar: AppBar(
-              leading: InkWell(
-                onTap: () {
-                  Navigator.pop(context);
-                },
-                child: const Icon(
-                  Icons.arrow_back_ios_new_outlined,
-                  size: 20,
-                ),
-              ),
-              foregroundColor: Colors.white,
-              flexibleSpace: Container(
-                decoration: const BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.centerLeft,
-                    end: Alignment.centerRight,
-                    colors: [
-                      Color.fromRGBO(252, 130, 59, 1),
-                      Color.fromRGBO(252, 130, 59, 1),
-                      Color.fromRGBO(211, 83, 7, 1),
-                    ],
+            appBar: const MyAppbar(
+              title: 'Select Address',
+            ),
+            bottomNavigationBar: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: SizedBox(
+                height: 50,
+                child: Align(
+                  alignment: Alignment.centerRight,
+                  child: GestureDetector(
+                    child: const MyButton(text: 'Save Address & Next'),
+                    onTap: () {
+                      if (selectedValueAddress.value == -1) {
+                        Fluttertoast.showToast(msg: "Please select Address");
+                      }
+
+                      ///for OrderFuelFlow
+                      if (widget.isFromOrderFuel ?? false) {
+                        otherCategory.shippingAddressId = controller
+                            .addressAList[selectedValueAddress.value].id
+                            .toString();
+                        if (controller.isBillDeilivery.value == true) {
+                          otherCategory.billingSameAsShipping = "1";
+                          otherCategory.billingAddressId = controller
+                              .addressAList[selectedValueAddress.value].id
+                              .toString();
+                        } else {
+                          otherCategory.billingSameAsShipping = "0";
+                          if (_formKeyReset.currentState!.validate()) {
+                            controller
+                                .addAddress(
+                                    nameController.text,
+                                    mobileController.text,
+                                    "Home",
+                                    houseNoController.text.toString(),
+                                    roadNameController.text.toString(),
+                                    roadNameController.text.toString(),
+                                    countryController.text.toString(),
+                                    stateController.text.toString(),
+                                    cityController.text.toString(),
+                                    pincodeController.text.toString(),
+                                    "$_latitude",
+                                    "$_longitude",
+                                    "1")
+                                .then((value) {
+                              otherCategory.billingSameAsShipping = "0";
+                              otherCategory.billingAddressId =
+                                  "${value['id'].toString()}";
+                              Get.to(const MyAssets());
+                            });
+                          }
+                        }
+                      } else if (categoryId == "9" ||
+                          categoryId == "16" ||
+                          categoryId == "10" ||
+                          categoryId == "11" ||
+                          categoryId == "10" ||
+                          categoryId == "8") {
+                        otherCategory.billingAddressId = controller
+                            .addressAList[selectedValueAddress.value].id
+                            .toString();
+
+                        otherCategory.shippingAddressId = controller
+                            .addressAList[selectedValueAddress.value].id
+                            .toString();
+                        if (controller.isBillDeilivery.value == true) {
+                          otherCategory.billingSameAsShipping = "1";
+                          otherCategory.billingAddressId = controller
+                              .addressAList[selectedValueAddress.value].id
+                              .toString();
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      Checkout_Car_Service()));
+                        } else {
+                          otherCategory.billingSameAsShipping = "0";
+                          if (_formKeyReset.currentState!.validate()) {
+                            controller
+                                .addAddress(
+                                    nameController.text,
+                                    mobileController.text,
+                                    "Home",
+                                    houseNoController.text.toString(),
+                                    roadNameController.text.toString(),
+                                    roadNameController.text.toString(),
+                                    countryController.text.toString(),
+                                    stateController.text.toString(),
+                                    cityController.text.toString(),
+                                    pincodeController.text.toString(),
+                                    "$_latitude",
+                                    "$_longitude",
+                                    "1")
+                                .then((value) {
+                              otherCategory.billingSameAsShipping = "0";
+                              otherCategory.billingAddressId =
+                                  "${value['id'].toString()}";
+
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          Checkout_Car_Service()));
+                            });
+                          }
+                        }
+
+                        //if check Same
+                      } else if (widget.isFromFuelOnTab != null &&
+                          widget.isFromFuelOnTab!) {
+                        Get.toNamed(Routes.FUEL_CHECKOUT, arguments: {
+                          'address_id': controller
+                              .addressAList[selectedValueAddress.value].id,
+                          'category_id': '${categoryId}',
+                        });
+                        // Navigator.push(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //         builder: (context) =>
+                        //             FuelOnTabCheckoutScreen(
+                        //               isFromFuelOnTap:
+                        //                   widget.isFromFuelOnTab,
+                        //             )));
+                      } else if (widget.isFromForLooking ?? false) {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const MyAssets()));
+                      } else if (widget.isFromFGenSet ?? false) {
+                        Get.toNamed(Routes.GENSET_CHECKOUT, arguments: {
+                          'address_id': controller
+                              .addressAList[selectedValueAddress.value].id,
+                          'category_id': '${categoryId}',
+                        });
+                        // Navigator.push(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //         builder: (context) =>
+                        //             const GetSetCheckoutScreen()));
+                      } else {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    const PaymentScreenTree()));
+                      }
+                    },
                   ),
-                  borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(23),
-                    bottomRight: Radius.circular(23),
-                  ),
-                ),
-              ),
-              title: Text('Select Address'.tr),
-              centerTitle: true,
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(20),
-                  bottomRight: Radius.circular(20),
                 ),
               ),
             ),
@@ -172,10 +291,10 @@ class _SelectNewAddressState extends State<SelectNewAddress> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                      padding: EdgeInsets.only(left: 8),
+                      padding: const EdgeInsets.only(left: 8),
                       child: Text(
                         'Shipping Address'.tr,
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 20),
                       ),
                     ),
@@ -190,12 +309,7 @@ class _SelectNewAddressState extends State<SelectNewAddress> {
                                 height: 50,
                                 width: 155,
                                 decoration: BoxDecoration(
-                                  gradient: const LinearGradient(
-                                    colors: [
-                                      Color.fromRGBO(138, 180, 2, 1),
-                                      Color.fromRGBO(59, 120, 31, 1),
-                                    ],
-                                  ),
+                                  gradient: colors.buttonGradient,
                                   borderRadius: BorderRadius.circular(12),
                                 ),
                                 alignment: Alignment.center,
@@ -237,12 +351,7 @@ class _SelectNewAddressState extends State<SelectNewAddress> {
                                   height: 50,
                                   width: 155,
                                   decoration: BoxDecoration(
-                                    gradient: const LinearGradient(
-                                      colors: [
-                                        Color.fromRGBO(138, 180, 2, 1),
-                                        Color.fromRGBO(59, 120, 31, 1),
-                                      ],
-                                    ),
+                                    gradient: colors.buttonGradient,
                                     borderRadius: BorderRadius.circular(12),
                                   ),
                                   alignment: Alignment.center,
@@ -284,18 +393,18 @@ class _SelectNewAddressState extends State<SelectNewAddress> {
                       ),
                     ),
                     //SizedBox(height: 20),
-                    Padding(
+                    /*Padding(
                       padding: EdgeInsets.only(left: 10),
                       child: Text(
                         'Select Delivery type'.tr,
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 16),
                       ),
-                    ),
+                    ),*/
                     //SizedBox(height: 10),
 
                     Padding(
-                      padding: const EdgeInsets.only(left: 10),
+                      padding: const EdgeInsets.only(left: 10, right: 10),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -305,92 +414,127 @@ class _SelectNewAddressState extends State<SelectNewAddress> {
                         ],
                       ),
                     ),
-                    Obx(() => controller.addressAList.length > 0
-                        ? ListView.builder(
-                            shrinkWrap: true,
-                            physics: NeverScrollableScrollPhysics(),
-                            itemCount: controller.addressAList.length,
-                            // .value.products!.length,
-                            itemBuilder: (context, index) {
-                              return Column(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                        color: const Color.fromARGB(
-                                            255, 231, 229, 229),
-                                      ),
-                                      height: 87,
-                                      width: MediaQuery.sizeOf(context).width,
-                                      //     width: 500,
-                                      child: Padding(
-                                        padding: EdgeInsets.all(8.0),
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            // Row(
-                                            //   mainAxisAlignment: MainAxisAlignment.end,
-                                            //   children: [
-                                            //     Padding(
-                                            //       padding: const EdgeInsets.only(
-                                            //         right: 20,
-                                            //       ),
-                                            //     )
-                                            //   ],
-                                            // ),
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Text(
-                                                  '${controller.addressAList[index].contactPersonName},${controller.addressAList[index].zip}',
-                                                  style: TextStyle(
-                                                      fontSize: 16,
-                                                      fontWeight:
-                                                          FontWeight.bold),
+                    Obx(() => controller.addressAList.isNotEmpty
+                        ? Column(
+                            children: [
+                              ListView.builder(
+                                shrinkWrap: true,
+                                padding: EdgeInsets.zero,
+                                physics: const NeverScrollableScrollPhysics(),
+                                itemCount: controller.isTab.value
+                                    ? 1
+                                    : controller.addressAList.length,
+                                // .value.products!.length,
+                                itemBuilder: (context, index) {
+                                  return Obx(() {
+                                    return InkWell(
+                                      onTap: () {
+                                        selectedValueAddress.value = index;
+                                      },
+                                      child: Column(
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                  color: colors.myCardColor,
+                                                  border: Border.all(
+                                                      color: selectedValueAddress
+                                                                  .value ==
+                                                              index
+                                                          ? colors.darkYellow
+                                                          : colors
+                                                              .transparent)),
+                                              //height: 87,
+                                              width: MediaQuery.sizeOf(context)
+                                                  .width,
+                                              //     width: 500,
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 10.0,
+                                                        vertical: 15),
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    // Row(
+                                                    //   mainAxisAlignment: MainAxisAlignment.end,
+                                                    //   children: [
+                                                    //     Padding(
+                                                    //       padding: const EdgeInsets.only(
+                                                    //         right: 20,
+                                                    //       ),
+                                                    //     )
+                                                    //   ],
+                                                    // ),
+                                                    Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      children: [
+                                                        Text(
+                                                          '${controller.addressAList[index].contactPersonName},${controller.addressAList[index].zip}',
+                                                          style: const TextStyle(
+                                                              fontSize: 16,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                        ),
+                                                        /*Checkbox(
+                                                    activeColor:
+                                                        Colors.deepOrange,
+                                                    checkColor: Colors.white,
+                                                    value: selectedValueAddress ==
+                                                            index
+                                                        ? true
+                                                        : false,
+                                                    onChanged: (bool? newValue) {
+                                                      setState(() {
+                                                        selectedValueAddress = index;
+                                                        isCheckedAddress = newValue!;
+                                                      });
+                                                    },
+                                                  ),*/
+                                                      ],
+                                                    ),
+                                                    Text(
+                                                      '${controller.addressAList[index].building},${controller.addressAList[index].landmark} ${controller.addressAList[index].city} ',
+                                                      // 'sobari nagar,sukhliya..',
+                                                      style: const TextStyle(
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                          color: Colors.black,
+                                                          fontSize: 14,
+                                                          fontWeight:
+                                                              FontWeight.w300),
+                                                    ),
+                                                  ],
                                                 ),
-                                                Checkbox(
-                                                  activeColor:
-                                                      Colors.deepOrange,
-                                                  checkColor: Colors.white,
-                                                  value: selectedValueAddress ==
-                                                          index
-                                                      ? true
-                                                      : false,
-                                                  onChanged: (bool? newValue) {
-                                                    setState(() {
-                                                      selectedValueAddress =
-                                                          index;
-                                                      isCheckedAddress =
-                                                          newValue!;
-                                                    });
-                                                  },
-                                                ),
-                                              ],
+                                              ),
                                             ),
-                                            Text(
-                                              '${controller.addressAList[index].building},${controller.addressAList[index].landmark} ${controller.addressAList[index].city} ',
-                                              // 'sobari nagar,sukhliya..',
-                                              style: TextStyle(
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  color: Colors.black,
-                                                  fontSize: 16,
-                                                  fontWeight: FontWeight.w300),
-                                            ),
-                                          ],
-                                        ),
+                                          ),
+                                          // const SizedBox(height: 10.0),
+                                        ],
                                       ),
-                                    ),
-                                  ),
-                                  const SizedBox(height: 10.0),
-                                ],
-                              );
-                            },
+                                    );
+                                  });
+                                },
+                              ),
+                              InkWell(
+                                  onTap: () {
+                                    controller.isTab.value =
+                                        !controller.isTab.value;
+                                  },
+                                  child: Align(
+                                    alignment: Alignment.topRight,
+                                    child: Text(controller.isTab.value
+                                        ? 'See more...'
+                                        : 'See less...'),
+                                  ))
+                            ],
                           )
                         : Center(
                             child: Text("No Address Found".tr),
@@ -404,450 +548,309 @@ class _SelectNewAddressState extends State<SelectNewAddress> {
                       ),
                     ),
 
-                    Row(
-                      children: [
-                        Checkbox(
-                          activeColor: Colors.deepOrange,
-                          value: controller.isBillDeilivery,
-                          onChanged: (value) {
-                            controller.isBillDeilivery = value!;
-                            setState(() {});
-                          },
-                        ),
-                        Text(
-                          'Same as Shipping address'.tr,
-                          style: TextStyle(color: colors.greyTemp),
-                        )
-                      ],
-                    ),
-
-                    Visibility(
-                      visible: !controller.isBillDeilivery,
-                      child: Column(
+                    Obx(() {
+                      return Row(
                         children: [
-                          Padding(
-                            padding: const EdgeInsets.all(20.0),
-                            child: Form(
-                              key: _formKeyReset,
-                              child: Column(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 8.0),
-                                    child: MyTextField(
-                                      validator: (value) =>
-                                          Validator.validateName(value),
-                                      controller: nameController,
-                                      labelText: Text("Name".tr),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 8.0),
-                                    child: MyTextField(
-                                      isAmount: true,
-                                      validator: (value) =>
-                                          Validator.validatePhone(value),
-                                      controller: mobileController,
-                                      labelText: Text("Mobile Number".tr),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 8.0),
-                                    child: MyTextField(
-                                      isAmount: true,
-                                      validator: (value) =>
-                                          Validator.validatePhone(value),
-                                      controller: alternatemobileController,
-                                      labelText:
-                                          Text("Alternate Mobile Number".tr),
-                                    ),
-                                  ),
-
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 8.0),
-                                    child: MyTextField(
-                                      validator: (value) =>
-                                          Validator.validateWithhint(value,
-                                              "House no., Building Name".tr),
-                                      controller: houseNoController,
-                                      labelText:
-                                          Text("House no., Building Name".tr),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 8.0),
-                                    child: MyTextField(
-                                      validator: (value) =>
-                                          Validator.validateWithhint(value,
-                                              "Road name, Area Colony".tr),
-                                      controller: roadNameController,
-                                      labelText:
-                                          Text("Road name, Area Colony".tr),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 8.0),
-                                    child: MyTextField(
-                                      validator: (value) =>
-                                          Validator.validateWithhint(
-                                              value, "Country".tr),
-                                      controller: countryController,
-                                      labelText: Text("Country".tr),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 8.0),
-                                    child: MyTextField(
-                                      validator: (value) =>
-                                          Validator.validateWithhint(
-                                              value, "State".tr),
-                                      controller: stateController,
-                                      labelText: Text("State".tr),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 8.0),
-                                    child: MyTextField(
-                                      validator: (value) =>
-                                          Validator.validateWithhint(
-                                              value, "City".tr),
-                                      controller: cityController,
-                                      labelText: Text("City".tr),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 8.0),
-                                    child: MyTextField(
-                                      isAmount: true,
-                                      validator: (value) =>
-                                          Validator.validateWithhint(
-                                              value, "PinCode".tr),
-                                      controller: pincodeController,
-                                      labelText: Text("PinCode".tr),
-                                    ),
-                                  ),
-                                  // _buildTextField(label: 'Name', hintText: 'Navin Pawa'),
-                                  // _buildTextField(label: 'Mobile Number'),
-                                  // _buildTextField(label: 'Alternate Mobile Number'),
-                                  // _buildTextField(label: 'House no., Building Name'),
-                                  // _buildTextField(label: 'Road name, Area Colony'),
-                                  // _buildTextField(label: 'Country'),
-                                  // _buildTextField(label: 'State'),
-                                  // _buildTextField(label: 'City'),
-                                  // _buildTextField(label: 'PinCode'),
-                                  SizedBox(
-                                    height: 20,
-                                  ),
-                                  // GetBuilder<AddressController>(
-                                  //     init: AddressController(),
-                                  //     builder: (controller) {
-                                  //       return InkWell(
-                                  //           onTap: () {
-                                  //             if (_formKeyReset.currentState!.validate()) {
-                                  //               controller
-                                  //                   .addAddress(
-                                  //                   nameController.text,
-                                  //                   mobileController.text,
-                                  //                   "Home",
-                                  //                   houseNoController.text.toString(),
-                                  //                   roadNameController.text.toString(),
-                                  //                   roadNameController.text.toString(),
-                                  //                   countryController.text.toString(),
-                                  //                   stateController.text.toString(),
-                                  //                   cityController.text.toString(),
-                                  //                   pincodeController.text.toString(),
-                                  //                   "22.75",
-                                  //                   "35.85",
-                                  //                   "1")
-                                  //                   .then((value) {
-                                  //                 Fluttertoast.showToast(
-                                  //                     msg: "${value['message']}");
-                                  //                 controller.getAddRess();
-                                  //               });
-                                  //
-                                  //               Navigator.pop(context);
-                                  //             }
-                                  //           },
-                                  //           child: MyButton(text: 'Save Address'.tr));
-                                  //     })
-                                ],
-                              ),
-                            ),
+                          Checkbox(
+                            activeColor: Colors.deepOrange,
+                            value: controller.isBillDeilivery.value,
+                            onChanged: (value) {
+                              controller.isBillDeilivery.value = value!;
+                            },
+                          ),
+                          Text(
+                            'Same as Shipping address'.tr,
+                            style: const TextStyle(color: colors.greyTemp),
                           )
-                          // SizedBox(
-                          //   height: 70,
-                          //   child: Padding(
-                          //     padding: const EdgeInsets.all(10.0),
-                          //     child: TextFormField(
-                          //       decoration: InputDecoration(
-                          //         label: const Text('Name'),
-                          //         border: OutlineInputBorder(
-                          //           borderRadius: BorderRadius.circular(12),
-                          //         ),
-                          //         hintText: 'Enter your name',
-                          //         hintStyle: const TextStyle(color: Colors.grey),
-                          //       ),
-                          //     ),
-                          //   ),
-                          // ),
-                          // SizedBox(
-                          //   height: 70,
-                          //   child: Padding(
-                          //     padding: const EdgeInsets.all(10.0),
-                          //     child: TextFormField(
-                          //       keyboardType: TextInputType.number,
-                          //       decoration: InputDecoration(
-                          //         label: const Text('Mobile Number'),
-                          //         border: OutlineInputBorder(
-                          //           borderRadius: BorderRadius.circular(12),
-                          //         ),
-                          //         hintText: 'Enter your Mobile number',
-                          //         hintStyle: const TextStyle(color: Colors.grey),
-                          //       ),
-                          //     ),
-                          //   ),
-                          // ),
-                          // SizedBox(
-                          //   height: 70,
-                          //   child: Padding(
-                          //     padding: const EdgeInsets.all(10.0),
-                          //     child: TextFormField(
-                          //       decoration: InputDecoration(
-                          //         label: const Text('Alternate Mobile number'),
-                          //         border: OutlineInputBorder(
-                          //           borderRadius: BorderRadius.circular(12),
-                          //         ),
-                          //         hintText: 'Enter your Alternate Mobile number',
-                          //         hintStyle: const TextStyle(color: Colors.grey),
-                          //       ),
-                          //     ),
-                          //   ),
-                          // ),
-                          // SizedBox(
-                          //   height: 70,
-                          //   child: Padding(
-                          //     padding: const EdgeInsets.all(10.0),
-                          //     child: TextFormField(
-                          //       decoration: InputDecoration(
-                          //         label: const Text('House no., Building Name'),
-                          //         border: OutlineInputBorder(
-                          //           borderRadius: BorderRadius.circular(12),
-                          //         ),
-                          //         hintText: 'Enter your Home no.. Building Name',
-                          //         hintStyle: const TextStyle(color: Colors.grey),
-                          //       ),
-                          //     ),
-                          //   ),
-                          // ),
-                          // SizedBox(
-                          //   height: 70,
-                          //   child: Padding(
-                          //     padding: const EdgeInsets.all(10.0),
-                          //     child: TextFormField(
-                          //       decoration: InputDecoration(
-                          //         label: const Text('Road name ,Area Colony'),
-                          //         border: OutlineInputBorder(
-                          //           borderRadius: BorderRadius.circular(12),
-                          //         ),
-                          //         hintText: 'Enter your Road name ,area colony',
-                          //         hintStyle: const TextStyle(color: Colors.grey),
-                          //       ),
-                          //     ),
-                          //   ),
-                          // ),
-                          //
-                          // SizedBox(
-                          //   height: 70,
-                          //   child: Padding(
-                          //     padding: const EdgeInsets.all(10.0),
-                          //     child: TextFormField(
-                          //       decoration: InputDecoration(
-                          //         label: const Text('Country'),
-                          //         border: OutlineInputBorder(
-                          //           borderRadius: BorderRadius.circular(12),
-                          //           borderSide:
-                          //           const BorderSide(color: Colors.red), //
-                          //         ),
-                          //         hintText: 'Enter your country name',
-                          //         hintStyle: const TextStyle(color: Colors.grey),
-                          //       ),
-                          //     ),
-                          //   ),
-                          // ),
-                          // SizedBox(
-                          //   height: 70,
-                          //   child: Padding(
-                          //     padding: const EdgeInsets.all(10.0),
-                          //     child: TextFormField(
-                          //       keyboardType: TextInputType.number,
-                          //       decoration: InputDecoration(
-                          //         label: const Text('State'),
-                          //         border: OutlineInputBorder(
-                          //           borderRadius: BorderRadius.circular(12),
-                          //         ),
-                          //         hintText: 'Enter your State name',
-                          //         hintStyle: const TextStyle(color: Colors.grey),
-                          //       ),
-                          //     ),
-                          //   ),
-                          // ),
-                          // SizedBox(
-                          //   height: 70,
-                          //   child: Padding(
-                          //     padding: const EdgeInsets.all(10.0),
-                          //     child: TextFormField(
-                          //       decoration: InputDecoration(
-                          //         label: const Text('City '),
-                          //         border: OutlineInputBorder(
-                          //           borderRadius: BorderRadius.circular(12),
-                          //         ),
-                          //         hintText: 'Enter your city name',
-                          //         hintStyle: const TextStyle(color: Colors.grey),
-                          //       ),
-                          //     ),
-                          //   ),
-                          // ),
-                          // SizedBox(
-                          //   height: 70,
-                          //   child: Padding(
-                          //     padding: const EdgeInsets.all(10.0),
-                          //     child: TextFormField(
-                          //       decoration: InputDecoration(
-                          //         label: const Text('Pincode'),
-                          //         border: OutlineInputBorder(
-                          //           borderRadius: BorderRadius.circular(12),
-                          //         ),
-                          //         hintText: 'Enter your Pincode ',
-                          //         hintStyle: const TextStyle(color: Colors.grey),
-                          //       ),
-                          //     ),
-                          //   ),
-                          // ),
                         ],
-                      ),
-                    ),
+                      );
+                    }),
 
-                    Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Align(
-                        alignment: Alignment.centerRight,
-                        child: GestureDetector(
-                          child: const MyButton(text: 'Save Address & Next'),
-                          onTap: () {
-                            if (selectedValueAddress == -1) {
-                              Fluttertoast.showToast(
-                                  msg: "Please select Address");
-                            }
-                            print("categoryId ${otherCategory.categoryId}");
-                            if (categoryId == "9" ||
-                                categoryId == "16" ||
-                                categoryId == "10" ||
-                                categoryId == "11" ||
-                                categoryId == "10" ||
-                                categoryId == "8") {
-                              otherCategory.billingAddressId = controller
-                                  .addressAList[selectedValueAddress].id
-                                  .toString();
-
-                              otherCategory.shippingAddressId = controller
-                                  .addressAList[selectedValueAddress].id
-                                  .toString();
-                              if (controller.isBillDeilivery == true) {
-                                otherCategory.billingSameAsShipping = "1";
-                                otherCategory.billingAddressId = controller
-                                    .addressAList[selectedValueAddress].id
-                                    .toString();
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            Checkout_Car_Service()));
-                              } else {
-                                otherCategory.billingSameAsShipping = "0";
-                                if (_formKeyReset.currentState!.validate()) {
-                                  controller
-                                      .addAddress(
-                                          nameController.text,
-                                          mobileController.text,
-                                          "Home",
-                                          houseNoController.text.toString(),
-                                          roadNameController.text.toString(),
-                                          roadNameController.text.toString(),
-                                          countryController.text.toString(),
-                                          stateController.text.toString(),
-                                          cityController.text.toString(),
-                                          pincodeController.text.toString(),
-                                          "$_latitude",
-                                          "$_longitude",
-                                          "1")
-                                      .then((value) {
-                                    otherCategory.billingSameAsShipping = "0";
-                                    otherCategory.billingAddressId =
-                                        "${value['id'].toString()}";
-
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                Checkout_Car_Service()));
-                                  });
-                                }
-                              }
-
-                              //if check Same
-                            } else if (widget.isFromFuelOnTab != null &&
-                                widget.isFromFuelOnTab!) {
-                              Get.toNamed(Routes.FUEL_CHECKOUT, arguments: {
-                                'address_id': controller
-                                    .addressAList[selectedValueAddress].id,
-                                'category_id': '${categoryId}',
-                              });
-                              // Navigator.push(
-                              //     context,
-                              //     MaterialPageRoute(
-                              //         builder: (context) =>
-                              //             FuelOnTabCheckoutScreen(
-                              //               isFromFuelOnTap:
-                              //                   widget.isFromFuelOnTab,
-                              //             )));
-                            } else if (widget.isFromForLooking ?? false) {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => const MyAssets()));
-                            } else if (widget.isFromFGenSet ?? false) {
-                              Get.toNamed(Routes.GENSET_CHECKOUT, arguments: {
-                                'address_id': controller
-                                    .addressAList[selectedValueAddress].id,
-                                'category_id': '${categoryId}',
-                              });
-                              // Navigator.push(
-                              //     context,
-                              //     MaterialPageRoute(
-                              //         builder: (context) =>
-                              //             const GetSetCheckoutScreen()));
-                            } else {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          const PaymentScreenTree()));
-                            }
-                          },
+                    Obx(() {
+                      return Visibility(
+                        visible: !controller.isBillDeilivery.value,
+                        child: SizedBox(
+                          height: Get.height / 2.7,
+                          child: SingleChildScrollView(
+                            padding: EdgeInsets.zero,
+                            child: Column(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 20.0),
+                                  child: Form(
+                                    key: _formKeyReset,
+                                    child: Column(
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 8.0),
+                                          child: MyTextField(
+                                            validator: (value) =>
+                                                Validator.validateName(value),
+                                            controller: nameController,
+                                            labelText: Text("Name".tr),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 8.0),
+                                          child: MyTextField(
+                                            isAmount: true,
+                                            validator: (value) =>
+                                                Validator.validatePhone(value),
+                                            controller: mobileController,
+                                            labelText: Text("Mobile Number".tr),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 8.0),
+                                          child: MyTextField(
+                                            isAmount: true,
+                                            validator: (value) =>
+                                                Validator.validatePhone(value),
+                                            controller:
+                                                alternatemobileController,
+                                            labelText: Text(
+                                                "Alternate Mobile Number".tr),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 8.0),
+                                          child: MyTextField(
+                                            validator: (value) =>
+                                                Validator.validateWithhint(
+                                                    value,
+                                                    "House no., Building Name"
+                                                        .tr),
+                                            controller: houseNoController,
+                                            labelText: Text(
+                                                "House no., Building Name".tr),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 8.0),
+                                          child: MyTextField(
+                                            validator: (value) =>
+                                                Validator.validateWithhint(
+                                                    value,
+                                                    "Road name, Area Colony"
+                                                        .tr),
+                                            controller: roadNameController,
+                                            labelText: Text(
+                                                "Road name, Area Colony".tr),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 8.0),
+                                          child: MyTextField(
+                                            validator: (value) =>
+                                                Validator.validateWithhint(
+                                                    value, "Country".tr),
+                                            controller: countryController,
+                                            labelText: Text("Country".tr),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 8.0),
+                                          child: MyTextField(
+                                            validator: (value) =>
+                                                Validator.validateWithhint(
+                                                    value, "State".tr),
+                                            controller: stateController,
+                                            labelText: Text("State".tr),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 8.0),
+                                          child: MyTextField(
+                                            validator: (value) =>
+                                                Validator.validateWithhint(
+                                                    value, "City".tr),
+                                            controller: cityController,
+                                            labelText: Text("City".tr),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 8.0),
+                                          child: MyTextField(
+                                            isAmount: true,
+                                            validator: (value) =>
+                                                Validator.validateWithhint(
+                                                    value, "PinCode".tr),
+                                            controller: pincodeController,
+                                            labelText: Text("PinCode".tr),
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          height: 20,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                )
+                                // SizedBox(
+                                //   height: 70,
+                                //   child: Padding(
+                                //     padding: const EdgeInsets.all(10.0),
+                                //     child: TextFormField(
+                                //       decoration: InputDecoration(
+                                //         label: const Text('Name'),
+                                //         border: OutlineInputBorder(
+                                //           borderRadius: BorderRadius.circular(12),
+                                //         ),
+                                //         hintText: 'Enter your name',
+                                //         hintStyle: const TextStyle(color: Colors.grey),
+                                //       ),
+                                //     ),
+                                //   ),
+                                // ),
+                                // SizedBox(
+                                //   height: 70,
+                                //   child: Padding(
+                                //     padding: const EdgeInsets.all(10.0),
+                                //     child: TextFormField(
+                                //       keyboardType: TextInputType.number,
+                                //       decoration: InputDecoration(
+                                //         label: const Text('Mobile Number'),
+                                //         border: OutlineInputBorder(
+                                //           borderRadius: BorderRadius.circular(12),
+                                //         ),
+                                //         hintText: 'Enter your Mobile number',
+                                //         hintStyle: const TextStyle(color: Colors.grey),
+                                //       ),
+                                //     ),
+                                //   ),
+                                // ),
+                                // SizedBox(
+                                //   height: 70,
+                                //   child: Padding(
+                                //     padding: const EdgeInsets.all(10.0),
+                                //     child: TextFormField(
+                                //       decoration: InputDecoration(
+                                //         label: const Text('Alternate Mobile number'),
+                                //         border: OutlineInputBorder(
+                                //           borderRadius: BorderRadius.circular(12),
+                                //         ),
+                                //         hintText: 'Enter your Alternate Mobile number',
+                                //         hintStyle: const TextStyle(color: Colors.grey),
+                                //       ),
+                                //     ),
+                                //   ),
+                                // ),
+                                // SizedBox(
+                                //   height: 70,
+                                //   child: Padding(
+                                //     padding: const EdgeInsets.all(10.0),
+                                //     child: TextFormField(
+                                //       decoration: InputDecoration(
+                                //         label: const Text('House no., Building Name'),
+                                //         border: OutlineInputBorder(
+                                //           borderRadius: BorderRadius.circular(12),
+                                //         ),
+                                //         hintText: 'Enter your Home no.. Building Name',
+                                //         hintStyle: const TextStyle(color: Colors.grey),
+                                //       ),
+                                //     ),
+                                //   ),
+                                // ),
+                                // SizedBox(
+                                //   height: 70,
+                                //   child: Padding(
+                                //     padding: const EdgeInsets.all(10.0),
+                                //     child: TextFormField(
+                                //       decoration: InputDecoration(
+                                //         label: const Text('Road name ,Area Colony'),
+                                //         border: OutlineInputBorder(
+                                //           borderRadius: BorderRadius.circular(12),
+                                //         ),
+                                //         hintText: 'Enter your Road name ,area colony',
+                                //         hintStyle: const TextStyle(color: Colors.grey),
+                                //       ),
+                                //     ),
+                                //   ),
+                                // ),
+                                //
+                                // SizedBox(
+                                //   height: 70,
+                                //   child: Padding(
+                                //     padding: const EdgeInsets.all(10.0),
+                                //     child: TextFormField(
+                                //       decoration: InputDecoration(
+                                //         label: const Text('Country'),
+                                //         border: OutlineInputBorder(
+                                //           borderRadius: BorderRadius.circular(12),
+                                //           borderSide:
+                                //           const BorderSide(color: Colors.red), //
+                                //         ),
+                                //         hintText: 'Enter your country name',
+                                //         hintStyle: const TextStyle(color: Colors.grey),
+                                //       ),
+                                //     ),
+                                //   ),
+                                // ),
+                                // SizedBox(
+                                //   height: 70,
+                                //   child: Padding(
+                                //     padding: const EdgeInsets.all(10.0),
+                                //     child: TextFormField(
+                                //       keyboardType: TextInputType.number,
+                                //       decoration: InputDecoration(
+                                //         label: const Text('State'),
+                                //         border: OutlineInputBorder(
+                                //           borderRadius: BorderRadius.circular(12),
+                                //         ),
+                                //         hintText: 'Enter your State name',
+                                //         hintStyle: const TextStyle(color: Colors.grey),
+                                //       ),
+                                //     ),
+                                //   ),
+                                // ),
+                                // SizedBox(
+                                //   height: 70,
+                                //   child: Padding(
+                                //     padding: const EdgeInsets.all(10.0),
+                                //     child: TextFormField(
+                                //       decoration: InputDecoration(
+                                //         label: const Text('City '),
+                                //         border: OutlineInputBorder(
+                                //           borderRadius: BorderRadius.circular(12),
+                                //         ),
+                                //         hintText: 'Enter your city name',
+                                //         hintStyle: const TextStyle(color: Colors.grey),
+                                //       ),
+                                //     ),
+                                //   ),
+                                // ),
+                                // SizedBox(
+                                //   height: 70,
+                                //   child: Padding(
+                                //     padding: const EdgeInsets.all(10.0),
+                                //     child: TextFormField(
+                                //       decoration: InputDecoration(
+                                //         label: const Text('Pincode'),
+                                //         border: OutlineInputBorder(
+                                //           borderRadius: BorderRadius.circular(12),
+                                //         ),
+                                //         hintText: 'Enter your Pincode ',
+                                //         hintStyle: const TextStyle(color: Colors.grey),
+                                //       ),
+                                //     ),
+                                //   ),
+                                // ),
+                              ],
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 30,
-                    ),
+                      );
+                    })
                   ],
                 ),
               ),

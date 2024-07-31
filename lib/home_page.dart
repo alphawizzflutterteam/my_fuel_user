@@ -588,9 +588,7 @@ class _HomePageState extends State<HomePage> {
                                             ),
                                           ),
 
-                                          Obx(() => controller
-                                                      .otherList.length ==
-                                                  0
+                                          Obx(() => controller.otherList.isEmpty
                                               ? Container()
                                               : GridView.builder(
                                                   physics:

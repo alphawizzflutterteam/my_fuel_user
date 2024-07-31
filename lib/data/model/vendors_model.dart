@@ -77,7 +77,8 @@ class VendorData {
   int? emergencyCost;
   int? commission;
   int? paymentDay;
-  Null? unit;
+  String? unit;
+  String? productId;
   int? qty;
   String? type;
   int? status;
@@ -103,6 +104,7 @@ class VendorData {
       this.createdAt,
       this.updatedAt,
       this.category,
+      this.productId,
       this.seller});
 
   VendorData.fromJson(Map<String, dynamic> json) {
@@ -120,6 +122,7 @@ class VendorData {
     isFuel = json['is_fuel'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
+    productId = json['product_id'];
     category =
         json['category'] != null ? Category.fromJson(json['category']) : null;
     seller = json['seller'] != null ? Seller.fromJson(json['seller']) : null;

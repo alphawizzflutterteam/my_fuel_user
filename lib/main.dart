@@ -4,6 +4,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:test_prj/language/language_transtation.dart';
 import 'package:test_prj/orderfuel/repository/order_fuel_repository.dart';
 import 'package:test_prj/routes/app_pages.dart';
+import 'package:test_prj/routes/bindings/inial_binding.dart';
 import 'package:test_prj/service/provider/lavavel_provider.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
@@ -29,6 +30,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       key: navigatorKey,
       title: "My Fuels User",
+      initialBinding: InitialBinding(),
       translations: Languages(),
       locale: const Locale('en', 'US'),
       initialRoute: AppPages.INITIAL,

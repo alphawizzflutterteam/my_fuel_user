@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:test_prj/Home/checkout_car_service.dart';
 import 'package:test_prj/components/my_appbar.dart';
-import 'package:test_prj/orderfuel/doorStepDelivery/checkout_page1.dart';
+import 'package:test_prj/orderfuel/doorStepDelivery/order_fuel_checkout.dart';
 import 'package:test_prj/orderfuel/fuelToGo/checkout_page2.dart';
 
 import '../../Home/Genset_checkOut.dart';
@@ -37,12 +37,14 @@ class EvVender extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       InkWell(
-
                         onTap: () {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const GetSetCheckoutScreen(isfrom: true,)),
+                                builder: (context) =>
+                                    const GetSetCheckoutScreen(
+                                      isfrom: true,
+                                    )),
                           );
                         },
                         child: const Column(
@@ -81,7 +83,7 @@ class EvVender extends StatelessWidget {
                   onTap: () => Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const CheckOutTo(),
+                        builder: (context) => const OrderFuelCheckOut(),
                       )),
                   child: Container(
                     height: 102,
@@ -97,7 +99,7 @@ class EvVender extends StatelessWidget {
                           Image.asset("assets/indianoil.png", height: 94),
                           Padding(
                             padding:
-                            const EdgeInsets.symmetric(horizontal: 12.0),
+                                const EdgeInsets.symmetric(horizontal: 12.0),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:test_prj/components/my_appbar.dart';
 import 'package:test_prj/components/my_button.dart';
 import 'package:test_prj/payment/payment_form.dart';
 import 'package:test_prj/payment/payment_page.dart';
@@ -31,43 +32,12 @@ class _PaymentScreenTreeState extends State<PaymentScreenTree> {
   Widget build(BuildContext context) {
     //Size size = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: AppBar(
-        leading: InkWell(
-            onTap: () {
-              Navigator.pop(context);
-            },
-            child: const Icon(Icons.arrow_back_ios_new_outlined)),
-        foregroundColor: Colors.white,
-        flexibleSpace: Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.centerLeft,
-              end: Alignment.centerRight,
-              colors: [
-                Color.fromRGBO(252, 130, 59, 1),
-                Color.fromRGBO(252, 130, 59, 1),
-                Color.fromRGBO(211, 83, 7, 1),
-              ],
-            ),
-            borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(23),
-              bottomRight: Radius.circular(23),
-            ),
-          ),
-        ),
-        title:  Text('Payment Type'.tr),
-        centerTitle: true,
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-            bottomLeft: Radius.circular(20),
-            bottomRight: Radius.circular(20),
-          ),
-        ),
-      ),
+      appBar: const MyAppbar(title: 'Payment type'),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Container(
               //   height: 100,
@@ -109,124 +79,128 @@ class _PaymentScreenTreeState extends State<PaymentScreenTree> {
               //     ],
               //   ),
               // ),
-               Padding(
-                padding: EdgeInsets.only(top: 20, bottom: 20),
+              Padding(
+                padding: const EdgeInsets.only(top: 5, bottom: 20),
                 child: Text(
                   'Select payment method'.tr,
-                  style: TextStyle(
+                  style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
                       color: Colors.black),
                 ),
               ),
-              // Padding(
-              //   padding: const EdgeInsets.only(top: 10),
-              //   child: GestureDetector(
-              //     onTap: () => _handleRadio(2),
-              //     child: Container(
-              //         width: 325,
-              //         height: 85,
-              //         decoration: BoxDecoration(
-              //             borderRadius: BorderRadius.circular(5),
-              //             border: _type == 1
-              //                 ? Border.all(width: 1, color: Colors.grey)
-              //                 : Border.all(width: 0.3, color: Colors.grey)),
-              //         child: Center(
-              //             child: Row(
-              //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //           children: [
-              //             const Row(children: [
-              //               Padding(
-              //                 padding: EdgeInsets.only(left: 5),
-              //                 child: Padding(
-              //                   padding: EdgeInsets.all(8.0),
-              //                   child: Column(
-              //                     crossAxisAlignment: CrossAxisAlignment.start,
-              //                     children: [
-              //                       Text(
-              //                         'Pay by My fuels card',
-              //                         style: TextStyle(
-              //                             fontSize: 16,
-              //                             fontWeight: FontWeight.w500),
-              //                       ),
-              //                       Text(
-              //                         'Available balance',
-              //                         style: TextStyle(
-              //                             fontSize: 12,
-              //                             fontWeight: FontWeight.w500,
-              //                             color: Colors.grey),
-              //                       ),
-              //                       Row(
-              //                         children: [
-              //                           Text(
-              //                             'Rs.1000',
-              //                             style: TextStyle(
-              //                                 fontSize: 16,
-              //                                 fontWeight: FontWeight.w500),
-              //                           ),
-              //                         ],
-              //                       ),
-              //                     ],
-              //                   ),
-              //                 ),
-              //               ),
-              //             ]),
-              //             Padding(
-              //               padding: const EdgeInsets.only(left: 20),
-              //               child: Text("",
-              //                   style: _type == 1
-              //                       ? const TextStyle(
-              //                           fontSize: 17,
-              //                           fontWeight: FontWeight.w500,
-              //                           color: Colors.black)
-              //                       : const TextStyle(
-              //                           fontSize: 15,
-              //                           fontWeight: FontWeight.w500,
-              //                           color: Colors.grey,
-              //                         )),
-              //             ),
-              //             Column(
-              //               children: [
-              //                 Padding(
-              //                   padding: const EdgeInsets.only(left: 60),
-              //                   child: Radio(
-              //                     value: 1,
-              //                     groupValue: _type,
-              //                     onChanged: _handleRadio,
-              //                     activeColor: Colors.orange,
-              //                   ),
-              //                 ),
-              //                 InkWell(
-              //                   onTap: () {
-              //                     _type == 1
-              //                         ? Navigator.push(
-              //                             context,
-              //                             MaterialPageRoute(
-              //                                 builder: (context) =>
-              //                                     PaymentScreen(
-              //                                         isAddoMoney: true)),
-              //                           )
-              //                         : Navigator.push(
-              //                             context,
-              //                             MaterialPageRoute(
-              //                                 builder: (context) =>
-              //                                     PaymentScreen()),
-              //                           );
-              //                   },
-              //                   child: const Text(
-              //                     'Add Money',
-              //                     style: TextStyle(
-              //                         fontSize: 16,
-              //                         fontWeight: FontWeight.w500,
-              //                         color: Colors.green),
-              //                   ),
-              //                 ),
-              //               ],
-              //             ),
-              //           ],
-              //         ))),
-              //   ),
-              // ),
+              Padding(
+                padding: const EdgeInsets.only(top: 10),
+                child: GestureDetector(
+                  onTap: () => _handleRadio(2),
+                  child: Container(
+                      width: 325,
+                      padding: const EdgeInsets.only(top: 10, bottom: 10),
+                      //height: 85,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                          border: _type == 1
+                              ? Border.all(width: 1, color: Colors.grey)
+                              : Border.all(width: 0.3, color: Colors.grey)),
+                      child: Center(
+                          child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Row(children: [
+                            Padding(
+                              padding: EdgeInsets.only(left: 5),
+                              child: Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Pay by My fuels card',
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w500),
+                                    ),
+                                    Text(
+                                      'Available balance',
+                                      style: TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w500,
+                                          color: Colors.grey),
+                                    ),
+                                    SizedBox(
+                                      height: 5,
+                                    ),
+                                    Row(
+                                      children: [
+                                        Text(
+                                          'Rs.1000',
+                                          style: TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ]),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 20),
+                            child: Text("",
+                                style: _type == 1
+                                    ? const TextStyle(
+                                        fontSize: 17,
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.black)
+                                    : const TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.grey,
+                                      )),
+                          ),
+                          Column(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(left: 60),
+                                child: Radio(
+                                  value: 1,
+                                  groupValue: _type,
+                                  onChanged: _handleRadio,
+                                  activeColor: Colors.orange,
+                                ),
+                              ),
+                              InkWell(
+                                onTap: () {
+                                  _type == 1
+                                      ? Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  PaymentScreen(
+                                                      isAddoMoney: true)),
+                                        )
+                                      : Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  PaymentScreen()),
+                                        );
+                                },
+                                child: const Text(
+                                  'Add Money',
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors.green),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ))),
+                ),
+              ),
               Padding(
                 padding: const EdgeInsets.only(top: 9),
                 child: Container(
@@ -250,7 +224,7 @@ class _PaymentScreenTreeState extends State<PaymentScreenTree> {
                           ),
                           SizedBox(
                             width: 100,
-                            child: Text("Cod",
+                            child: Text("Pay at Station/Pay at Home",
                                 textAlign: TextAlign.start,
                                 style: _type == 2
                                     ? const TextStyle(
@@ -526,6 +500,8 @@ class _PaymentScreenTreeState extends State<PaymentScreenTree> {
                     Get.back(result: "cod");
                   } else if (_type == 3) {
                     Get.back(result: "payment");
+                  } else {
+                    Get.back(result: "wallet");
                   }
 
                   // Navigator.push(
@@ -540,7 +516,7 @@ class _PaymentScreenTreeState extends State<PaymentScreenTree> {
                 child: Container(
                   alignment: Alignment.bottomCenter,
                   width: 330,
-                  child:  MyButton(
+                  child: MyButton(
                     text: 'Continue'.tr,
                   ),
                 ),

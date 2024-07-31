@@ -68,6 +68,7 @@ extension colors on ColorScheme {
 
   static const Color green1 = Color.fromRGBO(138, 180, 2, 1);
   static const Color green2 = Color.fromRGBO(59, 120, 31, 1);
+  static const Color myCardColor = Color(0xffF5F5F5);
 
   static const LinearGradient buttonGradient = LinearGradient(
     colors: [green1, green1],
