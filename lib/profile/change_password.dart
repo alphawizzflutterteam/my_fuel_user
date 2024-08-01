@@ -6,6 +6,7 @@ import 'package:test_prj/components/my_button.dart';
 import 'package:test_prj/components/my_textfield.dart';
 
 import '../controller/forget_controller.dart';
+import '../controller/singup_controller.dart';
 import '../helper/utils/validator_all.dart';
 
 class ChangePassword extends StatefulWidget {
@@ -19,58 +20,73 @@ class _ChangePasswordState extends State<ChangePassword> {
   TextEditingController currentPassword = TextEditingController();
   TextEditingController newPassword = TextEditingController();
   TextEditingController confirmPassword = TextEditingController();
-
+  final _formKeyReset = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<ForgetPasswordController>(
-        init: ForgetPasswordController(),
+    return GetBuilder<SignupController>(
+        init: SignupController(),
         builder: (controller) {
           return Scaffold(
-            body: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  children: [
-                    MyAppbar(title: "Change Password"),
-                    SizedBox(height: 16),
-                    Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: MyTextField(
-                          validator: (value) =>
-                              Validator.validatePassword(value),
-                          controller: currentPassword,
-                          labelText: Text("Current Password")),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: MyTextField(
-                          validator: (value) =>
-                              Validator.validatePassword(value),
-                          controller: newPassword,
-                          labelText: Text("New Password")),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: MyTextField(
-                          validator: (value) =>
-                              Validator.validatePassword(value),
-                          controller: confirmPassword,
-                          labelText: Text("Confirm Password")),
-                    ),
-                  ],
-                ),
-                Padding(
-                  padding:
-                      const EdgeInsets.only(left: 16, right: 16, bottom: 40),
-                  child: Container(
-                      height: 48,
-                      child: InkWell(
-                          onTap: () {
-                            // controller.resetPassword()
-                          },
-                          child: MyButton(text: "Change Password"))),
-                )
-              ],
+            body: Form(
+              key: _formKeyReset,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    children: [
+                      MyAppbar(title: "Change Password"),
+                      SizedBox(height: 16),
+                      Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: MyTextField(
+                            isPassword: true,
+                            validator: (value) =>
+                                Validator.validatePassword(value),
+                            controller: currentPassword,
+                            labelText: Text("Current Password")),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: MyTextField(
+                            isPassword: true,
+                            validator: (value) =>
+                                Validator.validatePassword(value),
+                            controller: newPassword,
+                            labelText: Text("New Password")),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: MyTextField(
+                            isPassword: true,
+                            validator: (value) =>
+                                Validator.validateConfirmPassword(
+                                    value, newPassword.text),
+                            controller: confirmPassword,
+                            labelText: Text("Confirm Password")),
+                      ),
+                    ],
+                  ),
+                  Padding(
+                    padding:
+                        const EdgeInsets.only(left: 16, right: 16, bottom: 40),
+                    child: Container(
+                        height: 48,
+                        child: InkWell(
+                            onTap: () {
+                              if (_formKeyReset!.currentState!.validate()) {
+                                controller
+                                    .chnagePassword(currentPassword.text,
+                                        confirmPassword.text)
+                                    .then((value) {
+                                  if (value['success'] == true) {}
+                                });
+                              }
+                              // controller.resetPassword()
+                            },
+                            child: MyButton(text: "Change Password"))),
+                  )
+                ],
+              ),
             ),
           );
         });

@@ -166,7 +166,7 @@ class Orders {
     sellerId = json['seller_id'];
     sellerIs = json['seller_is'];
     shippingAddressData = json['shipping_address_data'];
-    deliveryManId = json['delivery_man_id'];
+    deliveryManId = json['delivery_man_id'].toString();
     deliverymanCharge = json['deliveryman_charge'];
     expectedDeliveryDate = json['expected_delivery_date'];
     orderNote = json['order_note'];
@@ -190,7 +190,11 @@ class Orders {
         details!.add(new Details.fromJson(v));
       });
     }
-    deliveryMan = json['delivery_man'];
+    try {
+      deliveryMan = json['delivery_man'];
+    } catch (e) {
+      print(e);
+    }
     seller =
         json['seller'] != null ? new Seller.fromJson(json['seller']) : null;
   }

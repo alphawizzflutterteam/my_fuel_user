@@ -83,7 +83,9 @@ class _Checkout_Car_ServiceState extends State<Checkout_Car_Service> {
     checkOutRequest.wallet_used = "";
     checkOutRequest.wallet_used = "";
     checkOutRequest.transaction_id = "${response.paymentId}";
-
+    checkOutRequest.quantity = otherCategory.quantity ?? "1";
+    checkOutRequest.fuel_type = otherCategory.fuel_type;
+    checkOutRequest.service_type = otherCategory.service_type;
     carController.PlaceOtherCatOrder(checkOutRequest).then((value) {
       if (value['status'] == true) {
         Fluttertoast.showToast(msg: "${value['message']}");
@@ -186,92 +188,104 @@ class _Checkout_Car_ServiceState extends State<Checkout_Car_Service> {
                   children: [
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: const Color.fromRGBO(245, 245, 245, 1),
-                        ),
-                        // height: 105,
-                        width: MediaQuery.sizeOf(context).width,
-                        padding: const EdgeInsets.all(12),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text(
-                              'Delivery Address',
-                              style: TextStyle(
-                                  fontSize: 16, fontWeight: FontWeight.bold),
-                            ),
-                            const SizedBox(height: 10),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      '${carController.batterTyreCheckOut.value.data!.shippingAddressData!.contactPersonName},${carController.batterTyreCheckOut.value.data!.shippingAddressData!.zip}',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    SizedBox(
-                                      width: MediaQuery.of(context).size.width *
-                                          0.7,
-                                      child: Text(
-                                        '${carController.batterTyreCheckOut.value.data!.shippingAddressData!.building} ${carController.batterTyreCheckOut.value.data!.shippingAddressData!.landmark},${carController.batterTyreCheckOut.value.data!.shippingAddressData!.city}..',
-                                        style: const TextStyle(
-                                            color: Color.fromRGBO(
-                                                118, 118, 128, 1),
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w700),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                Container(
-                                  height: 24,
-                                  width: 57,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(4),
-                                      color: colors.primary.withOpacity(.1),
-                                      border:
-                                          Border.all(color: colors.primary)),
-                                  child: const Center(
-                                    child: Text(
-                                      'Home',
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        color: colors.primary,
-                                      ),
-                                    ),
-                                  ),
-                                )
-                              ],
-                            ),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            InkWell(
-                              onTap: () {
-                                Get.back();
-                              },
-                              child: Container(
-                                width: MediaQuery.sizeOf(context).width,
-                                height: 50,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                    border:
-                                        Border.all(color: colors.blackTemp)),
-                                child: Center(
-                                    child: Text(
-                                  'Change or add new address',
-                                  style: TextStyle(fontWeight: FontWeight.bold),
-                                )),
+                      child: otherCategory.shippingAddressId == null ||
+                              otherCategory.shippingAddressId == ""
+                          ? Container()
+                          : Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: const Color.fromRGBO(245, 245, 245, 1),
                               ),
-                            )
-                          ],
-                        ),
-                      ),
+                              // height: 105,
+                              width: MediaQuery.sizeOf(context).width,
+                              padding: const EdgeInsets.all(12),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const Text(
+                                    'Delivery Address',
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  const SizedBox(height: 10),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            '${carController.batterTyreCheckOut.value.data!.shippingAddressData!.contactPersonName},${carController.batterTyreCheckOut.value.data!.shippingAddressData!.zip}',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                          SizedBox(
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.7,
+                                            child: Text(
+                                              '${carController.batterTyreCheckOut.value.data!.shippingAddressData!.building} ${carController.batterTyreCheckOut.value.data!.shippingAddressData!.landmark},${carController.batterTyreCheckOut.value.data!.shippingAddressData!.city}..',
+                                              style: const TextStyle(
+                                                  color: Color.fromRGBO(
+                                                      118, 118, 128, 1),
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.w700),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      Container(
+                                        height: 24,
+                                        width: 57,
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(4),
+                                            color:
+                                                colors.primary.withOpacity(.1),
+                                            border: Border.all(
+                                                color: colors.primary)),
+                                        child: const Center(
+                                          child: Text(
+                                            'Home',
+                                            style: TextStyle(
+                                              fontSize: 12,
+                                              color: colors.primary,
+                                            ),
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: 20,
+                                  ),
+                                  InkWell(
+                                    onTap: () {
+                                      Get.back();
+                                    },
+                                    child: Container(
+                                      width: MediaQuery.sizeOf(context).width,
+                                      height: 50,
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          border: Border.all(
+                                              color: colors.blackTemp)),
+                                      child: Center(
+                                          child: Text(
+                                        'Change or add new address',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold),
+                                      )),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
                     ),
                     if (otherCategory.categoryId == "11") ...[
                       SizedBox(
@@ -1243,6 +1257,12 @@ class _Checkout_Car_ServiceState extends State<Checkout_Car_Service> {
                                       checkOutRequest.wallet_used = "";
                                       checkOutRequest.wallet_used = "";
                                       checkOutRequest.transaction_id = "";
+                                      checkOutRequest.quantity =
+                                          otherCategory.quantity ?? "1";
+                                      checkOutRequest.fuel_type =
+                                          otherCategory.fuel_type;
+                                      checkOutRequest.service_type =
+                                          otherCategory.service_type;
                                       carController.PlaceOtherCatOrder(
                                               checkOutRequest)
                                           .then((value) {

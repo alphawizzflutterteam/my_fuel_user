@@ -15,14 +15,15 @@ class SignupController extends AppBaseController {
 
   var checkOtpval = CheckOtpNodel().obs;
 
-  Future<Map<String, dynamic>> Register(User user) async {
+  Future<Map<String, dynamic>?> Register(User user) async {
     isLoading(true);
+    Map<String, dynamic>? val;
     print("User ${user.toJson()}");
-    Map<String, dynamic> response = await _laravelApiClient.register(user);
-
+    Map<String, dynamic> data = await _laravelApiClient.register(user);
+    print("User ${data}");
     isLoading(false);
-    return response;
-    print("object response ${response['temporary_token']}");
+    return data;
+    // print("object response ${response['temporary_token']}");
   }
 
   Future<Map<String, dynamic>> UpdateProfileA(UpdateProfile user) async {
@@ -42,6 +43,19 @@ class SignupController extends AppBaseController {
     Map<String, dynamic> response =
         await _laravelApiClient.checkOtp(token, mobile);
     checkOtpval.value = CheckOtpNodel.fromJson(response);
+    isLoading(false);
+    return response;
+    print("object response ${response['temporary_token']}");
+  }
+
+  Future<Map<String, dynamic>> chnagePassword(
+      String oldpassword, String newPassword) async {
+    isLoading(true);
+    print("User ${oldpassword.toString()}");
+    print("User ${newPassword.toString()}");
+    Map<String, dynamic> response =
+        await _laravelApiClient.chnagePassword(oldpassword, newPassword);
+    // checkOtpval.value = CheckOtpNodel.fromJson(response);
     isLoading(false);
     return response;
     print("object response ${response['temporary_token']}");

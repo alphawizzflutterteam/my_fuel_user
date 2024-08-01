@@ -27,25 +27,25 @@ class LaravelApiClient extends GetxService with ApiClient {
     super.init();
     return this;
   }
-
-  Future<String> userRegister(User user) async {
-    /*var _queryParameters = {
-      'api_token': authService.apiToken,
-    };
-     Uri _uri =
-        getApiBaseUri("options").replace(queryParameters: _queryParameters);*/
-    // print(option.toJson());
-    var response = await httpClient.post(
-      ApiConstants.userRegister,
-      data: user.toJson(),
-      options: optionsNetwork,
-    );
-    if (response.statusCode == 200) {
-      return response.data['temporary_token'];
-    } else {
-      throw Exception(response.data['message']);
-    }
-  }
+  //
+  // Future<String> userRegister(User user) async {
+  //   /*var _queryParameters = {
+  //     'api_token': authService.apiToken,
+  //   };
+  //    Uri _uri =
+  //       getApiBaseUri("options").replace(queryParameters: _queryParameters);*/
+  //   // print(option.toJson());
+  //   var response = await httpClient.post(
+  //     ApiConstants.userRegister,
+  //     data: user.toJson(),
+  //     options: optionsNetwork,
+  //   );
+  //   if (response.statusCode == 200) {
+  //     return response.data['temporary_token'];
+  //   } else {
+  //     return json.decode(response.toString());
+  //   }
+  // }
 
   Future<SettingModel> getSettings() async {
     /*var _queryParameters = {
@@ -69,8 +69,8 @@ class LaravelApiClient extends GetxService with ApiClient {
   Future<List<BannerModel>> getBanner() async {
     List<BannerModel> bannerList = [];
 
-    var response = await httpClient.get(
-      ApiConstants.banners,
+    var response = await httpClient.getUri(
+      Uri.parse(ApiConstants.banners),
       options: optionsNetwork,
     );
     if (response.statusCode == 200) {
@@ -105,8 +105,8 @@ class LaravelApiClient extends GetxService with ApiClient {
   }
 
   Future<Map<String, dynamic>> register(User user) async {
-    var response = await httpClient.post(
-      ApiConstants.userRegister,
+    var response = await httpClient.postUri(
+      Uri.parse("${ApiConstants.userRegister}"),
       data: user.toJson(),
       options: optionsNetwork,
     );
@@ -114,7 +114,7 @@ class LaravelApiClient extends GetxService with ApiClient {
       print("userRegister ${response.toString()} ");
       return json.decode(response.toString());
     } else {
-      throw Exception(response.data['message']);
+      return json.decode(response.toString());
     }
   }
 
@@ -134,15 +134,41 @@ class LaravelApiClient extends GetxService with ApiClient {
       print("userRegister ${response.toString()} ");
       return json.decode(response.toString());
     } else {
-      throw Exception(response.data['message']);
+      return json.decode(response.toString());
     }
   }
 
   Future<Map<String, dynamic>> checkOtp(String token, String mobile) async {
     Map data = {"temporary_token": "$token", "phone": "$mobile"};
     print("object Data Request $data");
-    var response = await httpClient.post(
-      ApiConstants.checkPhone,
+    var response = await httpClient.postUri(
+      Uri.parse(ApiConstants.checkPhone),
+      data: data,
+      options: optionsNetwork,
+    );
+    if (response.statusCode == 200) {
+      print("userRegister ${response.toString()} ");
+      return json.decode(response.toString());
+    } else {
+      throw Exception(response.data['message']);
+    }
+  }
+
+  Future<Map<String, dynamic>> chnagePassword(
+      String oldpassword, String newPassword) async {
+    Map data = {
+      "old_password": "$oldpassword",
+      "password": "$newPassword",
+      "confirm_password": "$newPassword"
+    };
+    print("object Data Request $data");
+    SharedPreferencesService? instance =
+        await SharedPreferencesService.getInstance();
+
+    String token = instance.getData(SharedPreferencesService.kTokenKey);
+    optionsNetwork.headers!['Authorization'] = "Bearer $token";
+    var response = await httpClient.putUri(
+      Uri.parse(ApiConstants.updatepassword),
       data: data,
       options: optionsNetwork,
     );
@@ -176,8 +202,8 @@ class LaravelApiClient extends GetxService with ApiClient {
     String token = instance.getData(SharedPreferencesService.kTokenKey);
     optionsNetwork.headers!['Authorization'] = "Bearer $token";
     print("category $id");
-    var response = await httpClient.post(
-      ApiConstants.serviceDetail,
+    var response = await httpClient.postUri(
+      Uri.parse(ApiConstants.serviceDetail),
       data: {'category': "$id", "offset": "0", "limit": "80"},
       options: optionsNetwork,
     );
@@ -192,8 +218,8 @@ class LaravelApiClient extends GetxService with ApiClient {
 
   Future<Map<String, dynamic>> verifyOtp(
       String token, String mobile, String otp) async {
-    var response = await httpClient.post(
-      ApiConstants.veriFyPhone,
+    var response = await httpClient.postUri(
+      Uri.parse(ApiConstants.veriFyPhone),
       data: {'temporary_token': "$token", "phone": "$mobile", "otp": "$otp"},
       options: optionsNetwork,
     );
@@ -201,6 +227,7 @@ class LaravelApiClient extends GetxService with ApiClient {
       print("userRegister ${response.toString()} ");
       return json.decode(response.toString());
     } else {
+      return json.decode(response.toString());
       throw Exception(response.data['message']);
     }
   }
@@ -212,8 +239,8 @@ class LaravelApiClient extends GetxService with ApiClient {
 
     String token = instance.getData(SharedPreferencesService.kTokenKey);
     optionsNetwork.headers!['Authorization'] = "Bearer $token";
-    var response = await httpClient.post(
-      ApiConstants.Enquiry,
+    var response = await httpClient.postUri(
+      Uri.parse(ApiConstants.Enquiry),
       data: {
         'category_id': "$id",
         "monthly_consumption": "$monthly_consumption",
@@ -226,14 +253,14 @@ class LaravelApiClient extends GetxService with ApiClient {
       print("userRegister ${response.toString()} ");
       return json.decode(response.toString());
     } else {
-      throw Exception(response.data['message']);
+      return json.decode(response.toString());
     }
   }
 
   Future<Map<String, dynamic>> Login(
       String membNo, String emailPhone, String password) async {
-    var response = await httpClient.post(
-      ApiConstants.login,
+    var response = await httpClient.postUri(
+      Uri.parse(ApiConstants.login),
       data: {
         "email": "$emailPhone",
         // "phone": "$emailPhone",
@@ -248,7 +275,7 @@ class LaravelApiClient extends GetxService with ApiClient {
 
       return json.decode(response.toString());
     } else {
-      throw Exception(response.data['message']);
+      return json.decode(response.toString());
     }
   }
 
@@ -260,8 +287,8 @@ class LaravelApiClient extends GetxService with ApiClient {
 
     String token = instance.getData(SharedPreferencesService.kTokenKey);
     optionsNetwork.headers!['Authorization'] = "Bearer $token";
-    var response = await httpClient.post(
-      ApiConstants.addToCart,
+    var response = await httpClient.postUri(
+      Uri.parse(ApiConstants.addToCart),
       data: {"id": "$ids", "quantity": "1"},
       options: optionsNetwork,
     );
@@ -319,8 +346,8 @@ class LaravelApiClient extends GetxService with ApiClient {
   }
 
   Future<Map<String, dynamic>> forgetPassWord(String membNo) async {
-    var response = await httpClient.post(
-      ApiConstants.forgetpassword,
+    var response = await httpClient.postUri(
+      Uri.parse(ApiConstants.forgetpassword),
       data: {
         "identity": "$membNo",
         // "phone": "$emailPhone",
@@ -332,7 +359,7 @@ class LaravelApiClient extends GetxService with ApiClient {
 
       return json.decode(response.toString());
     } else {
-      throw Exception(response.data['message']);
+      return json.decode(response.toString());
     }
   }
 
@@ -351,8 +378,8 @@ class LaravelApiClient extends GetxService with ApiClient {
     String longitude,
     String is_billing,
   ) async {
-    var response = await httpClient.post(
-      ApiConstants.addAddress,
+    var response = await httpClient.postUri(
+      Uri.parse(ApiConstants.addAddress),
       data: {
         "contact_person_name": "$name",
         "phone": "$phone",
@@ -380,8 +407,8 @@ class LaravelApiClient extends GetxService with ApiClient {
   }
 
   Future<Map<String, dynamic>> verifyPaswdOtp(String membNo, String otp) async {
-    var response = await httpClient.post(
-      ApiConstants.verifyOtp,
+    var response = await httpClient.postUri(
+      Uri.parse(ApiConstants.verifyOtp),
       data: {
         "identity": "$membNo",
         "otp": "$otp",
@@ -461,6 +488,44 @@ class LaravelApiClient extends GetxService with ApiClient {
     }
   }
 
+  Future<Map<String, dynamic>> getVendors(
+    String service_id,
+    String service_type,
+    String slot_id,
+    String date,
+    String vehicle_type,
+  ) async {
+    SharedPreferencesService? instance =
+        await SharedPreferencesService.getInstance();
+
+    Map data = {
+      "service_id": "$service_id",
+      "service_type": "$service_type",
+      "slot_id": "$slot_id",
+      "date": "$date",
+      "asset_id": "",
+      "vehicle_type": "$vehicle_type",
+      "quantity": "1",
+      "shipping_address_id": "",
+      "billing_address_id": ""
+    };
+
+    String token = instance.getData(SharedPreferencesService.kTokenKey);
+    optionsNetwork.headers!['Authorization'] = "Bearer $token";
+    var response = await httpClient.postUri(
+      data: data,
+      Uri.parse(ApiConstants.VENDORSERVICE),
+      options: optionsNetwork,
+    );
+    if (response.statusCode == 200) {
+      print("userRegister ${response.toString()} ");
+
+      return json.decode(response.toString());
+    } else {
+      return json.decode(response.toString());
+    }
+  }
+
   Future<Map<String, dynamic>> getSlots() async {
     SharedPreferencesService? instance =
         await SharedPreferencesService.getInstance();
@@ -487,9 +552,9 @@ class LaravelApiClient extends GetxService with ApiClient {
 
     String token = instance.getData(SharedPreferencesService.kTokenKey);
     optionsNetwork.headers!['Authorization'] = "Bearer $token";
-    var response = await httpClient.post(
+    var response = await httpClient.postUri(
+      Uri.parse(ApiConstants.VEHICLEMODEL),
       data: {"id": "$id"},
-      ApiConstants.VEHICLEMODEL,
       options: optionsNetwork,
     );
     if (response.statusCode == 200) {
@@ -509,9 +574,9 @@ class LaravelApiClient extends GetxService with ApiClient {
     print("object Rerquest ${otherCategory.toJson()}");
     optionsNetwork.headers!['Authorization'] = "Bearer $token";
     log("tokentoken $token");
-    var response = await httpClient.post(
+    var response = await httpClient.postUri(
+      Uri.parse(ApiConstants.VENDORCHEKOUT),
       data: otherCategory.toJson(),
-      ApiConstants.VENDORCHEKOUT,
       options: optionsNetwork,
     );
     if (response.statusCode == 200) {
@@ -519,7 +584,7 @@ class LaravelApiClient extends GetxService with ApiClient {
 
       return json.decode(response.toString());
     } else {
-      throw Exception(response.data['message']);
+      return json.decode(response.toString());
     }
   }
 
@@ -532,9 +597,10 @@ class LaravelApiClient extends GetxService with ApiClient {
     print("object Rerquest ${otherCategory.toJson()}");
     optionsNetwork.headers!['Authorization'] = "Bearer $token";
     log("tokentoken $token");
-    var response = await httpClient.post(
+    var response = await httpClient.postUri(
+      Uri.parse(ApiConstants.ConfirmPlaceOrder),
       data: otherCategory.toJson(),
-      ApiConstants.ConfirmPlaceOrder,
+
       // ApiConstants.VENDORCHEKOUT,
       options: optionsNetwork,
     );
@@ -553,6 +619,7 @@ class LaravelApiClient extends GetxService with ApiClient {
 
     String token = instance.getData(SharedPreferencesService.kTokenKey);
     optionsNetwork.headers!['Authorization'] = "Bearer $token";
+    log("AAAAAAAZZZZ $token");
     var response = await httpClient.get(
       ApiConstants.ORDERLIST,
       options: optionsNetwork,
@@ -647,6 +714,32 @@ class LaravelApiClient extends GetxService with ApiClient {
     }
   }
 
+  Future<Map<String, dynamic>> addMoney(
+      String amount, String transaction_id, String payment_method) async {
+    Map data = {
+      "amount": "$amount",
+      "transaction_id": "$transaction_id",
+      "payment_method": "$payment_method",
+    };
+    SharedPreferencesService? instance =
+        await SharedPreferencesService.getInstance();
+
+    String token = instance.getData(SharedPreferencesService.kTokenKey);
+    optionsNetwork.headers!['Authorization'] = "Bearer $token";
+    var response = await httpClient.postUri(
+      data: data,
+      Uri.parse(ApiConstants.addWallet),
+      options: optionsNetwork,
+    );
+    if (response.statusCode == 200) {
+      print("userRegister ${response.toString()} ");
+
+      return json.decode(response.toString());
+    } else {
+      return json.decode(response.toString());
+    }
+  }
+
   Future<Map<String, dynamic>> submitInsurance(
       String vehicle_number, String name, String email, String mobile) async {
     SharedPreferencesService? instance =
@@ -654,8 +747,8 @@ class LaravelApiClient extends GetxService with ApiClient {
 
     String token = instance.getData(SharedPreferencesService.kTokenKey);
     optionsNetwork.headers!['Authorization'] = "Bearer $token";
-    var response = await httpClient.post(
-      ApiConstants.insuranceSubmit,
+    var response = await httpClient.postUri(
+      Uri.parse(ApiConstants.insuranceSubmit),
       data: {
         "vehicle_number": "$vehicle_number",
         // "phone": "$emailPhone",
@@ -682,8 +775,8 @@ class LaravelApiClient extends GetxService with ApiClient {
 
     String token = instance.getData(SharedPreferencesService.kTokenKey);
     optionsNetwork.headers!['Authorization'] = "Bearer $token";
-    var response = await httpClient.post(
-      ApiConstants.addAsset,
+    var response = await httpClient.postUri(
+      Uri.parse(ApiConstants.addAsset),
       data: {
         "asset_type": "$asset_type",
         // "phone": "$emailPhone",

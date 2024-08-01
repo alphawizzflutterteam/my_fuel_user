@@ -111,7 +111,7 @@ class User {
   String? temporaryToken;
   bool? isEmailVerified;
   int? walletBalance;
-  Null? loyaltyPoint;
+  String? loyaltyPoint;
   int? loginHitCount;
   bool? isTempBlocked;
   Null? tempBlockTime;
@@ -122,8 +122,8 @@ class User {
   String? pan;
   String? msme;
   String? profile;
-  Null? gst;
-  Null? walletId;
+  String? gst;
+  String? walletId;
 
   User(
       {this.id,
@@ -195,7 +195,7 @@ class User {
     temporaryToken = json['temporary_token'];
     isEmailVerified = json['is_email_verified'];
     walletBalance = json['wallet_balance'];
-    loyaltyPoint = json['loyalty_point'];
+    loyaltyPoint = json['loyalty_point'].toString();
     loginHitCount = json['login_hit_count'];
     isTempBlocked = json['is_temp_blocked'];
     tempBlockTime = json['temp_block_time'];
@@ -206,8 +206,8 @@ class User {
     pan = json['pan'];
     msme = json['msme'];
     profile = json['profile'];
-    gst = json['gst'];
-    walletId = json['wallet_id'];
+    gst = json['gst'].toString();
+    walletId = json['wallet_id'].toString();
   }
 
   Map<String, dynamic> toJson() {

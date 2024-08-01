@@ -22,13 +22,13 @@ class UserInfoModel {
   String? paymentCardFawryToken;
   String? loginMedium;
   String? socialId;
-  int? isPhoneVerified;
+  String? isPhoneVerified;
   String? temporaryToken;
-  int? isEmailVerified;
-  int? walletBalance;
+  String? isEmailVerified;
+  String? walletBalance;
   String? loyaltyPoint;
-  int? loginHitCount;
-  int? isTempBlocked;
+  String? loginHitCount;
+  String? isTempBlocked;
   String? tempBlockTime;
   String? referralCode;
   String? referredBy;
@@ -39,8 +39,8 @@ class UserInfoModel {
   String? profile;
   String? gst;
   String? walletId;
-  int? referralUserCount;
-  int? ordersCount;
+  String? referralUserCount;
+  String? ordersCount;
   String? wallet_id;
 
   UserInfoModel(
@@ -113,25 +113,25 @@ class UserInfoModel {
     paymentCardFawryToken = json['payment_card_fawry_token'];
     loginMedium = json['login_medium'];
     socialId = json['social_id'];
-    isPhoneVerified = json['is_phone_verified'];
-    temporaryToken = json['temporary_token'];
-    isEmailVerified = json['is_email_verified'];
-    walletBalance = json['wallet_balance'];
-    loyaltyPoint = json['loyalty_point'];
-    loginHitCount = json['login_hit_count'];
-    isTempBlocked = json['is_temp_blocked'];
-    tempBlockTime = json['temp_block_time'];
-    referralCode = json['referral_code'];
-    referredBy = json['referred_by'];
-    appLanguage = json['app_language'];
+    isPhoneVerified = json['is_phone_verified'].toString();
+    temporaryToken = json['temporary_token'].toString();
+    isEmailVerified = json['is_email_verified'].toString();
+    walletBalance = json['wallet_balance'].toString();
+    loyaltyPoint = json['loyalty_point'].toString();
+    loginHitCount = json['login_hit_count'].toString();
+    isTempBlocked = json['is_temp_blocked'].toString();
+    tempBlockTime = json['temp_block_time'].toString();
+    referralCode = json['referral_code'].toString();
+    referredBy = json['referred_by'].toString();
+    appLanguage = json['app_language'].toString();
     address = json['address'];
     pan = json['pan'];
     msme = json['msme'];
     profile = json['profile'];
-    gst = json['gst'];
-    walletId = json['wallet_id'];
-    referralUserCount = json['referral_user_count'];
-    ordersCount = json['orders_count'];
+    gst = json['gst'].toString();
+    walletId = json['wallet_id'].toString();
+    referralUserCount = json['referral_user_count'].toString();
+    ordersCount = json['orders_count'].toString();
   }
 
   Map<String, dynamic> toJson() {

@@ -6,13 +6,14 @@ import 'package:dio/dio.dart';
 abstract class NetworkExceptions {
   static String handleResponse(Response response) {
     int statusCode = response.statusCode ?? 0;
+    print("statusCode $statusCode");
     switch (statusCode) {
       case 400:
       case 401:
-      case 403:
-        _get.Get.offAllNamed(Routes.LOGIN);
-        return "Unauthorized Request";
-        break;
+      // case 403:
+      //   _get.Get.offAllNamed(Routes.LOGIN);
+      //   return "Unauthorized Request";
+      //   break;
       case 404:
         return "Not found";
         break;
@@ -36,6 +37,7 @@ abstract class NetworkExceptions {
   static String getDioException(error) {
     if (error is Exception) {
       try {
+        print("getDioException ${error} ");
         var errorMessage = "";
         if (error is DioError) {
           switch (error.type) {
@@ -76,6 +78,9 @@ abstract class NetworkExceptions {
         return "Unexpected error occurred";
       }
     } else {
+      print("object $error");
+
+      return error.toString();
       if (error.toString().contains("is not a subtype of")) {
         return "Unable to process the data";
       } else {

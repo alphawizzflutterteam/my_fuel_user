@@ -6,6 +6,8 @@ import 'package:test_prj/controller/language_controller.dart';
 import 'package:test_prj/helper/colors.dart';
 import 'package:test_prj/language/language_global_var.dart';
 
+import '../helper/utils/shared_preference.dart';
+
 class LanguageScreen extends StatelessWidget {
   const LanguageScreen({super.key});
 
@@ -70,34 +72,44 @@ class LanguageScreen extends StatelessWidget {
                         itemBuilder: (context, index) {
                           var item = controller.languageList[index];
                           return InkWell(
-                            onTap: () {
+                            onTap: () async {
                               controller.languageList.forEach((element) {
                                 element.isSelected = false;
                               });
-
+                              SharedPreferencesService? instance =
+                                  await SharedPreferencesService.getInstance();
                               item.isSelected = true;
 
                               if (index == 0) {
-                                controller
-                                    .setLanguage(const Locale('hi', 'IN'));
+                                instance.saveData(
+                                    SharedPreferencesService.kLanguageKey, "1");
+                                controller.changeLanguage('hi', 'IN');
+                                // controller
+                                //     .setLanguage(const Locale('hi', 'IN'));
                               } else if (index == 1) {
-                                controller
-                                    .setLanguage(const Locale('en', 'US'));
+                                instance.saveData(
+                                    SharedPreferencesService.kLanguageKey, "2");
+                                controller.changeLanguage('en', 'US');
                               } else if (index == 2) {
-                                controller
-                                    .setLanguage(const Locale('te', 'IN'));
+                                instance.saveData(
+                                    SharedPreferencesService.kLanguageKey, "3");
+                                controller.changeLanguage('te', 'IN');
                               } else if (index == 3) {
-                                controller
-                                    .setLanguage(const Locale('ml', 'IN'));
+                                instance.saveData(
+                                    SharedPreferencesService.kLanguageKey, "4");
+                                controller.changeLanguage('ml', 'IN');
                               } else if (index == 4) {
-                                controller
-                                    .setLanguage(const Locale('kn', 'IN'));
+                                instance.saveData(
+                                    SharedPreferencesService.kLanguageKey, "5");
+                                controller.changeLanguage('kn', 'IN');
                               } else if (index == 5) {
-                                controller
-                                    .setLanguage(const Locale('bn', 'IN'));
+                                instance.saveData(
+                                    SharedPreferencesService.kLanguageKey, "6");
+                                controller.changeLanguage('bn', 'IN');
                               } else {
-                                controller
-                                    .setLanguage(const Locale('en', 'US'));
+                                instance.saveData(
+                                    SharedPreferencesService.kLanguageKey, "7");
+                                controller.changeLanguage('en', 'US');
                               }
                             },
                             child: Container(
