@@ -46,12 +46,5 @@ class ApiConstants {
   static const String VEHICLEMODEL = '/api/v1/customer/order/vehicle-model';
   static const String TIMESLOTS = '/api/v1/customer/order/time-slots';
 
-
-
-  ///gopal
-
-  static const String AllORDERLIST =
-      '/api/v1/customer/bookings';
-  static const String UPDATEORDERAPI =
-      '/api/v1/customer/order/update-booking-status';
+  static const String NOTIFICATIONS = '/api/v1/notifications';
 }

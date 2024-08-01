@@ -1,7 +1,12 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:test_prj/components/my_button.dart';
 import 'package:test_prj/repository/model/user_model.dart';
+import 'package:test_prj/splashScreen.dart';
 
 import '../components/my_appbar.dart';
 import 'package:get/get.dart';
@@ -38,6 +43,7 @@ class _EditProfileState extends State<EditProfile> {
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmpasswordController = TextEditingController();
   TextEditingController guestIdController = TextEditingController();
+  final ImagePicker _picker = ImagePicker();
 
   @override
   void initState() {
@@ -79,6 +85,99 @@ class _EditProfileState extends State<EditProfile> {
     });
   }
 
+  Future<void> ProfileImage() async {
+    final XFile? pickedFile = await _picker.pickImage(
+        source: ImageSource.gallery,
+        imageQuality: 80,
+        maxWidth: 400,
+        maxHeight: 400);
+    if (pickedFile != null) {
+      setState(() {
+        profileImage = File(pickedFile.path);
+      });
+      Navigator.pop(context);
+    }
+  }
+
+  File? profileImage;
+  Future<void> ProfileImage1() async {
+    final XFile? pickedFile = await _picker.pickImage(
+        source: ImageSource.camera,
+        imageQuality: 80,
+        maxWidth: 400,
+        maxHeight: 400);
+    if (pickedFile != null) {
+      setState(() {
+        profileImage = File(pickedFile.path);
+      });
+      Navigator.pop(context);
+    }
+  }
+
+  imagePick() {
+    return Container(
+      padding: EdgeInsets.zero,
+      child: Padding(
+        padding: const EdgeInsets.only(left: 30.0, top: 23),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            InkWell(
+              onTap: () {
+                ProfileImage1();
+              },
+              child: Row(
+                children: [
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  const Icon(
+                    Icons.camera_alt_outlined,
+                    size: 30,
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    "Camera".tr,
+                    style: const TextStyle(fontSize: 19),
+                  ),
+                ],
+              ),
+            ),
+            Divider(),
+            InkWell(
+              onTap: () {
+                ProfileImage();
+              },
+              child: Row(
+                children: [
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Image.asset(
+                    "assets/gallery.png",
+                    height: 30,
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    "Gallery".tr,
+                    style: const TextStyle(fontSize: 19),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(
+              height: 40,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -92,20 +191,64 @@ class _EditProfileState extends State<EditProfile> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(height: 100),
+                GetBuilder<ProfileController>(builder: (profileController) {
+                  return GetBuilder<SignupController>(
+                      builder: (signUpController) {
+                    return ClipOval(
+                      child: profileImage != null
+                          ? Image.file(
+                              profileImage!,
+                              height: 125,
+                              width: 125,
+                              fit: BoxFit.cover,
+                            )
+                          : profileController.userInfoModel.value?.image ==
+                                      null ||
+                                  profileController
+                                          .userInfoModel.value?.image ==
+                                      '' ||
+                                  profileController
+                                          .userInfoModel.value?.image ==
+                                      'def.png'
+                              ? SizedBox()
+                              : Image.network(
+                                  '${configModel?.baseUrls?.customerImageUrl}${Get.find<ProfileController>().userInfoModel?.value.image}',
+                                  height: 125,
+                                  width: 125,
+                                  fit: BoxFit.cover,
+                                ),
+                    );
+                  });
+                }),
+                GestureDetector(
+                  onTap: () {
+                    showModalBottomSheet(
+                      context: context,
+                      builder: (context) => imagePick(),
+                    );
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 105.0, left: 80),
+                    child: Image.asset(
+                      "assets/EditIcon.png",
+                      height: 25,
+                    ),
+                  ),
+                ),
                 // App Icon
-                Center(
-                  child: Image.asset(
-                    "assets/login-logo.png",
-                    height: 62,
-                  ),
-                ),
-                const SizedBox(height: 10),
-                Center(
-                  child: const Text(
-                    "Edit Profile",
-                    style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
-                  ),
-                ),
+                // Center(
+                //   child: Image.asset(
+                //     "assets/login-logo.png",
+                //     height: 62,
+                //   ),
+                // ),
+                // const SizedBox(height: 10),
+                // Center(
+                //   child: const Text(
+                //     "Edit Profile",
+                //     style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
+                //   ),
+                // ),
                 const SizedBox(height: 8),
                 // const Text(
                 //   "Please Sign in to your account",

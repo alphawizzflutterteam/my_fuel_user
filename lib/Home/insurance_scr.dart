@@ -8,6 +8,7 @@ import 'package:test_prj/home_page.dart';
 
 import '../components/my_button.dart';
 import '../helper/colors.dart';
+import '../helper/utils/app_constants.dart';
 import '../orderfuel/EV/checkout_page.dart';
 import '../orderfuel/doorStepDelivery/order_fuel_checkout.dart';
 import '../orderfuel/doorStepDelivery/vendors_page.dart';
@@ -155,6 +156,7 @@ class _Insurance_ScrState extends State<Insurance_Scr> {
                     ),
                     MyTextField(
                       isAmount: true,
+                      maxLenth: AppConstants.phoneValidation,
                       labelText: Text(
                         "Mobile No.".tr,
                         style: TextStyle(

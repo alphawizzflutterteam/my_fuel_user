@@ -6,6 +6,8 @@ import 'package:test_prj/authPages/otpScreen1.dart';
 import 'package:test_prj/authPages/otpScreen2.dart';
 import 'package:test_prj/authPages/sign_up.dart';
 import 'package:test_prj/home.dart';
+import 'package:test_prj/orderfuel/doorStepDelivery/order_fuel_checkout.dart';
+import 'package:test_prj/orderfuel/doorStepDelivery/vendors_page.dart';
 import 'package:test_prj/routes/app_routes.dart';
 import 'package:test_prj/routes/bindings/inial_binding.dart';
 import 'package:test_prj/splashScreen.dart';
@@ -26,7 +28,7 @@ class AppPages {
     ),
     GetPage(
       name: Routes.LANGUAGE,
-      page: () => const LanguageScreen(),
+      page: () => LanguageScreen(),
       binding: InitialBinding(),
     ),
     GetPage(
@@ -82,6 +84,11 @@ class AppPages {
     GetPage(
       name: Routes.FUELONTAP,
       page: () => FuelOnTabScreen(),
+      binding: InitialBinding(),
+    ),
+    GetPage(
+      name: Routes.orderFuelCheckout,
+      page: () => OrderFuelCheckOut(),
       binding: InitialBinding(),
     ),
 //     GetPage(name: Routes.ROOT, page: () => RootView(), binding: RootBinding(), middlewares: [AuthMiddleware(), SalonOwnerMiddleware()]),

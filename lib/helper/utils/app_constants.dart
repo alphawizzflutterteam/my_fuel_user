@@ -16,6 +16,7 @@ class AppConstants {
 
   static const String userId = 'userId';
   static const String name = 'name';
+  static const String currencySymbol = '₹';
 
   // sharePreference
   static const String token = 'token';

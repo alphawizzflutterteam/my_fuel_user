@@ -79,11 +79,16 @@ class _FuelOnTabCheckoutScreenState extends State<FuelOnTabCheckoutScreen> {
       // Get.toNamed(Routes.ORDERPLACED,
       //     arguments: controller
       //         .verifyModel.value.data);
+      if (value['status'] == false) {
+        Fluttertoast.showToast(msg: "${value['message']}");
+        return;
+      }
 
       Get.offAll(
         OrderPlaced(
           isFromFuelOnTap: true,
-          amount: "${controller.checkOutModel.value.total}",
+          amount: "${value['message']}",
+          order_id: "${value['order_id']}",
         ),
       );
       // Navigator.push(context,
@@ -189,13 +194,19 @@ class _FuelOnTabCheckoutScreenState extends State<FuelOnTabCheckoutScreen> {
                                 controller
                                     .placeOrder(address_id.toString(), "cod")
                                     .then((value) {
+                                  if (value['status'] == false) {
+                                    Fluttertoast.showToast(
+                                        msg: "${value['message']}");
+                                    return;
+                                  }
+
                                   Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) => OrderPlaced(
                                         isFromFuelOnTap: true,
-                                        amount:
-                                            "${controller.checkOutModel.value.total}",
+                                        amount: "${value['message']}",
+                                        order_id: "${value['order_id']}",
                                       ),
                                     ),
                                   );

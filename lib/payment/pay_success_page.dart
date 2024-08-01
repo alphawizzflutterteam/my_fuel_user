@@ -7,14 +7,24 @@ import 'package:test_prj/helper/colors.dart';
 import 'package:test_prj/home.dart';
 
 class OrderPlaced extends StatefulWidget {
-  OrderPlaced({super.key, this.isFromFuelOnTap, this.amount});
-  final bool? isFromFuelOnTap;
   final String? amount;
+  final String? order_id;
+  OrderPlaced({super.key, this.isFromFuelOnTap, this.amount, this.order_id});
+  final bool? isFromFuelOnTap;
+
   @override
   State<OrderPlaced> createState() => _OrderPlacedState();
 }
 
 class _OrderPlacedState extends State<OrderPlaced> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    initUI();
+  }
+
   @override
   Widget build(BuildContext context) {
     return PopScope(
@@ -89,25 +99,26 @@ class _OrderPlacedState extends State<OrderPlaced> {
                                 fontWeight: FontWeight.bold),
                             textAlign: TextAlign.center,
                           ),
-                          SizedBox(height: 5), // Spacing between texts
+                          SizedBox(height: 5),
+                          Text(
+                            "Order Id -${widget.order_id}",
+                            style: TextStyle(color: Colors.white, fontSize: 16),
+                            textAlign: TextAlign.center,
+                          ), // Spacing between texts
                           Padding(
                             padding: const EdgeInsets.only(left: 70),
                             child: Row(children: [
                               Image.asset("assets/goldcoin.png", height: 20),
                               Text(
-                                "${widget.amount} Points added to your",
+                                "${widget.amount.toString()} ",
                                 style: TextStyle(
                                     color: Colors.white, fontSize: 16),
                                 textAlign: TextAlign.center,
+                                overflow: TextOverflow.ellipsis,
                               ),
                             ]),
                           ),
                           SizedBox(height: 5), // Spacing between texts
-                          Text(
-                            "My Fuels Card",
-                            style: TextStyle(color: Colors.white, fontSize: 16),
-                            textAlign: TextAlign.center,
-                          ),
                         ],
                       ),
                     ),
@@ -119,6 +130,13 @@ class _OrderPlacedState extends State<OrderPlaced> {
         ),
       ),
     );
+  }
+
+  Future<void> initUI() async {
+    print("object AAAAAAA ${widget.amount}");
+    await Future.delayed(const Duration(milliseconds: 3000), () async {
+      Get.offAll(const Home());
+    });
   }
 }
 

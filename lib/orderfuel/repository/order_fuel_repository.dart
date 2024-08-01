@@ -5,6 +5,7 @@ import 'package:test_prj/data/model/OrderFuelModel.dart';
 import 'package:test_prj/data/model/TimeSlotModel.dart';
 import 'package:test_prj/data/model/VehicleType.dart';
 import 'package:test_prj/data/model/order_fuel_check_out_model.dart';
+import 'package:test_prj/data/model/vehicle_list_model.dart';
 import 'package:test_prj/data/model/vendors_model.dart';
 import 'package:test_prj/helper/utils/app_constants.dart';
 import 'package:test_prj/orderfuel/doorStepDelivery/order_fuel_checkout.dart';
@@ -104,7 +105,25 @@ class OrderFuelRepo extends GetxService with ApiClient {
     required String vehicleModel,
     required String tyreSize,
     required String productId,
+    required String vendorId,
+    required String quantity,
   }) async {
+    log(jsonEncode({
+      "category_id": categoryId,
+      'vehicle_type': vehicleType,
+      'vehicle_model': vehicleModel,
+      'tyre_size': tyreSize,
+      'time_slot_id': slotId,
+      'date': date,
+      'service': serviceType,
+      'notes': note,
+      'product_id': productId,
+      'shipping_address_id': shipping,
+      'billing_address_id': billing,
+      'billing_same_as_shipping': isBillingSameAsShipping,
+      'seller_id': vendorId,
+      'quantity': quantity
+    }));
     var response = await httpClient.post(
       '/api/v1/customer/order/vendor-checkout',
       data: jsonEncode({
@@ -119,7 +138,9 @@ class OrderFuelRepo extends GetxService with ApiClient {
         'product_id': productId,
         'shipping_address_id': shipping,
         'billing_address_id': billing,
-        'billing_same_as_shipping': isBillingSameAsShipping
+        'billing_same_as_shipping': isBillingSameAsShipping,
+        'seller_id': vendorId,
+        'quantity': quantity
       }),
       options: optionsNetwork,
     );
@@ -144,6 +165,8 @@ class OrderFuelRepo extends GetxService with ApiClient {
     required String vehicleModel,
     required String tyreSize,
     required String productId,
+    required String vendorId,
+    required String assetId,
     required String paymentMethod,
     required String transactionId,
     required String quantity,
@@ -167,13 +190,27 @@ class OrderFuelRepo extends GetxService with ApiClient {
         'payment_method': paymentMethod,
         'wallet_used': walletUsed,
         'transaction_id': transactionId,
-        'quantity': quantity
+        'quantity': quantity,
+        'seller_id': vendorId,
+        'asset_id': assetId
       }),
       options: optionsNetwork,
     );
 
     if (response.statusCode == 200) {
       return json.decode(response.toString());
+    } else {
+      throw Exception(response.data['message']);
+    }
+  }
+
+  Future<VehicleListModel> getVehicle({required String catId}) async {
+    var response = await httpClient.get(
+      '/api/v1/customer/vehicle-service?id=6',
+      options: optionsNetwork,
+    );
+    if (response.statusCode == 200) {
+      return VehicleListModel.fromJson(json.decode(response.toString()));
     } else {
       throw Exception(response.data['message']);
     }

@@ -7,6 +7,9 @@ import 'package:test_prj/controller/otp_controller.dart';
 import 'package:test_prj/controller/profile_controller.dart';
 import 'package:test_prj/controller/singup_controller.dart';
 import 'package:test_prj/controller/splash_controller.dart';
+import 'package:test_prj/orderfuel/doorStepDelivery/controller/orde_fuel_checkout_controller.dart';
+import 'package:test_prj/orderfuel/doorStepDelivery/controller/vendor_controller.dart';
+import 'package:test_prj/orderfuel/doorStepDelivery/order_fuel_checkout.dart';
 
 import '../../controller/address_controller.dart';
 import '../../controller/asset_controller.dart';
@@ -38,6 +41,8 @@ class InitialBinding implements Bindings {
     Get.lazyPut(() => AssetController());
     Get.lazyPut(() => OtherServiceController());
     Get.lazyPut(() => CartController());
+    // Get.lazyPut(() => VendorController());
+    // Get.lazyPut(() => OrderFuelCheckoutController());
 
     // Get.lazyPut(() => LoginController() );
     // Get.lazyPut(() => ForgotPasswordController() );

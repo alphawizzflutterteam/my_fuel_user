@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
@@ -9,12 +10,15 @@ import 'package:get_storage/get_storage.dart';
 import 'package:test_prj/components/my_appbar.dart';
 import 'package:test_prj/components/my_button.dart';
 import 'package:test_prj/controller/address_controller.dart';
+import 'package:test_prj/controller/profile_controller.dart';
 import 'package:test_prj/helper/colors.dart';
 import 'package:test_prj/home_page.dart';
 import 'package:test_prj/orderfuel/EV/checkout_page.dart';
+import 'package:test_prj/orderfuel/doorStepDelivery/order_fuel_checkout.dart';
 import 'package:test_prj/payment/paymentScreen.dart';
 
 import 'package:test_prj/profile/add_address.dart';
+import 'package:test_prj/profile/profile_assets.dart';
 import 'package:test_prj/routes/app_routes.dart';
 import 'package:test_prj/splashScreen.dart';
 // import 'package:location/location.dart';
@@ -28,6 +32,7 @@ import 'orderfuel/doorStepDelivery/my_assets.dart';
 class SelectNewAddress extends StatefulWidget {
   final bool? isFromFuelOnTab;
   final bool? isFromOrderFuel;
+  final bool? isFromEv;
   final bool? isFromForLooking;
   final bool? isFromFGenSet;
   const SelectNewAddress(
@@ -35,7 +40,8 @@ class SelectNewAddress extends StatefulWidget {
       this.isFromFuelOnTab = false,
       this.isFromForLooking = false,
       this.isFromFGenSet = false,
-      this.isFromOrderFuel});
+      this.isFromOrderFuel,
+      this.isFromEv});
 
   @override
   State<SelectNewAddress> createState() => _SelectNewAddressState();
@@ -46,6 +52,16 @@ class _SelectNewAddressState extends State<SelectNewAddress> {
   RxInt selectedValueAddress = 0.obs;
   final _formKeyReset = GlobalKey<FormState>();
   bool isCheckedAddress = false;
+
+  TextEditingController nameController = TextEditingController();
+  TextEditingController mobileController = TextEditingController();
+  TextEditingController alternatemobileController = TextEditingController();
+  TextEditingController houseNoController = TextEditingController();
+  TextEditingController roadNameController = TextEditingController();
+  TextEditingController countryController = TextEditingController();
+  TextEditingController stateController = TextEditingController();
+  TextEditingController cityController = TextEditingController();
+  TextEditingController pincodeController = TextEditingController();
 
   String? _latitude;
   String? _longitude;
@@ -82,6 +98,42 @@ class _SelectNewAddressState extends State<SelectNewAddress> {
           'Location permissions are permanently denied, we cannot request permissions.');
     }
 
+    Position position = await Geolocator.getCurrentPosition();
+    print("object position $position");
+    print("object position ${position.toJson()}");
+    List<Placemark> placemark = await placemarkFromCoordinates(
+        double.parse(position.latitude!.toString()),
+        double.parse(position.longitude!.toString()),
+        localeIdentifier: "en");
+
+    placemark.toList(growable: true);
+
+    Placemark place = placemark[0];
+
+    address =
+        "${place.street}, ${place.locality}, ${place.postalCode}, ${place.country}";
+
+    ProfileController profileController = Get.put(ProfileController());
+    AddressController addressController = Get.put(AddressController());
+    addressController
+        .addAddress(
+            profileController.userInfoModel.value.fName.toString(),
+            profileController.userInfoModel.value.phone.toString(),
+            "Home",
+            place.street.toString(),
+            place.locality.toString(),
+            place.locality.toString(),
+            place.country.toString(),
+            place.administrativeArea.toString(),
+            place.locality.toString(),
+            place.postalCode.toString(),
+            "$_latitude",
+            "$_longitude",
+            "1")
+        .then((value) {
+      addressController.getAddRess();
+    });
+    setState(() {});
     // When we reach here, permissions are granted and we can
     // continue accessing the position of the device.
     return await Geolocator.getCurrentPosition();
@@ -91,7 +143,6 @@ class _SelectNewAddressState extends State<SelectNewAddress> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _determinePosition();
   }
 
   Widget customRadio(String text, int value) {
@@ -145,100 +196,24 @@ class _SelectNewAddressState extends State<SelectNewAddress> {
                   child: GestureDetector(
                     child: const MyButton(text: 'Save Address & Next'),
                     onTap: () {
-                      if (selectedValueAddress.value == -1) {
-                        Fluttertoast.showToast(msg: "Please select Address");
-                      }
-
                       ///for OrderFuelFlow
                       if (widget.isFromOrderFuel ?? false) {
-                        otherCategory.shippingAddressId = controller
-                            .addressAList[selectedValueAddress.value].id
-                            .toString();
-                        if (controller.isBillDeilivery.value == true) {
-                          otherCategory.billingSameAsShipping = "1";
-                          otherCategory.billingAddressId = controller
-                              .addressAList[selectedValueAddress.value].id
-                              .toString();
-                        } else {
-                          otherCategory.billingSameAsShipping = "0";
-                          if (_formKeyReset.currentState!.validate()) {
-                            controller
-                                .addAddress(
-                                    nameController.text,
-                                    mobileController.text,
-                                    "Home",
-                                    houseNoController.text.toString(),
-                                    roadNameController.text.toString(),
-                                    roadNameController.text.toString(),
-                                    countryController.text.toString(),
-                                    stateController.text.toString(),
-                                    cityController.text.toString(),
-                                    pincodeController.text.toString(),
-                                    "$_latitude",
-                                    "$_longitude",
-                                    "1")
-                                .then((value) {
-                              otherCategory.billingSameAsShipping = "0";
-                              otherCategory.billingAddressId =
-                                  "${value['id'].toString()}";
-                              Get.to(const MyAssets());
-                            });
-                          }
-                        }
+                        checkAndNavigate(controller, 'orderFuel');
+                      } else if (widget.isFromEv ?? false) {
+                        checkAndNavigate(controller, 'ev');
                       } else if (categoryId == "9" ||
                           categoryId == "16" ||
                           categoryId == "10" ||
                           categoryId == "11" ||
                           categoryId == "10" ||
                           categoryId == "8") {
+                        print('__________________');
+
                         otherCategory.billingAddressId = controller
                             .addressAList[selectedValueAddress.value].id
                             .toString();
 
-                        otherCategory.shippingAddressId = controller
-                            .addressAList[selectedValueAddress.value].id
-                            .toString();
-                        if (controller.isBillDeilivery.value == true) {
-                          otherCategory.billingSameAsShipping = "1";
-                          otherCategory.billingAddressId = controller
-                              .addressAList[selectedValueAddress.value].id
-                              .toString();
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      Checkout_Car_Service()));
-                        } else {
-                          otherCategory.billingSameAsShipping = "0";
-                          if (_formKeyReset.currentState!.validate()) {
-                            controller
-                                .addAddress(
-                                    nameController.text,
-                                    mobileController.text,
-                                    "Home",
-                                    houseNoController.text.toString(),
-                                    roadNameController.text.toString(),
-                                    roadNameController.text.toString(),
-                                    countryController.text.toString(),
-                                    stateController.text.toString(),
-                                    cityController.text.toString(),
-                                    pincodeController.text.toString(),
-                                    "$_latitude",
-                                    "$_longitude",
-                                    "1")
-                                .then((value) {
-                              otherCategory.billingSameAsShipping = "0";
-                              otherCategory.billingAddressId =
-                                  "${value['id'].toString()}";
-
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          Checkout_Car_Service()));
-                            });
-                          }
-                        }
+                        checkAndNavigate(controller, 'CarCheckOut');
 
                         //if check Same
                       } else if (widget.isFromFuelOnTab != null &&
@@ -248,30 +223,18 @@ class _SelectNewAddressState extends State<SelectNewAddress> {
                               .addressAList[selectedValueAddress.value].id,
                           'category_id': '${categoryId}',
                         });
-                        // Navigator.push(
-                        //     context,
-                        //     MaterialPageRoute(
-                        //         builder: (context) =>
-                        //             FuelOnTabCheckoutScreen(
-                        //               isFromFuelOnTap:
-                        //                   widget.isFromFuelOnTab,
-                        //             )));
-                      } else if (widget.isFromForLooking ?? false) {
+                      } /* else if (widget.isFromForLooking ?? false) {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
                                 builder: (context) => const MyAssets()));
-                      } else if (widget.isFromFGenSet ?? false) {
+                      }*/
+                      else if (widget.isFromFGenSet ?? false) {
                         Get.toNamed(Routes.GENSET_CHECKOUT, arguments: {
                           'address_id': controller
                               .addressAList[selectedValueAddress.value].id,
                           'category_id': '${categoryId}',
                         });
-                        // Navigator.push(
-                        //     context,
-                        //     MaterialPageRoute(
-                        //         builder: (context) =>
-                        //             const GetSetCheckoutScreen()));
                       } else {
                         Navigator.push(
                             context,
@@ -859,13 +822,53 @@ class _SelectNewAddressState extends State<SelectNewAddress> {
         });
   }
 
-  TextEditingController nameController = TextEditingController();
-  TextEditingController mobileController = TextEditingController();
-  TextEditingController alternatemobileController = TextEditingController();
-  TextEditingController houseNoController = TextEditingController();
-  TextEditingController roadNameController = TextEditingController();
-  TextEditingController countryController = TextEditingController();
-  TextEditingController stateController = TextEditingController();
-  TextEditingController cityController = TextEditingController();
-  TextEditingController pincodeController = TextEditingController();
+  checkAndNavigate(AddressController controller, String title) {
+    otherCategory.shippingAddressId =
+        controller.addressAList[selectedValueAddress.value].id.toString();
+    if (controller.isBillDeilivery.value == true) {
+      otherCategory.billingSameAsShipping = "1";
+      otherCategory.billingAddressId =
+          controller.addressAList[selectedValueAddress.value].id.toString();
+      if (title == 'orderFuel') {
+        Get.to(const ProfileAssets(
+          isFromFuel: true,
+        ));
+      } else if (title == 'ev') {
+        Navigator.pop(context, true);
+      } else {
+        Get.to(const Checkout_Car_Service());
+      }
+    } else {
+      otherCategory.billingSameAsShipping = "0";
+      if (_formKeyReset.currentState!.validate()) {
+        controller
+            .addAddress(
+                nameController.text,
+                mobileController.text,
+                "Home",
+                houseNoController.text.toString(),
+                roadNameController.text.toString(),
+                roadNameController.text.toString(),
+                countryController.text.toString(),
+                stateController.text.toString(),
+                cityController.text.toString(),
+                pincodeController.text.toString(),
+                "$_latitude",
+                "$_longitude",
+                "1")
+            .then((value) {
+          otherCategory.billingSameAsShipping = "0";
+          otherCategory.billingAddressId = "${value['id'].toString()}";
+
+          if (title == 'orderFuel') {
+            Get.to(const ProfileAssets(
+              isFromFuel: true,
+            ));
+          } else {
+            Get.to(const Checkout_Car_Service());
+          }
+        });
+      }
+    }
+  }
 }

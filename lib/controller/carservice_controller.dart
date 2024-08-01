@@ -37,6 +37,9 @@ class CarServiceController extends AppBaseController {
   @override
   void onInit() {
     super.onInit();
+    getVehiCleType();
+
+    getSlots();
   }
 
   Future<void> getVendors(String service_id, String service_type,
@@ -47,8 +50,12 @@ class CarServiceController extends AppBaseController {
     isLoading(false);
     vendorProductServiceModel(VendorServiceProductModel.fromJson(data));
     sellerList!.value = vendorProductServiceModel.value.data!;
-    update();
     isLoading.value = false;
+    update();
+  }
+
+  updateSlotId(int value) {
+    selectTimeSlot.value = value;
   }
 
   Future<void> getVehiCleType() async {
@@ -94,13 +101,13 @@ class CarServiceController extends AppBaseController {
     isLoading(false);
     vehicleModel(VehicleModel.fromJson(data));
     VehicleModelData v = VehicleModelData(name: "Select Vehicle Model");
+
     vehicleModelList!.value.add(v);
     vehicleModelList!.value.addAll(vehicleModel.value.data!);
+    selectedService.value = vehicleModelList!.value[0];
+    selectModel.value = vehicleModelList!.value[0];
+    selectedService.value = vehicleModelList!.value[0];
     // vehicleModelList!.value = vehicleModel.value.data!;
-    if (vehicleModelList!.value.isNotEmpty) {
-      selectedService.value = vehicleModelList!.value[0];
-      selectModel.value = vehicleModelList!.value[0];
-    }
 
     update();
     // list.value = response;

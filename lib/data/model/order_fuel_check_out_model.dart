@@ -91,7 +91,7 @@ class OrderFuelCheckData {
   });
 
   OrderFuelCheckData.fromJson(Map<String, dynamic> json) {
-    categoryId = json['category_id'];
+    categoryId = json['category_id'].toString();
     userId = json['user_id'];
     sellerId = json['seller_id'];
     vehicleType = json['vehicle_type'];
@@ -118,7 +118,8 @@ class OrderFuelCheckData {
     billingAddressData = json['billing_address_data'] != null
         ? BillingAddressData.fromJson(json['billing_address_data'])
         : null;
-    if (json['product'] != null) {
+    print('_______asdadasd________${json['product']}');
+    if (json['product'] != null && json['product'].isNotEmpty) {
       product = <Product>[];
       json['product'].forEach((v) {
         product!.add(Product.fromJson(v));
@@ -220,17 +221,17 @@ class ShippingAddressData {
   String? customerId;
   bool? isGuest;
   String? contactPersonName;
-  Null? email;
+  String? email;
   String? addressType;
   String? address;
-  Null? building;
-  Null? landmark;
+  String? building;
+  String? landmark;
   String? city;
   String? zip;
   String? phone;
   String? createdAt;
   String? updatedAt;
-  Null? state;
+  String? state;
   String? country;
   String? latitude;
   String? longitude;
@@ -309,7 +310,7 @@ class BillingAddressData {
   String? customerId;
   bool? isGuest;
   String? contactPersonName;
-  Null? email;
+  String? email;
   String? addressType;
   String? address;
   String? building;
@@ -683,24 +684,24 @@ class CategoryIds {
 class Seller {
   int? id;
   String? fName;
-  Null? lName;
+  String? lName;
   String? phone;
   String? image;
   String? email;
   String? password;
   String? status;
-  Null? rememberToken;
+  String? rememberToken;
   String? createdAt;
   String? updatedAt;
-  Null? bankName;
-  Null? branch;
-  Null? accountNo;
-  Null? holderName;
+  String? bankName;
+  String? branch;
+  String? accountNo;
+  String? holderName;
   String? authToken;
-  Null? salesCommissionPercentage;
+  String? salesCommissionPercentage;
   String? gst;
   String? pan;
-  Null? cmFirebaseToken;
+  String? cmFirebaseToken;
   int? posStatus;
   int? minimumOrderAmount;
   int? freeDeliveryStatus;
