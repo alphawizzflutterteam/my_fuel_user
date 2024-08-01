@@ -1,16 +1,24 @@
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:get/get_rx/get_rx.dart';
+import 'package:test_prj/orderfuel/doorStepDelivery/controller/add_vehicle_controller.dart';
 
 import '../data/model/assetlist_model.dart';
 import '../service/provider/lavavel_provider.dart';
 import 'appBase/appbase_controller.dart';
 
 class AssetController extends AppBaseController {
-  LaravelApiClient _laravelApiClient = Get.find<LaravelApiClient>();
+  final LaravelApiClient _laravelApiClient = Get.find<LaravelApiClient>();
+
+  final addAssetController = Get.put(AddVehicleController());
 
   RxBool isLoading = false.obs;
   var assetInfoModel = AssetListModel().obs;
-  RxList<AssetData>? dataList = <AssetData>[].obs;
+
+  RxList<AssetData>? assetDataList = <AssetData>[].obs;
+
+  RxInt selectedButton = 1.obs;
+  RxInt selectedAsset = 0.obs;
   @override
   void onInit() {
     super.onInit();
@@ -64,8 +72,8 @@ class AssetController extends AppBaseController {
     Map<String, dynamic> data = await _laravelApiClient.assetsList();
 
     assetInfoModel(AssetListModel.fromJson(data));
-    dataList!.value = assetInfoModel.value.data!;
+    assetDataList!.value = assetInfoModel.value.data!;
     isLoading(false);
-    print("dataList ${dataList!.value.length}");
+    print("dataList ${assetDataList!.value.length}");
   }
 }

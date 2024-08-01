@@ -86,7 +86,7 @@ class _CarwashdetailsState extends State<Carwashdetails> {
           children: [
             Container(
               height: 100,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.center,

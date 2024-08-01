@@ -59,7 +59,7 @@ class _SelectAddressState extends State<SelectAddress> {
           children: [
             Container(
               height: 120,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 gradient: LinearGradient(
                   begin: Alignment.centerLeft,
                   end: Alignment.centerRight,

@@ -10,6 +10,8 @@ class Routes {
   static const FUEL_CHECKOUT = '/fuelcheckout';
   static const ORDERPLACED = '/placeorder';
   static const FUELONTAP = '/fuelontap';
+  static const VENDORSCREEN = '/vendorScreen';
+  static const orderFuelCheckout = '/orderFuelCheckout';
 
   static const ROOT = '/root';
   static const RATING = '/rating';

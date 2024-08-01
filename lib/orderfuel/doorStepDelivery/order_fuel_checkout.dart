@@ -33,77 +33,87 @@ class _OrderFuelCheckOutState extends State<OrderFuelCheckOut> {
                 : Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: colors.myCardColor,
-                              ),
-                              height: 105,
-                              padding: const EdgeInsets.all(12),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const Text(
-                                    'Delivery Address',
-                                    style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                  const SizedBox(height: 10),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      const Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            'Navin Yadav,452010',
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                          Text(
-                                            'G-14 1st sobari nagar,sukhliya..',
-                                            style: TextStyle(
-                                                color: Color.fromRGBO(
-                                                    118, 118, 128, 1),
-                                                fontSize: 12,
-                                                fontWeight: FontWeight.w700),
-                                          ),
-                                        ],
-                                      ),
-                                      Container(
-                                        height: 24,
-                                        width: 57,
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(4),
-                                            color: Colors.white,
-                                            border:
-                                                Border.all(color: Colors.red)),
-                                        child: const Center(
-                                          child: Text(
-                                            'Home',
-                                            style: TextStyle(
-                                              fontSize: 12,
-                                              color: Colors.red,
-                                            ),
-                                          ),
+                      (controller.vendorController.argument['from'] != null &&
+                              (controller.vendorController.argument['from'] ==
+                                      'asset' ||
+                                  controller
+                                          .vendorController.argument['from'] ==
+                                      'ev'))
+                          ? Column(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      color: colors.myCardColor,
+                                    ),
+                                    height: 105,
+                                    padding: const EdgeInsets.all(12),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        const Text(
+                                          'Delivery Address',
+                                          style: TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold),
                                         ),
-                                      )
-                                    ],
+                                        const SizedBox(height: 10),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  '${controller.orderFuelCheckData?.shippingAddressData?.contactPersonName}, ${controller.orderFuelCheckData?.shippingAddressData?.zip}',
+                                                  style: const TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                                Text(
+                                                  '${controller.orderFuelCheckData?.shippingAddressData?.address}',
+                                                  style: const TextStyle(
+                                                      color: Color.fromRGBO(
+                                                          118, 118, 128, 1),
+                                                      fontSize: 12,
+                                                      fontWeight:
+                                                          FontWeight.w700),
+                                                ),
+                                              ],
+                                            ),
+                                            Container(
+                                              height: 24,
+                                              width: 57,
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(4),
+                                                  color: Colors.white,
+                                                  border: Border.all(
+                                                      color: Colors.red)),
+                                              child: Center(
+                                                child: Text(
+                                                  '${controller.orderFuelCheckData?.shippingAddressData?.addressType}',
+                                                  style: const TextStyle(
+                                                    fontSize: 12,
+                                                    color: Colors.red,
+                                                  ),
+                                                ),
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
+                                ),
+                              ],
+                            )
+                          : const SizedBox(),
                       Card(
                         color: colors.myCardColor,
                         elevation: 0,

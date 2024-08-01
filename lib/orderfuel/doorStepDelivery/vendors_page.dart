@@ -21,7 +21,11 @@ class VendorsPage extends StatelessWidget {
       init: VendorController(),
       builder: (controller) {
         return Scaffold(
-          appBar: const MyAppbar(title: "Vendors"),
+          appBar: MyAppbar(
+              title: controller.orderFuelController.selectedIndex.value == 1 &&
+                      controller.argument['from'] == 'ev'
+                  ? 'Charging Station'
+                  : "Vendors"),
           body: Obx(
             () {
               return controller.isLoading.value
@@ -36,69 +40,82 @@ class VendorsPage extends StatelessWidget {
                             child: Column(
                               children: [
                                 // fuels price section
-                                Container(
-                                  height: 59,
-                                  decoration: BoxDecoration(
-                                    color:
-                                        const Color.fromRGBO(138, 180, 2, 200),
-                                    border: Border.all(
-                                      color:
-                                          const Color.fromRGBO(138, 180, 2, 10),
-                                    ),
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 16),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      InkWell(
-                                        onTap: () {
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    const GetSetCheckoutScreen(
-                                                      isfrom: true,
-                                                    )),
-                                          );
-                                        },
-                                        child: const Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
+                                controller.orderFuelController.selectedIndex
+                                                .value ==
+                                            1 &&
+                                        controller.argument['from'] == 'ev'
+                                    ? SizedBox()
+                                    : Container(
+                                        height: 59,
+                                        decoration: BoxDecoration(
+                                          color: const Color.fromRGBO(
+                                              138, 180, 2, 200),
+                                          border: Border.all(
+                                            color: const Color.fromRGBO(
+                                                138, 180, 2, 10),
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                        ),
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 16),
+                                        child: Row(
                                           mainAxisAlignment:
-                                              MainAxisAlignment.center,
+                                              MainAxisAlignment.spaceBetween,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
                                           children: [
-                                            Text(
-                                              "My Fuels Price",
-                                              style: TextStyle(
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.bold,
+                                            InkWell(
+                                              onTap: () {
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          const GetSetCheckoutScreen(
+                                                            isfrom: true,
+                                                          )),
+                                                );
+                                              },
+                                              child: const Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  Text(
+                                                    "My Fuels Price",
+                                                    style: TextStyle(
+                                                      fontSize: 16,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    ),
+                                                  ),
+                                                  Text(
+                                                    "₹89.00",
+                                                    style: TextStyle(
+                                                        fontSize: 20,
+                                                        color: Color.fromRGBO(
+                                                            138, 180, 2, 1),
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ),
+                                                ],
                                               ),
                                             ),
-                                            Text(
-                                              "₹89.00",
-                                              style: TextStyle(
-                                                  fontSize: 20,
-                                                  color: Color.fromRGBO(
-                                                      138, 180, 2, 1),
-                                                  fontWeight: FontWeight.bold),
-                                            ),
+                                            Image.asset(
+                                              "assets/Arrow - Down 2.png",
+                                              height: 24,
+                                            )
                                           ],
                                         ),
                                       ),
-                                      Image.asset(
-                                        "assets/Arrow - Down 2.png",
-                                        height: 24,
-                                      )
-                                    ],
-                                  ),
-                                ),
 
-                                const SizedBox(height: 20),
+                                controller.orderFuelController.selectedIndex
+                                                .value ==
+                                            1 &&
+                                        controller.argument['from'] == 'ev'
+                                    ? SizedBox()
+                                    : const SizedBox(height: 20),
 
                                 ListView.builder(
                                   itemCount: controller.vendorList.length,
@@ -110,7 +127,10 @@ class VendorsPage extends StatelessWidget {
                                     return GestureDetector(
                                       onTap: () => Get.to(
                                           const OrderFuelCheckOut(),
-                                          arguments: item.productId),
+                                          arguments: [
+                                            item.productId,
+                                            item.sellerId.toString()
+                                          ]),
                                       child: Container(
                                         height: 102,
                                         margin:
