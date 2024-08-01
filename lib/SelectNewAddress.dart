@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
@@ -9,6 +10,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:test_prj/components/my_appbar.dart';
 import 'package:test_prj/components/my_button.dart';
 import 'package:test_prj/controller/address_controller.dart';
+import 'package:test_prj/controller/profile_controller.dart';
 import 'package:test_prj/helper/colors.dart';
 import 'package:test_prj/home_page.dart';
 import 'package:test_prj/orderfuel/EV/checkout_page.dart';
@@ -82,6 +84,42 @@ class _SelectNewAddressState extends State<SelectNewAddress> {
           'Location permissions are permanently denied, we cannot request permissions.');
     }
 
+    Position position = await Geolocator.getCurrentPosition();
+    print("object position $position");
+    print("object position ${position.toJson()}");
+    List<Placemark> placemark = await placemarkFromCoordinates(
+        double.parse(position.latitude!.toString()),
+        double.parse(position.longitude!.toString()),
+        localeIdentifier: "en");
+
+    placemark.toList(growable: true);
+
+    Placemark place = placemark[0];
+
+    address =
+        "${place.street}, ${place.locality}, ${place.postalCode}, ${place.country}";
+
+    ProfileController profileController = Get.put(ProfileController());
+    AddressController addressController = Get.put(AddressController());
+    addressController
+        .addAddress(
+            profileController.userInfoModel.value.fName.toString(),
+            profileController.userInfoModel.value.phone.toString(),
+            "Home",
+            place.street.toString(),
+            place.locality.toString(),
+            place.locality.toString(),
+            place.country.toString(),
+            place.administrativeArea.toString(),
+            place.locality.toString(),
+            place.postalCode.toString(),
+            "$_latitude",
+            "$_longitude",
+            "1")
+        .then((value) {
+      addressController.getAddRess();
+    });
+    setState(() {});
     // When we reach here, permissions are granted and we can
     // continue accessing the position of the device.
     return await Geolocator.getCurrentPosition();
@@ -91,7 +129,6 @@ class _SelectNewAddressState extends State<SelectNewAddress> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _determinePosition();
   }
 
   Widget customRadio(String text, int value) {

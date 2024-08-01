@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
@@ -5,11 +6,13 @@ import 'package:test_prj/authPages/login_page.dart';
 import 'package:test_prj/controller/language_controller.dart';
 import 'package:test_prj/helper/colors.dart';
 import 'package:test_prj/language/language_global_var.dart';
+import 'package:test_prj/routes/app_routes.dart';
 
 import '../helper/utils/shared_preference.dart';
 
 class LanguageScreen extends StatelessWidget {
-  const LanguageScreen({super.key});
+  final bool? isLogin;
+  LanguageScreen({super.key, this.isLogin = false});
 
   @override
   Widget build(BuildContext context) {
@@ -19,40 +22,53 @@ class LanguageScreen extends StatelessWidget {
           return Scaffold(
             body: Column(
               children: [
-                Container(
-                  height: 105,
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.centerLeft,
-                      end: Alignment.centerRight,
-                      colors: [
-                        Color.fromRGBO(252, 130, 59, 1),
-                        Color.fromRGBO(252, 130, 59, 1),
-                        Color.fromRGBO(211, 83, 7, 1),
-                      ],
-                    ),
-                    borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(23),
-                      bottomRight: Radius.circular(23),
-                    ),
-                  ),
-                  child: Padding(
-                    padding:
-                        const EdgeInsets.only(top: 45.0, left: 20, right: 20),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          LanguageGlobalVar.Choose_Language.tr,
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 20,
-                            fontWeight: FontWeight.w400,
-                          ),
+                Stack(
+                  children: [
+                    Positioned(
+                      child: Padding(
+                        padding: EdgeInsets.only(top: 45.0, left: 20),
+                        child: Icon(
+                          Icons.arrow_back,
+                          color: Colors.white,
                         ),
-                      ],
+                      ),
                     ),
-                  ),
+                    Container(
+                      height: 105,
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.centerLeft,
+                          end: Alignment.centerRight,
+                          colors: [
+                            Color.fromRGBO(252, 130, 59, 1),
+                            Color.fromRGBO(252, 130, 59, 1),
+                            Color.fromRGBO(211, 83, 7, 1),
+                          ],
+                        ),
+                        borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(23),
+                          bottomRight: Radius.circular(23),
+                        ),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            top: 45.0, left: 20, right: 20),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              LanguageGlobalVar.Choose_Language.tr,
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 20,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: 20, right: 20, top: 28),
@@ -111,6 +127,8 @@ class LanguageScreen extends StatelessWidget {
                                     SharedPreferencesService.kLanguageKey, "7");
                                 controller.changeLanguage('en', 'US');
                               }
+
+                              Get.offAllNamed(Routes.LOGIN);
                             },
                             child: Container(
                               width: 150,

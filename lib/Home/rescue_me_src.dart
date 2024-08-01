@@ -21,13 +21,7 @@ class RescueMe extends StatefulWidget {
 }
 
 class _RescueMeState extends State<RescueMe> {
-  List<String> services = [
-    'Fuel',
-    'Tyres',
-    'Changes',
-    'Jump Start',
-    'Towing(break down)'
-  ];
+  List<String> services = ['Fuel', 'Tyres', 'Jump Start', 'Towing(break down)'];
 
   TextEditingController fuelQuantityController = TextEditingController();
   List<String> vehicles = ['2 wheeler', '4 wheeler'];

@@ -26,7 +26,7 @@ class AppPages {
     ),
     GetPage(
       name: Routes.LANGUAGE,
-      page: () => const LanguageScreen(),
+      page: () => LanguageScreen(),
       binding: InitialBinding(),
     ),
     GetPage(

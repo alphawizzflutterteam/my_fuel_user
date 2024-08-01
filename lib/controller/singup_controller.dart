@@ -18,7 +18,7 @@ class SignupController extends AppBaseController {
   Future<Map<String, dynamic>?> Register(User user) async {
     isLoading(true);
     Map<String, dynamic>? val;
-    print("User ${user.toJson()}");
+    print("User Register${user.toJson()}");
     Map<String, dynamic> data = await _laravelApiClient.register(user);
     print("User ${data}");
     isLoading(false);
