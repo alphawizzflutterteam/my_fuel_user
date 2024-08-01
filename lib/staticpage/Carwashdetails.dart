@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:test_prj/components/widgets/globle_widgets.dart';
 import 'package:test_prj/orderfuel/EV/checkout_page.dart';
 
 import '../Home/checkout_car_service.dart';
 import '../components/my_button.dart';
 import '../data/model/VendorServiceProductModel.dart';
 import '../helper/colors.dart';
+import '../helper/utils/validator_all.dart';
 import '../home_page.dart';
 import '../splashScreen.dart';
 
@@ -33,7 +35,6 @@ class _CarwashdetailsState extends State<Carwashdetails> {
     return Scaffold(
       floatingActionButton: Container(
         width: double.infinity,
-
         decoration: BoxDecoration(
           gradient: const LinearGradient(
             colors: [Color(0xFFF3B781F), Color(0xFF8AB402)],
@@ -148,10 +149,13 @@ class _CarwashdetailsState extends State<Carwashdetails> {
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(10),
                         child: Image.network(
-                          'https://media.istockphoto.com/id/1330589502/photo/electric-vehicle-charging-station.jpg?s=1024x1024&w=is&k=20&c=gwve61BLBc9djE8P9Qp-2KSxS-ehZtvlcTW6AKy4DOA=',
+                          '${configModel?.baseUrls?.sellerImageUrl}/${widget.sellerData?.seller?.image}',
                           height: 130,
                           width: 100,
                           fit: BoxFit.cover,
+                          errorBuilder: (context, error, stackTrace) {
+                            return errorImage(100, 100);
+                          },
                         ),
                       ),
                     ),
@@ -188,7 +192,9 @@ class _CarwashdetailsState extends State<Carwashdetails> {
                             Row(
                               children: [
                                 Text(
-                                  "₹350",
+                                  widget.sellerData?.products?.length == 0
+                                      ? "₹ ${widget.sellerData?.products?[0].unitPrice}"
+                                      : "₹ ${0.0}",
                                   style: TextStyle(
                                     fontSize: 16,
                                     color: Colors.black54,
@@ -352,12 +358,12 @@ class _CarwashdetailsState extends State<Carwashdetails> {
                                 // Use ClipRRect to clip the image with the specified border radius
                                 borderRadius: BorderRadius.circular(10),
                                 child: Image.network(
-                                  "${configModel!.baseUrls!.brandImageUrl}/${widget.sellerData!.products![index].images![0]}",
+                                  widget.sellerData!.products?[index].images ==
+                                          null
+                                      ? ""
+                                      : "${configModel!.baseUrls!.productThumbnailUrl}/${widget.sellerData!.products?[index].thumbnail}",
                                   errorBuilder: (context, error, stackTrace) {
-                                    return Image.asset(
-                                      'assets/tyre.png',
-                                      fit: BoxFit.cover,
-                                    );
+                                    return errorImage(100, 100);
                                   },
                                 ),
                               ),
@@ -588,6 +594,109 @@ class _CarwashdetailsState extends State<Carwashdetails> {
                 SizedBox(
                   height: 20,
                 ),
+
+                ListView.builder(
+                  physics: NeverScrollableScrollPhysics(),
+                  itemCount: widget.sellerData!.reviews?.length,
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) {
+                    return Column(
+                      children: [
+                        Container(
+                          margin:
+                              EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                          child: Padding(
+                            padding: EdgeInsets.all(1),
+                            child: Row(
+                              children: [
+                                Container(
+                                  height: 40,
+                                  width: 40,
+                                  margin: EdgeInsets.only(right: 10),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(50),
+                                    child: Image.network(
+                                      'https://media.istockphoto.com/id/1330589502/photo/electric-vehicle-charging-station.jpg?s=1024x1024&w=is&k=20&c=gwve61BLBc9djE8P9Qp-2KSxS-ehZtvlcTW6AKy4DOA=',
+                                      height: 40,
+                                      width: 40,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ),
+                                Expanded(
+                                  child: Padding(
+                                    padding: EdgeInsets.symmetric(vertical: 0),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Text(
+                                              "${widget.sellerData!.reviews![index].user?.fName}",
+                                              style: TextStyle(
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.black,
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 30),
+                                              child: Text(
+                                                "${widget.sellerData!.reviews![index].createdAt.toString()}",
+                                                // "${Validator.convertDateString()}",
+                                                style: TextStyle(
+                                                  fontSize: 15,
+                                                  color: Colors.black54,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        RatingBar.builder(
+                                          initialRating: double.parse(widget
+                                              .sellerData!
+                                              .reviews![index]
+                                              .rating
+                                              .toString()),
+                                          minRating: 2,
+                                          direction: Axis.horizontal,
+                                          itemSize: 22,
+                                          itemCount: 5,
+                                          itemPadding: EdgeInsets.symmetric(
+                                              horizontal: 0.0),
+                                          itemBuilder: (context, _) => Icon(
+                                            Icons.star,
+                                            color: Colors.amber,
+                                          ),
+                                          onRatingUpdate: (rating) {
+                                            print(rating);
+                                          },
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 5),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 15, right: 10),
+                          child: Text(
+                            "Comment :${widget.sellerData!.reviews![index].comment}",
+                            style:
+                                TextStyle(fontSize: 14, color: Colors.black54),
+                          ),
+                        ),
+                      ],
+                    );
+                  },
+                ),
                 Container(
                   margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                   child: Padding(
@@ -662,99 +771,99 @@ class _CarwashdetailsState extends State<Carwashdetails> {
                   ),
                 ),
                 SizedBox(height: 5),
-                Padding(
-                  padding: const EdgeInsets.only(left: 15, right: 10),
-                  child: Text(
-                    "Lorem Ipsum is simply dummy text of the "
-                    "printing and typesetting industry.",
-                    style: TextStyle(fontSize: 14, color: Colors.black54),
-                  ),
-                ),
-                SizedBox(height: 5),
-                Container(
-                  margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                  child: Padding(
-                    padding: EdgeInsets.all(1),
-                    child: Row(
-                      children: [
-                        Container(
-                          height: 40,
-                          width: 40,
-                          margin: EdgeInsets.only(right: 10),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(50),
-                            child: Image.network(
-                              'https://media.istockphoto.com/id/1330589502/photo/electric-vehicle-charging-station.jpg?s=1024x1024&w=is&k=20&c=gwve61BLBc9djE8P9Qp-2KSxS-ehZtvlcTW6AKy4DOA=',
-                              height: 40,
-                              width: 40,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(vertical: 0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Row(
-                                  children: [
-                                    Text(
-                                      "Wade Warren",
-                                      style: TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.black,
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(left: 30),
-                                      child: Text(
-                                        "02 Jun 23, 04:55",
-                                        style: TextStyle(
-                                          fontSize: 15,
-                                          color: Colors.black54,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-
-                                // SizedBox(height: 8),
-                                RatingBar.builder(
-                                  initialRating: 3,
-                                  minRating: 1,
-                                  direction: Axis.horizontal,
-                                  itemSize: 22,
-                                  itemCount: 5,
-                                  itemPadding:
-                                      EdgeInsets.symmetric(horizontal: 0.0),
-                                  itemBuilder: (context, _) => Icon(
-                                    Icons.star,
-                                    color: Colors.amber,
-                                  ),
-                                  onRatingUpdate: (rating) {
-                                    print(rating);
-                                  },
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                SizedBox(height: 5),
-                Padding(
-                  padding: const EdgeInsets.only(left: 15, right: 10),
-                  child: Text(
-                    "Lorem Ipsum is simply dummy text of the "
-                    "printing and typesetting industry.",
-                    style: TextStyle(fontSize: 14, color: Colors.black54),
-                  ),
-                ),
+                // Padding(
+                //   padding: const EdgeInsets.only(left: 15, right: 10),
+                //   child: Text(
+                //     "Lorem Ipsum is simply dummy text of the "
+                //     "printing and typesetting industry.",
+                //     style: TextStyle(fontSize: 14, color: Colors.black54),
+                //   ),
+                // ),
+                // SizedBox(height: 5),
+                // Container(
+                //   margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                //   child: Padding(
+                //     padding: EdgeInsets.all(1),
+                //     child: Row(
+                //       children: [
+                //         Container(
+                //           height: 40,
+                //           width: 40,
+                //           margin: EdgeInsets.only(right: 10),
+                //           child: ClipRRect(
+                //             borderRadius: BorderRadius.circular(50),
+                //             child: Image.network(
+                //               'https://media.istockphoto.com/id/1330589502/photo/electric-vehicle-charging-station.jpg?s=1024x1024&w=is&k=20&c=gwve61BLBc9djE8P9Qp-2KSxS-ehZtvlcTW6AKy4DOA=',
+                //               height: 40,
+                //               width: 40,
+                //               fit: BoxFit.cover,
+                //             ),
+                //           ),
+                //         ),
+                //         Expanded(
+                //           child: Padding(
+                //             padding: EdgeInsets.symmetric(vertical: 0),
+                //             child: Column(
+                //               crossAxisAlignment: CrossAxisAlignment.start,
+                //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //               children: [
+                //                 Row(
+                //                   children: [
+                //                     Text(
+                //                       "Wade Warren",
+                //                       style: TextStyle(
+                //                         fontSize: 18,
+                //                         fontWeight: FontWeight.bold,
+                //                         color: Colors.black,
+                //                       ),
+                //                     ),
+                //                     Padding(
+                //                       padding: const EdgeInsets.only(left: 30),
+                //                       child: Text(
+                //                         "02 Jun 23, 04:55",
+                //                         style: TextStyle(
+                //                           fontSize: 15,
+                //                           color: Colors.black54,
+                //                         ),
+                //                       ),
+                //                     ),
+                //                   ],
+                //                 ),
+                //
+                //                 // SizedBox(height: 8),
+                //                 RatingBar.builder(
+                //                   initialRating: 3,
+                //                   minRating: 1,
+                //                   direction: Axis.horizontal,
+                //                   itemSize: 22,
+                //                   itemCount: 5,
+                //                   itemPadding:
+                //                       EdgeInsets.symmetric(horizontal: 0.0),
+                //                   itemBuilder: (context, _) => Icon(
+                //                     Icons.star,
+                //                     color: Colors.amber,
+                //                   ),
+                //                   onRatingUpdate: (rating) {
+                //                     print(rating);
+                //                   },
+                //                 ),
+                //               ],
+                //             ),
+                //           ),
+                //         ),
+                //       ],
+                //     ),
+                //   ),
+                // ),
+                // SizedBox(height: 5),
+                // Padding(
+                //   padding: const EdgeInsets.only(left: 15, right: 10),
+                //   child: Text(
+                //     "Lorem Ipsum is simply dummy text of the "
+                //     "printing and typesetting industry.",
+                //     style: TextStyle(fontSize: 14, color: Colors.black54),
+                //   ),
+                // ),
                 SizedBox(
                   height: 20,
                 ),

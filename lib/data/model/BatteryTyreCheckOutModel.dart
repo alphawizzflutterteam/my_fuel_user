@@ -8,6 +8,7 @@ class BatteryTyreCheckOutModel {
   BatteryTyreCheckOutModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     message = json['message'];
+
     data = json['data'] != null
         ? new BatteryTyreData.fromJson(json['data'])
         : null;
@@ -26,8 +27,8 @@ class BatteryTyreCheckOutModel {
 
 class BatteryTyreData {
   String? categoryId;
-  int? userId;
-  int? sellerId;
+  String? userId;
+  String? sellerId;
   String? vehicleType;
   String? vehicleModel;
   String? productId;
@@ -82,9 +83,9 @@ class BatteryTyreData {
       this.productName});
 
   BatteryTyreData.fromJson(Map<String, dynamic> json) {
-    categoryId = json['category_id'];
-    userId = json['user_id'];
-    sellerId = json['seller_id'];
+    categoryId = json['category_id'].toString();
+    userId = json['user_id'].toString();
+    sellerId = json['seller_id'].toString();
     vehicleType = json['vehicle_type'];
     vehicleModel = json['vehicle_model'];
     productId = json['product_id'];

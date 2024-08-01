@@ -5,6 +5,7 @@ import 'package:test_prj/carwash_vendordet.dart';
 import 'package:test_prj/myOrder/CarWash.dart';
 import 'package:test_prj/myOrder/myOrder.dart';
 
+import '../helper/utils/app_constants.dart';
 import '../splashScreen.dart';
 
 class CarWash extends StatefulWidget {
@@ -192,7 +193,7 @@ class _CarWashState extends State<CarWash> {
                                           Row(
                                             children: [
                                               Text(
-                                                'Rs.350',
+                                                '${AppConstants.currencySymbol}350',
                                                 style: TextStyle(
                                                     fontSize: 18,
                                                     fontWeight:

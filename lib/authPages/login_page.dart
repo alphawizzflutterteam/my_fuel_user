@@ -266,6 +266,14 @@ class _LoginPageState extends State<LoginPage> {
         });
   }
 
+  final bool isPassword = true;
+  bool _obscureText = true;
+  void _toggle() {
+    setState(() {
+      _obscureText = !_obscureText;
+    });
+  }
+
   Widget showPersonal() {
     return Column(
       children: [
@@ -293,6 +301,7 @@ class _LoginPageState extends State<LoginPage> {
         const SizedBox(height: 15),
         TextFormField(
           controller: passwordController,
+          obscureText: isPassword ? _obscureText : false,
           validator: (value) {
             if (value == null || value.isEmpty) {
               return 'Please enter password';
@@ -300,11 +309,12 @@ class _LoginPageState extends State<LoginPage> {
             return null;
           },
           decoration: InputDecoration(
-            suffixIcon: IconButton(
-                onPressed: () {
-                  setState(() {});
-                },
-                icon: Icon(Icons.remove_red_eye)),
+            suffixIcon: isPassword
+                ? GestureDetector(
+                    onTap: _toggle,
+                    child: Icon(
+                        _obscureText ? Icons.visibility_off : Icons.visibility))
+                : const SizedBox.shrink(),
             label: Text('Password'),
             labelStyle: TextStyle(color: Colors.grey.shade700),
             enabled: true,
@@ -375,6 +385,7 @@ class _LoginPageState extends State<LoginPage> {
         SizedBox(
           height: 56,
           child: TextFormField(
+            obscureText: isPassword ? _obscureText : false,
             controller: passwordController,
             validator: (value) {
               if (value == null || value.isEmpty) {
@@ -384,6 +395,13 @@ class _LoginPageState extends State<LoginPage> {
             },
             decoration: InputDecoration(
               label: Text('Password'),
+              suffixIcon: isPassword
+                  ? GestureDetector(
+                      onTap: _toggle,
+                      child: Icon(_obscureText
+                          ? Icons.visibility_off
+                          : Icons.visibility))
+                  : const SizedBox.shrink(),
               labelStyle: TextStyle(color: Colors.grey.shade700),
               enabled: true,
               enabledBorder: OutlineInputBorder(

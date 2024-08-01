@@ -34,9 +34,9 @@ class WalletController extends AppBaseController {
     Map<String, dynamic> data = await _laravelApiClient.addMoney(
         amount, transaction_id, payment_method);
 
-    walletInfoModel(WalletTransactionModel.fromJson(data));
-    listView!.value = walletInfoModel.value.walletTransactionList!;
+    // walletInfoModel(WalletTransactionModel.fromJson(data));
+    // listView!.value = walletInfoModel.value.walletTransactionList!;
     isLoading(false);
-    print("getBanner ${walletInfoModel.value}");
+    // print("getBanner ${walletInfoModel.value}");
   }
 }

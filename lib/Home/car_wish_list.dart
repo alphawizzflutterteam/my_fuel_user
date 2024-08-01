@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:test_prj/components/widgets/globle_widgets.dart';
 import 'package:test_prj/home_page.dart';
 import 'package:test_prj/orderfuel/EV/charginStationDetails.dart';
+import 'package:test_prj/splashScreen.dart';
 
 import '../components/my_button.dart';
 import '../controller/carservice_controller.dart';
@@ -22,6 +24,12 @@ class _CarWashListState extends State<CarWashList> {
   void initState() {
     // TODO: implement initState
     super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
     CarServiceController carServiceController = Get.put(CarServiceController());
     carServiceController.getVendors(
         otherCategory.categoryId.toString(),
@@ -149,9 +157,12 @@ class _CarWashListState extends State<CarWashList> {
                                               // Use ClipRRect to clip the image with the specified border radius
                                               borderRadius:
                                                   BorderRadius.circular(10),
-                                              child: Image.asset(
-                                                'assets/tyre.png',
-                                                fit: BoxFit.cover,
+                                              child: Image.network(
+                                                "${configModel?.baseUrls?.sellerImageUrl}/${carServiceController.sellerList?[index].seller?.image.toString()}",
+                                                errorBuilder: (context, error,
+                                                    stackTrace) {
+                                                  return errorImage(100, 100);
+                                                },
                                               ),
                                             ),
                                           ),
@@ -200,7 +211,14 @@ class _CarWashListState extends State<CarWashList> {
                                                         .spaceBetween,
                                                 children: [
                                                   Text(
-                                                      '₹ ${carServiceController.sellerList![index].products![0].unitPrice.toString()}',
+                                                      carServiceController
+                                                                  .sellerList?[
+                                                                      index]
+                                                                  .products
+                                                                  ?.length ==
+                                                              0
+                                                          ? "₹ 0.0"
+                                                          : '₹ ${carServiceController.sellerList![index].products![0].unitPrice.toString()}',
                                                       style: TextStyle(
                                                           fontSize: 16,
                                                           fontWeight:
@@ -238,7 +256,7 @@ class _CarWashListState extends State<CarWashList> {
                                                         ),
                                                         SizedBox(width: 5),
                                                         Text(
-                                                          '${carServiceController.sellerList![index].products!.length}',
+                                                          '${carServiceController.sellerList![index].reviews!.length}',
                                                           style: TextStyle(
                                                             color: Colors.white,
                                                           ),

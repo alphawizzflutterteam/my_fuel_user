@@ -6,6 +6,8 @@ import 'package:test_prj/helper/colors.dart';
 import 'package:test_prj/payment/paymentScreen.dart';
 import 'package:test_prj/payment/payment_form.dart';
 
+import '../helper/utils/app_constants.dart';
+
 class Checkout_Battery extends StatefulWidget {
   const Checkout_Battery({super.key});
 
@@ -21,7 +23,6 @@ class _Checkout_BatteryState extends State<Checkout_Battery> {
         leading: Icon(Icons.arrow_back_ios_new_outlined),
         foregroundColor: Colors.white,
         flexibleSpace: Container(
-
           decoration: BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment.centerLeft,
@@ -45,11 +46,11 @@ class _Checkout_BatteryState extends State<Checkout_Battery> {
             bottomLeft: Radius.circular(20),
             bottomRight: Radius.circular(20),
           ),
-        ),),
+        ),
+      ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-
           // Column(
           //   children: [
           //
@@ -169,8 +170,7 @@ class _Checkout_BatteryState extends State<Checkout_Battery> {
                 children: [
                   const Text(
                     'Delivery Address',
-                    style: TextStyle(
-                        fontSize: 16, fontWeight: FontWeight.bold),
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 10),
                   Row(
@@ -197,7 +197,7 @@ class _Checkout_BatteryState extends State<Checkout_Battery> {
                         width: 57,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(4),
-                            color:  colors.primary.withOpacity(.1),
+                            color: colors.primary.withOpacity(.1),
                             border: Border.all(color: colors.primary)),
                         child: const Center(
                           child: Text(
@@ -211,16 +211,20 @@ class _Checkout_BatteryState extends State<Checkout_Battery> {
                       )
                     ],
                   ),
-                  SizedBox(height: 20,),
-
+                  SizedBox(
+                    height: 20,
+                  ),
                   Container(
                     width: MediaQuery.sizeOf(context).width,
                     height: 50,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
-                        border: Border.all(color: colors.blackTemp)
-                    ),
-                    child: Center(child: Text('Change or add new address',style: TextStyle(fontWeight: FontWeight.bold),)),
+                        border: Border.all(color: colors.blackTemp)),
+                    child: Center(
+                        child: Text(
+                      'Change or add new address',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    )),
                   )
                 ],
               ),
@@ -232,16 +236,20 @@ class _Checkout_BatteryState extends State<Checkout_Battery> {
               width: MediaQuery.sizeOf(context).width,
               color: colors.lightgray,
               child: Padding(
-                padding: const EdgeInsets.only(left: 16,top: 12,bottom: 8),
+                padding: const EdgeInsets.only(left: 16, top: 12, bottom: 8),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Car & tyres detail',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18),),
-                    SizedBox(height: 15,),
+                    Text(
+                      'Car & tyres detail',
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
                     Row(
                       children: [
-
-
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -255,10 +263,13 @@ class _Checkout_BatteryState extends State<Checkout_Battery> {
                               'Audi',
                               style: TextStyle(fontWeight: FontWeight.w600),
                             ),
-                            SizedBox(height: 10,),
+                            SizedBox(
+                              height: 10,
+                            ),
                             Text(
                               'Tyres',
-                              style: TextStyle( color: Colors.black.withOpacity(0.5),
+                              style: TextStyle(
+                                  color: Colors.black.withOpacity(0.5),
                                   fontWeight: FontWeight.w500),
                             ),
                             Text(
@@ -267,7 +278,9 @@ class _Checkout_BatteryState extends State<Checkout_Battery> {
                             ),
                           ],
                         ),
-                        SizedBox(width: 30,),
+                        SizedBox(
+                          width: 30,
+                        ),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -281,10 +294,13 @@ class _Checkout_BatteryState extends State<Checkout_Battery> {
                               'A3',
                               style: TextStyle(fontWeight: FontWeight.w600),
                             ),
-                            SizedBox(height: 10,),
+                            SizedBox(
+                              height: 10,
+                            ),
                             Text(
                               'Booking Date',
-                              style: TextStyle( color: Colors.black.withOpacity(0.5),
+                              style: TextStyle(
+                                  color: Colors.black.withOpacity(0.5),
                                   fontWeight: FontWeight.w500),
                             ),
                             Text(
@@ -301,7 +317,9 @@ class _Checkout_BatteryState extends State<Checkout_Battery> {
             ),
           ),
 
-          SizedBox(height: 20,),
+          SizedBox(
+            height: 20,
+          ),
           Container(
             child: Column(
               children: [
@@ -399,7 +417,7 @@ class _Checkout_BatteryState extends State<Checkout_Battery> {
                         ),
                       ),
                       Text(
-                        "Rs.120.00",
+                        "${AppConstants.currencySymbol}.120.00",
                         style: TextStyle(
                           fontSize: 18,
                           color: Colors.green,
@@ -426,7 +444,8 @@ class _Checkout_BatteryState extends State<Checkout_Battery> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const PaymentScreenTree()));
+                                builder: (context) =>
+                                    const PaymentScreenTree()));
                       },
                     ),
                   ),

@@ -1,0 +1,67 @@
+{
+  "project_info": {
+    "project_number": "559417201906",
+    "project_id": "myfuels-in",
+    "storage_bucket": "myfuels-in.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:559417201906:android:26a1850de9b3c202166c6b",
+        "android_client_info": {
+          "package_name": "com.myfueldriver.main"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAuHeYAh95Xrywgs9A4kBD_DxCuqFYOiOY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:559417201906:android:15636cd022c49fa1166c6b",
+        "android_client_info": {
+          "package_name": "com.myfueluser.main"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAuHeYAh95Xrywgs9A4kBD_DxCuqFYOiOY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:559417201906:android:0f347dba1c25b8e6166c6b",
+        "android_client_info": {
+          "package_name": "com.myfuelvendor.main"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAuHeYAh95Xrywgs9A4kBD_DxCuqFYOiOY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
