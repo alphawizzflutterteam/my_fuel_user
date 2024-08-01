@@ -33,7 +33,7 @@ class _CarServiceState extends State<CarService> {
   void didChangeDependencies() {
     // TODO: implement didChangeDependencies
     super.didChangeDependencies();
-    CarServiceController carServiceController = Get.find();
+    CarServiceController carServiceController = Get.put(CarServiceController());
 
     carServiceController.getSlots();
   }
@@ -41,6 +41,7 @@ class _CarServiceState extends State<CarService> {
   void initUI() {
     print("object ${otherCategory.categoryId}");
     HomeController controller = Get.find();
+
     controller
         .getServiceDetails(otherCategory.categoryId == null
             ? "9"
@@ -278,6 +279,8 @@ class _CarServiceState extends State<CarService> {
                             msg: "Please select one service");
                         return;
                       }
+                      CarServiceController carServiceController = Get.find();
+                      carServiceController.updateSlotId(99);
 
                       otherCategory.productId = data.join(",");
                       otherCategory.service = "At Your Station";
@@ -296,6 +299,7 @@ class _CarServiceState extends State<CarService> {
 
   void _showBottomSheet(BuildContext context) {
     final _formKeyReset = GlobalKey<FormState>();
+
     showModalBottomSheet(
       context: context,
       isScrollControlled: true, // Ensure the bottom sheet can scroll
@@ -524,13 +528,15 @@ class _CarServiceState extends State<CarService> {
                           width: 330,
                           child: GestureDetector(
                               onTap: () {
+                                if (carServiceController.selectTimeSlot.value ==
+                                        99 ||
+                                    otherCategory.timeSlotId!.isEmpty ||
+                                    otherCategory.timeSlotId == "") {
+                                  Fluttertoast.showToast(
+                                      msg: "Please select Slot");
+                                  return;
+                                }
                                 if (_formKeyReset.currentState!.validate()) {
-                                  if (otherCategory.timeSlotId!.isEmpty ||
-                                      otherCategory.timeSlotId == "") {
-                                    Fluttertoast.showToast(
-                                        msg: "Please select Slot");
-                                    return;
-                                  }
                                   otherCategory.date =
                                       dateController.text.toString();
 

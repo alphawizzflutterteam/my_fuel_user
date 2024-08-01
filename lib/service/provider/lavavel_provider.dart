@@ -11,6 +11,7 @@ import 'package:test_prj/service/provider/end_points.dart';
 
 import '../../data/model/CheckRequestModel.dart';
 import '../../data/model/addres_model.dart';
+import '../../data/model/notification_model.dart';
 import '../../data/model/response/BannerModel.dart';
 import '../../data/model/response/home_model.dart';
 import '../../data/model/response/setting_model.dart';
@@ -78,6 +79,27 @@ class LaravelApiClient extends GetxService with ApiClient {
       List<dynamic> data = response.data;
 
       bannerList = data.map((json) => BannerModel.fromJson(json)).toList();
+      // data.forEach((element) {
+      //   bannerList.add(BannerModel.fromJson(json.decode(element.toString())));
+      // });
+      return bannerList;
+    } else {
+      throw Exception(response.data['message']);
+    }
+  }
+
+  Future<List<Notification>> getNotification() async {
+    List<Notification> bannerList = [];
+
+    var response = await httpClient.getUri(
+      Uri.parse(ApiConstants.NOTIFICATIONS),
+      options: optionsNetwork,
+    );
+    if (response.statusCode == 200) {
+      print("banners ${response.toString()} ");
+
+      bannerList = NotificationModel.fromJson(json.decode(response.toString()))
+          .notification!;
       // data.forEach((element) {
       //   bannerList.add(BannerModel.fromJson(json.decode(element.toString())));
       // });
@@ -332,8 +354,9 @@ class LaravelApiClient extends GetxService with ApiClient {
 
     String token = instance.getData(SharedPreferencesService.kTokenKey);
     optionsNetwork.headers!['Authorization'] = "Bearer $token";
-    var response = await httpClient.get(
-      "${ApiConstants.PLACEORDER}$address_id&payment_method=$paymentType&order_note=ABC Status",
+    var response = await httpClient.getUri(
+      Uri.parse(
+          "${ApiConstants.PLACEORDER}$address_id&payment_method=$paymentType&order_note=ABC Status"),
       options: optionsNetwork,
     );
     if (response.statusCode == 200) {
@@ -500,7 +523,7 @@ class LaravelApiClient extends GetxService with ApiClient {
 
     Map data = {
       "service_id": "$service_id",
-      "service_type": "$service_type",
+      "service_type": "Door Step",
       "slot_id": "$slot_id",
       "date": "$date",
       "asset_id": "",
@@ -512,6 +535,8 @@ class LaravelApiClient extends GetxService with ApiClient {
 
     String token = instance.getData(SharedPreferencesService.kTokenKey);
     optionsNetwork.headers!['Authorization'] = "Bearer $token";
+    log("AAAAAAAA $token");
+    log("AAAAAAAA $data");
     var response = await httpClient.postUri(
       data: data,
       Uri.parse(ApiConstants.VENDORSERVICE),

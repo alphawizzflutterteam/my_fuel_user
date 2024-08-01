@@ -44,4 +44,5 @@ class ApiConstants {
   static const String VENDORSERVICE = '/api/v1/customer/order/service-vendor';
   static const String VEHICLEMODEL = '/api/v1/customer/order/vehicle-model';
   static const String TIMESLOTS = '/api/v1/customer/order/time-slots';
+  static const String NOTIFICATIONS = '/api/v1/notifications';
 }

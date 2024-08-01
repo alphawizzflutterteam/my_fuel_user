@@ -367,13 +367,13 @@ class Products {
 
 class CategoryIds {
   String? id;
-  int? position;
+  String? position;
 
   CategoryIds({this.id, this.position});
 
   CategoryIds.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    position = json['position'];
+    position = json['position'].toString();
   }
 
   Map<String, dynamic> toJson() {

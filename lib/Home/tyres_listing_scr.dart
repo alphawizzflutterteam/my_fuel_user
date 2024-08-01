@@ -126,7 +126,7 @@ class _TyresListingState extends State<TyresListing> {
                                         // Use ClipRRect to clip the image with the specified border radius
                                         borderRadius: BorderRadius.circular(10),
                                         child: Image.network(
-                                          "${configModel!.baseUrls!.brandImageUrl}/${homeController.servicesDetailModel.value.products![index].images![0]}",
+                                          "${configModel!.baseUrls!.productThumbnailUrl}/${homeController.servicesDetailModel.value.products![index].thumbnail}",
                                           errorBuilder:
                                               (context, error, stackTrace) {
                                             return Image.asset(

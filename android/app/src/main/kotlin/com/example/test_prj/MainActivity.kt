@@ -1,4 +1,4 @@
-package com.example.my_foels_user_app
+package com.myfueluser.main
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
+import 'package:test_prj/components/my_appbar.dart';
 import 'package:test_prj/controller/cart_controller.dart';
+import 'package:test_prj/helper/utils/app_constants.dart';
 import 'package:test_prj/payment/paymentScreen.dart';
 import 'package:test_prj/splashScreen.dart';
 
@@ -59,7 +61,8 @@ class _GetSetCheckoutScreenState extends State<GetSetCheckoutScreen> {
       Get.offAll(
         OrderPlaced(
           isFromFuelOnTap: true,
-          amount: "${controller.checkOutModel.value.total}",
+          amount: "${value['message']}",
+          order_id: "${value['order_id']}",
         ),
       );
 
@@ -112,42 +115,45 @@ class _GetSetCheckoutScreenState extends State<GetSetCheckoutScreen> {
         builder: (controller) {
           controller.manageCart(address_id, category_id);
           return Scaffold(
-            appBar: AppBar(
-              leading: InkWell(
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  child: Icon(
-                    Icons.arrow_back_ios_new_outlined,
-                    size: 20,
-                  )),
-              foregroundColor: Colors.white,
-              flexibleSpace: Container(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.centerLeft,
-                    end: Alignment.centerRight,
-                    colors: [
-                      Color.fromRGBO(252, 130, 59, 1),
-                      Color.fromRGBO(252, 130, 59, 1),
-                      Color.fromRGBO(211, 83, 7, 1),
-                    ],
-                  ),
-                  borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(23),
-                    bottomRight: Radius.circular(23),
-                  ),
-                ),
-              ),
-              title: Text('Checkout'),
-              centerTitle: true,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(20),
-                  bottomRight: Radius.circular(20),
-                ),
-              ),
+            appBar: MyAppFinalbar(
+              title: "Checkout",
             ),
+            // AppBar(
+            //   leading: InkWell(
+            //       onTap: () {
+            //         Navigator.pop(context);
+            //       },
+            //       child: Icon(
+            //         Icons.arrow_back_ios_new_outlined,
+            //         size: 20,
+            //       )),
+            //   foregroundColor: Colors.white,
+            //   flexibleSpace: Container(
+            //     decoration: BoxDecoration(
+            //       gradient: LinearGradient(
+            //         begin: Alignment.centerLeft,
+            //         end: Alignment.centerRight,
+            //         colors: [
+            //           Color.fromRGBO(252, 130, 59, 1),
+            //           Color.fromRGBO(252, 130, 59, 1),
+            //           Color.fromRGBO(211, 83, 7, 1),
+            //         ],
+            //       ),
+            //       borderRadius: BorderRadius.only(
+            //         bottomLeft: Radius.circular(23),
+            //         bottomRight: Radius.circular(23),
+            //       ),
+            //     ),
+            //   ),
+            //   title: Text('Checkout'),
+            //   centerTitle: true,
+            //   shape: RoundedRectangleBorder(
+            //     borderRadius: BorderRadius.only(
+            //       bottomLeft: Radius.circular(20),
+            //       bottomRight: Radius.circular(20),
+            //     ),
+            //   ),
+            // ),
             body: SingleChildScrollView(
               child: Obx(() {
                 return controller.isLoading.value == true
@@ -227,6 +233,7 @@ class _GetSetCheckoutScreenState extends State<GetSetCheckoutScreen> {
                                   ),
 
                                   ListView.builder(
+                                    physics: NeverScrollableScrollPhysics(),
                                     itemCount: controller
                                         .checkOutModel.value.data!.length,
                                     shrinkWrap: true,
@@ -606,7 +613,7 @@ class _GetSetCheckoutScreenState extends State<GetSetCheckoutScreen> {
                                                         ),
                                                       ),
                                                       Text(
-                                                        "Rs.${controller.checkOutModel.value.total}",
+                                                        "${AppConstants.currencySymbol}${controller.checkOutModel.value.total}",
                                                         style: TextStyle(
                                                           fontSize: 18,
                                                           color: Colors.green,
@@ -671,6 +678,8 @@ class _GetSetCheckoutScreenState extends State<GetSetCheckoutScreen> {
                                                                           true,
                                                                       amount:
                                                                           "${controller.checkOutModel.value.total}",
+                                                                      order_id:
+                                                                          "${value['order_id']}",
                                                                     ),
                                                                   ),
                                                                 );
@@ -735,7 +744,7 @@ class _GetSetCheckoutScreenState extends State<GetSetCheckoutScreen> {
                                                   color: Colors.black54),
                                             ),
                                             Text(
-                                              "Rs.${controller.checkOutModel.value.subtotal.toString()}",
+                                              "${AppConstants.currencySymbol}${controller.checkOutModel.value.subtotal.toString()}",
                                               style: TextStyle(
                                                 fontSize: 18,
                                                 color: Colors.black,
@@ -818,7 +827,7 @@ class _GetSetCheckoutScreenState extends State<GetSetCheckoutScreen> {
                                               ),
                                             ),
                                             Text(
-                                              "Rs.${controller.checkOutModel.value.total.toString()}",
+                                              "${AppConstants.currencySymbol}${controller.checkOutModel.value.total.toString()}",
                                               style: TextStyle(
                                                 fontSize: 18,
                                                 color: Colors.green,
@@ -870,7 +879,9 @@ class _GetSetCheckoutScreenState extends State<GetSetCheckoutScreen> {
                                                             isFromFuelOnTap:
                                                                 true,
                                                             amount:
-                                                                "${controller.checkOutModel.value.total}",
+                                                                "${value['message']}",
+                                                            order_id:
+                                                                "${value['order_id']}",
                                                           );
                                                         },
                                                       ),

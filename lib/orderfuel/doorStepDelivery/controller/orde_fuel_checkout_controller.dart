@@ -88,7 +88,8 @@ class OrderFuelCheckoutController extends AppBaseController {
 
     if (response['status']) {
       Get.to(OrderPlaced(
-        amount: response['order_id'],
+        amount: response['message'],
+        order_id: "${response['order_id']}",
       ));
     }
 

@@ -141,23 +141,24 @@ class _SignUpState extends State<SignUp> {
                         const Text("Already Have an account? "),
                         GestureDetector(
                           onTap: () {
-                            if (_formKeyReset!.currentState!.validate()) {
-                              User user = new User();
-                              user.fName = nameController.text;
-                              // user.lName = nameController.text;
-                              user.email = emailController.text;
-                              user.phone = phoneController.text;
-                              user.gst = gstController.text;
-                              user.address = addressController.text;
-                              user.pan = panController.text;
-                              user.msme = msmeController.text;
-                              user.password = passwordController.text;
-
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => const LoginPage()));
-                            }
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const LoginPage()));
+                            // if (_formKeyReset!.currentState!.validate()) {
+                            //   User user = new User();
+                            //   user.fName = nameController.text;
+                            //   // user.lName = nameController.text;
+                            //   user.email = emailController.text;
+                            //   user.phone = phoneController.text;
+                            //   user.gst = gstController.text;
+                            //   user.address = addressController.text;
+                            //   user.pan = panController.text;
+                            //   user.msme = msmeController.text;
+                            //   user.password = passwordController.text;
+                            //
+                            //
+                            // }
                           },
                           child: const Text(
                             "Sign in",

@@ -50,6 +50,10 @@ dependencies:
   geocoding: ^2.2.0
   shimmer: ^3.0.0
   flutter_no_internet_widget: ^1.0.0+18-dev.1
+  firebase_messaging: ^15.0.0
+  flutter_local_notifications: ^17.1.2
+  firebase_core: ^3.0.0
+  image_picker: ^1.1.2
   #flutter_cashfree_pg_sdk: ^2.1.1+31
 
 #  rating_bar: ^0.2.0
@@ -81,7 +85,32 @@ flutter:
     - assets/
     - assets/images/
   #   - images/a_dot_ham.jpeg
-
+  fonts:
+    - family: Nexa
+      fonts:
+        - asset: assets/fonts/Nexa-Black.ttf
+        - asset: assets/fonts/Nexa-BlackItalic.ttf
+        - asset: assets/fonts/Nexa-Bold.ttf
+        - asset: assets/Fonts/Nexa Light_0.otf
+        - asset: assets/Fonts/Nexa-Bold.otf
+        - asset: assets/Fonts/Nexa-Bold-Italic.otf
+        - asset: assets/Fonts/Nexa-BoldItalic.ttf
+        - asset: assets/Fonts/Nexa-Book.ttf
+        - asset: assets/Fonts/Nexa-BookItalic.ttf
+        - asset: assets/Fonts/Nexa-ExtraLight.ttf
+        - asset: assets/Fonts/Nexa-Heavy.ttf
+        - asset: assets/Fonts/Nexa-Heavy-Italic.otf
+        - asset: assets/Fonts/Nexa-HeavyItalic.ttf
+        - asset: assets/Fonts/Nexa-Light.otf
+        - asset: assets/Fonts/Nexa-Light.ttf
+        - asset: assets/Fonts/Nexa-Light-Italic.otf
+        - asset: assets/Fonts/Nexa-LightItalic.ttf
+        - asset: assets/Fonts/Nexa-Regular.ttf
+        - asset: assets/Fonts/Nexa-Thin-Italic.otf
+        - asset: assets/Fonts/NexaBlack.otf
+        - asset: assets/Fonts/NexaHeavy.otf
+        - asset: assets/Fonts/NexaThin.otf
+          style: italic
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 

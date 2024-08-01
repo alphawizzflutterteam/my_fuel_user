@@ -31,71 +31,75 @@ class _SliderHomeState extends State<SliderHome> {
                 ?
 
                 /// When Data is Showing
-                CarouselSlider(
-                    items: controller.list.map((item) {
-                      return Builder(
-                        builder: (BuildContext context) {
-                          return Stack(
-                            fit: StackFit.expand,
-                            children: [
-                              Image.network(
-                                "${item.imagePath!}/${item.photo!}",
-                                fit: BoxFit.cover,
-                                width: double.infinity,
-                              ),
-                              Align(
-                                alignment: Alignment.bottomCenter,
-                                child: Container(
-                                  padding: EdgeInsets.symmetric(vertical: 0.0),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: controller.list
-                                        .asMap()
-                                        .entries
-                                        .map((entry) {
-                                      return GestureDetector(
-                                        onTap: () => _carouselController
-                                            .animateToPage(entry.key),
-                                        child: Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 2.0),
-                                          child: Container(
-                                            width: currentIndex == entry.key
-                                                ? 17
-                                                : 7,
-                                            height: 10.0,
-                                            margin: EdgeInsets.symmetric(
-                                                horizontal: 2.0),
-                                            decoration: BoxDecoration(
-                                              shape: BoxShape.circle,
-                                              color: currentIndex == entry.key
-                                                  ? Colors.black
-                                                  : Colors.grey,
-                                            ),
-                                          ),
-                                        ),
-                                      );
-                                    }).toList(),
+                Column(
+                    children: [
+                      CarouselSlider(
+                        items: controller.list.map((item) {
+                          return Builder(
+                            builder: (BuildContext context) {
+                              return Stack(
+                                fit: StackFit.expand,
+                                children: [
+                                  Column(
+                                    children: [
+                                      Image.network(
+                                        "${item.imagePath!}/${item.photo!}",
+                                        fit: BoxFit.cover,
+                                        width: double.infinity,
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                        }).toList(),
+                        carouselController: _carouselController,
+                        options: CarouselOptions(
+                          scrollPhysics: BouncingScrollPhysics(),
+                          autoPlay: true,
+                          aspectRatio: 2.0,
+                          viewportFraction: 1.0,
+                          onPageChanged: (index, reason) {
+                            setState(() {
+                              currentIndex = index;
+                            });
+                          },
+                        ),
+                      ),
+                      Align(
+                        alignment: Alignment.bottomCenter,
+                        child: Container(
+                          padding: EdgeInsets.symmetric(vertical: 0.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children:
+                                controller.list.asMap().entries.map((entry) {
+                              return GestureDetector(
+                                onTap: () => _carouselController
+                                    .animateToPage(entry.key),
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 2.0),
+                                  child: Container(
+                                    width: currentIndex == entry.key ? 17 : 7,
+                                    height: 10.0,
+                                    margin:
+                                        EdgeInsets.symmetric(horizontal: 2.0),
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: currentIndex == entry.key
+                                          ? Colors.black
+                                          : Colors.grey,
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ],
-                          );
-                        },
-                      );
-                    }).toList(),
-                    carouselController: _carouselController,
-                    options: CarouselOptions(
-                      scrollPhysics: BouncingScrollPhysics(),
-                      autoPlay: true,
-                      aspectRatio: 2.0,
-                      viewportFraction: 1.0,
-                      onPageChanged: (index, reason) {
-                        setState(() {
-                          currentIndex = index;
-                        });
-                      },
-                    ),
+                              );
+                            }).toList(),
+                          ),
+                        ),
+                      ),
+                    ],
                   )
                 : CarouselSlider(
                     items: imageList.map((item) {
