@@ -13,6 +13,8 @@ class CancelOrder extends StatefulWidget {
 class _CancelOrderState extends State<CancelOrder> {
   int selectedValue = 1;
 
+  String cancelReason='';
+
   Widget customRadio(String text, int value) {
     return GestureDetector(
       onTap: () {
@@ -28,6 +30,7 @@ class _CancelOrderState extends State<CancelOrder> {
             onChanged: (int? newValue) {
               setState(() {
                 selectedValue = newValue!;
+                cancelReason=text;
               });
             },
             activeColor: Colors.red,
@@ -122,8 +125,8 @@ class _CancelOrderState extends State<CancelOrder> {
               padding: const EdgeInsets.all(12.0),
               child: GestureDetector(
                 onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: ((context) => OrderDetails())));
+                  // Navigator.push(context,
+                  //     MaterialPageRoute(builder: ((context) => OrderDetails())));
                 },
                 child: MyButton(text: 'Done'),
               ),

@@ -62,7 +62,7 @@ class LaravelApiClient extends GetxService with ApiClient {
       print("getSettingUri ${response.toString()} ");
       return SettingModel.fromJson(json.decode(response.toString()));
     } else {
-      throw Exception(response.data['message']);
+      throw Exception(response.orderTypeList['message']);
     }
   }
 
@@ -75,7 +75,7 @@ class LaravelApiClient extends GetxService with ApiClient {
     );
     if (response.statusCode == 200) {
       print("banners ${response.toString()} ");
-      List<dynamic> data = response.data;
+      List<dynamic> data = response.orderTypeList;
 
       bannerList = data.map((json) => BannerModel.fromJson(json)).toList();
       // data.forEach((element) {
@@ -83,7 +83,7 @@ class LaravelApiClient extends GetxService with ApiClient {
       // });
       return bannerList;
     } else {
-      throw Exception(response.data['message']);
+      throw Exception(response.orderTypeList['message']);
     }
   }
 
@@ -100,7 +100,7 @@ class LaravelApiClient extends GetxService with ApiClient {
       //   bannerList.add(BannerModel.fromJson(json.decode(element.toString())));
       // });
     } else {
-      throw Exception(response.data['message']);
+      throw Exception(response.orderTypeList['message']);
     }
   }
 
@@ -150,7 +150,7 @@ class LaravelApiClient extends GetxService with ApiClient {
       print("userRegister ${response.toString()} ");
       return json.decode(response.toString());
     } else {
-      throw Exception(response.data['message']);
+      throw Exception(response.orderTypeList['message']);
     }
   }
 
@@ -176,7 +176,7 @@ class LaravelApiClient extends GetxService with ApiClient {
       print("userRegister ${response.toString()} ");
       return json.decode(response.toString());
     } else {
-      throw Exception(response.data['message']);
+      throw Exception(response.orderTypeList['message']);
     }
   }
 
@@ -212,7 +212,7 @@ class LaravelApiClient extends GetxService with ApiClient {
       return ServiceDetailsModel.fromJson(json.decode(response.toString()));
       return json.decode(response.toString());
     } else {
-      throw Exception(response.data['message']);
+      throw Exception(response.orderTypeList['message']);
     }
   }
 
@@ -228,7 +228,7 @@ class LaravelApiClient extends GetxService with ApiClient {
       return json.decode(response.toString());
     } else {
       return json.decode(response.toString());
-      throw Exception(response.data['message']);
+      throw Exception(response.orderTypeList['message']);
     }
   }
 
@@ -613,6 +613,8 @@ class LaravelApiClient extends GetxService with ApiClient {
     }
   }
 
+
+  //gopal
   Future<Map<String, dynamic>> getOrders() async {
     SharedPreferencesService? instance =
         await SharedPreferencesService.getInstance();
@@ -621,7 +623,7 @@ class LaravelApiClient extends GetxService with ApiClient {
     optionsNetwork.headers!['Authorization'] = "Bearer $token";
     log("AAAAAAAZZZZ $token");
     var response = await httpClient.get(
-      ApiConstants.ORDERLIST,
+      ApiConstants.AllORDERLIST,
       options: optionsNetwork,
     );
     if (response.statusCode == 200) {
@@ -632,6 +634,31 @@ class LaravelApiClient extends GetxService with ApiClient {
       return json.decode(response.toString());
     }
   }
+  Future<Map<String, dynamic>> updateOrder(
+      String status, String remark, String orderID) async {
+    Map data = {
+      "status": "$status",
+      "remark": "$remark",
+    };
+    SharedPreferencesService? instance =
+    await SharedPreferencesService.getInstance();
+
+    String token = instance.getData(SharedPreferencesService.kTokenKey);
+    optionsNetwork.headers!['Authorization'] = "Bearer $token";
+    var response = await httpClient.postUri(
+      data: data,
+      Uri.parse(ApiConstants.UPDATEORDERAPI+'/'+'${orderID}'),
+      options: optionsNetwork,
+    );
+    if (response.statusCode == 200) {
+      print("userRegister ${response.toString()} ");
+
+      return json.decode(response.toString());
+    } else {
+      return json.decode(response.toString());
+    }
+  }
+
 
   Future<Map<String, dynamic>> getOffer() async {
     SharedPreferencesService? instance =
@@ -683,7 +710,7 @@ class LaravelApiClient extends GetxService with ApiClient {
       options: optionsNetwork,
     );
     if (response.statusCode == 200) {
-      List<dynamic> data = response.data;
+      List<dynamic> data = response.orderTypeList;
 
       addressList =
           data.map((json) => AddressListModel.fromJson(json)).toList();

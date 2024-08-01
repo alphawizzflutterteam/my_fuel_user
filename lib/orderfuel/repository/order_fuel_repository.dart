@@ -30,7 +30,7 @@ class OrderFuelRepo extends GetxService with ApiClient {
     if (response.statusCode == 200) {
       return OrderFuelModel.fromJson(json.decode(response.toString()));
     } else {
-      throw Exception(response.data['message']);
+      throw Exception(response.orderTypeList['message']);
     }
   }
 
@@ -42,7 +42,7 @@ class OrderFuelRepo extends GetxService with ApiClient {
     if (response.statusCode == 200) {
       return VehicleType.fromJson(json.decode(response.toString()));
     } else {
-      throw Exception(response.data['message']);
+      throw Exception(response.orderTypeList['message']);
     }
   }
 
@@ -54,7 +54,7 @@ class OrderFuelRepo extends GetxService with ApiClient {
     if (response.statusCode == 200) {
       return TimeSlotModel.fromJson(json.decode(response.toString()));
     } else {
-      throw Exception(response.data['message']);
+      throw Exception(response.orderTypeList['message']);
     }
   }
 

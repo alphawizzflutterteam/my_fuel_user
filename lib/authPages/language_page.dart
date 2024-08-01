@@ -111,6 +111,7 @@ class LanguageScreen extends StatelessWidget {
                                     SharedPreferencesService.kLanguageKey, "7");
                                 controller.changeLanguage('en', 'US');
                               }
+                              Get.to(LoginPage());
                             },
                             child: Container(
                               width: 150,

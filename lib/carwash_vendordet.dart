@@ -605,10 +605,10 @@ class VenderDetails3 extends StatelessWidget {
                       if (title != null) {
                         Navigator.pop(context);
                       } else {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const CancelOrder()));
+                        // Navigator.push(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //         builder: (context) => const CancelOrder()));
                       }
                     },
                     child: Container(
