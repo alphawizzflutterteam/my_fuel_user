@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:test_prj/components/my_appbar.dart';
-import 'package:test_prj/orderfuel/doorStepDelivery/checkout_page1.dart';
+import 'package:test_prj/orderfuel/doorStepDelivery/order_fuel_checkout.dart';
 import 'package:test_prj/orderfuel/fuelToGo/checkout_page2.dart';
 
 import '../../Home/Genset_checkOut.dart';
@@ -44,7 +44,10 @@ class _VendorsPage2State extends State<VendorsPage2> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const GetSetCheckoutScreen(isfrom: true,)),
+                                builder: (context) =>
+                                    const GetSetCheckoutScreen(
+                                      isfrom: true,
+                                    )),
                           );
                         },
                         child: const Column(

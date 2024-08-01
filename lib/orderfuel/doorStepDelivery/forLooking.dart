@@ -86,12 +86,10 @@ class _LookingForCompanyState extends State<LookingForCompany> {
 
                     if ((item?.isNotEmpty ?? false) &&
                         item!.first.slug == 'diesel') {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => SelectNewAddress(
-                                    isFromForLooking: true,
-                                  )));
+                      Get.to(const SelectNewAddress(
+                        isFromForLooking: true,
+                        isFromOrderFuel: true,
+                      ));
                     } else if ((item?.isNotEmpty ?? false) &&
                         item!.first.slug == 'ev') {
                       Navigator.push(

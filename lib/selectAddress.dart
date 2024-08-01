@@ -24,19 +24,20 @@ class _SelectAddressState extends State<SelectAddress> {
       child: Row(
         children: [
           Radio<int>(
-
             value: value,
             groupValue: selectedValue,
             onChanged: (int? newValue) {
               setState(() {
                 selectedValue = newValue!;
               });
-            },fillColor: MaterialStateProperty.resolveWith<Color>((Set<MaterialState> states) {
-            if (states.contains(MaterialState.selected)) {
-              return colors.secondary; // Color when selected
-            }
-            return colors.greyTemp; // Color when not selected
-          }),
+            },
+            fillColor: MaterialStateProperty.resolveWith<Color>(
+                (Set<MaterialState> states) {
+              if (states.contains(MaterialState.selected)) {
+                return colors.secondary; // Color when selected
+              }
+              return colors.greyTemp; // Color when not selected
+            }),
           ),
           //           // activeColor: colors.secondary,
           Text(
@@ -110,7 +111,7 @@ class _SelectAddressState extends State<SelectAddress> {
                           width: 340,
                           decoration: BoxDecoration(
                             gradient: const LinearGradient(
-                              colors: [Color(0xfff3b781f),Color(0xFF8AB402)],
+                              colors: [Color(0xfff3b781f), Color(0xFF8AB402)],
                               stops: [0, 1],
                               begin: AlignmentDirectional(0.94, -1),
                               end: AlignmentDirectional(-0.94, 1),

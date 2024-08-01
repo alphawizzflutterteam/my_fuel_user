@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:test_prj/Home/checkout_car_service.dart';
 import 'package:test_prj/components/my_appbar.dart';
-import 'package:test_prj/orderfuel/doorStepDelivery/checkout_page1.dart';
+import 'package:test_prj/helper/colors.dart';
+import 'package:test_prj/orderfuel/doorStepDelivery/order_fuel_checkout.dart';
 import 'package:test_prj/orderfuel/doorStepDelivery/controller/vendor_controller.dart';
 import 'package:test_prj/orderfuel/fuelToGo/checkout_page2.dart';
+import 'package:test_prj/splashScreen.dart';
 
 import '../../Home/Genset_checkOut.dart';
 import '../../Home/checkout_battery.dart';
@@ -105,12 +108,9 @@ class VendorsPage extends StatelessWidget {
                                     var item = controller.vendorList[index];
 
                                     return GestureDetector(
-                                      onTap: () => Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                const CheckOutTo(),
-                                          )),
+                                      onTap: () => Get.to(
+                                          const OrderFuelCheckOut(),
+                                          arguments: item.productId),
                                       child: Container(
                                         height: 102,
                                         margin:
@@ -125,7 +125,8 @@ class VendorsPage extends StatelessWidget {
                                           child: Row(
                                             children: [
                                               Image.network(
-                                                  '${controller.splashController.settingModel.value.baseUrls}',
+
+                                          '${controller.splashController.settingModel.value.baseUrls}',
                                                   height: 94),
                                               Padding(
                                                 padding:
@@ -135,9 +136,9 @@ class VendorsPage extends StatelessWidget {
                                                   crossAxisAlignment:
                                                       CrossAxisAlignment.start,
                                                   children: [
-                                                    const Text(
-                                                      "Vendor Name",
-                                                      style: TextStyle(
+                                                    Text(
+                                                      item.seller?.fName ?? '',
+                                                      style: const TextStyle(
                                                         fontSize: 16,
                                                         fontWeight:
                                                             FontWeight.bold,
@@ -176,9 +177,11 @@ class VendorsPage extends StatelessWidget {
                                                                 .grey.shade500,
                                                           ),
                                                         ),
-                                                        const Text(
-                                                          "Diesel",
-                                                          style: TextStyle(
+                                                        Text(
+                                                          item.category?.name ??
+                                                              '',
+                                                          style:
+                                                              const TextStyle(
                                                             fontSize: 12,
                                                             fontWeight:
                                                                 FontWeight.bold,
@@ -186,14 +189,14 @@ class VendorsPage extends StatelessWidget {
                                                         ),
                                                       ],
                                                     ),
-                                                    const Row(
+                                                    Row(
                                                       children: [
-                                                        Icon(
+                                                        const Icon(
                                                           Icons
                                                               .location_on_outlined,
                                                           size: 16,
                                                         ),
-                                                        Text(
+                                                        const Text(
                                                           " 11Km",
                                                           style: TextStyle(
                                                             fontSize: 12,
@@ -201,21 +204,19 @@ class VendorsPage extends StatelessWidget {
                                                                 FontWeight.w500,
                                                           ),
                                                         ),
-                                                        SizedBox(width: 86),
+                                                        const SizedBox(
+                                                            width: 86),
                                                         Text(
-                                                          "₹89.00",
-                                                          style: TextStyle(
-                                                              fontSize: 20,
-                                                              color: Color
-                                                                  .fromRGBO(
-                                                                      138,
-                                                                      180,
-                                                                      2,
-                                                                      1),
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                              height: 1),
+                                                          "₹ ${item.cost}",
+                                                          style:
+                                                              const TextStyle(
+                                                                  fontSize: 20,
+                                                                  color: colors
+                                                                      .green1,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                  height: 1),
                                                         ),
                                                       ],
                                                     )

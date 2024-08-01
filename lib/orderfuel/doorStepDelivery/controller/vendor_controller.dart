@@ -7,7 +7,6 @@ import 'package:test_prj/orderfuel/doorStepDelivery/controller/order_fuel_contro
 class VendorController extends AppBaseController {
   RxList<VendorData> vendorList = <VendorData>[].obs;
   final orderFuelController = Get.find<OrderFuelController>();
-  final splashController = Get.find<SplashController>();
 
   Map<String, dynamic> argument = {};
 
