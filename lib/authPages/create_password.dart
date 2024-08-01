@@ -104,14 +104,14 @@ class _CreatePasswordPageState extends State<CreatePasswordPage> {
                                   ),
                                   SizedBox(height: 10),
                                   Text(
-                                    "Create New Password",
+                                    "Create New Password ",
                                     style: TextStyle(
                                         fontSize: 30,
                                         fontWeight: FontWeight.bold),
                                   ),
                                   SizedBox(height: 8),
                                   Text(
-                                    "Enter the OTP sent to +91 9556654328",
+                                    "Enter the OTP sent to +91 $phone",
                                     style: TextStyle(
                                       fontSize: 16,
                                     ),
@@ -236,9 +236,14 @@ class _CreatePasswordPageState extends State<CreatePasswordPage> {
                       left: 20,
                       child: Row(
                         children: [
-                          Icon(
-                            Icons.arrow_back,
-                            color: Colors.white,
+                          InkWell(
+                            onTap: () {
+                              Get.back();
+                            },
+                            child: Icon(
+                              Icons.arrow_back,
+                              color: Colors.white,
+                            ),
                           ),
                           SizedBox(
                             width: 80,

@@ -8,6 +8,7 @@ class ApiConstants {
   static const String veriFyPhone = '/api/v1/auth/verify-phone';
   static const String homeServices = '/api/v1/services';
   static const String forgetpassword = '/api/v1/auth/forgot-password';
+  static const String updatepassword = '/api/v1/customer/update-password';
   static const String verifyOtp = '/api/v1/auth/verify-otp';
   static const String resetPassword = '/api/v1/auth/reset-password';
   static const String offers = '/api/v1/coupon/list';
@@ -27,6 +28,7 @@ class ApiConstants {
   static const String MANAGECART = '/api/v1/cart?address_id=';
   static const String UPDATEPROFILE = '/api/v1/customer/update-profile';
   static const String VENDORCHEKOUT = '/api/v1/customer/order/vendor-checkout';
+  static const String addWallet = '/api/v1/customer/add_wallet';
   static const String ConfirmPlaceOrder =
       '/api/v1/customer/order/confirm-vendor-service';
   static const String ORDERLIST =
@@ -39,6 +41,7 @@ class ApiConstants {
   ///2&payment_method=cash_on_delivery&order_note=ABC Status
   ///
   static const String VEHICLETYPE = '/api/v1/customer/order/vehicle-type';
+  static const String VENDORSERVICE = '/api/v1/customer/order/service-vendor';
   static const String VEHICLEMODEL = '/api/v1/customer/order/vehicle-model';
   static const String TIMESLOTS = '/api/v1/customer/order/time-slots';
 }

@@ -7,6 +7,7 @@ import 'package:test_prj/components/my_background.dart';
 import 'package:test_prj/components/my_button.dart';
 import 'package:test_prj/components/my_textfield.dart';
 import 'package:test_prj/controller/singup_controller.dart';
+import 'package:test_prj/helper/utils/app_constants.dart';
 import 'package:test_prj/helper/utils/validator_all.dart';
 
 import '../repository/model/user_model.dart';
@@ -57,7 +58,7 @@ class _SignUpState extends State<SignUp> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const SizedBox(height: 100),
+                    const SizedBox(height: 60),
                     // App Icon
                     Image.asset(
                       "assets/login-logo.png",
@@ -80,8 +81,8 @@ class _SignUpState extends State<SignUp> {
                     GetBuilder<SignupController>(
                         init: SignupController(),
                         builder: (controller) {
-                          return controller.isLoading.value == true
-                              ? const CircularProgressIndicator()
+                          return Obx(() => controller.isLoading.value == true
+                              ? Center(child: const CircularProgressIndicator())
                               : GestureDetector(
                                   onTap: () {
                                     if (_formKeyReset!.currentState!
@@ -101,7 +102,7 @@ class _SignUpState extends State<SignUp> {
                                           data == "0" ? "normal" : "bussiness";
 
                                       controller.Register(user).then((value) {
-                                        if (value.containsKey("errors")) {
+                                        if (value!.containsKey('errors')) {
                                           Fluttertoast.showToast(
                                               msg:
                                                   "${value['errors'][0]['message']}");
@@ -125,19 +126,13 @@ class _SignUpState extends State<SignUp> {
                                                       '${controller.checkOtpval.value.otp}'
                                                 });
                                           });
-
-                                          // Navigator.pushReplacement(
-                                          //     context,
-                                          //     MaterialPageRoute(
-                                          //         builder: (context) =>
-                                          //             OTPScreen2(a )));
                                         }
 
                                         // return null;
                                       });
                                     }
                                   },
-                                  child: const MyButton(text: "Sign Up"));
+                                  child: const MyButton(text: "Sign Up")));
                         }),
                     const SizedBox(height: 70),
                     Row(
@@ -165,7 +160,7 @@ class _SignUpState extends State<SignUp> {
                             }
                           },
                           child: const Text(
-                            "Sign Up",
+                            "Sign in",
                             style: TextStyle(
                               color: Color.fromRGBO(138, 180, 2, 1),
                             ),
@@ -173,6 +168,10 @@ class _SignUpState extends State<SignUp> {
                         ),
                       ],
                     ),
+
+                    SizedBox(
+                      height: 35,
+                    )
                   ],
                 ),
               ),
@@ -198,6 +197,7 @@ class _SignUpState extends State<SignUp> {
           validator: (value) => Validator.validatePhone(value),
           isAmount: true,
           controller: phoneController,
+          maxLenth: AppConstants.phoneValidation,
           labelText: const Text("Phone No "),
         ),
         const SizedBox(height: 15),
@@ -262,6 +262,7 @@ class _SignUpState extends State<SignUp> {
         MyTextField(
           validator: (value) => Validator.validatePhone(value),
           controller: phoneController,
+          maxLenth: AppConstants.phoneValidation,
           isAmount: true,
           labelText: const Text("Phone No "),
         ),

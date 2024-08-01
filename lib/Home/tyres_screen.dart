@@ -373,11 +373,24 @@ class _TyresScreenState extends State<TyresScreen> {
                             validator: (value) => Validator.validateWithhint(
                                 value, "Select Note"),
                             decoration: InputDecoration(
-                                border: InputBorder.none,
-                                enabledBorder: OutlineInputBorder(
-                                    borderSide:
-                                        BorderSide(color: colors.lightgray),
-                                    borderRadius: BorderRadius.circular(16))),
+                              isDense: true,
+                              border: OutlineInputBorder(
+                                  borderSide:
+                                      BorderSide(color: Colors.grey.shade200),
+                                  borderRadius: BorderRadius.circular(8)),
+                              errorBorder: OutlineInputBorder(
+                                  borderSide:
+                                      BorderSide(color: Colors.grey.shade200),
+                                  borderRadius: BorderRadius.circular(8)),
+                              enabledBorder: OutlineInputBorder(
+                                  borderSide:
+                                      BorderSide(color: Colors.grey.shade200),
+                                  borderRadius: BorderRadius.circular(8)),
+                              focusedBorder: OutlineInputBorder(
+                                  borderSide:
+                                      BorderSide(color: Colors.grey.shade700),
+                                  borderRadius: BorderRadius.circular(8)),
+                            ),
                           ),
                         ),
                       ),
@@ -388,7 +401,8 @@ class _TyresScreenState extends State<TyresScreen> {
                         onTap: () {
                           //selectIndex == 1 ?  MyButton(text: "Door Step ") : DisButton(text: "Door Step")
 
-                          if (otherCategory.timeSlotId!.isEmpty ||
+                          if (otherCategory.timeSlotId == null ||
+                              otherCategory.timeSlotId!.isEmpty ||
                               otherCategory.timeSlotId == "") {
                             Fluttertoast.showToast(msg: "PLease select Slot");
                             return;
@@ -401,39 +415,38 @@ class _TyresScreenState extends State<TyresScreen> {
                                 noteController.text.toString();
                             // otherCategory.timeSlotId = "1";
                             otherCategory.date = dateController.text.toString();
-                            if (widget.page == 1) {
+                            // if (widget.page == 1) {
+                            if (selectIndex == 1) {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) => TyresListing(
                                             index: selectIndex,
                                           )));
-                            } else if (widget.page == 2) {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => BatteryListing(
-                                            index: selectIndex,
-                                          )));
-                            } else if (selectIndex == 2 &&
-                                widget.title == 'carWash') {
+                            } else
+                            // if (widget.page == 2)
+                            {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) => CarWashList()));
-                            } else {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => TyresListing(
-                                            index: selectIndex,
-                                          )));
-
-                              // Navigator.push(
-                              //     context,
-                              //     MaterialPageRoute(
-                              //         builder: (context) => Summary1()));
                             }
+                            // else if (selectIndex == 2 &&
+                            //     widget.title == 'carWash') {
+                            //   Navigator.push(
+                            //       context,
+                            //       MaterialPageRoute(
+                            //           builder: (context) => CarWashList()));
+                            // } else {
+                            //   Navigator.push(
+                            //       context,
+                            //       MaterialPageRoute(
+                            //           builder: (context) => TyresListing(
+                            //                 index: selectIndex,
+                            //               )));
+                            //
+                            //
+                            // }
                           }
                         },
                         child: Container(

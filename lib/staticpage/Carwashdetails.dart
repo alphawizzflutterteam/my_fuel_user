@@ -2,14 +2,85 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:test_prj/orderfuel/EV/checkout_page.dart';
 
+import '../Home/checkout_car_service.dart';
 import '../components/my_button.dart';
+import '../data/model/VendorServiceProductModel.dart';
+import '../helper/colors.dart';
+import '../home_page.dart';
+import '../splashScreen.dart';
 
-class Carwashdetails extends StatelessWidget {
+class Carwashdetails extends StatefulWidget {
+  SellerData? sellerData;
+
+  Carwashdetails({super.key, this.sellerData});
+  @override
+  State<Carwashdetails> createState() => _CarwashdetailsState();
+}
+
+class _CarwashdetailsState extends State<Carwashdetails> {
+  int selectedIndex = -1;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: Container(
+        width: double.infinity,
+
+        decoration: BoxDecoration(
+          gradient: const LinearGradient(
+            colors: [Color(0xFFF3B781F), Color(0xFF8AB402)],
+            stops: [0, 1],
+            begin: AlignmentDirectional(0.94, -1),
+            end: AlignmentDirectional(-0.94, 1),
+          ),
+          borderRadius: BorderRadius.circular(15),
+        ),
+        margin: EdgeInsets.symmetric(
+            horizontal: 16.0), // Optional padding for inner elements
+        child: FloatingActionButton.extended(
+          backgroundColor: Colors.transparent,
+          // backgroundColor: Colors.white,
+
+          // backgroundColor: Colors.grey.shade200,
+          onPressed: () async {
+            if (selectedIndex == -1) {
+              Fluttertoast.showToast(msg: "Please select one product");
+              return;
+            }
+
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => Checkout_Car_Service()));
+            // var data = await Navigator.push(
+            //     context,
+            //     MaterialPageRoute(
+            //       builder: (context) => MyFullAssets(),
+            //     ));
+            //
+            // if (data != null) {
+            //   controller.getAssets();
+            // }
+            // Navigato
+            // Add your onPressed logic here
+          },
+          label: Text(
+            'Book Service Now',
+            style: TextStyle(fontWeight: FontWeight.w700, color: Colors.white),
+          ),
+
+          // Optionally, adjust other properties like background color, elevation, etc.
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -47,7 +118,7 @@ class Carwashdetails extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(top: 45.0, left: 30),
                     child: Text(
-                      'Star Car Wash',
+                      '${widget.sellerData!.seller!.fName!.toString()}',
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 20,
@@ -92,7 +163,7 @@ class Carwashdetails extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              "Star Car Wash",
+                              "${widget.sellerData!.seller!.fName!.toString()}",
                               style: TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
@@ -105,7 +176,7 @@ class Carwashdetails extends StatelessWidget {
                                 Icon(Icons.location_on),
                                 SizedBox(width: 5),
                                 Text(
-                                  "12, ring Road",
+                                  "${widget.sellerData!.seller!.shop!.address!.toString()}",
                                   style: TextStyle(
                                     fontSize: 16,
                                     color: Colors.black54,
@@ -199,8 +270,8 @@ class Carwashdetails extends StatelessWidget {
                     padding: const EdgeInsets.only(left: 15, right: 10),
                     child: Text(
                       "Lorem Ipsum is simply dummy text of the "
-                          "printing and typesetting industry. Lorem Ipsum has "
-                          "been the industry's standard dummy text ever since the 1500s",
+                      "printing and typesetting industry. Lorem Ipsum has "
+                      "been the industry's standard dummy text ever since the 1500s",
                       style: TextStyle(fontSize: 14, color: Colors.black54),
                     ),
                   ),
@@ -224,6 +295,113 @@ class Carwashdetails extends StatelessWidget {
                   ],
                 ),
               ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 10, right: 250),
+              child: Text(
+                "Products",
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            ListView.builder(
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              itemCount: widget.sellerData?.products?.length ?? 0,
+              itemBuilder: (context, index) {
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: InkWell(
+                    onTap: () {
+                      otherCategory.productId =
+                          widget.sellerData!.products?[index].id.toString();
+
+                      selectedIndex = index;
+
+                      setState(() {});
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        // color: colors.lightgray,
+                        border: Border.all(
+                          color: selectedIndex == index
+                              ? Colors.deepOrangeAccent
+                              : colors.lightgray,
+                          width: 2,
+                        ),
+                        borderRadius: BorderRadius.circular(8.0),
+                        color: selectedIndex == index
+                            ? colors.lightgray
+                            : Colors.white,
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                // Add additional decoration properties here as needed
+                              ),
+                              width: 100,
+                              height: 100,
+                              child: ClipRRect(
+                                // Use ClipRRect to clip the image with the specified border radius
+                                borderRadius: BorderRadius.circular(10),
+                                child: Image.network(
+                                  "${configModel!.baseUrls!.brandImageUrl}/${widget.sellerData!.products![index].images![0]}",
+                                  errorBuilder: (context, error, stackTrace) {
+                                    return Image.asset(
+                                      'assets/tyre.png',
+                                      fit: BoxFit.cover,
+                                    );
+                                  },
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 20,
+                            ),
+                            Column(
+                              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SizedBox(
+                                  height: 5,
+                                ),
+                                Text(
+                                  '${widget.sellerData!.products![index].name}',
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                SizedBox(
+                                  height: 5,
+                                ),
+                                Text(
+                                  '${widget.sellerData!.products![index].slug}',
+                                  style: TextStyle(color: colors.greyTemp),
+                                ),
+                                SizedBox(
+                                  height: 5,
+                                ),
+                                Text(
+                                    '₹ ${widget.sellerData!.products![index].unitPrice}',
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold))
+                              ],
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                );
+              },
             ),
             Padding(
               padding: const EdgeInsets.only(top: 10, right: 250),
@@ -318,7 +496,7 @@ class Carwashdetails extends StatelessWidget {
                                       value: 1,
                                       backgroundColor: Colors.grey,
                                       valueColor:
-                                      AlwaysStoppedAnimation(Colors.blue),
+                                          AlwaysStoppedAnimation(Colors.blue),
                                       borderRadius: BorderRadius.circular(5),
                                     ),
                                   ),
@@ -338,7 +516,7 @@ class Carwashdetails extends StatelessWidget {
                                     value: 0.8,
                                     backgroundColor: Colors.grey,
                                     valueColor:
-                                    AlwaysStoppedAnimation(Colors.green),
+                                        AlwaysStoppedAnimation(Colors.green),
                                     borderRadius: BorderRadius.circular(5),
                                   ),
                                 ),
@@ -357,7 +535,7 @@ class Carwashdetails extends StatelessWidget {
                                     value: 0.6,
                                     backgroundColor: Colors.grey,
                                     valueColor:
-                                    AlwaysStoppedAnimation(Colors.yellow),
+                                        AlwaysStoppedAnimation(Colors.yellow),
                                     borderRadius: BorderRadius.circular(5),
                                   ),
                                 ),
@@ -395,7 +573,7 @@ class Carwashdetails extends StatelessWidget {
                                     value: 0.2,
                                     backgroundColor: Colors.grey,
                                     valueColor:
-                                    AlwaysStoppedAnimation(Colors.red),
+                                        AlwaysStoppedAnimation(Colors.red),
                                     borderRadius: BorderRadius.circular(5),
                                   ),
                                 ),
@@ -466,7 +644,7 @@ class Carwashdetails extends StatelessWidget {
                                   itemSize: 22,
                                   itemCount: 5,
                                   itemPadding:
-                                  EdgeInsets.symmetric(horizontal: 0.0),
+                                      EdgeInsets.symmetric(horizontal: 0.0),
                                   itemBuilder: (context, _) => Icon(
                                     Icons.star,
                                     color: Colors.amber,
@@ -488,7 +666,7 @@ class Carwashdetails extends StatelessWidget {
                   padding: const EdgeInsets.only(left: 15, right: 10),
                   child: Text(
                     "Lorem Ipsum is simply dummy text of the "
-                        "printing and typesetting industry.",
+                    "printing and typesetting industry.",
                     style: TextStyle(fontSize: 14, color: Colors.black54),
                   ),
                 ),
@@ -551,7 +729,7 @@ class Carwashdetails extends StatelessWidget {
                                   itemSize: 22,
                                   itemCount: 5,
                                   itemPadding:
-                                  EdgeInsets.symmetric(horizontal: 0.0),
+                                      EdgeInsets.symmetric(horizontal: 0.0),
                                   itemBuilder: (context, _) => Icon(
                                     Icons.star,
                                     color: Colors.amber,
@@ -573,7 +751,7 @@ class Carwashdetails extends StatelessWidget {
                   padding: const EdgeInsets.only(left: 15, right: 10),
                   child: Text(
                     "Lorem Ipsum is simply dummy text of the "
-                        "printing and typesetting industry.",
+                    "printing and typesetting industry.",
                     style: TextStyle(fontSize: 14, color: Colors.black54),
                   ),
                 ),
@@ -581,27 +759,29 @@ class Carwashdetails extends StatelessWidget {
                   height: 20,
                 ),
 
-                InkWell(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => CheckOut(
-                              // page: 1,
-                            )));
-
-                    // Add your onTap logic here
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      child: const MyButton(
-                        text: "Book Service Now",
-                      ),
-                    ),
-                  ),
-
-                ),
+                // InkWell(
+                //   onTap: () {
+                //     if (selectedIndex == -1) {
+                //       Fluttertoast.showToast(msg: "Please select one product");
+                //       return;
+                //     }
+                //
+                //     Navigator.push(
+                //         context,
+                //         MaterialPageRoute(
+                //             builder: (context) => Checkout_Car_Service()));
+                //
+                //     // Add your onTap logic here
+                //   },
+                //   child: Padding(
+                //     padding: const EdgeInsets.all(8.0),
+                //     child: Container(
+                //       child: const MyButton(
+                //         text: "Book Service Now",
+                //       ),
+                //     ),
+                //   ),
+                // ),
                 // Padding(
                 //   padding: const EdgeInsets.all(10.0),
                 //   child: TextButton(

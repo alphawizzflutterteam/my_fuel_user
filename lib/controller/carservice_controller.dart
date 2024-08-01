@@ -10,19 +10,22 @@ import 'package:test_prj/home_page.dart';
 
 import '../data/model/CheckRequestModel.dart';
 import '../data/model/VehicleType.dart';
+import '../data/model/VendorServiceProductModel.dart';
 import '../service/provider/lavavel_provider.dart';
 
 class CarServiceController extends AppBaseController {
   LaravelApiClient _laravelApiClient = Get.find<LaravelApiClient>();
 
   var vehicletype = VehicleType().obs;
+  var vendorProductServiceModel = VendorServiceProductModel().obs;
   var timeSlotModel = TimeSlotModel().obs;
   RxInt selectTimeSlot = 99.obs;
 
   var vehicleModel = VehicleModel().obs;
   var batterTyreCheckOut = BatteryTyreCheckOutModel().obs;
   RxBool isLoading = false.obs;
-
+  RxList<SelectProducts>? productsList = <SelectProducts>[].obs;
+  RxList<SellerData>? sellerList = <SellerData>[].obs;
   RxList<VehicleData>? vehicleList = <VehicleData>[].obs;
   RxList<VehicleModelData>? vehicleModelList = <VehicleModelData>[].obs;
   RxList<TimeData>? tileList = <TimeData>[].obs;
@@ -34,6 +37,18 @@ class CarServiceController extends AppBaseController {
   @override
   void onInit() {
     super.onInit();
+  }
+
+  Future<void> getVendors(String service_id, String service_type,
+      String slot_id, String date, String vehicle_type) async {
+    isLoading.value = true;
+    Map<String, dynamic> data = await _laravelApiClient.getVendors(
+        service_id, service_type, slot_id, date, vehicle_type);
+    isLoading(false);
+    vendorProductServiceModel(VendorServiceProductModel.fromJson(data));
+    sellerList!.value = vendorProductServiceModel.value.data!;
+    update();
+    isLoading.value = false;
   }
 
   Future<void> getVehiCleType() async {

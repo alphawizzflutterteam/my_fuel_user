@@ -21,6 +21,7 @@ import 'package:test_prj/splashScreen.dart';
 import 'Home/checkout_car_service.dart';
 
 import 'components/my_textfield.dart';
+import 'helper/utils/app_constants.dart';
 import 'helper/utils/validator_all.dart';
 import 'orderfuel/doorStepDelivery/my_assets.dart';
 
@@ -446,6 +447,7 @@ class _SelectNewAddressState extends State<SelectNewAddress> {
                                         vertical: 8.0),
                                     child: MyTextField(
                                       isAmount: true,
+                                      maxLenth: AppConstants.phoneValidation,
                                       validator: (value) =>
                                           Validator.validatePhone(value),
                                       controller: mobileController,
@@ -457,6 +459,7 @@ class _SelectNewAddressState extends State<SelectNewAddress> {
                                         vertical: 8.0),
                                     child: MyTextField(
                                       isAmount: true,
+                                      maxLenth: AppConstants.phoneValidation,
                                       validator: (value) =>
                                           Validator.validatePhone(value),
                                       controller: alternatemobileController,
@@ -527,6 +530,7 @@ class _SelectNewAddressState extends State<SelectNewAddress> {
                                         vertical: 8.0),
                                     child: MyTextField(
                                       isAmount: true,
+                                      maxLenth: AppConstants.pinValidation,
                                       validator: (value) =>
                                           Validator.validateWithhint(
                                               value, "PinCode".tr),

@@ -125,7 +125,7 @@ class VendorsPage extends StatelessWidget {
                                           child: Row(
                                             children: [
                                               Image.network(
-                                                  '${controller.splashController.settingModel.}',
+                                                  '${controller.splashController.settingModel.value.baseUrls}',
                                                   height: 94),
                                               Padding(
                                                 padding:

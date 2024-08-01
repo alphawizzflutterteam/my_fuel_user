@@ -3,6 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class SharedPreferencesService {
   // Global private constants
   static String kTokenKey = 'token';
+  static String kLanguageKey = 'language_type';
   String _kThemeColorKey = 'theme_color';
   static SharedPreferencesService? _instance;
   static late SharedPreferences _prefs;

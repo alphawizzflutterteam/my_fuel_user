@@ -280,6 +280,7 @@ class _CarServiceState extends State<CarService> {
                       }
 
                       otherCategory.productId = data.join(",");
+                      otherCategory.service = "At Your Station";
                       _showBottomSheet(context);
                     },
                     child: const MyButton(

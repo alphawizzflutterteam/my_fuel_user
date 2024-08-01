@@ -55,7 +55,7 @@ class _PaymentScreenTreeState extends State<PaymentScreenTree> {
             ),
           ),
         ),
-        title:  Text('Payment Type'.tr),
+        title: Text('Payment Type'.tr),
         centerTitle: true,
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
@@ -109,7 +109,7 @@ class _PaymentScreenTreeState extends State<PaymentScreenTree> {
               //     ],
               //   ),
               // ),
-               Padding(
+              Padding(
                 padding: EdgeInsets.only(top: 20, bottom: 20),
                 child: Text(
                   'Select payment method'.tr,
@@ -522,10 +522,13 @@ class _PaymentScreenTreeState extends State<PaymentScreenTree> {
               ),
               GestureDetector(
                 onTap: () {
+                  print("object Click${_type}");
                   if (_type == 2) {
                     Get.back(result: "cod");
+                    print("object Click");
                   } else if (_type == 3) {
                     Get.back(result: "payment");
+                    print("object Click");
                   }
 
                   // Navigator.push(
@@ -540,7 +543,7 @@ class _PaymentScreenTreeState extends State<PaymentScreenTree> {
                 child: Container(
                   alignment: Alignment.bottomCenter,
                   width: 330,
-                  child:  MyButton(
+                  child: MyButton(
                     text: 'Continue'.tr,
                   ),
                 ),

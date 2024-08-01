@@ -5,6 +5,7 @@ class MyTextField extends StatefulWidget {
   final TextEditingController? controller;
   final bool isPassword;
   final bool isAmount;
+  final maxLenth;
   final TextInputType? textInputType;
   final Function(String text)? onChanged;
   final String? Function(String?) validator;
@@ -19,6 +20,7 @@ class MyTextField extends StatefulWidget {
     this.isPassword = false,
     this.isAmount = false,
     this.onChanged,
+    this.maxLenth,
     required this.validator,
   });
 
@@ -36,33 +38,38 @@ class _MyTextFieldState extends State<MyTextField> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 56,
-      child: TextFormField(
-        controller: widget.controller,
-        obscureText: widget.isPassword ? _obscureText : false,
-        onChanged: widget.onChanged,
-        validator: widget.validator!,
-        keyboardType: widget.isAmount
-            ? TextInputType.number
-            : widget.textInputType ?? TextInputType.text,
-        decoration: InputDecoration(
-          label: widget.labelText,
-          suffixIcon: widget.isPassword
-              ? GestureDetector(
-                  onTap: _toggle,
-                  child: Icon(
-                      _obscureText ? Icons.visibility_off : Icons.visibility))
-              : const SizedBox.shrink(),
-          labelStyle: TextStyle(color: Colors.grey.shade700),
-          enabled: true,
-          enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.grey.shade200),
-              borderRadius: BorderRadius.circular(8)),
-          focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.grey.shade700),
-              borderRadius: BorderRadius.circular(8)),
-        ),
+    return TextFormField(
+      controller: widget.controller,
+      obscureText: widget.isPassword ? _obscureText : false,
+      onChanged: widget.onChanged,
+      validator: widget.validator!,
+      maxLength: widget.maxLenth ?? null,
+      keyboardType: widget.isAmount
+          ? TextInputType.number
+          : widget.textInputType ?? TextInputType.text,
+      decoration: InputDecoration(
+        label: widget.labelText,
+        suffixIcon: widget.isPassword
+            ? GestureDetector(
+                onTap: _toggle,
+                child: Icon(
+                    _obscureText ? Icons.visibility_off : Icons.visibility))
+            : const SizedBox.shrink(),
+        labelStyle: TextStyle(color: Colors.grey.shade700),
+        enabled: true,
+        isDense: true,
+        border: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.grey.shade200),
+            borderRadius: BorderRadius.circular(8)),
+        errorBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.grey.shade200),
+            borderRadius: BorderRadius.circular(8)),
+        enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.grey.shade200),
+            borderRadius: BorderRadius.circular(8)),
+        focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.grey.shade700),
+            borderRadius: BorderRadius.circular(8)),
       ),
     );
   }

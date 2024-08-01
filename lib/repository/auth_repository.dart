@@ -10,7 +10,7 @@ class AuthRepository {
     _laravelApiClient = Get.find<LaravelApiClient>();
   }
 
-  Future<String> registerUserApi(User user) {
-    return _laravelApiClient.userRegister(user);
-  }
+  // Future<String> registerUserApi(User user) {
+  //   return _laravelApiClient.userRegister(user);
+  // }
 }

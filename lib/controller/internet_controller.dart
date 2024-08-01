@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 class InternetController extends AppBaseController {
   final Connectivity _connectivity = Connectivity();
   // final _isConnected = false.obs;
-  RxBool isConnected = false.obs;
+  RxBool isConnected = true.obs;
   // bool get isConnected => _isConnected.value;
 
   @override
@@ -26,7 +26,7 @@ class InternetController extends AppBaseController {
     isConnected.value = result != ConnectivityResult.none;
 
     if (result != ConnectivityResult.none) {
-      isConnected.value = false;
+      isConnected.value = true;
     } else {
       isConnected.value = true;
     }

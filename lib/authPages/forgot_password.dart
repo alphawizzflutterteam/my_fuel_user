@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:test_prj/authPages/otpScreen1.dart';
@@ -104,6 +105,17 @@ class ForgetPassword extends StatelessWidget {
                                         labelStyle: TextStyle(
                                             color: Colors.grey.shade700),
                                         enabled: true,
+                                        isDense: true,
+                                        border: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color: Colors.grey.shade200),
+                                            borderRadius:
+                                                BorderRadius.circular(8)),
+                                        errorBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color: Colors.grey.shade200),
+                                            borderRadius:
+                                                BorderRadius.circular(8)),
                                         enabledBorder: OutlineInputBorder(
                                             borderSide: BorderSide(
                                                 color: Colors.grey.shade200),
@@ -152,6 +164,10 @@ class ForgetPassword extends StatelessWidget {
                                                   //     MaterialPageRoute(
                                                   //         builder: (context) =>
                                                   //             const OTPScreen()));
+                                                } else {
+                                                  Fluttertoast.showToast(
+                                                      msg:
+                                                          "Please enter Correct user data");
                                                 }
                                               });
                                             }
@@ -184,9 +200,14 @@ class ForgetPassword extends StatelessWidget {
                     left: 20,
                     child: Row(
                       children: [
-                        Icon(
-                          Icons.arrow_back,
-                          color: Colors.white,
+                        InkWell(
+                          onTap: () {
+                            Get.back();
+                          },
+                          child: Icon(
+                            Icons.arrow_back,
+                            color: Colors.white,
+                          ),
                         ),
                         SizedBox(
                           width: 80,
