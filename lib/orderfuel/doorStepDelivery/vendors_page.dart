@@ -125,9 +125,16 @@ class VendorsPage extends StatelessWidget {
                                           child: Row(
                                             children: [
                                               Image.network(
-
-                                          '${controller.splashController.settingModel.value.baseUrls}',
-                                                  height: 94),
+                                                '${configModel?.baseUrls}/${item.seller?.image}',
+                                                height: 94,
+                                                errorBuilder: (context, error,
+                                                        stackTrace) =>
+                                                    Image.asset(
+                                                  'assets/login-logo.png',
+                                                  height: 94,
+                                                  width: 94,
+                                                ),
+                                              ),
                                               Padding(
                                                 padding:
                                                     const EdgeInsets.symmetric(
