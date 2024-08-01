@@ -22,7 +22,6 @@ import 'package:test_prj/splashScreen.dart';
 import 'Home/checkout_car_service.dart';
 
 import 'components/my_textfield.dart';
-import 'helper/utils/app_constants.dart';
 import 'helper/utils/validator_all.dart';
 import 'orderfuel/doorStepDelivery/my_assets.dart';
 
@@ -549,7 +548,154 @@ class _SelectNewAddressState extends State<SelectNewAddress> {
                       ),
                     ),
 
-  
+                    Obx(() {
+                      return Row(
+                        children: [
+                          Checkbox(
+                            activeColor: Colors.deepOrange,
+                            value: controller.isBillDeilivery.value,
+                            onChanged: (value) {
+                              controller.isBillDeilivery.value = value!;
+                            },
+                          ),
+                          Text(
+                            'Same as Shipping address'.tr,
+                            style: const TextStyle(color: colors.greyTemp),
+                          )
+                        ],
+                      );
+                    }),
+
+                    Obx(() {
+                      return Visibility(
+                        visible: !controller.isBillDeilivery.value,
+                        child: SizedBox(
+                          height: Get.height / 2.7,
+                          child: SingleChildScrollView(
+                            padding: EdgeInsets.zero,
+                            child: Column(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 20.0),
+                                  child: Form(
+                                    key: _formKeyReset,
+                                    child: Column(
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 8.0),
+                                          child: MyTextField(
+                                            validator: (value) =>
+                                                Validator.validateName(value),
+                                            controller: nameController,
+                                            labelText: Text("Name".tr),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 8.0),
+                                          child: MyTextField(
+                                            isAmount: true,
+                                            validator: (value) =>
+                                                Validator.validatePhone(value),
+                                            controller: mobileController,
+                                            labelText: Text("Mobile Number".tr),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 8.0),
+                                          child: MyTextField(
+                                            isAmount: true,
+                                            validator: (value) =>
+                                                Validator.validatePhone(value),
+                                            controller:
+                                                alternatemobileController,
+                                            labelText: Text(
+                                                "Alternate Mobile Number".tr),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 8.0),
+                                          child: MyTextField(
+                                            validator: (value) =>
+                                                Validator.validateWithhint(
+                                                    value,
+                                                    "House no., Building Name"
+                                                        .tr),
+                                            controller: houseNoController,
+                                            labelText: Text(
+                                                "House no., Building Name".tr),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 8.0),
+                                          child: MyTextField(
+                                            validator: (value) =>
+                                                Validator.validateWithhint(
+                                                    value,
+                                                    "Road name, Area Colony"
+                                                        .tr),
+                                            controller: roadNameController,
+                                            labelText: Text(
+                                                "Road name, Area Colony".tr),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 8.0),
+                                          child: MyTextField(
+                                            validator: (value) =>
+                                                Validator.validateWithhint(
+                                                    value, "Country".tr),
+                                            controller: countryController,
+                                            labelText: Text("Country".tr),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 8.0),
+                                          child: MyTextField(
+                                            validator: (value) =>
+                                                Validator.validateWithhint(
+                                                    value, "State".tr),
+                                            controller: stateController,
+                                            labelText: Text("State".tr),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 8.0),
+                                          child: MyTextField(
+                                            validator: (value) =>
+                                                Validator.validateWithhint(
+                                                    value, "City".tr),
+                                            controller: cityController,
+                                            labelText: Text("City".tr),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 8.0),
+                                          child: MyTextField(
+                                            isAmount: true,
+                                            validator: (value) =>
+                                                Validator.validateWithhint(
+                                                    value, "PinCode".tr),
+                                            controller: pincodeController,
+                                            labelText: Text("PinCode".tr),
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          height: 20,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                )
                                 // SizedBox(
                                 //   height: 70,
                                 //   child: Padding(
