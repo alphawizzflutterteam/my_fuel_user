@@ -129,7 +129,9 @@ class LanguageScreen extends StatelessWidget {
                               }
 
 
+
                               Get.offAllNamed(Routes.LOGIN);
+
                             },
                             child: Container(
                               width: 150,
