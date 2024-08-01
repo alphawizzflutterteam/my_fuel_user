@@ -19,6 +19,15 @@ class _AssetsState extends State<MyAssets> {
           selectedValue = index;
         });
       },
+      style: OutlinedButton.styleFrom(
+        minimumSize: const Size(280, 50),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadiusDirectional.circular(10),
+        ),
+        side: BorderSide(
+          color: (selectedValue == index) ? Colors.black : Colors.grey,
+        ),
+      ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -39,15 +48,6 @@ class _AssetsState extends State<MyAssets> {
             activeColor: Colors.orange,
           ),
         ],
-      ),
-      style: OutlinedButton.styleFrom(
-        minimumSize: const Size(280, 50),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadiusDirectional.circular(10),
-        ),
-        side: BorderSide(
-          color: (selectedValue == index) ? Colors.black : Colors.grey,
-        ),
       ),
     );
   }
@@ -75,7 +75,7 @@ class _AssetsState extends State<MyAssets> {
                   bottomRight: Radius.circular(23),
                 ),
               ),
-              child:  Row(
+              child: Row(
                 children: [
                   InkWell(
                     onTap: () {
@@ -183,8 +183,12 @@ class _AssetsState extends State<MyAssets> {
               child: Align(
                 alignment: Alignment.centerRight,
                 child: GestureDetector(
-                  onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const AssetsPage(),)),
-                  child: const MyButton(text: 'Add Asset type')),
+                    onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const AssetsPage(),
+                        )),
+                    child: const MyButton(text: 'Add Asset type')),
               ),
             ),
             const SizedBox(height: 20),

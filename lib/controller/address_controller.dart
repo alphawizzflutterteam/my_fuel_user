@@ -50,11 +50,12 @@ class AddressController extends AppBaseController {
     return value;
   }
 
+  Map? data;
   @override
   void onInit() {
     // TODO: implement onInit
     super.onInit();
-
+    data = Get.arguments;
     getAddRess();
   }
 

@@ -85,24 +85,21 @@ class _LookingForCompanyState extends State<LookingForCompany> {
                         ?.where((element) => element.isSelected!);
 
                     if ((item?.isNotEmpty ?? false) &&
-                        item!.first.slug == 'diesel') {
+                            item!.first.slug == 'diesel' ||
+                        item!.first.slug == 'cng' ||
+                        item.first.slug == 'petrol') {
                       Get.to(const SelectNewAddress(
                         isFromForLooking: true,
                         isFromOrderFuel: true,
                       ));
                     } else if ((item?.isNotEmpty ?? false) &&
                         item!.first.slug == 'ev') {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => EvVehicle(
-                                    selectedIndex: 0,
-                                  )));
+                      Get.to(EvVehicle(), arguments: item.first.id);
                     } else {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => SelectNewAddress(
+                              builder: (context) => const SelectNewAddress(
                                     isFromForLooking: true,
                                   )));
                     }
@@ -110,22 +107,21 @@ class _LookingForCompanyState extends State<LookingForCompany> {
                     var item = controller.servicesList[1].data
                         ?.where((element) => element.isSelected!);
 
-                    print('${item?.first.slug}_____________');
-
                     if ((item?.isNotEmpty ?? false) &&
-                        item!.first.slug == 'diesel') {
+                            item!.first.slug == 'diesel' ||
+                        item!.first.slug == 'cng' ||
+                        item.first.slug == 'petrol') {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (context) => const AddVehicles()));
                     } else if ((item?.isNotEmpty ?? false) &&
                         item!.first.slug == 'ev') {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => EvVehicle(
-                                    selectedIndex: 1,
-                                  )));
+                      Get.to(
+                          EvVehicle(
+                            selectedIndex: 0,
+                          ),
+                          arguments: item.first.id);
                     } else {
                       Navigator.push(
                           context,

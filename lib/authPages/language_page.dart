@@ -128,6 +128,7 @@ class LanguageScreen extends StatelessWidget {
                                 controller.changeLanguage('en', 'US');
                               }
 
+
                               Get.offAllNamed(Routes.LOGIN);
                             },
                             child: Container(

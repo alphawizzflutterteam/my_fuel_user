@@ -8,6 +8,7 @@ import 'package:test_prj/components/my_background2.dart';
 
 import 'package:test_prj/components/my_button.dart';
 import 'package:test_prj/controller/otp_controller.dart';
+import 'package:test_prj/helper/utils/app_constants.dart';
 
 import '../controller/home_controller.dart';
 import '../helper/utils/shared_preference.dart';
@@ -175,10 +176,14 @@ class _OTPScreenState extends State<OTPScreen> {
                                         SharedPreferencesService? instance =
                                             await SharedPreferencesService
                                                 .getInstance();
+
                                         instance.saveData(
                                             SharedPreferencesService.kTokenKey,
                                             controller.verifyModel.value.token
                                                 .toString());
+                                        await controller.box.write(
+                                            AppConstants.token,
+                                            controller.verifyModel.value.token);
 
                                         Get.toNamed(Routes.MEMBERCARD,
                                             arguments: controller

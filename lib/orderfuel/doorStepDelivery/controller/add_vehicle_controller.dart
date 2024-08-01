@@ -16,8 +16,8 @@ class AddVehicleController extends AppBaseController {
   void onInit() async {
     // TODO: implement onInit
     super.onInit();
-    await getFuelOrderService();
     getTimeslot();
+    await getFuelOrderService();
   }
 
   RxInt? selectedValue = 1.obs;

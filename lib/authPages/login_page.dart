@@ -9,6 +9,7 @@ import 'package:test_prj/controller/login_controller.dart';
 import 'package:test_prj/controller/singup_controller.dart';
 import 'package:test_prj/helper/app_images.dart';
 import 'package:test_prj/helper/colors.dart';
+import 'package:test_prj/helper/utils/app_constants.dart';
 import 'package:test_prj/home.dart';
 import 'package:test_prj/authPages/sign_up.dart';
 import 'package:test_prj/routes/app_pages.dart';
@@ -219,6 +220,9 @@ class _LoginPageState extends State<LoginPage> {
                                                   SharedPreferencesService
                                                       .kTokenKey,
                                                   value['token'].toString());
+                                              await controller.box.write(
+                                                  AppConstants.token,
+                                                  value['token']);
 
                                               Navigator.pushReplacement(
                                                   context,
