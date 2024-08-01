@@ -11,6 +11,9 @@ class AppConstants {
   static const String polylineMapKey =
       'AIzaSyAmJixElxZzVtD26BWhCaGC1S3HMHsGDLc';
 
+  static const int phoneValidation = 10;
+  static const int pinValidation = 6;
+
   static const String userId = 'userId';
   static const String name = 'name';
 

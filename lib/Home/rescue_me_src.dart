@@ -192,7 +192,7 @@ class _RescueMeState extends State<RescueMe> {
                           onChanged: (String? newValue) {
                             if (newValue != null) {
                               selectedServices = newValue;
-                              otherCategory.service = newValue.toString();
+                              otherCategory.service_type = newValue.toString();
                               setState(() {});
                             }
                           },
@@ -229,7 +229,8 @@ class _RescueMeState extends State<RescueMe> {
                                     setState(() {
                                       selectedfuelType = newValue;
 
-                                      otherCategory.notes = newValue.toString();
+                                      otherCategory.fuel_type =
+                                          newValue.toString();
                                     });
                                   }
                                 },
@@ -258,6 +259,7 @@ class _RescueMeState extends State<RescueMe> {
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               child: TextFormField(
+                                keyboardType: TextInputType.number,
                                 controller: fuelQuantityController,
                                 decoration: InputDecoration(
                                     contentPadding: EdgeInsets.only(left: 5),
@@ -277,11 +279,11 @@ class _RescueMeState extends State<RescueMe> {
                                 otherCategory.vehicleType!.isEmpty) {
                               Fluttertoast.showToast(
                                   msg: "PLease select Vehicle Type");
-                            } else if (otherCategory.notes == null ||
-                                otherCategory.notes!.isEmpty) {
+                            } else if (otherCategory.fuel_type == null ||
+                                otherCategory.fuel_type!.isEmpty) {
                               Fluttertoast.showToast(
                                   msg: "PLease select Vehicle Model");
-                            } else if (otherCategory.service == null ||
+                            } else if (otherCategory.fuel_type == null ||
                                 selectedfuelType!.isEmpty) {
                               Fluttertoast.showToast(
                                   msg: "Please select Fuel Type");
@@ -289,8 +291,10 @@ class _RescueMeState extends State<RescueMe> {
                               Fluttertoast.showToast(
                                   msg: "Please Enter Fuel Quantity");
                             } else {
-                              otherCategory.tyreSize =
+                              otherCategory.quantity =
                                   fuelQuantityController.text.toString();
+                              otherCategory.service = "At your station";
+
                               print(
                                   "object Cate Id ${otherCategory.categoryId}");
                               Navigator.push(

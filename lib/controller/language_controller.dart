@@ -35,4 +35,9 @@ class LanguageController extends AppBaseController {
     Get.offAllNamed(Routes.LOGIN);
     update();
   }
+
+  void changeLanguage(var param1, var param2) {
+    var locale = Locale(param1, param2);
+    Get.updateLocale(locale);
+  }
 }

@@ -6,6 +6,7 @@ import 'package:test_prj/authPages/login_page_2.dart';
 import 'package:test_prj/components/my_background.dart';
 import 'package:test_prj/components/my_button.dart';
 import 'package:test_prj/controller/login_controller.dart';
+import 'package:test_prj/controller/singup_controller.dart';
 import 'package:test_prj/helper/app_images.dart';
 import 'package:test_prj/helper/colors.dart';
 import 'package:test_prj/home.dart';
@@ -154,41 +155,84 @@ class _LoginPageState extends State<LoginPage> {
                         Obx(
                           () => controller.isLoading.value == true
                               ? Center(child: CircularProgressIndicator())
-                              : GestureDetector(
-                                  onTap: () {
-                                    if (_formKey.currentState!.validate()) {
-                                      controller
-                                          .login(
-                                              memberShipController.text
-                                                  .toString(),
-                                              phoneEmailController.text
-                                                  .toString(),
-                                              passwordController.text
-                                                  .toString())
-                                          .then((value) async {
-                                        if (value.containsKey("errors")) {
-                                          Fluttertoast.showToast(msg: "$value");
-                                        } else if (value['token'] != "") {
-                                          SharedPreferencesService? instance =
-                                              await SharedPreferencesService
-                                                  .getInstance();
-                                          instance.saveData(
-                                              SharedPreferencesService
-                                                  .kTokenKey,
-                                              value['token'].toString());
+                              : GetBuilder<SignupController>(
+                                  init: SignupController(),
+                                  builder: (signUpController) {
+                                    return GestureDetector(
+                                      onTap: () {
+                                        if (_formKey.currentState!.validate()) {
+                                          controller
+                                              .login(
+                                                  memberShipController.text
+                                                      .toString(),
+                                                  phoneEmailController.text
+                                                      .toString(),
+                                                  passwordController.text
+                                                      .toString())
+                                              .then((value) async {
+                                            if (value.containsKey("errors")) {
+                                              Fluttertoast.showToast(
+                                                  msg: "$value");
+                                            } else if (value.containsKey(
+                                                'temporary_token')) {
+                                              String token =
+                                                  value['temporary_token']
+                                                      .toString();
+                                              signUpController
+                                                  .checkOtp(
+                                                      token,
+                                                      phoneEmailController.text
+                                                          .toString())
+                                                  .then((value) {
+                                                Get.toNamed(
+                                                    Routes.PHONE_VERIFICATION,
+                                                    arguments: {
+                                                      'token': token,
+                                                      'type':
+                                                          '${controller.changeIndex.value.toString()}',
+                                                      'phone':
+                                                          '${phoneEmailController.text.toString()}',
+                                                      'otp':
+                                                          '${signUpController.checkOtpval.value.otp}'
+                                                    });
+                                              });
 
-                                          Navigator.pushReplacement(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      Home()));
+                                              // SharedPreferencesService? instance =
+                                              //     await SharedPreferencesService
+                                              //         .getInstance();
+                                              // instance.saveData(
+                                              //     SharedPreferencesService
+                                              //         .kTokenKey,
+                                              //     value['token'].toString());
+                                              //
+                                              // Navigator.pushReplacement(
+                                              //     context,
+                                              //     MaterialPageRoute(
+                                              //         builder: (context) =>
+                                              //             Home()));
+                                            } else if (value['token'] != "") {
+                                              SharedPreferencesService?
+                                                  instance =
+                                                  await SharedPreferencesService
+                                                      .getInstance();
+                                              instance.saveData(
+                                                  SharedPreferencesService
+                                                      .kTokenKey,
+                                                  value['token'].toString());
+
+                                              Navigator.pushReplacement(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          Home()));
+                                            }
+                                            // return null;
+                                          });
                                         }
-                                        // return null;
-                                      });
-                                    }
-                                  },
-                                  child: MyButton(text: "Login".tr),
-                                ),
+                                      },
+                                      child: MyButton(text: "Login".tr),
+                                    );
+                                  }),
                         ),
                         const SizedBox(height: 100),
                         Row(

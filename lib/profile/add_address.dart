@@ -6,6 +6,7 @@ import 'package:test_prj/components/my_button.dart';
 import 'package:test_prj/components/my_textfield.dart';
 import 'package:test_prj/controller/address_controller.dart';
 
+import '../helper/utils/app_constants.dart';
 import '../helper/utils/validator_all.dart';
 
 class AddAddressScreen extends StatefulWidget {
@@ -93,6 +94,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 8.0),
                       child: MyTextField(
+                        maxLenth: AppConstants.phoneValidation,
                         isAmount: true,
                         validator: (value) => Validator.validatePhone(value),
                         controller: mobileController,
@@ -103,6 +105,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                       padding: const EdgeInsets.symmetric(vertical: 8.0),
                       child: MyTextField(
                         isAmount: true,
+                        maxLenth: AppConstants.phoneValidation,
                         validator: (value) => Validator.validatePhone(value),
                         controller: alternatemobileController,
                         labelText: Text("Alternate Mobile Number".tr),
@@ -155,6 +158,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                         isAmount: true,
                         validator: (value) => Validator.validateName(value),
                         controller: pincodeController,
+                        maxLenth: AppConstants.pinValidation,
                         labelText: Text("PinCode".tr),
                       ),
                     ),
@@ -180,7 +184,11 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                                       .addAddress(
                                           nameController.text,
                                           mobileController.text,
-                                          "Home",
+                                          selectedValue == 1
+                                              ? "Home"
+                                              : selectedValue == 2
+                                                  ? "Home"
+                                                  : "Office",
                                           houseNoController.text.toString(),
                                           roadNameController.text.toString(),
                                           roadNameController.text.toString(),

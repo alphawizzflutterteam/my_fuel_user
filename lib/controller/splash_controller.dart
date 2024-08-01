@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_rx/get_rx.dart';
 import 'package:test_prj/controller/appBase/appbase_controller.dart';
+import 'package:test_prj/controller/language_controller.dart';
 import 'package:test_prj/routes/app_pages.dart';
 import 'package:test_prj/routes/app_routes.dart';
 import 'package:test_prj/service/provider/lavavel_provider.dart';
@@ -27,12 +28,15 @@ class SplashController extends AppBaseController {
   }
 
   _navigateToHome() async {
+    LanguageController languageController = Get.put(LanguageController());
     await Future.delayed(const Duration(milliseconds: 6000), () async {});
     SharedPreferencesService? instance =
         await SharedPreferencesService.getInstance();
 
     try {
-      String token = instance.getData(SharedPreferencesService.kTokenKey);
+      String? token = instance.getData(SharedPreferencesService.kTokenKey);
+      String? languageType =
+          instance.getData(SharedPreferencesService.kLanguageKey);
 
       print("object token $token");
       if (token == null) {
@@ -41,6 +45,20 @@ class SplashController extends AppBaseController {
         Get.offAllNamed(Routes.HOME);
       } else {
         Get.offAllNamed(Routes.LANGUAGE);
+      }
+      if (languageType == '1') {
+        languageController.changeLanguage('hi', 'IN');
+      } else if (languageType == '2') {
+        languageController.changeLanguage('en', 'US');
+      } else if (languageType == '3') {
+        languageController.changeLanguage('te', 'IN');
+      } else if (languageType == '4') {
+        print('kklll');
+        languageController.changeLanguage('ml', 'IN');
+      } else if (languageType == '5') {
+        languageController.changeLanguage('kn', 'IN');
+      } else if (languageType == '6') {
+        languageController.changeLanguage('bn', 'IN');
       }
     } catch (e) {
       Get.offAllNamed(Routes.LANGUAGE);

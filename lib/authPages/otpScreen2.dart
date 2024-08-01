@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:pinput/pinput.dart';
 import 'package:test_prj/authPages/create_password.dart';
@@ -110,6 +111,11 @@ class _OTPScreenState extends State<OTPScreen2> {
                     ),
                     GestureDetector(
                         onTap: () {
+                          if (pinController.text.isEmpty) {
+                            Fluttertoast.showToast(msg: "Please Enter Otp");
+                            return;
+                          }
+
                           if (pinController.text == "$token") {
                             controller
                                 .veriFyOtp(phone, pinController.text)
@@ -127,6 +133,9 @@ class _OTPScreenState extends State<OTPScreen2> {
                             //     MaterialPageRoute(
                             //       builder: (context) => CreatePasswordPage(),
                             //     ));
+                          } else {
+                            Fluttertoast.showToast(
+                                msg: "Enter Correct password");
                           }
                         },
                         child: MyButton(text: "Verify")),
