@@ -20,6 +20,8 @@ class SplashScreen extends StatefulWidget {
 SettingModel? configModel;
 String categoryId = "";
 String? address;
+String? latitude;
+String? longitude;
 
 class _SplashScreenState extends State<SplashScreen> {
   @override
@@ -70,6 +72,8 @@ class _SplashScreenState extends State<SplashScreen> {
         double.parse(position.longitude!.toString()),
         localeIdentifier: "en");
 
+    latitude = position.latitude!.toString();
+    longitude = position.longitude!.toString();
     placemark.toList(growable: true);
 
     Placemark place = placemark[0];

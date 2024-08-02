@@ -5,6 +5,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:test_prj/components/my_button.dart';
+import 'package:test_prj/components/widgets/globle_widgets.dart';
 import 'package:test_prj/repository/model/user_model.dart';
 import 'package:test_prj/splashScreen.dart';
 
@@ -180,6 +181,7 @@ class _EditProfileState extends State<EditProfile> {
 
   @override
   Widget build(BuildContext context) {
+    print("Image Value  ${profileImage}");
     return Scaffold(
       appBar: MyAppbar(title: "Edit Profile"),
       body: Form(
@@ -194,47 +196,71 @@ class _EditProfileState extends State<EditProfile> {
                 GetBuilder<ProfileController>(builder: (profileController) {
                   return GetBuilder<SignupController>(
                       builder: (signUpController) {
-                    return ClipOval(
-                      child: profileImage != null
-                          ? Image.file(
-                              profileImage!,
-                              height: 125,
-                              width: 125,
-                              fit: BoxFit.cover,
-                            )
-                          : profileController.userInfoModel.value?.image ==
-                                      null ||
-                                  profileController
-                                          .userInfoModel.value?.image ==
-                                      '' ||
-                                  profileController
-                                          .userInfoModel.value?.image ==
-                                      'def.png'
-                              ? SizedBox()
-                              : Image.network(
-                                  '${configModel?.baseUrls?.customerImageUrl}${Get.find<ProfileController>().userInfoModel?.value.image}',
-                                  height: 125,
-                                  width: 125,
-                                  fit: BoxFit.cover,
-                                ),
+                    return Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        Center(
+                          child: Container(
+                            height: 125,
+                            width: 125,
+                            decoration: BoxDecoration(
+                                image: DecorationImage(
+                                    image: AssetImage(
+                              'assets/login-logo.png',
+                            ))),
+                            // color: Colors.deepOrange,
+                            child: ClipOval(
+                              child: profileImage != null
+                                  ? Image.file(
+                                      profileImage!,
+                                      height: 125,
+                                      width: 125,
+                                      fit: BoxFit.cover,
+                                    )
+                                  : profileController
+                                                  .userInfoModel.value?.image ==
+                                              null ||
+                                          profileController
+                                                  .userInfoModel.value?.image ==
+                                              '' ||
+                                          profileController
+                                                  .userInfoModel.value?.image ==
+                                              'def.png'
+                                      ? SizedBox()
+                                      : Image.network(
+                                          '${configModel?.baseUrls?.customerImageUrl}${Get.find<ProfileController>().userInfoModel?.value.image}',
+                                          height: 125,
+                                          width: 125,
+                                          fit: BoxFit.cover,
+                                          errorBuilder:
+                                              (context, error, stackTrace) {
+                                            return errorImage(125, 125);
+                                          },
+                                        ),
+                            ),
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            showModalBottomSheet(
+                              context: context,
+                              builder: (context) => imagePick(),
+                            );
+                          },
+                          child: Padding(
+                            padding:
+                                const EdgeInsets.only(top: 105.0, left: 80),
+                            child: Image.asset(
+                              "assets/Editicon.png",
+                              height: 25,
+                            ),
+                          ),
+                        ),
+                      ],
                     );
                   });
                 }),
-                GestureDetector(
-                  onTap: () {
-                    showModalBottomSheet(
-                      context: context,
-                      builder: (context) => imagePick(),
-                    );
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 105.0, left: 80),
-                    child: Image.asset(
-                      "assets/EditIcon.png",
-                      height: 25,
-                    ),
-                  ),
-                ),
+
                 // App Icon
                 // Center(
                 //   child: Image.asset(

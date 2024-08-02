@@ -101,10 +101,14 @@ class _SelectNewAddressState extends State<SelectNewAddress> {
     Position position = await Geolocator.getCurrentPosition();
     print("object position $position");
     print("object position ${position.toJson()}");
+
     List<Placemark> placemark = await placemarkFromCoordinates(
         double.parse(position.latitude!.toString()),
         double.parse(position.longitude!.toString()),
         localeIdentifier: "en");
+
+    latitude = position.latitude!.toString();
+    longitude = position.longitude!.toString();
 
     placemark.toList(growable: true);
 
@@ -127,13 +131,15 @@ class _SelectNewAddressState extends State<SelectNewAddress> {
             place.administrativeArea.toString(),
             place.locality.toString(),
             place.postalCode.toString(),
-            "$_latitude",
-            "$_longitude",
+            "${latitude}",
+            "${longitude}",
             "1")
         .then((value) {
-      addressController.getAddRess();
+      addressController.getAddRess().then((value) {
+        setState(() {});
+      });
     });
-    setState(() {});
+
     // When we reach here, permissions are granted and we can
     // continue accessing the position of the device.
     return await Geolocator.getCurrentPosition();
@@ -853,8 +859,8 @@ class _SelectNewAddressState extends State<SelectNewAddress> {
                 stateController.text.toString(),
                 cityController.text.toString(),
                 pincodeController.text.toString(),
-                "$_latitude",
-                "$_longitude",
+                "${latitude}",
+                "${longitude}",
                 "1")
             .then((value) {
           otherCategory.billingSameAsShipping = "0";

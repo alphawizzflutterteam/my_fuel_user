@@ -35,8 +35,8 @@ class _RescueMeState extends State<RescueMe> {
   void didChangeDependencies() {
     // TODO: implement didChangeDependencies
     super.didChangeDependencies();
-    CarServiceController carServiceController = Get.find();
-    carServiceController.getVehiCleType();
+    // CarServiceController carServiceController = Get.find();
+    // carServiceController.getVehiCleType();
   }
 
   @override
@@ -95,6 +95,8 @@ class _RescueMeState extends State<RescueMe> {
                       SizedBox(
                         height: 20,
                       ),
+
+                      ///Vehicle
                       Container(
                         decoration: BoxDecoration(
                           border: Border.all(color: colors.black12, width: 2),
@@ -187,6 +189,7 @@ class _RescueMeState extends State<RescueMe> {
                             if (newValue != null) {
                               selectedServices = newValue;
                               otherCategory.service_type = newValue.toString();
+                              fuelQuantityController.text = "";
                               setState(() {});
                             }
                           },
@@ -206,62 +209,85 @@ class _RescueMeState extends State<RescueMe> {
                             ),
                       carServiceController.selectedService.value == null
                           ? Container()
-                          : Container(
-                              decoration: BoxDecoration(
-                                border:
-                                    Border.all(color: colors.black12, width: 2),
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              padding: EdgeInsets.symmetric(horizontal: 10),
-                              child: DropdownButton<String>(
-                                hint: Text('Fuel Type'.tr),
-                                value: selectedfuelType,
-                                underline: Container(),
-                                isExpanded: true,
-                                onChanged: (String? newValue) {
-                                  if (newValue != null) {
-                                    setState(() {
-                                      selectedfuelType = newValue;
+                          :
 
-                                      otherCategory.fuel_type =
-                                          newValue.toString();
-                                    });
-                                  }
-                                },
-                                items: fuelTypes.map<DropdownMenuItem<String>>(
-                                    (String value) {
-                                  return DropdownMenuItem<String>(
-                                    value: value,
-                                    child: Text(value),
-                                  );
-                                }).toList(),
-                              ),
-                            ),
+                          /// Fuel Type Diesel Petrol
+                          selectedServices == "Fuel"
+                              ? Container(
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                        color: colors.black12, width: 2),
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  padding: EdgeInsets.symmetric(horizontal: 10),
+                                  child: DropdownButton<String>(
+                                    hint: Text('Fuel Type'.tr),
+                                    value: selectedfuelType,
+                                    underline: Container(),
+                                    isExpanded: true,
+                                    onChanged: (String? newValue) {
+                                      if (newValue != null) {
+                                        setState(() {
+                                          selectedfuelType = newValue;
+
+                                          otherCategory.fuel_type =
+                                              newValue.toString();
+                                        });
+                                      }
+                                    },
+                                    items: fuelTypes
+                                        .map<DropdownMenuItem<String>>(
+                                            (String value) {
+                                      return DropdownMenuItem<String>(
+                                        value: value,
+                                        child: Text(value),
+                                      );
+                                    }).toList(),
+                                  ),
+                                )
+                              : Container(),
                       selectedfuelType == null
                           ? Container()
                           : SizedBox(
                               height: 20,
                             ),
-                      selectedfuelType == null
+                      SizedBox(
+                        height: 8,
+                      ),
+                      selectedServices == null
                           ? Container()
-                          : Container(
-                              height: 50,
-                              width: MediaQuery.sizeOf(context).width,
-                              decoration: BoxDecoration(
-                                border:
-                                    Border.all(color: colors.black12, width: 2),
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: TextFormField(
-                                keyboardType: TextInputType.number,
-                                controller: fuelQuantityController,
-                                decoration: InputDecoration(
-                                    contentPadding: EdgeInsets.only(left: 5),
-                                    hintText:
-                                        'Fuel Quantity(Min 5 ltrs - Max 20 ltrs'
-                                            .tr,
-                                    border: InputBorder.none),
-                              )),
+                          : selectedServices == "Fuel" ||
+                                  selectedServices == "Tyres" ||
+                                  selectedServices == "Jump Start" ||
+                                  selectedServices == "Towing(break down)"
+                              ? Container(
+                                  height: 50,
+                                  width: MediaQuery.sizeOf(context).width,
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                        color: colors.black12, width: 2),
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: TextFormField(
+                                    keyboardType: selectedServices == "Fuel"
+                                        ? TextInputType.number
+                                        : TextInputType.text,
+                                    controller: fuelQuantityController,
+                                    decoration: InputDecoration(
+                                        contentPadding:
+                                            EdgeInsets.only(left: 5),
+                                        hintText: selectedServices ==
+                                                    "Jump Start" ||
+                                                selectedServices ==
+                                                    "Towing(break down)"
+                                            ? "Note"
+                                            : selectedServices == "Fuel"
+                                                ? 'Fuel Quantity(Min 5 ltrs - Max 20 ltrs'
+                                                    .tr
+                                                : "Tyre Size".tr,
+                                        border: InputBorder.none),
+                                  ))
+                              : Container(),
                       SizedBox(
                         height: 100,
                       ),
@@ -269,33 +295,84 @@ class _RescueMeState extends State<RescueMe> {
                         padding: const EdgeInsets.all(12.0),
                         child: GestureDetector(
                           onTap: () {
-                            if (otherCategory.vehicleType == null ||
-                                otherCategory.vehicleType!.isEmpty) {
-                              Fluttertoast.showToast(
-                                  msg: "PLease select Vehicle Type");
-                            } else if (otherCategory.fuel_type == null ||
-                                otherCategory.fuel_type!.isEmpty) {
-                              Fluttertoast.showToast(
-                                  msg: "PLease select Vehicle Model");
-                            } else if (otherCategory.fuel_type == null ||
-                                selectedfuelType!.isEmpty) {
-                              Fluttertoast.showToast(
-                                  msg: "Please select Fuel Type");
-                            } else if (fuelQuantityController.text.isEmpty) {
-                              Fluttertoast.showToast(
-                                  msg: "Please Enter Fuel Quantity");
-                            } else {
-                              otherCategory.quantity =
-                                  fuelQuantityController.text.toString();
-                              otherCategory.service = "At your station";
+                            //// Valid For Fuel
+                            if (selectedServices == "Fuel") {
+                              if (otherCategory.vehicleType == null ||
+                                  otherCategory.vehicleType!.isEmpty) {
+                                Fluttertoast.showToast(
+                                    msg: "PLease select Vehicle Type");
+                              } else if (otherCategory.fuel_type == null ||
+                                  otherCategory.fuel_type!.isEmpty) {
+                                Fluttertoast.showToast(
+                                    msg: "PLease select Vehicle Model");
+                              } else if (otherCategory.fuel_type == null ||
+                                  selectedfuelType!.isEmpty) {
+                                Fluttertoast.showToast(
+                                    msg: "Please select Fuel Type");
+                              } else if (fuelQuantityController.text.isEmpty) {
+                                Fluttertoast.showToast(
+                                    msg: "Please Enter Fuel Quantity");
+                              } else {
+                                otherCategory.quantity =
+                                    fuelQuantityController.text.toString();
+                                otherCategory.service = "At your station";
 
-                              print(
-                                  "object Cate Id ${otherCategory.categoryId}");
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: ((context) =>
-                                          SelectNewAddress())));
+                                print(
+                                    "object Cate Id ${otherCategory.categoryId}");
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: ((context) =>
+                                            SelectNewAddress())));
+                              }
+                              //// Valid For Tyre
+                            } else if (selectedServices == "Tyres") {
+                              if (otherCategory.vehicleType == null ||
+                                  otherCategory.vehicleType!.isEmpty) {
+                                Fluttertoast.showToast(
+                                    msg: "PLease select Vehicle Type");
+                              } else if (fuelQuantityController.text.isEmpty) {
+                                Fluttertoast.showToast(
+                                    msg: "Please Enter Fuel Quantity");
+                              } else {
+                                otherCategory.quantity = "1";
+                                otherCategory.tyreSize =
+                                    fuelQuantityController.text.toString();
+                                otherCategory.service = "At your station";
+
+                                print(
+                                    "object Cate Id ${otherCategory.categoryId}");
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: ((context) =>
+                                            SelectNewAddress())));
+                              }
+
+                              /// Jump Start
+                            } else if (selectedServices == "Jump Start" ||
+                                selectedServices == "Towing(break down)") {
+                              if (otherCategory.vehicleType == null ||
+                                  otherCategory.vehicleType!.isEmpty) {
+                                Fluttertoast.showToast(
+                                    msg: "PLease select Vehicle Type");
+                              } else if (fuelQuantityController.text.isEmpty) {
+                                Fluttertoast.showToast(
+                                    msg: "Please Enter Fuel Quantity");
+                              } else {
+                                otherCategory.quantity = "1";
+                                otherCategory.notes =
+                                    fuelQuantityController.text.toString();
+                                otherCategory.service = "At your station";
+
+                                print(
+                                    "object Cate Id ${otherCategory.categoryId}");
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: ((context) =>
+                                            SelectNewAddress())));
+                              }
                             }
                           },
                           child: MyButton(text: 'Done'.tr),
