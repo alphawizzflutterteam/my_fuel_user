@@ -1708,32 +1708,33 @@ class _HomePageState extends State<HomePage> {
                       child: GetBuilder<CarServiceController>(
                           init: CarServiceController(),
                           builder: (carController) {
-                            return DropdownButton<VehicleData>(
-                              hint: const Text('Select Your Vehicle Type'),
-                              value: carController.selectedVehicle!.value,
-                              underline: Container(),
-                              isExpanded: true,
-                              onChanged: (VehicleData? newValue) {
-                                // otherCategory = OtherCategory();
-                                carController.selectedVehicle!.value =
-                                    newValue!;
+                            return Obx(() => DropdownButton<VehicleData>(
+                                  hint: const Text('Select Your Vehicle Type'),
+                                  value: carController.selectedVehicle!.value,
+                                  underline: Container(),
+                                  isExpanded: true,
+                                  onChanged: (VehicleData? newValue) {
+                                    // otherCategory = OtherCategory();
+                                    carController.selectedVehicle!.value =
+                                        newValue!;
 
-                                otherCategory.vehicleType =
-                                    newValue.id.toString();
-                                print(
-                                    "vehicleType ${otherCategory.vehicleType}");
-                                print("vehicleType ${newValue.id.toString()}");
-                                carType(() {});
-                              },
-                              items: carController.vehicleList!
-                                  .map<DropdownMenuItem<VehicleData>>(
-                                      (VehicleData value) {
-                                return DropdownMenuItem<VehicleData>(
-                                  value: value,
-                                  child: Text(value.name.toString()),
-                                );
-                              }).toList(),
-                            );
+                                    otherCategory.vehicleType =
+                                        newValue.id.toString();
+                                    print(
+                                        "vehicleType ${otherCategory.vehicleType}");
+                                    print(
+                                        "vehicleType ${newValue.id.toString()}");
+                                    carType(() {});
+                                  },
+                                  items: carController.vehicleList!
+                                      .map<DropdownMenuItem<VehicleData>>(
+                                          (VehicleData value) {
+                                    return DropdownMenuItem<VehicleData>(
+                                      value: value,
+                                      child: Text(value.name.toString()),
+                                    );
+                                  }).toList(),
+                                ));
                           }),
                     ),
                     // SizedBox(height: 10,),

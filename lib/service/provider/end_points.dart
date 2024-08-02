@@ -33,7 +33,9 @@ class ApiConstants {
       '/api/v1/customer/order/confirm-vendor-service';
   static const String ORDERLIST =
       '/api/v1/customer/order/list?limit=10&offset=0';
-
+  static const String AllORDERLIST = '/api/v1/customer/bookings';
+  static const String UPDATEORDERAPI =
+      '/api/v1/customer/order/update-booking-status';
 
   ///2&category_id=1
   static const String PLACEORDER =
