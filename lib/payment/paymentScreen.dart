@@ -45,6 +45,7 @@ class _PaymentScreenTreeState extends State<PaymentScreenTree> {
               if (_type == 2) {
                 Get.back(result: "cod");
               } else if (_type == 3) {
+                print('${_type}___________');
                 Get.back(result: "payment");
               } else {
                 double wallet = double.parse(

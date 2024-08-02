@@ -412,9 +412,9 @@ class _OrderFuelCheckOutState extends State<OrderFuelCheckOut> {
                                             'wallet',
                                             controller.orderFuelCheckData!.total
                                                 .toString());
-                                      } else {
-                                        //controller.placeBooking('', 'cod', '0');
-                                      }
+                                      } else if (value == 'cod') {
+                                        controller.placeBooking('', 'cod', '0');
+                                      } else {}
                                     });
                                   },
                                 ),
