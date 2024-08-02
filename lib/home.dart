@@ -21,6 +21,7 @@ class _HomeState extends State<Home> {
     setState(() {});
   }
 
+  List<BottomNavigationBarItem> bottomItem = [];
   List<Widget> pages = [
     HomePage(),
     MyOrder(),
@@ -41,25 +42,33 @@ class _HomeState extends State<Home> {
         items: [
           BottomNavigationBarItem(
               icon: Image(
-                image: AssetImage("assets/Home.png"),
+                image: _selectedIndex == 0
+                    ? AssetImage("assets/Home.png")
+                    : AssetImage("assets/HomeUnselect.png"),
                 height: 24,
               ),
               label: "Home".tr),
           BottomNavigationBarItem(
               icon: Image(
-                image: AssetImage("assets/login-logo.png"),
+                image: _selectedIndex == 1
+                    ? AssetImage("assets/Home.png")
+                    : AssetImage("assets/login-logo.png"),
                 height: 24,
               ),
               label: "My Orders".tr),
           BottomNavigationBarItem(
               icon: Image(
-                image: AssetImage("assets/offers.png"),
+                image: _selectedIndex == 2
+                    ? AssetImage("assets/offersselected.png")
+                    : AssetImage("assets/offers.png"),
                 height: 24,
               ),
               label: "Offers".tr),
           BottomNavigationBarItem(
               icon: Image(
-                image: AssetImage("assets/2 User.png"),
+                image: _selectedIndex == 3
+                    ? AssetImage("assets/2 UserSeected.png")
+                    : AssetImage("assets/2 User.png"),
                 height: 24,
               ),
               label: 'Profile'.tr),
