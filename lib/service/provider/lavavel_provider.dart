@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:test_prj/data/model/OtherCategoryModel.dart';
 import 'package:test_prj/data/model/service_detail.dart';
@@ -676,6 +677,36 @@ class LaravelApiClient extends GetxService with ApiClient {
       options: optionsNetwork,
     );
     if (response.statusCode == 200) {
+      print("userRegister ${response.toString()} ");
+
+      return json.decode(response.toString());
+    } else {
+      return json.decode(response.toString());
+    }
+  }
+
+  Future<Map<String, dynamic>> submitReview(
+      String type, String comment, String orderID,double rating) async {
+    Map data = {
+      'product_id':'',
+      "type": "$type",
+      "comment": "$comment",
+      "rating": "$rating",
+      "order_id": "$orderID",
+    };
+    SharedPreferencesService? instance =
+        await SharedPreferencesService.getInstance();
+
+    String token = instance.getData(SharedPreferencesService.kTokenKey);
+    optionsNetwork.headers!['Authorization'] = "Bearer $token";
+    var response = await httpClient.postUri(
+      data: data,
+      Uri.parse(ApiConstants.SUBMITREVIEW),
+      options: optionsNetwork,
+    );
+    if (response.statusCode == 200) {
+      Fluttertoast.showToast(
+          msg: "${response.data['message']}");
       print("userRegister ${response.toString()} ");
 
       return json.decode(response.toString());

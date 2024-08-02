@@ -49,4 +49,9 @@ class ApiConstants {
   static const String TIMESLOTS = '/api/v1/customer/order/time-slots';
 
   static const String NOTIFICATIONS = '/api/v1/notifications';
+
+
+
+  ///gopal
+  static const String SUBMITREVIEW = '/api/v1/products/reviews/submit';
 }
