@@ -1,19 +1,19 @@
 class OtherCategory {
-  String? categoryId;
-  String? vehicleType;
-  String? vehicleModel;
-  String? tyreSize;
-  String? quantity;
-  String? timeSlotId;
-  String? date;
-  String? notes;
-  String? service;
-  String? fuel_type;
-  String? productId;
-  String? service_type;
-  String? shippingAddressId;
-  String? billingSameAsShipping;
-  String? billingAddressId;
+  String? categoryId = "";
+  String? vehicleType = "";
+  String? vehicleModel = "";
+  String? tyreSize = "";
+  String? quantity = "";
+  String? timeSlotId = "";
+  String? date = "";
+  String? notes = "";
+  String? service = "";
+  String? fuel_type = "";
+  String? productId = "";
+  String? service_type = "";
+  String? shippingAddressId = "";
+  String? billingSameAsShipping = "";
+  String? billingAddressId = "";
 
   OtherCategory(
       {this.categoryId,

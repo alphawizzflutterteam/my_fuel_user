@@ -1,22 +1,22 @@
 class CheckOutRequest {
-  String? categoryId;
-  String? vehicleType;
-  String? vehicleModel;
-  String? tyreSize;
-  String? fuel_type;
-  String? service_type;
-  String? timeSlotId;
-  String? date;
-  String? notes;
-  String? service;
-  String? productId;
-  String? shippingAddressId;
-  String? billingSameAsShipping;
-  String? billingAddressId;
-  String? payment_method;
-  String? wallet_used;
-  String? transaction_id;
-  String? quantity;
+  String? categoryId = "";
+  String? vehicleType = "";
+  String? vehicleModel = "";
+  String? tyreSize = "";
+  String? fuel_type = "";
+  String? service_type = "";
+  String? timeSlotId = "";
+  String? date = DateTime.now().toString();
+  String? notes = "";
+  String? service = "";
+  String? productId = "";
+  String? shippingAddressId = "";
+  String? billingSameAsShipping = "";
+  String? billingAddressId = "";
+  String? payment_method = "";
+  String? wallet_used = "";
+  String? transaction_id = "";
+  String? quantity = "1";
 
   CheckOutRequest({
     this.categoryId,

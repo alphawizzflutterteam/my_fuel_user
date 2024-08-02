@@ -638,7 +638,6 @@ class LaravelApiClient extends GetxService with ApiClient {
     }
   }
 
-
   //gopal
   Future<Map<String, dynamic>> getOrders() async {
     SharedPreferencesService? instance =
@@ -659,6 +658,7 @@ class LaravelApiClient extends GetxService with ApiClient {
       return json.decode(response.toString());
     }
   }
+
   Future<Map<String, dynamic>> updateOrder(
       String status, String remark, String orderID) async {
     Map data = {
@@ -666,13 +666,13 @@ class LaravelApiClient extends GetxService with ApiClient {
       "remark": "$remark",
     };
     SharedPreferencesService? instance =
-    await SharedPreferencesService.getInstance();
+        await SharedPreferencesService.getInstance();
 
     String token = instance.getData(SharedPreferencesService.kTokenKey);
     optionsNetwork.headers!['Authorization'] = "Bearer $token";
     var response = await httpClient.postUri(
       data: data,
-      Uri.parse(ApiConstants.UPDATEORDERAPI+'/'+'${orderID}'),
+      Uri.parse(ApiConstants.UPDATEORDERAPI + '/' + '${orderID}'),
       options: optionsNetwork,
     );
     if (response.statusCode == 200) {
@@ -683,7 +683,6 @@ class LaravelApiClient extends GetxService with ApiClient {
       return json.decode(response.toString());
     }
   }
-
 
   Future<Map<String, dynamic>> getOffer() async {
     SharedPreferencesService? instance =
@@ -735,7 +734,7 @@ class LaravelApiClient extends GetxService with ApiClient {
       options: optionsNetwork,
     );
     if (response.statusCode == 200) {
-      List<dynamic> data = response.orderTypeList;
+      List<dynamic> data = response.data;
 
       addressList =
           data.map((json) => AddressListModel.fromJson(json)).toList();
