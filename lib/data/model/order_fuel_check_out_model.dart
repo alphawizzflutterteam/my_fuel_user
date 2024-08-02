@@ -93,7 +93,9 @@ class OrderFuelCheckData {
   OrderFuelCheckData.fromJson(Map<String, dynamic> json) {
     categoryId = json['category_id'].toString();
     userId = json['user_id'];
-    sellerId = json['seller_id'];
+    sellerId = json['seller_id'] != null
+        ? int.parse(json['seller_id'].toString())
+        : 19;
     vehicleType = json['vehicle_type'];
     vehicleModel = json['vehicle_model'];
     productId = json['product_id'];

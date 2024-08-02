@@ -28,6 +28,10 @@ class LaravelApiClient extends GetxService with ApiClient {
     super.init();
     return this;
   }
+
+  void updateHeaders(String token) {
+    httpClient.updateHeaders(token);
+  }
   //
   // Future<String> userRegister(User user) async {
   //   /*var _queryParameters = {

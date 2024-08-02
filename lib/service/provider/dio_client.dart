@@ -13,6 +13,7 @@ import 'package:test_prj/service/exceptions/network_exceptions.dart';
 
 const _defaultConnectTimeout = Duration.millisecondsPerMinute;
 const _defaultReceiveTimeout = Duration.millisecondsPerMinute;
+String? tokenForNew;
 
 class DioClient {
   final String baseUrl;
@@ -67,6 +68,11 @@ class DioClient {
     //   _dio.interceptors
     //       .add(DioCacheManager(CacheConfig(baseUrl: baseUrl)).interceptor);
     // }
+  }
+
+  void updateHeaders(String token) {
+    _dio.options.headers['Authorization'] = 'Bearer $token';
+    optionsNetwork.headers?['Authorization'] = 'Bearer $token';
   }
 
   Future<dynamic> get(
