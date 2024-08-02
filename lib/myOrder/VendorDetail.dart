@@ -32,6 +32,10 @@ class VenderDetails extends StatefulWidget {
 }
 
 class _VenderDetailsState extends State<VenderDetails> {
+
+  double ratingCount=0.0;
+
+  TextEditingController writeReviewController=TextEditingController();
   // List<step.Step> steps=[
   @override
   Widget build(BuildContext context) {
@@ -64,11 +68,16 @@ class _VenderDetailsState extends State<VenderDetails> {
                       ),
                       child: Row(
                         children: [
-                          Padding(
-                            padding: const EdgeInsets.only(top: 45.0, left: 20),
-                            child: Icon(
-                              Icons.arrow_back,
-                              color: Colors.white,
+                          InkWell(
+                            onTap: (){
+                              Navigator.pop(context);
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.only(top: 45.0, left: 20),
+                              child: Icon(
+                                Icons.arrow_back,
+                                color: Colors.white,
+                              ),
                             ),
                           ),
                           Padding(
@@ -200,23 +209,27 @@ class _VenderDetailsState extends State<VenderDetails> {
                                   child: Row(
                                     children: [
 
-                                      FadeInImage
-                                          .assetNetwork(
-                                        fit: BoxFit.cover,
-                                        height:
-                                        80,
-                                        placeholder:
-                                        'assets/indianoil.png', // Placeholder image path
-                                        image:
-                                        '${configModel!.baseUrls!.categoryImageUrl}/${widget.booking.products?[index].images}', // Network image URL
-                                        imageErrorBuilder: (context,
-                                            error,
-                                            stackTrace) {
-                                          // Widget to display in case of an error
-                                          return Image.asset("assets/indianoil.png", height: 80);
-                                        },
-                                        placeholderScale:
-                                        1.0, // Optional: scale of the placeholder
+                                      ClipRRect(
+                                        borderRadius: BorderRadius.circular(8),
+                                        child: FadeInImage
+                                            .assetNetwork(
+                                          fit: BoxFit.cover,
+                                          height:
+                                          80,
+                                          width: 80,
+                                          placeholder:
+                                          'assets/indianoil.png', // Placeholder image path
+                                          image:
+                                          '${configModel!.baseUrls!.productImageUrl}/${widget.booking.products?[index].images[0]}', // Network image URL
+                                          imageErrorBuilder: (context,
+                                              error,
+                                              stackTrace) {
+                                            // Widget to display in case of an error
+                                            return Image.asset("assets/indianoil.png", height: 80);
+                                          },
+                                          placeholderScale:
+                                          1.0, // Optional: scale of the placeholder
+                                        ),
                                       ),
 
                                       SizedBox(width: 20,),
@@ -405,6 +418,87 @@ class _VenderDetailsState extends State<VenderDetails> {
                               ),
                             ),
                           ),
+
+                          SizedBox(height: 20,),
+
+                          InkWell(
+                            onTap: () {
+                              AlertDialog(
+                                title: const Text('Alert Dialog'),
+                                content: const Text('This is an example of an alert dialog.'),
+                                actions: <Widget>[
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: const Text('Close'),
+                                  ),
+                                ],
+                              );
+                              // Navigator.push(context, MaterialPageRoute(builder: (context)=>WriteReview()));
+                            },
+                            child: Container(
+                              height: 60,
+                              decoration: const BoxDecoration(color: Color(0xffFFF3EC)),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 10.0),
+                                    child: Row(
+                                      children: [
+                                        RatingBar.builder(
+                                          initialRating:  ratingCount,
+                                          minRating: 0,
+                                          direction: Axis.horizontal,
+                                          itemCount: 5,
+                                          itemSize: 25,
+                                          itemBuilder: (context, _) => const Icon(
+                                            Icons.star,
+                                            color: Colors.amber,
+                                          ),
+                                          onRatingUpdate: (rating) {
+                                            ratingCount=rating;
+                                            setState(() {
+
+                                            });
+                                            print(rating);
+                                          },
+                                        ),
+                                        const SizedBox(
+                                          width: 20,
+                                        ),
+                                        InkWell(
+                                          onTap: () {
+                                            writeReviewDialog(context,controller);
+                                          },
+                                          child: const Icon(
+                                            Icons.edit_outlined,
+                                            color: Colors.orange,
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.only(left: 15),
+                                          child: InkWell(
+                                            onTap: () {
+                                              writeReviewDialog(context,controller);
+                                            },
+                                            child: const Text(
+                                              "Write Review",
+                                              style: TextStyle(
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.orange),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Container(
@@ -520,36 +614,41 @@ class _VenderDetailsState extends State<VenderDetails> {
                                   SizedBox(
                                     height: 30,
                                   ),
-                                  Text(
-                                    "Address",
-                                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                                  ),
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(right: 35),
-                                    child: Text(
-                                      '${widget.booking?.shippingAddress?.address}',
-                                      style: TextStyle(fontSize: 14, color: Colors.black54),
-                                    ),
-                                  ),
-                                  Text(
-                                    '${widget.booking?.shippingAddress?.contactPersonName}',
-                                    style: TextStyle(fontSize: 14, color: Colors.black54),
-                                  ),
-                                  Text(
-                                    '${widget.booking?.shippingAddress?.state}',
-                                    style: TextStyle(fontSize: 14, color: Colors.black54),
-                                  ),
-                                  Text(
-                                    '${widget.booking?.shippingAddress?.zip}',
-                                    style: TextStyle(fontSize: 14, color: Colors.black54),
-                                  ),
-                                  Text(
-                                    'Phone- ${widget.booking?.shippingAddress?.phone}',
-                                    style: TextStyle(fontSize: 14, color: Colors.black54),
-                                  ),
+                                  widget.booking?.shippingAddress==null ? SizedBox()   :    Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                   children: [
+                                     Text(
+                                       "Address",
+                                       style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                                     ),
+                                     SizedBox(
+                                       height: 10,
+                                     ),
+                                     Padding(
+                                       padding: const EdgeInsets.only(right: 35),
+                                       child: Text(
+                                         '${widget.booking?.shippingAddress?.address}',
+                                         style: TextStyle(fontSize: 14, color: Colors.black54),
+                                       ),
+                                     ),
+                                     Text(
+                                       '${widget.booking?.shippingAddress?.contactPersonName}',
+                                       style: TextStyle(fontSize: 14, color: Colors.black54),
+                                     ),
+                                     Text(
+                                       '${widget.booking?.shippingAddress?.state}',
+                                       style: TextStyle(fontSize: 14, color: Colors.black54),
+                                     ),
+                                     Text(
+                                       '${widget.booking?.shippingAddress?.zip}',
+                                       style: TextStyle(fontSize: 14, color: Colors.black54),
+                                     ),
+                                     Text(
+                                       'Phone- ${widget.booking?.shippingAddress?.phone}',
+                                       style: TextStyle(fontSize: 14, color: Colors.black54),
+                                     ),
+                                   ],
+                                 ),
                                   SizedBox(
                                     height: 20,
                                   ),
@@ -842,6 +941,190 @@ class _VenderDetailsState extends State<VenderDetails> {
   }
 
   Function? dialogState;
+
+
+
+  void writeReviewDialog(BuildContext context,OrderController controller) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          contentPadding: EdgeInsets.zero,
+          content: SizedBox(
+            height: 400,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 20, left: 10),
+                    child: Container(
+                      child: Center(
+                        child: Text(
+                          "Write Review",
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 10),
+                    child: Text(
+                      "Review",
+                      style:
+                      TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 10),
+                    child: RatingBar.builder(
+                      initialRating: ratingCount,
+                      minRating: 0,
+                      direction: Axis.horizontal,
+                      itemSize: 25,
+                      itemCount: 5,
+                      itemPadding: EdgeInsets.symmetric(horizontal: 0.0),
+                      itemBuilder: (context, _) => Icon(
+                        Icons.star,
+                        color: Colors.amber,
+                      ),
+                      onRatingUpdate: (rating) {
+                        ratingCount=rating;
+                        setState(() {
+
+                        });
+                        print(rating);
+                      },
+                    ),
+                  ),
+                  SizedBox(
+                    height: 12,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 10),
+                    child: Text(
+                      "Description",
+                      style:
+                      TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+
+                  Container(
+                    height: 150,
+                    decoration: BoxDecoration(
+                        border: Border.all(
+                          color: Colors.grey, // Change color as needed
+                          width: 2.0,
+                        ),
+                        borderRadius: BorderRadius.circular(10)),
+                    child: TextField(
+                      controller: writeReviewController,
+                      maxLines: null, // Allow unlimited lines
+                      keyboardType: TextInputType.multiline,
+                      decoration: InputDecoration(
+                          border: InputBorder.none,
+                          // contentPadding: EdgeInsets.only(bottom: 100),
+                          hintText: 'Write here...',
+                          contentPadding: EdgeInsets.only(left: 10)
+                        // enabledBorder: OutlineInputBorder(
+                        //   borderRadius: BorderRadius.circular(15),
+                        //   // borderSide: BorderSide(
+                        //   //   color: Colors.grey, // Change color as needed
+                        //   //   width: 2.0, // Border width
+                        //   // ),
+                        // ),
+                        // focusedBorder: OutlineInputBorder(
+                        //   borderSide: BorderSide(
+                        //     color: Colors.grey, // Change color as needed
+                        //     width: 2.0, // Border width
+                        //   ),
+                        // ),
+                      ),
+                    ),
+                  ),
+                  // Padding(
+                  //   padding: const EdgeInsets.all(10),
+                  //   child: TextField(
+                  //     maxLines: null, // Allow unlimited lines
+                  //     keyboardType: TextInputType.multiline,
+                  //     decoration: InputDecoration(
+                  //       // contentPadding: EdgeInsets.only(bottom: 100),
+                  //       hintText: 'Write here...',
+                  //       enabledBorder: OutlineInputBorder(
+                  //         borderRadius: BorderRadius.circular(15),
+                  //         borderSide: BorderSide(
+                  //           color: Colors.grey, // Change color as needed
+                  //           width: 2.0, // Border width
+                  //         ),
+                  //       ),
+                  //       focusedBorder: OutlineInputBorder(
+                  //         borderSide: BorderSide(
+                  //           color: Colors.grey, // Change color as needed
+                  //           width: 2.0, // Border width
+                  //         ),
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  InkWell(
+                    onTap: () {
+                      controller.submitReview('booking',writeReviewController.text, widget.booking.id,ratingCount).then((value) {
+                        Navigator.pop(context);
+                        // Navigator.push(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //         builder: ((context) => OrderDetails(booking: widget.booking,)))).then((value) {
+                        //   Navigator.pop(context);
+                        //   Get.offAll(Home());
+                        //
+                        //
+                        //
+                        // });
+                      });
+                      // if (title != null) {
+                      //   Navigator.pop(context);
+                      // } else {
+                      //   // Navigator.push(
+                      //   //     context,
+                      //   //     MaterialPageRoute(
+                      //   //         builder: (context) => const CancelOrder()));
+                      // }
+                    },
+                    child: Container(
+                      // alignment: Alignment.bottomCenter,
+                      width: 300,
+                      height: 50,
+                      child: MyButton(
+                        text: 'Submit Review',
+                      ),
+                    ),
+                  )
+
+                  // // SizedBox(height: 30),
+                  // Container(
+                  //   alignment: Alignment.bottomCenter,
+                  //   width: 330,
+                  //   // child: MyButton(text: 'Submit Review',),
+                  // ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
 
   void showReviewDialog(BuildContext context,OrderController controller) {
     showDialog(
