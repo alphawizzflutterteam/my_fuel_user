@@ -10,10 +10,15 @@ import 'package:test_prj/routes/app_routes.dart';
 
 import '../helper/utils/shared_preference.dart';
 
-class LanguageScreen extends StatelessWidget {
+class LanguageScreen extends StatefulWidget {
   final bool? isLogin;
   LanguageScreen({super.key, this.isLogin = false});
 
+  @override
+  State<LanguageScreen> createState() => _LanguageScreenState();
+}
+
+class _LanguageScreenState extends State<LanguageScreen> {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<LanguageController>(
@@ -96,6 +101,7 @@ class LanguageScreen extends StatelessWidget {
                                   await SharedPreferencesService.getInstance();
                               item.isSelected = true;
 
+                              setState(() {});
                               if (index == 0) {
                                 instance.saveData(
                                     SharedPreferencesService.kLanguageKey, "1");
@@ -128,10 +134,15 @@ class LanguageScreen extends StatelessWidget {
                                 controller.changeLanguage('en', 'US');
                               }
 
-
-
-                              Get.offAllNamed(Routes.LOGIN);
-
+                              Future.delayed(
+                                Duration(seconds: 2),
+                                () => {
+                                  if (widget.isLogin == true)
+                                    {Get.back()}
+                                  else
+                                    {Get.offAllNamed(Routes.LOGIN)}
+                                },
+                              );
                             },
                             child: Container(
                               width: 150,

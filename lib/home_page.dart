@@ -130,6 +130,8 @@ class _HomePageState extends State<HomePage> {
         double.parse(position.longitude!.toString()),
         localeIdentifier: "en");
 
+    latitude = position.latitude!.toString();
+    longitude = position.longitude!.toString();
     placemark.toList(growable: true);
 
     Placemark place = placemark[0];

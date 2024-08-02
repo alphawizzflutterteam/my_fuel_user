@@ -76,7 +76,7 @@ class LaravelApiClient extends GetxService with ApiClient {
     );
     if (response.statusCode == 200) {
       print("banners ${response.toString()} ");
-      List<dynamic> data = response.orderTypeList;
+      List<dynamic> data = response.data;
 
       bannerList = data.map((json) => BannerModel.fromJson(json)).toList();
       // data.forEach((element) {

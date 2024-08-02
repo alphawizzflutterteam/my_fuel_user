@@ -12,6 +12,8 @@ import 'package:test_prj/helper/utils/validator_all.dart';
 
 import '../repository/model/user_model.dart';
 import '../routes/app_routes.dart';
+import '../staticpage/privacy_policy.dart';
+import '../staticpage/terms_condition.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({super.key});
@@ -41,6 +43,7 @@ class _SignUpState extends State<SignUp> {
     initUI();
   }
 
+  bool isPCheck = false;
   @override
   Widget build(BuildContext context) {
     // data = Get.arguments ?? '';
@@ -78,63 +81,129 @@ class _SignUpState extends State<SignUp> {
                     data == "1" ? showBusiness() : showUser(),
 
                     const SizedBox(height: 20),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Checkbox(
+                          activeColor: Colors.deepOrange,
+                          value: isPCheck,
+                          onChanged: (value) {
+                            isPCheck = value!;
+                            setState(() {});
+                          },
+                        ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(vertical: 14),
+                          child: InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          TermsConditionScreen(),
+                                    ));
+                              },
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text("Terms and Conditions".tr,
+                                      style: TextStyle(
+                                          color:
+                                              Theme.of(context).primaryColor)),
+                                ],
+                              )),
+                        ),
+                        Text(" and "),
+                        Padding(
+                          padding: EdgeInsets.symmetric(vertical: 14),
+                          child: InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          PrivacyolicyScreen(),
+                                    ));
+                              },
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text("Privacy Policy".tr,
+                                      style: TextStyle(
+                                          color:
+                                              Theme.of(context).primaryColor)),
+                                ],
+                              )),
+                        ),
+                      ],
+                    ),
                     GetBuilder<SignupController>(
                         init: SignupController(),
                         builder: (controller) {
-                          return Obx(() => controller.isLoading.value == true
-                              ? Center(child: const CircularProgressIndicator())
-                              : GestureDetector(
-                                  onTap: () {
-                                    if (_formKeyReset!.currentState!
-                                        .validate()) {
-                                      User user = User();
-                                      user.fName = nameController.text;
-                                      user.lName = nameController.text;
-                                      user.email = emailController.text;
-                                      user.phone = phoneController.text;
-                                      user.gst = gstController.text;
-                                      user.guest_id = "123";
-                                      user.address = addressController.text;
-                                      user.pan = panController.text;
-                                      user.msme = msmeController.text;
-                                      user.password = passwordController.text;
-                                      user.profile =
-                                          data == "0" ? "normal" : "bussiness";
+                          return Obx(() {
+                            return controller.isLoading.value == true
+                                ? Center(
+                                    child: const CircularProgressIndicator())
+                                : GestureDetector(
+                                    onTap: () {
+                                      if (isPCheck == false) {
+                                        Fluttertoast.showToast(
+                                            msg:
+                                                "Please select privacy and terms & condition");
+                                      }
+                                      if (_formKeyReset!.currentState!
+                                          .validate()) {
+                                        User user = User();
+                                        user.fName = nameController.text;
+                                        user.lName = nameController.text;
+                                        user.email = emailController.text;
+                                        user.phone = phoneController.text;
+                                        user.gst = gstController.text;
+                                        user.guest_id = "123";
+                                        user.address = addressController.text;
+                                        user.pan = panController.text;
+                                        user.msme = msmeController.text;
+                                        user.password = passwordController.text;
+                                        user.profile = data == "0"
+                                            ? "normal"
+                                            : "bussiness";
 
-                                      controller.Register(user).then((value) {
-                                        if (value!.containsKey('errors')) {
-                                          Fluttertoast.showToast(
-                                              msg:
-                                                  "${value['errors'][0]['message']}");
-                                        } else if (value['temporary_token'] !=
-                                            "") {
-                                          String token =
-                                              value['temporary_token']
-                                                  .toString();
-                                          controller
-                                              .checkOtp(
-                                                  token, phoneController.text)
-                                              .then((value) {
-                                            Get.toNamed(
-                                                Routes.PHONE_VERIFICATION,
-                                                arguments: {
-                                                  'token': token,
-                                                  'type': '${data}',
-                                                  'phone':
-                                                      '${phoneController.text}',
-                                                  'otp':
-                                                      '${controller.checkOtpval.value.otp}'
-                                                });
-                                          });
-                                        }
+                                        controller.Register(user).then((value) {
+                                          if (value!.containsKey('errors')) {
+                                            Fluttertoast.showToast(
+                                                msg:
+                                                    "${value['errors'][0]['message']}");
+                                          } else if (value['temporary_token'] !=
+                                              "") {
+                                            String token =
+                                                value['temporary_token']
+                                                    .toString();
+                                            controller
+                                                .checkOtp(
+                                                    token, phoneController.text)
+                                                .then((value) {
+                                              Get.toNamed(
+                                                  Routes.PHONE_VERIFICATION,
+                                                  arguments: {
+                                                    'token': token,
+                                                    'type': '${data}',
+                                                    'phone':
+                                                        '${phoneController.text}',
+                                                    'otp':
+                                                        '${controller.checkOtpval.value.otp}'
+                                                  });
+                                            });
+                                          }
 
-                                        // return null;
-                                      });
-                                    }
-                                  },
-                                  child: const MyButton(text: "Sign Up")));
+                                          // return null;
+                                        });
+                                      }
+                                    },
+                                    child: const MyButton(text: "Sign Up"));
+                          });
                         }),
-                    const SizedBox(height: 70),
+                    const SizedBox(height: 40),
+
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -195,9 +264,9 @@ class _SignUpState extends State<SignUp> {
       children: [
         const SizedBox(height: 25),
         MyTextField(
-          validator: (value) => Validator.validatePhone(value),
           isAmount: true,
           controller: phoneController,
+          validator: (value) => Validator.validatePhone(value),
           maxLenth: AppConstants.phoneValidation,
           labelText: const Text("Phone No "),
         ),
@@ -209,7 +278,8 @@ class _SignUpState extends State<SignUp> {
         ),
         const SizedBox(height: 15),
         MyTextField(
-          validator: (value) => Validator.validateName(value),
+          validator: (value) =>
+              Validator.validateWithhint(value, "Company Name"),
           controller: nameController,
           labelText: const Text("Company Name"),
         ),
@@ -221,13 +291,14 @@ class _SignUpState extends State<SignUp> {
         ),
         const SizedBox(height: 15),
         MyTextField(
-          validator: (value) => Validator.validateAddress(value),
+          validator: (value) =>
+              Validator.validateWithhint(value, "Company Address"),
           controller: addressController,
           labelText: const Text("Company Address"),
         ),
         const SizedBox(height: 15),
         MyTextField(
-          validator: (value) => Validator.validateAddress(value),
+          validator: (value) => Validator.validateWithhint(value, "Pan No."),
           controller: panController,
           labelText: const Text("Pan No."),
         ),
