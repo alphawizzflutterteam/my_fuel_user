@@ -172,8 +172,10 @@ class _LoginPageState extends State<LoginPage> {
                                                       .toString())
                                               .then((value) async {
                                             if (value.containsKey("errors")) {
+                                              var data =
+                                                  value['errors'][0]['message'];
                                               Fluttertoast.showToast(
-                                                  msg: "$value");
+                                                  msg: "${data}");
                                             } else if (value.containsKey(
                                                 'temporary_token')) {
                                               String token =
