@@ -383,8 +383,11 @@ class _OrderFuelCheckOutState extends State<OrderFuelCheckOut> {
                                 child: GestureDetector(
                                   child: const MyButton(text: 'Checkout'),
                                   onTap: () {
-                                    Get.to(const PaymentScreenTree())
-                                        ?.then((value) {
+                                    Get.to(PaymentScreenTree(
+                                      totalAmount: controller
+                                          .orderFuelCheckData?.total
+                                          .toString(),
+                                    ))?.then((value) {
                                       if (value == 'payment') {
                                         RazorPayHelper razorPay =
                                             RazorPayHelper(
@@ -410,7 +413,7 @@ class _OrderFuelCheckOutState extends State<OrderFuelCheckOut> {
                                             controller.orderFuelCheckData!.total
                                                 .toString());
                                       } else {
-                                        controller.placeBooking('', 'cod', '0');
+                                        //controller.placeBooking('', 'cod', '0');
                                       }
                                     });
                                   },

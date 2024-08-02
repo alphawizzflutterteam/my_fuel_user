@@ -180,7 +180,7 @@ class VendorsPage extends StatelessWidget {
                                                               242, 151, 15, 1),
                                                         ),
                                                         Text(
-                                                          " 4.3",
+                                                          "4.3",
                                                           style: TextStyle(
                                                             color:
                                                                 Color.fromRGBO(

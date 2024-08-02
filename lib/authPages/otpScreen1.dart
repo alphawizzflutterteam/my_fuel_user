@@ -9,6 +9,7 @@ import 'package:test_prj/components/my_background2.dart';
 import 'package:test_prj/components/my_button.dart';
 import 'package:test_prj/controller/otp_controller.dart';
 import 'package:test_prj/helper/utils/app_constants.dart';
+import 'package:test_prj/orderfuel/repository/order_fuel_repository.dart';
 
 import '../controller/home_controller.dart';
 import '../helper/utils/shared_preference.dart';
@@ -184,6 +185,11 @@ class _OTPScreenState extends State<OTPScreen> {
                                         await controller.box.write(
                                             AppConstants.token,
                                             controller.verifyModel.value.token);
+
+                                        ///Reintialize the DioClient
+                                        Get.find<OrderFuelRepo>().updateHeaders(
+                                            controller
+                                                .verifyModel.value.token!);
 
                                         Get.toNamed(Routes.MEMBERCARD,
                                             arguments: controller

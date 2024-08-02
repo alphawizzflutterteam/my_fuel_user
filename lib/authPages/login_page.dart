@@ -12,8 +12,10 @@ import 'package:test_prj/helper/colors.dart';
 import 'package:test_prj/helper/utils/app_constants.dart';
 import 'package:test_prj/home.dart';
 import 'package:test_prj/authPages/sign_up.dart';
+import 'package:test_prj/orderfuel/repository/order_fuel_repository.dart';
 import 'package:test_prj/routes/app_pages.dart';
 import 'package:test_prj/routes/app_routes.dart';
+import 'package:test_prj/service/provider/lavavel_provider.dart';
 
 import '../helper/utils/shared_preference.dart';
 
@@ -155,7 +157,7 @@ class _LoginPageState extends State<LoginPage> {
                         const SizedBox(height: 20),
                         Obx(
                           () => controller.isLoading.value == true
-                              ? Center(child: CircularProgressIndicator())
+                              ? const Center(child: CircularProgressIndicator())
                               : GetBuilder<SignupController>(
                                   init: SignupController(),
                                   builder: (signUpController) {
@@ -225,6 +227,11 @@ class _LoginPageState extends State<LoginPage> {
                                               await controller.box.write(
                                                   AppConstants.token,
                                                   value['token']);
+
+                                              ///Reintialize the DioClient
+                                              Get.find<OrderFuelRepo>()
+                                                  .updateHeaders(
+                                                      value['token']);
 
                                               Navigator.pushReplacement(
                                                   context,

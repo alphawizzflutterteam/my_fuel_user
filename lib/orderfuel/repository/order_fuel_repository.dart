@@ -23,6 +23,10 @@ class OrderFuelRepo extends GetxService with ApiClient {
     return this;
   }
 
+  void updateHeaders(String token) {
+    httpClient.updateHeaders(token);
+  }
+
   Future<OrderFuelModel> getOrderFuelServices() async {
     var response = await httpClient.get(
       '/api/v1/customer/order/service-list',
