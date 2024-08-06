@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:test_prj/Home/checkout_car_service.dart';
 import 'package:test_prj/components/my_appbar.dart';
 import 'package:test_prj/orderfuel/doorStepDelivery/order_fuel_checkout.dart';
@@ -15,7 +16,7 @@ class EvVender extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: [
-          const MyAppbar(title: "Vendors"),
+           MyAppbar(title: "Vendors".tr),
           const SizedBox(height: 15),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -47,12 +48,12 @@ class EvVender extends StatelessWidget {
                                     )),
                           );
                         },
-                        child: const Column(
+                        child:  Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              "My Fuels Price",
+                              "My Fuels Price".tr,
                               style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
@@ -193,8 +194,8 @@ class EvVender extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Text(
-                                "Vendor Name",
+                               Text(
+                                "Vendor Name".tr,
                                 style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,

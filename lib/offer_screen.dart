@@ -244,32 +244,36 @@ class _OffersScreenState extends State<OffersScreen> {
                     ? Center(
                         child: CircularProgressIndicator(),
                       )
-                    : ListView.builder(
-                        padding: EdgeInsets.zero,
-                        physics: NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        itemCount:
-                            controller.offerInfoModel.value.coupons!.length,
-                        itemBuilder: (context, index) {
-                          return OfferCard(
-                            color: offers[0]['color'],
-                            text: controller
-                                .offerInfoModel.value.coupons![index].title
-                                .toString(),
-                            icon: offers[0]['icon'],
-                            title: controller
-                                .offerInfoModel.value.coupons![index].title
-                                .toString(),
-                            description:
-                                "${controller.offerInfoModel.value.coupons![index].discount.toString()} ${controller.offerInfoModel.value.coupons![index].discountType.toString()} for code ${controller.offerInfoModel.value.coupons![index].code.toString()}",
-                            offer:
-                                "${controller.offerInfoModel.value.coupons![index].discount.toString()} ${controller.offerInfoModel.value.coupons![index].discountType.toString()}",
-                            expiry: controller.offerInfoModel.value
-                                .coupons![index].plainExpireDate
-                                .toString(),
-                          );
-                        },
-                      )),
+                    : controller.offerInfoModel.value.coupons!.length == 0
+                        ? Center(
+                            child: Text("No data Found"),
+                          )
+                        : ListView.builder(
+                            padding: EdgeInsets.zero,
+                            physics: NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount:
+                                controller.offerInfoModel.value.coupons!.length,
+                            itemBuilder: (context, index) {
+                              return OfferCard(
+                                color: offers[0]['color'],
+                                text: controller
+                                    .offerInfoModel.value.coupons![index].title
+                                    .toString(),
+                                icon: offers[0]['icon'],
+                                title: controller
+                                    .offerInfoModel.value.coupons![index].title
+                                    .toString(),
+                                description:
+                                    "${controller.offerInfoModel.value.coupons![index].discount.toString()} ${controller.offerInfoModel.value.coupons![index].discountType.toString()} for code ${controller.offerInfoModel.value.coupons![index].code.toString()}",
+                                offer:
+                                    "${controller.offerInfoModel.value.coupons![index].discount.toString()} ${controller.offerInfoModel.value.coupons![index].discountType.toString()}",
+                                expiry: controller.offerInfoModel.value
+                                    .coupons![index].plainExpireDate
+                                    .toString(),
+                              );
+                            },
+                          )),
               ],
             );
           }),

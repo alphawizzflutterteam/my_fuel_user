@@ -33,7 +33,9 @@ class BatteryTyreData {
   String? vehicleModel;
   String? productId;
   String? tyreSize;
+  String? fuel_type;
   String? timeSlotId;
+  String? quantity;
   String? date;
   String? notes;
   String? service;
@@ -62,7 +64,9 @@ class BatteryTyreData {
       this.vehicleModel,
       this.productId,
       this.tyreSize,
+      this.fuel_type,
       this.timeSlotId,
+      this.quantity,
       this.date,
       this.notes,
       this.service,
@@ -90,7 +94,9 @@ class BatteryTyreData {
     vehicleModel = json['vehicle_model'];
     productId = json['product_id'];
     tyreSize = json['tyre_size'];
+    fuel_type = json['fuel_type'];
     timeSlotId = json['time_slot_id'];
+    quantity = json['quantity'].toString();
     date = json['date'];
     notes = json['notes'];
     service = json['service'];
@@ -135,6 +141,8 @@ class BatteryTyreData {
     data['vehicle_model'] = this.vehicleModel;
     data['product_id'] = this.productId;
     data['tyre_size'] = this.tyreSize;
+    data['quantity'] = this.quantity;
+    data['fuel_type'] = this.fuel_type;
     data['time_slot_id'] = this.timeSlotId;
     data['date'] = this.date;
     data['notes'] = this.notes;
@@ -376,30 +384,30 @@ class Product {
   String? attributes;
   String? choiceOptions;
   String? variation;
-  int? published;
+  String? published;
   String? unitPrice;
   String? purchasePrice;
   String? tax;
   String? taxType;
   String? taxModel;
-  int? discount;
+  String? discount;
   String? discountType;
-  int? currentStock;
-  int? minimumOrderQty;
+  String? currentStock;
+  String? minimumOrderQty;
   String? details;
-  int? freeShipping;
+  String? freeShipping;
   String? attachment;
   String? createdAt;
   String? updatedAt;
-  int? status;
-  int? featuredStatus;
+  String? status;
+  String? featuredStatus;
   String? metaTitle;
   String? metaDescription;
   String? metaImage;
-  int? requestStatus;
+  String? requestStatus;
   String? deniedNote;
-  int? shippingCost;
-  int? multiplyQty;
+  String? shippingCost;
+  String? multiplyQty;
   String? tempShippingCost;
   String? isShippingCostUpdated;
   String? code;
@@ -497,42 +505,42 @@ class Product {
     }
     colorImage = json['color_image'];
     thumbnail = json['thumbnail'];
-    featured = json['featured'];
-    flashDeal = json['flash_deal'];
-    videoProvider = json['video_provider'];
-    videoUrl = json['video_url'];
-    colors = json['colors'];
+    featured = json['featured'].toString();
+    flashDeal = json['flash_deal'].toString();
+    videoProvider = json['video_provider'].toString();
+    videoUrl = json['video_url'].toString();
+    colors = json['colors'].toString();
     variantProduct = json['variant_product'].toString();
-    attributes = json['attributes'];
-    choiceOptions = json['choice_options'];
-    variation = json['variation'];
-    published = json['published'];
+    attributes = json['attributes'].toString();
+    choiceOptions = json['choice_options'].toString();
+    variation = json['variation'].toString();
+    published = json['published'].toString();
     unitPrice = json['unit_price'].toString();
     purchasePrice = json['purchase_price'].toString();
     tax = json['tax'].toString();
     taxType = json['tax_type'].toString();
-    taxModel = json['tax_model'];
-    discount = json['discount'];
-    discountType = json['discount_type'];
-    currentStock = json['current_stock'];
-    minimumOrderQty = json['minimum_order_qty'];
-    details = json['details'];
-    freeShipping = json['free_shipping'];
-    attachment = json['attachment'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
-    status = json['status'];
-    featuredStatus = json['featured_status'];
-    metaTitle = json['meta_title'];
-    metaDescription = json['meta_description'];
-    metaImage = json['meta_image'];
-    requestStatus = json['request_status'];
-    deniedNote = json['denied_note'];
-    shippingCost = json['shipping_cost'];
-    multiplyQty = json['multiply_qty'];
-    tempShippingCost = json['temp_shipping_cost'];
-    isShippingCostUpdated = json['is_shipping_cost_updated'];
-    code = json['code'];
+    taxModel = json['tax_model'].toString();
+    discount = json['discount'].toString();
+    discountType = json['discount_type'].toString();
+    currentStock = json['current_stock'].toString();
+    minimumOrderQty = json['minimum_order_qty'].toString();
+    details = json['details'].toString();
+    freeShipping = json['free_shipping'].toString();
+    attachment = json['attachment'].toString();
+    createdAt = json['created_at'].toString();
+    updatedAt = json['updated_at'].toString();
+    status = json['status'].toString();
+    featuredStatus = json['featured_status'].toString();
+    metaTitle = json['meta_title'].toString();
+    metaDescription = json['meta_description'].toString();
+    metaImage = json['meta_image'].toString();
+    requestStatus = json['request_status'].toString();
+    deniedNote = json['denied_note'].toString();
+    shippingCost = json['shipping_cost'].toString();
+    multiplyQty = json['multiply_qty'].toString();
+    tempShippingCost = json['temp_shipping_cost'].toString();
+    isShippingCostUpdated = json['is_shipping_cost_updated'].toString();
+    code = json['code'].toString();
     // if (json['translations'] != null) {
     //   translations = <Null>[];
     //   json['translations'].forEach((v) {

@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:test_prj/components/my_appbar.dart';
 import 'package:test_prj/components/my_button.dart';
 import 'package:test_prj/components/my_textfield.dart';
+import 'package:test_prj/routes/app_routes.dart';
 
 import '../controller/forget_controller.dart';
 import '../controller/singup_controller.dart';
@@ -34,7 +37,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                 children: [
                   Column(
                     children: [
-                      MyAppbar(title: "Change Password"),
+                      MyAppbar(title: "Change Password".tr),
                       SizedBox(height: 16),
                       Padding(
                         padding: const EdgeInsets.all(16.0),
@@ -43,7 +46,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                             validator: (value) =>
                                 Validator.validatePassword(value),
                             controller: currentPassword,
-                            labelText: Text("Current Password")),
+                            labelText: Text("Current Password".tr)),
                       ),
                       Padding(
                         padding: const EdgeInsets.all(16.0),
@@ -52,7 +55,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                             validator: (value) =>
                                 Validator.validatePassword(value),
                             controller: newPassword,
-                            labelText: Text("New Password")),
+                            labelText: Text("New Password".tr)),
                       ),
                       Padding(
                         padding: const EdgeInsets.all(16.0),
@@ -62,29 +65,41 @@ class _ChangePasswordState extends State<ChangePassword> {
                                 Validator.validateConfirmPassword(
                                     value, newPassword.text),
                             controller: confirmPassword,
-                            labelText: Text("Confirm Password")),
+                            labelText: Text("Confirm Password".tr)),
                       ),
                     ],
                   ),
-                  Padding(
-                    padding:
-                        const EdgeInsets.only(left: 16, right: 16, bottom: 40),
-                    child: Container(
-                        height: 48,
-                        child: InkWell(
-                            onTap: () {
-                              if (_formKeyReset!.currentState!.validate()) {
-                                controller
-                                    .chnagePassword(currentPassword.text,
-                                        confirmPassword.text)
-                                    .then((value) {
-                                  if (value['success'] == true) {}
-                                });
-                              }
-                              // controller.resetPassword()
-                            },
-                            child: MyButton(text: "Change Password"))),
-                  )
+                  Obx(() => controller.isLoading.value == true
+                      ? Center(
+                          child: CircularProgressIndicator(),
+                        )
+                      : Padding(
+                          padding: const EdgeInsets.only(
+                              left: 16, right: 16, bottom: 40),
+                          child: Container(
+                              height: 48,
+                              child: InkWell(
+                                  onTap: () {
+                                    if (_formKeyReset!.currentState!
+                                        .validate()) {
+                                      controller
+                                          .chnagePassword(currentPassword.text,
+                                              confirmPassword.text)
+                                          .then((value) {
+                                        if (value['success'] == true) {
+                                          Fluttertoast.showToast(
+                                              msg: "${value['message']}");
+                                          Get.back();
+                                        } else {
+                                          Fluttertoast.showToast(
+                                              msg: "${value['message']}");
+                                        }
+                                      });
+                                    }
+                                    // controller.resetPassword()
+                                  },
+                                  child: MyButton(text: "Change Password".tr))),
+                        ))
                 ],
               ),
             ),

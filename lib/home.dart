@@ -6,7 +6,8 @@ import 'package:test_prj/offer_screen.dart';
 import 'package:test_prj/profile_page.dart';
 
 class Home extends StatefulWidget {
-  const Home({super.key});
+  int? seleted;
+  Home({super.key, this.seleted});
 
   @override
   State<Home> createState() => _HomeState();
@@ -28,6 +29,15 @@ class _HomeState extends State<Home> {
     OffersScreen(),
     ProfilePage(),
   ];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    callForinitUI();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,7 +61,7 @@ class _HomeState extends State<Home> {
           BottomNavigationBarItem(
               icon: Image(
                 image: _selectedIndex == 1
-                    ? AssetImage("assets/Home.png")
+                    ? AssetImage("assets/login-logo.png")
                     : AssetImage("assets/login-logo.png"),
                 height: 24,
               ),
@@ -75,5 +85,12 @@ class _HomeState extends State<Home> {
         ],
       ),
     );
+  }
+
+  void callForinitUI() {
+    if (widget.seleted == 1) {
+      _selectedIndex = widget.seleted ?? 0;
+      setState(() {});
+    }
   }
 }

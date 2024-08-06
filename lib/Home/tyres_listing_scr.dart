@@ -60,9 +60,9 @@ class _TyresListingState extends State<TyresListing> {
                 title: Text(otherCategory.categoryId == "9"
                     ? 'Tyres Listing'.tr
                     : otherCategory.categoryId == "10"
-                        ? "Battery Listing"
+                        ? "Battery Listing".tr
                         : otherCategory.categoryId == "11"
-                            ? "Car Wash"
+                            ? "Car Wash".tr
                             : ""),
                 centerTitle: true,
                 shape: RoundedRectangleBorder(

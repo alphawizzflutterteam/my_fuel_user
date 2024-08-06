@@ -1,8 +1,8 @@
 class WalletTransactionModel {
   int? limit;
   int? offset;
-  int? totalWalletBalance;
-  int? totalWalletTransaction;
+  String? totalWalletBalance;
+  String? totalWalletTransaction;
   List<WalletTransactionList>? walletTransactionList;
 
   WalletTransactionModel(
@@ -15,8 +15,8 @@ class WalletTransactionModel {
   WalletTransactionModel.fromJson(Map<String, dynamic> json) {
     limit = json['limit'];
     offset = json['offset'];
-    totalWalletBalance = json['total_wallet_balance'];
-    totalWalletTransaction = json['total_wallet_transaction'];
+    totalWalletBalance = json['total_wallet_balance'].toString();
+    totalWalletTransaction = json['total_wallet_transaction'].toString();
     if (json['wallet_transaction_list'] != null) {
       walletTransactionList = <WalletTransactionList>[];
       json['wallet_transaction_list'].forEach((v) {

@@ -300,18 +300,18 @@ class _RescueMeState extends State<RescueMe> {
                               if (otherCategory.vehicleType == null ||
                                   otherCategory.vehicleType!.isEmpty) {
                                 Fluttertoast.showToast(
-                                    msg: "PLease select Vehicle Type");
+                                    msg: "Please select Vehicle Type".tr);
                               } else if (otherCategory.fuel_type == null ||
                                   otherCategory.fuel_type!.isEmpty) {
                                 Fluttertoast.showToast(
-                                    msg: "PLease select Vehicle Model");
+                                    msg: "Please select Vehicle Model".tr);
                               } else if (otherCategory.fuel_type == null ||
                                   selectedfuelType!.isEmpty) {
                                 Fluttertoast.showToast(
                                     msg: "Please select Fuel Type");
                               } else if (fuelQuantityController.text.isEmpty) {
                                 Fluttertoast.showToast(
-                                    msg: "Please Enter Fuel Quantity");
+                                    msg: "Please Enter Fuel Quantity".tr);
                               } else {
                                 otherCategory.quantity =
                                     fuelQuantityController.text.toString();
@@ -327,13 +327,14 @@ class _RescueMeState extends State<RescueMe> {
                               }
                               //// Valid For Tyre
                             } else if (selectedServices == "Tyres") {
+                              // ${carController.batterTyreCheckOut.value.data!.fuel_type}
                               if (otherCategory.vehicleType == null ||
                                   otherCategory.vehicleType!.isEmpty) {
                                 Fluttertoast.showToast(
-                                    msg: "PLease select Vehicle Type");
+                                    msg: "Please select Vehicle Type".tr);
                               } else if (fuelQuantityController.text.isEmpty) {
                                 Fluttertoast.showToast(
-                                    msg: "Please Enter Fuel Quantity");
+                                    msg: "Please Enter Fuel Quantity".tr);
                               } else {
                                 otherCategory.quantity = "1";
                                 otherCategory.tyreSize =
@@ -355,16 +356,17 @@ class _RescueMeState extends State<RescueMe> {
                               if (otherCategory.vehicleType == null ||
                                   otherCategory.vehicleType!.isEmpty) {
                                 Fluttertoast.showToast(
-                                    msg: "PLease select Vehicle Type");
+                                    msg: "Please select Vehicle Type".tr);
                               } else if (fuelQuantityController.text.isEmpty) {
                                 Fluttertoast.showToast(
-                                    msg: "Please Enter Fuel Quantity");
+                                    msg: "Please Enter Fuel Quantity".tr);
                               } else {
                                 otherCategory.quantity = "1";
                                 otherCategory.notes =
                                     fuelQuantityController.text.toString();
                                 otherCategory.service = "At your station";
-
+                                otherCategory.tyreSize =
+                                    fuelQuantityController.text.toString();
                                 print(
                                     "object Cate Id ${otherCategory.categoryId}");
                                 Navigator.push(

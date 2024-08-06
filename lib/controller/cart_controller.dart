@@ -55,12 +55,29 @@ class CartController extends AppBaseController {
     return value;
   }
 
+  Future<Map> cashFree(String name, String email, String mobile, String amount,
+      String id) async {
+    isLoading(true);
+    Map response =
+        await orderFuelRepo.getPaymentId(name, email, mobile, amount, id);
+    isLoading(false);
+    if (response['status']) {
+      // Get.to(OrderPlaced(
+      //   amount: response['message'],
+      //   order_id: "${response['order_id']}",
+      // ));
+    }
+
+    isLoading.value = false;
+    return response;
+  }
+
   Future<Map<String, dynamic>> placeOrder(
-      String address_id, String paymentType) async {
+      String address_id, String paymentType, String wallet) async {
     isLoading(true);
 
     Map<String, dynamic> value =
-        await _laravelApiClient.placeOrder(address_id, paymentType);
+        await _laravelApiClient.placeOrder(address_id, paymentType, wallet);
 
     // checkOutModel(GenSetCheckOutModel.fromJson(value));
 

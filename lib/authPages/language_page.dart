@@ -29,15 +29,6 @@ class _LanguageScreenState extends State<LanguageScreen> {
               children: [
                 Stack(
                   children: [
-                    Positioned(
-                      child: Padding(
-                        padding: EdgeInsets.only(top: 45.0, left: 20),
-                        child: Icon(
-                          Icons.arrow_back,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
                     Container(
                       height: 105,
                       decoration: BoxDecoration(
@@ -73,6 +64,23 @@ class _LanguageScreenState extends State<LanguageScreen> {
                         ),
                       ),
                     ),
+                    widget.isLogin == true
+                        ? Positioned(
+                            left: 0,
+                            child: Padding(
+                              padding: EdgeInsets.only(top: 60.0, left: 20),
+                              child: InkWell(
+                                onTap: () {
+                                  Get.back();
+                                },
+                                child: Icon(
+                                  Icons.arrow_back_ios_new,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          )
+                        : Container(),
                   ],
                 ),
                 Padding(
@@ -135,7 +143,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
                               }
 
                               Future.delayed(
-                                Duration(seconds: 2),
+                                Duration(seconds: 1),
                                 () => {
                                   if (widget.isLogin == true)
                                     {Get.back()}

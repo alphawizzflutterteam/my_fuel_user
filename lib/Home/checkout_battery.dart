@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:test_prj/components/my_appbar.dart';
 import 'package:test_prj/components/my_button.dart';
 import 'package:test_prj/helper/colors.dart';
@@ -39,7 +40,7 @@ class _Checkout_BatteryState extends State<Checkout_Battery> {
             ),
           ),
         ),
-        title: Text('Checkout'),
+        title: Text('Checkout'.tr),
         centerTitle: true,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
@@ -439,7 +440,7 @@ class _Checkout_BatteryState extends State<Checkout_Battery> {
                   child: Align(
                     alignment: Alignment.centerRight,
                     child: GestureDetector(
-                      child: const MyButton(text: 'Checkout'),
+                      child:  MyButton(text: 'Checkout'.tr),
                       onTap: () {
                         Navigator.push(
                             context,

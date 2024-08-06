@@ -89,6 +89,7 @@ class UserInfoModel {
       this.ordersCount});
 
   UserInfoModel.fromJson(Map<String, dynamic> json) {
+    print("objectProfile ${json['profile']}");
     id = json['id'];
     name = json['name'];
     fName = json['f_name'];

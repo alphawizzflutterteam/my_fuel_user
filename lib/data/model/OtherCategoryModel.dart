@@ -52,21 +52,21 @@ class OtherCategory {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['category_id'] = this.categoryId;
-    data['vehicle_type'] = this.vehicleType;
-    data['vehicle_model'] = this.vehicleModel;
-    data['tyre_size'] = this.tyreSize;
-    data['time_slot_id'] = this.timeSlotId;
-    data['quantity'] = this.quantity;
-    data['date'] = this.date;
-    data['notes'] = this.notes;
-    data['service'] = this.service;
-    data['service_type'] = this.service_type;
-    data['product_id'] = this.productId;
-    data['fuel_type'] = this.fuel_type;
-    data['shipping_address_id'] = this.shippingAddressId;
-    data['billing_same_as_shipping'] = this.billingSameAsShipping;
-    data['billing_address_id'] = this.billingAddressId;
+    data['category_id'] = this.categoryId ?? "";
+    data['vehicle_type'] = this.vehicleType ?? "";
+    data['vehicle_model'] = this.vehicleModel ?? "";
+    data['tyre_size'] = this.tyreSize ?? "";
+    data['time_slot_id'] = this.timeSlotId ?? "";
+    data['quantity'] = this.quantity ?? "";
+    data['date'] = this.date ?? "";
+    data['notes'] = this.notes ?? "";
+    data['service'] = this.service ?? "";
+    data['service_type'] = this.service_type ?? "";
+    data['product_id'] = this.productId ?? "";
+    data['fuel_type'] = this.fuel_type ?? "";
+    data['shipping_address_id'] = this.shippingAddressId ?? "";
+    data['billing_same_as_shipping'] = this.billingSameAsShipping ?? "";
+    data['billing_address_id'] = this.billingAddressId ?? "";
     return data;
   }
 }

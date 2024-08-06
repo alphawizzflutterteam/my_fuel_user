@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:test_prj/components/my_button.dart';
 import 'package:test_prj/helper/colors.dart';
@@ -31,7 +32,7 @@ class _OrderPlacedState extends State<OrderPlaced> {
       canPop: false,
       onPopInvoked: (didPop) {
         if (!didPop) {
-          Get.offAll(const Home());
+          Get.offAll(Home());
 
           // Navigator.push(
           //     context, MaterialPageRoute(builder: (context) => const Home()));
@@ -42,8 +43,12 @@ class _OrderPlacedState extends State<OrderPlaced> {
         body: InkWell(
           onTap: () {
             if (widget.isFromFuelOnTap ?? false) {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const Home()));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => Home(
+                            seleted: 1,
+                          )));
               // showDialog(
               //   context: context,
               //   builder: (context) {
@@ -51,8 +56,12 @@ class _OrderPlacedState extends State<OrderPlaced> {
               //   },
               // );
             } else {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const Home()));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => Home(
+                            seleted: 1,
+                          )));
             }
           },
           child: Container(
@@ -92,7 +101,7 @@ class _OrderPlacedState extends State<OrderPlaced> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            "Order Placed Successfully",
+                            "Order Placed Successfully".tr,
                             style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 24,
@@ -104,19 +113,22 @@ class _OrderPlacedState extends State<OrderPlaced> {
                             "Order Id -${widget.order_id}",
                             style: TextStyle(color: Colors.white, fontSize: 16),
                             textAlign: TextAlign.center,
-                          ), // Spacing between texts
+                          ),
+                          Image.asset("assets/goldcoin.png",
+                              height: 20), // Spacing between texts
                           Padding(
-                            padding: const EdgeInsets.only(left: 70),
-                            child: Row(children: [
-                              Image.asset("assets/goldcoin.png", height: 20),
-                              Text(
-                                "${widget.amount.toString()} ",
-                                style: TextStyle(
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                            child: SizedBox(
+                              width: MediaQuery.sizeOf(context).width / 1.2,
+                              child: Text(
+                                maxLines: 2,
+                                "${widget.amount.toString()}",
+                                style: const TextStyle(
                                     color: Colors.white, fontSize: 16),
                                 textAlign: TextAlign.center,
                                 overflow: TextOverflow.ellipsis,
                               ),
-                            ]),
+                            ),
                           ),
                           SizedBox(height: 5), // Spacing between texts
                         ],
@@ -135,7 +147,9 @@ class _OrderPlacedState extends State<OrderPlaced> {
   Future<void> initUI() async {
     print("object AAAAAAA ${widget.amount}");
     await Future.delayed(const Duration(milliseconds: 3000), () async {
-      Get.offAll(const Home());
+      Get.offAll(Home(
+        seleted: 1,
+      ));
     });
   }
 }
@@ -224,11 +238,11 @@ class _RateDriverDialogState extends State<RateDriverDialog> {
                   Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const Home(),
+                        builder: (context) => Home(),
                       ));
                 },
-                child: const SizedBox(
-                    height: 40, child: MyButton(text: 'Submit Review')))
+                child: SizedBox(
+                    height: 40, child: MyButton(text: 'Submit Review'.tr)))
           ],
         ),
       ),

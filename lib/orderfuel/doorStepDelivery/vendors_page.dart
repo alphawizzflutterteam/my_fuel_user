@@ -24,8 +24,8 @@ class VendorsPage extends StatelessWidget {
           appBar: MyAppbar(
               title: controller.orderFuelController.selectedIndex.value == 1 &&
                       controller.argument['from'] == 'ev'
-                  ? 'Charging Station'
-                  : "Vendors"),
+                  ? 'Charging Station'.tr
+                  : "Vendors".tr),
           body: Obx(
             () {
               return controller.isLoading.value
@@ -46,7 +46,7 @@ class VendorsPage extends StatelessWidget {
                                         controller.argument['from'] == 'ev'
                                     ? SizedBox()
                                     : Container(
-                                        height: 59,
+                                        height: 79,
                                         decoration: BoxDecoration(
                                           color: const Color.fromRGBO(
                                               138, 180, 2, 200),
@@ -99,6 +99,14 @@ class VendorsPage extends StatelessWidget {
                                                         fontWeight:
                                                             FontWeight.bold),
                                                   ),
+                                                  Text(
+                                                    "Recommended (Lorem Lpsum)",
+                                                    style: TextStyle(
+                                                      fontSize: 14,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    ),
+                                                  ),
                                                 ],
                                               ),
                                             ),
@@ -145,7 +153,7 @@ class VendorsPage extends StatelessWidget {
                                           child: Row(
                                             children: [
                                               Image.network(
-                                                '${configModel?.baseUrls}/${item.seller?.image}',
+                                                '${configModel!.baseUrls?.sellerImageUrl}/${item.seller?.image}',
                                                 height: 94,
                                                 errorBuilder: (context, error,
                                                         stackTrace) =>

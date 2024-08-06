@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:test_prj/Home/fuel_ontab_checkout.dart';
 import 'package:test_prj/components/my_button.dart';
 import 'package:test_prj/data/model/TimeSlotModel.dart';
@@ -36,10 +37,10 @@ class _EvdoorbottomState extends State<Evdoorbottom> {
       child: SingleChildScrollView(
         child: Column(
           children: [
-            const Padding(
+            Padding(
               padding: EdgeInsets.only(top: 20, left: 30, right: 20),
               child: Text(
-                "Schedule data and timing",
+                "Schedule data and timing".tr,
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
             ),
@@ -50,10 +51,10 @@ class _EvdoorbottomState extends State<Evdoorbottom> {
               padding: const EdgeInsets.all(10),
               child: TextField(
                   controller: widget.dateController,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     contentPadding: EdgeInsets.only(left: 10, top: 10),
                     // labelText: 'Schedule date and timing',
-                    hintText: 'Schedule date and timing',
+                    hintText: 'Schedule date and timing'.tr,
 
                     //filled: true,
                     suffixIcon: Icon(Icons.calendar_today),
@@ -130,7 +131,7 @@ class _EvdoorbottomState extends State<Evdoorbottom> {
                       context,
                       MaterialPageRoute(
                           builder: (context) => const Evcheckout()))*/
-                  child: const MyButton(text: 'Book Now')),
+                  child: MyButton(text: 'Book Now'.tr)),
             ),
           ],
         ),

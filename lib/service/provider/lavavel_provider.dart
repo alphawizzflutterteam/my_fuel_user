@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
@@ -17,6 +18,7 @@ import '../../data/model/response/BannerModel.dart';
 import '../../data/model/response/home_model.dart';
 import '../../data/model/response/setting_model.dart';
 import '../../helper/utils/shared_preference.dart';
+import '../../main.dart';
 import 'api_provider.dart';
 
 class LaravelApiClient extends GetxService with ApiClient {
@@ -203,7 +205,7 @@ class LaravelApiClient extends GetxService with ApiClient {
       print("userRegister ${response.toString()} ");
       return json.decode(response.toString());
     } else {
-      throw Exception(response.orderTypeList['message']);
+      return json.decode(response.toString());
     }
   }
 
@@ -293,7 +295,8 @@ class LaravelApiClient extends GetxService with ApiClient {
         // "phone": "$emailPhone",
         "password": "$password",
         // "guest_id": "$membNo"
-        "guest_id": "123"
+        "guest_id": "123",
+        "device_token": "$device_token"
       },
       options: optionsNetwork,
     );
@@ -353,7 +356,7 @@ class LaravelApiClient extends GetxService with ApiClient {
   }
 
   Future<Map<String, dynamic>> placeOrder(
-      String address_id, String paymentType) async {
+      String address_id, String paymentType, String wallet) async {
     SharedPreferencesService? instance =
         await SharedPreferencesService.getInstance();
 
@@ -361,7 +364,7 @@ class LaravelApiClient extends GetxService with ApiClient {
     optionsNetwork.headers!['Authorization'] = "Bearer $token";
     var response = await httpClient.getUri(
       Uri.parse(
-          "${ApiConstants.PLACEORDER}$address_id&payment_method=$paymentType&order_note=ABC Status"),
+          "${ApiConstants.PLACEORDER}$address_id&payment_method=$paymentType&order_note=ABC Status&wallet_use=$wallet"),
       options: optionsNetwork,
     );
     if (response.statusCode == 200) {
@@ -428,6 +431,7 @@ class LaravelApiClient extends GetxService with ApiClient {
     if (response.statusCode == 200) {
       print("userRegister ${response.toString()} ");
 
+      getAddress();
       return json.decode(response.toString());
     } else {
       return json.decode(response.toString());
@@ -482,7 +486,7 @@ class LaravelApiClient extends GetxService with ApiClient {
 
     String token = instance.getData(SharedPreferencesService.kTokenKey);
     optionsNetwork.headers!['Authorization'] = "Bearer $token";
-    log("message Token $token");
+    log("message $token");
     var response = await httpClient.get(
       ApiConstants.getProfile,
       options: optionsNetwork,
@@ -495,6 +499,40 @@ class LaravelApiClient extends GetxService with ApiClient {
     } else {
       return json.decode(response.toString());
     }
+  }
+
+  Future<Map<String, dynamic>> updateProfileWithImage(
+      UpdateProfile user, File? image) async {
+    SharedPreferencesService? instance =
+        await SharedPreferencesService.getInstance();
+
+    final Map<String, String> data = <String, String>{};
+    data['f_name'] = user.fName.toString();
+    data['l_name'] = user.lName.toString();
+    data['email'] = user.email.toString();
+    data['phone'] = user.phone.toString();
+    data['pan'] = user.pan.toString();
+    data['gst'] = user.gst.toString();
+    data['msme'] = user.msme.toString();
+    data['address'] = user.address.toString();
+    data['address'] = user.address.toString();
+    // data['password'] = user.fName.toString();
+    data['_method'] = "PUT";
+
+    String token = instance.getData(SharedPreferencesService.kTokenKey);
+    optionsNetwork.headers!['Authorization'] = "Bearer $token";
+    log("message Token $token");
+    log("message Token AAAAAAAAAAAAAAAAAAAAAA ${token == "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiMTZhMTVhMDQ1ZjdlMDc5NGQ5M2E1ZGFhNTY4MmVhNDI2M2UxZGEwMGJmOGQ2NzgzYjdiZmI3NzZiNGJlZGY3MmZiY2MwN2E0YWI2Y2IyZGQiLCJpYXQiOjE3MjI2ODQ4ODYuMDMxMjQ4MDkyNjUxMzY3MTg3NSwibmJmIjoxNzIyNjg0ODg2LjAzMTI1LCJleHAiOjE3NTQyMjA4ODYuMDI3ODczOTkyOTE5OTIxODc1LCJzdWIiOiI3NyIsInNjb3BlcyI6W119.gs55hbe_pkoF0uOT6RWbr2_dtIm_ZzxagKZlqFyigKRHHTXtVdcPsZPAJh8XHrnifklrpHORyYrybGmcAa-sG5xrjx5aVvvBwzBLoOG0CPDrQckFNlOlMsPuZ91koS55Dz0nwit1-8S2XIP5nreQysljXenA9SkzHC9AyayfDdjnD0XiQ0oRQxaZEFcC9SnoDozxO7yLnr6jnAPcZwUMoIyysrwK1lidKSKto5F0S54rYTChzsowQBIZOWFvKimEflV56EsgC8yY_xYYIiHweyC0WI-nj7kHKwdXZYcU-AWeacJ9Izhnp1JvNAFywxysOgcGnGwbrykU1ny0w0eFaSjXtsV5QFFViQdOBWCJuyc1jZeeho9oJC3JZMI54QCv7QeWEF1VhfEkQcgziGiBVYwYHYJ1GAQkf1-PxC-HNUYBwx87wPK6LUtmGH7TktUcIHSxkM4OMmIvllCjX5GORCkshslwRRChScd8wuxF8Y5mkCyBiYag_ZDeqWBtR3Jc9HFCVuTInWtbwR2YSUbX-gNrLV2OGvWUW4wlFEAy0YeTn6LcdXz2WcIAizbtxf-cVuXNaTEA5Q4zWEVyu3pOBGMWbtXPnmLKtiojmoGss8W15zBanwHgX7DAekjf5X_CqS5AstdaurGRZqEhwjIDmxc12XpYe3rtRPIpc6XYSCM"}");
+    var response = await httpClient.postAPICallCompleteTest(
+        Uri.parse('${AppConstants.baseUrl}${ApiConstants.UPDATEPROFILE}'),
+        data,
+        token,
+        testImages: image);
+    log("message getProfile $response");
+
+    print("getProfile ${response.toString()} ");
+
+    return response;
   }
 
   Future<Map<String, dynamic>> getVehicleType() async {
@@ -528,7 +566,7 @@ class LaravelApiClient extends GetxService with ApiClient {
 
     Map data = {
       "service_id": "$service_id",
-      "service_type": "Door Step",
+      "service_type": "$service_type",
       "slot_id": "$slot_id",
       "date": "$date",
       "asset_id": "",
@@ -690,9 +728,9 @@ class LaravelApiClient extends GetxService with ApiClient {
   }
 
   Future<Map<String, dynamic>> submitReview(
-      String type, String comment, String orderID,double rating) async {
+      String type, String comment, String orderID, double rating) async {
     Map data = {
-      'product_id':'',
+      'product_id': '',
       "type": "$type",
       "comment": "$comment",
       "rating": "$rating",
@@ -709,8 +747,7 @@ class LaravelApiClient extends GetxService with ApiClient {
       options: optionsNetwork,
     );
     if (response.statusCode == 200) {
-      Fluttertoast.showToast(
-          msg: "${response.data['message']}");
+      Fluttertoast.showToast(msg: "${response.data['message']}");
       print("userRegister ${response.toString()} ");
 
       return json.decode(response.toString());
@@ -725,6 +762,7 @@ class LaravelApiClient extends GetxService with ApiClient {
 
     String token = instance.getData(SharedPreferencesService.kTokenKey);
     optionsNetwork.headers!['Authorization'] = "Bearer $token";
+    log("messagePPPP$token");
     var response = await httpClient.get(
       ApiConstants.offers,
       options: optionsNetwork,
@@ -744,6 +782,7 @@ class LaravelApiClient extends GetxService with ApiClient {
 
     String token = instance.getData(SharedPreferencesService.kTokenKey);
     optionsNetwork.headers!['Authorization'] = "Bearer $token";
+    log("getData $token");
     var response = await httpClient.get(
       ApiConstants.assetsList,
       options: optionsNetwork,
@@ -826,6 +865,31 @@ class LaravelApiClient extends GetxService with ApiClient {
     }
   }
 
+  Future<Map<String, dynamic>> delete(
+    String id,
+  ) async {
+    Map data = {
+      "address_id": "$id",
+    };
+    SharedPreferencesService? instance =
+        await SharedPreferencesService.getInstance();
+
+    String token = instance.getData(SharedPreferencesService.kTokenKey);
+    optionsNetwork.headers!['Authorization'] = "Bearer $token";
+    var response = await httpClient.deleteUri(
+      data: data,
+      Uri.parse(ApiConstants.DeleteAddress),
+      options: optionsNetwork,
+    );
+    if (response.statusCode == 200) {
+      print("userRegister ${response.toString()} ");
+      getAddress();
+      return json.decode(response.toString());
+    } else {
+      return json.decode(response.toString());
+    }
+  }
+
   Future<Map<String, dynamic>> submitInsurance(
       String vehicle_number, String name, String email, String mobile) async {
     SharedPreferencesService? instance =
@@ -887,19 +951,20 @@ class LaravelApiClient extends GetxService with ApiClient {
     SharedPreferencesService? instance =
         await SharedPreferencesService.getInstance();
 
+    Map data = {
+      "id": "$id",
+      "asset_type": "$asset_type",
+      "name": "$name",
+      "capacity": "$capacity",
+      "fuel_capacity": "$fuel_capacity"
+    };
+
+    log("Update $data");
     String token = instance.getData(SharedPreferencesService.kTokenKey);
     optionsNetwork.headers!['Authorization'] = "Bearer $token";
     var response = await httpClient.put(
       ApiConstants.updateAsset,
-      data: {
-        "id": "$id",
-        "asset_type": "$asset_type",
-        // "phone": "$emailPhone",
-        "name": "$name",
-        // "guest_id": "$membNo"
-        "capacity": "$capacity",
-        "fuel_capacity": "$fuel_capacity"
-      },
+      data: data,
       options: optionsNetwork,
     );
     if (response.statusCode == 200) {

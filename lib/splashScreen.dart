@@ -20,6 +20,8 @@ class SplashScreen extends StatefulWidget {
 SettingModel? configModel;
 String categoryId = "";
 String? address;
+String? fName;
+String? Phone;
 String? latitude;
 String? longitude;
 

@@ -150,6 +150,14 @@ class _SignUpState extends State<SignUp> {
                                         Fluttertoast.showToast(
                                             msg:
                                                 "Please select privacy and terms & condition");
+                                        return;
+                                      }
+                                      if (panController.text.isNotEmpty &&
+                                          panController.text.length < 10) {
+                                        Fluttertoast.showToast(
+                                            msg:
+                                                "Please enter pan number of 10");
+                                        return;
                                       }
                                       if (_formKeyReset!.currentState!
                                           .validate()) {
@@ -199,7 +207,7 @@ class _SignUpState extends State<SignUp> {
                                         });
                                       }
                                     },
-                                    child: const MyButton(text: "Sign Up"));
+                                    child: MyButton(text: "Sign Up".tr));
                           });
                         }),
                     const SizedBox(height: 40),
@@ -285,6 +293,7 @@ class _SignUpState extends State<SignUp> {
         ),
         const SizedBox(height: 15),
         MyTextField(
+          maxLenth: 16,
           validator: (value) => null,
           controller: gstController,
           labelText: const Text("Gst Number (optional)"),
@@ -298,12 +307,15 @@ class _SignUpState extends State<SignUp> {
         ),
         const SizedBox(height: 15),
         MyTextField(
-          validator: (value) => Validator.validateWithhint(value, "Pan No."),
+          maxLenth: 10,
+          // validator: (value) => Validator.validateWithhint(value, "Pan No."),
+          validator: (value) => null,
           controller: panController,
-          labelText: const Text("Pan No."),
+          labelText: const Text("Pan No.(Optional)"),
         ),
         const SizedBox(height: 15),
         MyTextField(
+          maxLenth: 12,
           validator: (value) => null,
           controller: msmeController,
           labelText: const Text("MSME No.(optional)"),
@@ -313,7 +325,7 @@ class _SignUpState extends State<SignUp> {
           validator: (value) => Validator.validatePassword(value),
           isPassword: true,
           controller: passwordController,
-          labelText: const Text("Password"),
+          labelText: Text("Password".tr),
         ),
         const SizedBox(height: 15),
         MyTextField(
@@ -321,7 +333,7 @@ class _SignUpState extends State<SignUp> {
               Validator.validateConfirmPassword(value, passwordController.text),
           isPassword: true,
           controller: confirmpasswordController,
-          labelText: const Text("Confirm Password"),
+          labelText: Text("Confirm Password".tr),
         ),
       ],
     );
@@ -352,6 +364,7 @@ class _SignUpState extends State<SignUp> {
         ),
         const SizedBox(height: 15),
         MyTextField(
+          maxLenth: 16,
           validator: (value) => null,
           controller: gstController,
           labelText: const Text("Gst Number (optional)"),

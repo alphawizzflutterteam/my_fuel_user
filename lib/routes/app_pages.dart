@@ -13,6 +13,7 @@ import 'package:test_prj/routes/bindings/inial_binding.dart';
 import 'package:test_prj/splashScreen.dart';
 
 import '../Home/Genset_checkOut.dart';
+import '../Home/checkout_car_service.dart';
 import '../Home/fuel_on_tab.dart';
 import '../Home/fuel_ontab_checkout.dart';
 import '../authPages/register_complete.dart';
@@ -43,7 +44,7 @@ class AppPages {
     ),
     GetPage(
       name: Routes.HOME,
-      page: () => const Home(),
+      page: () => Home(),
       binding: InitialBinding(),
     ),
     GetPage(
@@ -89,6 +90,11 @@ class AppPages {
     GetPage(
       name: Routes.orderFuelCheckout,
       page: () => OrderFuelCheckOut(),
+      binding: InitialBinding(),
+    ),
+    GetPage(
+      name: Routes.CarCheckout,
+      page: () => Checkout_Car_Service(),
       binding: InitialBinding(),
     ),
 //     GetPage(name: Routes.ROOT, page: () => RootView(), binding: RootBinding(), middlewares: [AuthMiddleware(), SalonOwnerMiddleware()]),

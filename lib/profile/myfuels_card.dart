@@ -11,6 +11,8 @@ import 'package:test_prj/helper/utils/validator_all.dart';
 import 'package:test_prj/payment/paymentScreen.dart';
 
 import '../controller/cart_controller.dart';
+import '../orderfuel/doorStepDelivery/controller/orde_fuel_checkout_controller.dart';
+import '../service/paymnet_service/cashFree_pay.dart';
 
 class MyFuelsCard extends StatefulWidget {
   const MyFuelsCard({super.key});
@@ -22,6 +24,8 @@ class MyFuelsCard extends StatefulWidget {
 class _MyFuelsCardState extends State<MyFuelsCard> {
   Razorpay? razorpay;
   int? pricerazorpayy;
+  // OrderFuelCheckoutController orderFuelCheckoutController =
+  //     Get.put(OrderFuelCheckoutController());
   @override
   void initState() {
     // TODO: implement initState
@@ -35,7 +39,7 @@ class _MyFuelsCardState extends State<MyFuelsCard> {
   }
 
   String amountA = "0";
-
+  String paymentId = "";
   void _showEnterAmountDialog(BuildContext context) {
     final TextEditingController _amountController = TextEditingController();
 
@@ -43,11 +47,11 @@ class _MyFuelsCardState extends State<MyFuelsCard> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Enter Amount'),
+          title: Text('Enter Amount'.tr),
           content: TextField(
             controller: _amountController,
             decoration: InputDecoration(
-              labelText: 'Amount',
+              labelText: 'Amount'.tr,
               prefixText: '${AppConstants.currencySymbol}',
               border: OutlineInputBorder(),
             ),
@@ -58,35 +62,83 @@ class _MyFuelsCardState extends State<MyFuelsCard> {
               onPressed: () {
                 Navigator.of(context).pop(); // Close the dialog
               },
-              child: Text('Cancel'),
+              child: Text('Cancel'.tr),
             ),
-            TextButton(
-              onPressed: () async {
-                String amountText = _amountController.text;
-                if (amountText.isNotEmpty) {
-                  double? amount = double.tryParse(amountText);
-                  amountA = amount.toString();
-                  if (amount != null && amount > 0) {
-                    Navigator.of(context).pop();
-                    // Close dialog
-                    openCheckout(amountA);
-                    // Get.back();
-                    // Navigate to the second screen and wait for a result
+            GetBuilder<ProfileController>(
+                init: ProfileController(),
+                builder: (profileController) {
+                  return TextButton(
+                    onPressed: () async {
+                      String amountText = _amountController.text;
+                      if (amountText.isNotEmpty) {
+                        double? amount = double.tryParse(amountText);
+                        amountA = amount.toString();
+                        if (amount != null && amount > 0) {
+                          Navigator.of(context).pop();
 
-                    // If valid amount, show a confirmation message
-                    // // Close the dialog
-                    // _showConfirmationDialog(context, amount);
-                  } else {
-                    // Show error if amount is invalid
-                    // _showErrorDialog(context, 'Please enter a valid amount.');
-                  }
-                } else {
-                  // Show error if amount is empty
-                  // _showErrorDialog(context, 'Please enter an amount.');
-                }
-              },
-              child: Text('OK'),
-            ),
+                          profileController
+                              .cashFree(
+                                  profileController.userInfoModel.value.fName
+                                      .toString(),
+                                  profileController.userInfoModel.value.email
+                                      .toString(),
+                                  profileController.userInfoModel.value.phone
+                                      .toString(),
+                                  amountText.toString().replaceAll(",", "") ??
+                                      '100',
+                                  profileController.userInfoModel.value.id
+                                      .toString())
+                              .then((value) {
+                            if (value['status'] == true) {
+                              paymentId = value['data']['response']['order_id'];
+                              Fluttertoast.showToast(
+                                  msg: "Please wait for payment");
+                              CashFreeHelper cashFreeHelper = CashFreeHelper(
+                                value['data']['response']['order_id'],
+                                context,
+                                value['data']['response']['payment_session_id'],
+                                (value) {
+                                  if (value != "error") {
+                                    WalletController controller = Get.find();
+                                    controller
+                                        .addMoney("${amountA.toString()}",
+                                            "${paymentId}", "razorpay")
+                                        .then((value) {
+                                      Get.back();
+                                      Navigator.pop(context);
+                                    });
+                                  } else {
+                                    Fluttertoast.showToast(
+                                        msg: 'Something went wrong');
+                                  }
+                                },
+                              );
+                              cashFreeHelper.init();
+                            } else {
+                              Fluttertoast.showToast(msg: value['message']);
+                            }
+                          });
+
+                          // Close dialog
+                          // openCheckout(amountA);
+                          // Get.back();
+                          // Navigate to the second screen and wait for a result
+
+                          // If valid amount, show a confirmation message
+                          // // Close the dialog
+                          // _showConfirmationDialog(context, amount);
+                        } else {
+                          // Show error if amount is invalid
+                          // _showErrorDialog(context, 'Please enter a valid amount.');
+                        }
+                      } else {
+                        // Show error if amount is empty
+                        // _showErrorDialog(context, 'Please enter an amount.');
+                      }
+                    },
+                    child: Text('OK'.tr),
+                  );
+                }),
           ],
         );
       },
@@ -113,30 +165,29 @@ class _MyFuelsCardState extends State<MyFuelsCard> {
 
   Future<void> handlePaymentSuccess(PaymentSuccessResponse response) async {
     Fluttertoast.showToast(msg: "Payment successfully");
+// Get.offAll(
+    //   OrderPlaced(
+    //     isFromFuelOnTap: true,
+    //     amount: "${controller.checkOutModel.value.total}",
+    //   ),
+    // );
 
+    // Navigator.pushReplacement(
+    //   navigatorKey.currentState!.context!,
+    //   MaterialPageRoute(
+    //     builder: (context) => OrderPlaced(
+    //       isFromFuelOnTap: true,
+    //       amount: "${controller.checkOutModel.value.total}",
+    //     ),
+    //   ),
+    // );
+    // Navigator.push(context,
+    //     MaterialPageRoute(builder: (context) => const PaymentScreenTree()));
     WalletController controller = Get.find();
     controller
         .addMoney("$amountA", "${response.paymentId}", "razorpay")
         .then((value) {
       Get.back();
-      // Get.offAll(
-      //   OrderPlaced(
-      //     isFromFuelOnTap: true,
-      //     amount: "${controller.checkOutModel.value.total}",
-      //   ),
-      // );
-
-      // Navigator.pushReplacement(
-      //   navigatorKey.currentState!.context!,
-      //   MaterialPageRoute(
-      //     builder: (context) => OrderPlaced(
-      //       isFromFuelOnTap: true,
-      //       amount: "${controller.checkOutModel.value.total}",
-      //     ),
-      //   ),
-      // );
-      // Navigator.push(context,
-      //     MaterialPageRoute(builder: (context) => const PaymentScreenTree()));
     });
 
     Navigator.pop(context);
@@ -341,7 +392,7 @@ class _MyFuelsCardState extends State<MyFuelsCard> {
                                                                   .start,
                                                           children: [
                                                             Text(
-                                                              "#${controller.listView![index].id}",
+                                                              "#ID${controller.listView![index].id}",
                                                               style: TextStyle(
                                                                 fontSize: 16,
                                                                 fontWeight:
@@ -363,9 +414,21 @@ class _MyFuelsCardState extends State<MyFuelsCard> {
                                                       ],
                                                     ),
                                                     Text(
-                                                      "+₹${controller.listView![index].balance}",
+                                                      controller
+                                                                  .listView![
+                                                                      index]
+                                                                  .debit !=
+                                                              0
+                                                          ? "-₹${controller.listView![index].debit}"
+                                                          : "+₹${controller.listView![index].credit}",
                                                       style: TextStyle(
-                                                        color: Colors.green,
+                                                        color: controller
+                                                                    .listView![
+                                                                        index]
+                                                                    .debit !=
+                                                                0
+                                                            ? Colors.red
+                                                            : Colors.green,
                                                         fontSize: 20,
                                                         fontWeight:
                                                             FontWeight.w700,

@@ -96,13 +96,14 @@ class CarServiceController extends AppBaseController {
   Future<void> getVehicleModel(String id) async {
     vehicleModelList = <VehicleModelData>[].obs;
     vehicleModelList!.clear();
+    VehicleModelData v = VehicleModelData(name: "Select Vehicle Model");
+
+    vehicleModelList!.value.add(v);
     isLoading(true);
     Map<String, dynamic> data = await _laravelApiClient.getVehicleModel(id);
     isLoading(false);
     vehicleModel(VehicleModel.fromJson(data));
-    VehicleModelData v = VehicleModelData(name: "Select Vehicle Model");
 
-    vehicleModelList!.value.add(v);
     vehicleModelList!.value.addAll(vehicleModel.value.data!);
     selectedService.value = vehicleModelList!.value[0];
     selectModel.value = vehicleModelList!.value[0];

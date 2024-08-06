@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
 import 'package:test_prj/components/widgets/globle_widgets.dart';
 import 'package:test_prj/orderfuel/EV/checkout_page.dart';
 
@@ -12,6 +13,7 @@ import '../data/model/VendorServiceProductModel.dart';
 import '../helper/colors.dart';
 import '../helper/utils/validator_all.dart';
 import '../home_page.dart';
+import '../routes/app_routes.dart';
 import '../splashScreen.dart';
 
 class Carwashdetails extends StatefulWidget {
@@ -57,10 +59,11 @@ class _CarwashdetailsState extends State<Carwashdetails> {
               return;
             }
 
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => Checkout_Car_Service()));
+            Get.toNamed(Routes.CarCheckout);
+            // Navigator.push(
+            //     context,
+            //     MaterialPageRoute(
+            //         builder: (context) => Checkout_Car_Service()));
             // var data = await Navigator.push(
             //     context,
             //     MaterialPageRoute(
@@ -225,7 +228,7 @@ class _CarwashdetailsState extends State<Carwashdetails> {
                                       ),
                                       SizedBox(width: 5),
                                       Text(
-                                        '2.2',
+                                        '0.0',
                                         style: TextStyle(
                                           color: Colors.white,
                                         ),
@@ -435,7 +438,7 @@ class _CarwashdetailsState extends State<Carwashdetails> {
                             Padding(
                               padding: const EdgeInsets.only(right: 65),
                               child: Text(
-                                "2.2",
+                                "0.0",
                                 style: TextStyle(
                                   fontSize: 40,
                                   fontWeight: FontWeight.bold,
@@ -449,14 +452,17 @@ class _CarwashdetailsState extends State<Carwashdetails> {
                                 minRating: 1,
                                 direction: Axis.horizontal,
                                 itemCount: 5,
+
                                 itemSize: 22, // Reduced size
                                 itemBuilder: (context, _) => Icon(
                                   Icons.star,
                                   color: Colors.amber,
                                 ),
-                                onRatingUpdate: (rating) {
-                                  print(rating);
-                                },
+
+                                onRatingUpdate: (double value) {},
+                                // {
+                                //   print(rating);
+                                // },
                               ),
                             ),
                             SizedBox(
@@ -656,25 +662,27 @@ class _CarwashdetailsState extends State<Carwashdetails> {
                                             ),
                                           ],
                                         ),
-                                        RatingBar.builder(
-                                          initialRating: double.parse(widget
-                                              .sellerData!
-                                              .reviews![index]
-                                              .rating
-                                              .toString()),
-                                          minRating: 2,
-                                          direction: Axis.horizontal,
-                                          itemSize: 22,
-                                          itemCount: 5,
-                                          itemPadding: EdgeInsets.symmetric(
-                                              horizontal: 0.0),
-                                          itemBuilder: (context, _) => Icon(
-                                            Icons.star,
-                                            color: Colors.amber,
+                                        IgnorePointer(
+                                          child: RatingBar.builder(
+                                            initialRating: double.parse(widget
+                                                .sellerData!
+                                                .reviews![index]
+                                                .rating
+                                                .toString()),
+                                            minRating: 2,
+                                            direction: Axis.horizontal,
+                                            itemSize: 22,
+                                            itemCount: 5,
+                                            itemPadding: EdgeInsets.symmetric(
+                                                horizontal: 0.0),
+                                            itemBuilder: (context, _) => Icon(
+                                              Icons.star,
+                                              color: Colors.amber,
+                                            ),
+                                            onRatingUpdate: (rating) {
+                                              print(rating);
+                                            },
                                           ),
-                                          onRatingUpdate: (rating) {
-                                            print(rating);
-                                          },
                                         ),
                                       ],
                                     ),
@@ -936,6 +944,10 @@ class _CarwashdetailsState extends State<Carwashdetails> {
                 // )
               ],
             ),
+
+            SizedBox(
+              height: 60,
+            )
           ],
         ),
       ),

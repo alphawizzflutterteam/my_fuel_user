@@ -20,6 +20,11 @@ class OrderFuelCheckoutController extends AppBaseController {
   String? vendorId;
   Map? data;
 
+  /// Check
+  /// Payment id and Order id
+  String paymentId = "";
+  String orderId = "";
+
   @override
   void onInit() {
     // TODO: implement onInit
@@ -94,6 +99,23 @@ class OrderFuelCheckoutController extends AppBaseController {
     }
 
     isLoading.value = false;
+  }
+
+  Future<Map> cashFree(String name, String email, String mobile, String amount,
+      String id) async {
+    isLoading(true);
+    Map response =
+        await orderFuelRepo.getPaymentId(name, email, mobile, amount, id);
+    isLoading(false);
+    if (response['status']) {
+      // Get.to(OrderPlaced(
+      //   amount: response['message'],
+      //   order_id: "${response['order_id']}",
+      // ));
+    }
+
+    isLoading.value = false;
+    return response;
   }
 
   Future<void> getOrderFuelCheckoutForEvData() async {

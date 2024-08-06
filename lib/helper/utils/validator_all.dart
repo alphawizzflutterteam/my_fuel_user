@@ -34,6 +34,15 @@ class Validator {
     return null;
   }
 
+  static String? validatePincodeWithhint(String? value, String hint) {
+    if (value!.isEmpty) {
+      return 'Please enter an $hint';
+    } else if (value!.length < 6) {
+      return 'Please enter 6 digit $hint';
+    }
+    return null;
+  }
+
   static String? validateAddress(String? value) {
     if (value!.isEmpty) {
       return 'Please enter an address';
@@ -52,7 +61,7 @@ class Validator {
 
   static String? validateConfirmPassword(String? value, String password) {
     if (value!.isEmpty) {
-      return 'Please enter an password';
+      return 'Please enter an confirm password';
     } else if (value != password) {
       return 'Password does not match';
     }

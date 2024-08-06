@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:test_prj/components/my_button.dart';
 import 'package:test_prj/components/my_hinttext_field.dart';
 import 'package:test_prj/helper/utils/extentions.dart';
@@ -29,17 +30,18 @@ class _FueladdQuantityState extends State<FueladdQuantity> {
             const SizedBox(
               height: 10,
             ),
-            const Text(
-              'Add Fuel Quantity',
+            Text(
+              'Add Fuel Quantity'.tr,
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.w500),
             ),
             const SizedBox(
               height: 40,
             ),
             TextFormField(
+                keyboardType: TextInputType.number,
                 controller: widget.controller,
-                decoration:
-                    CustomInputDecoration.inputDecoration('Add Fuel Quantity')),
+                decoration: CustomInputDecoration.inputDecoration(
+                    'Add Fuel Quantity'.tr)),
             const SizedBox(
               height: 40,
             ),
@@ -54,7 +56,7 @@ class _FueladdQuantityState extends State<FueladdQuantity> {
                 onTap: widget.ontab,
                 child: Container(
                   child: MyButton(
-                    text: "Add Quantity",
+                    text: "Add Quantity".tr,
                   ),
                 ),
               ),

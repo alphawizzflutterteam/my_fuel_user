@@ -10,6 +10,7 @@ import 'package:test_prj/components/my_button.dart';
 import 'package:test_prj/components/my_textfield.dart';
 
 import '../controller/forget_controller.dart';
+import '../helper/utils/validator_all.dart';
 
 class CreatePasswordPage extends StatefulWidget {
   CreatePasswordPage({super.key});
@@ -117,76 +118,89 @@ class _CreatePasswordPageState extends State<CreatePasswordPage> {
                                     ),
                                   ),
                                   SizedBox(height: 20),
-                                  SizedBox(
-                                    height: 56,
-                                    child: TextFormField(
-                                      controller: password,
-                                      validator: (value) {
-                                        if (value == null || value.isEmpty) {
-                                          return 'Please enter New Password';
-                                        } else if (value.length < 6) {
-                                          return 'Please enter New Password of 6 character';
-                                        }
-                                        return null;
-                                      },
-                                      decoration: InputDecoration(
-                                        prefixIcon:
-                                            Icon(Icons.person_2_outlined),
-                                        label: Text('Create New Password'),
-                                        labelStyle: TextStyle(
-                                            color: Colors.grey.shade700),
-                                        enabled: true,
-                                        enabledBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                                color: Colors.grey.shade200),
-                                            borderRadius:
-                                                BorderRadius.circular(8)),
-                                        focusedBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                                color: Colors.grey.shade700),
-                                            borderRadius:
-                                                BorderRadius.circular(8)),
-                                      ),
-                                    ),
+                                  MyTextField(
+                                    isPassword: true,
+                                    labelText: Text('Create New Password'),
+                                    controller: password,
+                                    validator: (value) =>
+                                        Validator.validatePassword(value),
                                   ),
+                                  // TextFormField(
+                                  //   controller: password,
+                                  //   validator: (value) {
+                                  //     if (value == null || value.isEmpty) {
+                                  //       return 'Please enter New Password';
+                                  //     } else if (value.length < 6) {
+                                  //       return 'Please enter New Password of 6 character';
+                                  //     }
+                                  //     return null;
+                                  //   },
+                                  //   decoration: InputDecoration(
+                                  //     prefixIcon:
+                                  //         Icon(Icons.person_2_outlined),
+                                  //     label: Text('Create New Password'.tr),
+                                  //     labelStyle: TextStyle(
+                                  //         color: Colors.grey.shade700),
+                                  //     enabled: true,
+                                  //     enabledBorder: OutlineInputBorder(
+                                  //         borderSide: BorderSide(
+                                  //             color: Colors.grey.shade200),
+                                  //         borderRadius:
+                                  //             BorderRadius.circular(8)),
+                                  //     focusedBorder: OutlineInputBorder(
+                                  //         borderSide: BorderSide(
+                                  //             color: Colors.grey.shade700),
+                                  //         borderRadius:
+                                  //             BorderRadius.circular(8)),
+                                  //   ),
+                                  // ),
                                   // MyTextField(
                                   //   labelText: Text("Create New Password"),
                                   // ),
                                   SizedBox(height: 20),
-                                  SizedBox(
-                                    height: 56,
-                                    child: TextFormField(
-                                      controller: confirmpassword,
-                                      validator: (value) {
-                                        if (value == null || value.isEmpty) {
-                                          return 'Please enter Confirm Password';
-                                        } else if (value.length < 6) {
-                                          return 'Please enter New Password of 6 character';
-                                        } else if (value !=
-                                            password.text.toString()) {
-                                          return 'Please enter New Password and conform password same';
-                                        }
-                                        return null;
-                                      },
-                                      decoration: InputDecoration(
-                                        prefixIcon: Icon(Icons.lock_open_sharp),
-                                        label: Text('Confirm Password'),
-                                        labelStyle: TextStyle(
-                                            color: Colors.grey.shade700),
-                                        enabled: true,
-                                        enabledBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                                color: Colors.grey.shade200),
-                                            borderRadius:
-                                                BorderRadius.circular(8)),
-                                        focusedBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                                color: Colors.grey.shade700),
-                                            borderRadius:
-                                                BorderRadius.circular(8)),
-                                      ),
-                                    ),
+                                  const SizedBox(height: 15),
+                                  MyTextField(
+                                    validator: (value) =>
+                                        Validator.validateConfirmPassword(
+                                            value, password.text),
+                                    isPassword: true,
+                                    controller: confirmpassword,
+                                    labelText: Text("Confirm Password".tr),
                                   ),
+                                  // SizedBox(
+                                  //   height: 56,
+                                  //   child: TextFormField(
+                                  //     controller: confirmpassword,
+                                  //     validator: (value) {
+                                  //       if (value == null || value.isEmpty) {
+                                  //         return 'Please enter Confirm Password';
+                                  //       } else if (value.length < 6) {
+                                  //         return 'Please enter New Password of 6 character';
+                                  //       } else if (value !=
+                                  //           password.text.toString()) {
+                                  //         return 'Please enter New Password and conform password same';
+                                  //       }
+                                  //       return null;
+                                  //     },
+                                  //     decoration: InputDecoration(
+                                  //       prefixIcon: Icon(Icons.lock_open_sharp),
+                                  //       label: Text('Confirm Password'.tr),
+                                  //       labelStyle: TextStyle(
+                                  //           color: Colors.grey.shade700),
+                                  //       enabled: true,
+                                  //       enabledBorder: OutlineInputBorder(
+                                  //           borderSide: BorderSide(
+                                  //               color: Colors.grey.shade200),
+                                  //           borderRadius:
+                                  //               BorderRadius.circular(8)),
+                                  //       focusedBorder: OutlineInputBorder(
+                                  //           borderSide: BorderSide(
+                                  //               color: Colors.grey.shade700),
+                                  //           borderRadius:
+                                  //               BorderRadius.circular(8)),
+                                  //     ),
+                                  //   ),
+                                  // ),
                                   //
                                   // MyTextField(
                                   //   labelText: Text("Confirm Password"),
@@ -221,7 +235,8 @@ class _CreatePasswordPageState extends State<CreatePasswordPage> {
                                       //     MaterialPageRoute(
                                       //       builder: (context) => LoginPage(),
                                       //     )),
-                                      child: MyButton(text: "Create Password")),
+                                      child:
+                                          MyButton(text: "Create Password".tr)),
                                   SizedBox(height: 30),
                                 ],
                               ),

@@ -13,25 +13,21 @@ class PrivacyolicyScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     print(" Data Show ${configModel!.privacyPolicy}");
-    return GetBuilder<SplashController>(
-        init: SplashController(),
-        builder: (controller) {
-          return Scaffold(
-            body: SingleChildScrollView(
-              child: Column(
-                children: [
-                  const MyAppbar(title: 'Privacy Policy'),
-                  Html(
-                    // data: htmlContent,
-                    data: '''
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            MyAppbar(title: 'Privacy Policy'.tr),
+            Html(
+              // data: htmlContent,
+              data: '''
                     <!DOCTYPE html> ${configModel!.privacyPolicy} </html>
     ''',
-                  )
-                ],
-              ),
-            ),
-          );
-        });
+            )
+          ],
+        ),
+      ),
+    );
   }
 
   String htmlContent = '''

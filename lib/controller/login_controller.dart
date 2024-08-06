@@ -26,11 +26,12 @@ class LoginController extends AppBaseController {
 
     Map<String, dynamic> value =
         await _laravelApiClient.Login(membNo, emailPhone, password);
+
+    log('dsdsdsds ${value}');
     if (value.containsKey("errors")) {
       var data = value['errors'][0]['message'];
       Fluttertoast.showToast(msg: "${data}");
     } else if (value['token'] != null) {}
-    log('dsdsdsds ${value}');
 
     isLoading(false);
     return value;

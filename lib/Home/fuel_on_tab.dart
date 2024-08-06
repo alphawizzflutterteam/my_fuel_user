@@ -32,7 +32,8 @@ class _FuelOnTabScreenState extends State<FuelOnTabScreen> {
   void didChangeDependencies() {
     // TODO: implement didChangeDependencies
     super.didChangeDependencies();
-    HomeController homeController = Get.find();
+    // HomeController homeController = Get.find();
+    HomeController homeController = Get.put(HomeController());
     print("object categoryId ${categoryId}");
     homeController.getServiceDetails(categoryId.toString());
   }
@@ -44,7 +45,7 @@ class _FuelOnTabScreenState extends State<FuelOnTabScreen> {
         builder: (homeController) {
           return Scaffold(
             appBar: MyAppFinalbar(
-              title: 'Fuel On Tab',
+              title: 'Fuel On Tab'.tr,
             ),
             floatingActionButton: GetBuilder<CartController>(
                 init: CartController(),
@@ -72,7 +73,7 @@ class _FuelOnTabScreenState extends State<FuelOnTabScreen> {
                           },
                           child: Padding(
                             padding: const EdgeInsets.only(left: 25.0),
-                            child: MyButton(text: 'Next'),
+                            child: MyButton(text: 'Next'.tr),
                           ),
                         ));
                 }),

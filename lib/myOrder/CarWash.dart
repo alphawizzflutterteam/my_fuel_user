@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:get/get.dart';
 import 'package:test_prj/carwash_vendordet.dart';
 import 'package:test_prj/myOrder/CarWash.dart';
 import 'package:test_prj/myOrder/myOrder.dart';
@@ -140,7 +141,7 @@ class _CarWashState extends State<CarWash> {
                                                   BorderRadius.circular(12),
                                               borderSide: BorderSide.none,
                                             ),
-                                            hintText: "Search"),
+                                            hintText: "Search".tr),
                                       ),
                                     ),
                                   ),

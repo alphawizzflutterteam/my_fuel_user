@@ -6,6 +6,7 @@ import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:test_prj/Home/editprofile.dart';
 import 'package:test_prj/authPages/language_page.dart';
+import 'package:test_prj/components/widgets/globle_widgets.dart';
 import 'package:test_prj/controller/profile_controller.dart';
 import 'package:test_prj/profile/ContactUs.dart';
 import 'package:test_prj/profile/My_Address.dart';
@@ -151,8 +152,20 @@ class ProfilePageState extends State<ProfilePage> {
                                                   null &&
                                               controller.userInfoModel.value !=
                                                   null
-                                          ? Image.asset("assets/profile.png",
-                                              height: 68)
+                                          ? ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              child: Image.network(
+                                                height: 68,
+                                                width: 68,
+                                                fit: BoxFit.fill,
+                                                "${configModel?.baseUrls?.customerImageUrl}/${Get.find<ProfileController>().userInfoModel?.value.image}",
+                                                errorBuilder: (context, error,
+                                                    stackTrace) {
+                                                  return errorImage(68, 68);
+                                                },
+                                              ),
+                                            )
                                           : Image.asset("assets/profile.png",
                                               height: 68)),
                                       Padding(
@@ -183,23 +196,26 @@ class ProfilePageState extends State<ProfilePage> {
                                                       ),
                                                     ),
                                                   )
-                                                : Text(
-                                                    controller.userInfoModel !=
-                                                                null &&
-                                                            controller
-                                                                    .userInfoModel
-                                                                    .value !=
-                                                                null
-                                                        ? controller
-                                                            .userInfoModel
-                                                            .value
-                                                            .name
-                                                            .toString()
-                                                        : "",
-                                                    style: TextStyle(
-                                                        fontSize: 20,
-                                                        fontWeight:
-                                                            FontWeight.w700),
+                                                : Container(
+                                                    width: 200,
+                                                    child: Text(
+                                                      controller.userInfoModel !=
+                                                                  null &&
+                                                              controller
+                                                                      .userInfoModel
+                                                                      .value !=
+                                                                  null
+                                                          ? controller
+                                                              .userInfoModel
+                                                              .value
+                                                              .name
+                                                              .toString()
+                                                          : "",
+                                                      style: TextStyle(
+                                                          fontSize: 20,
+                                                          fontWeight:
+                                                              FontWeight.w700),
+                                                    ),
                                                   )),
                                             Obx(() => controller
                                                         .isLoading.value ==
@@ -313,7 +329,7 @@ class ProfilePageState extends State<ProfilePage> {
                                             }),
                                         const Divider(),
                                         settingsCard(
-                                            title: "My Assets",
+                                            title: "My Assets".tr,
                                             onTap: () => Navigator.push(
                                                 context,
                                                 MaterialPageRoute(
@@ -371,7 +387,7 @@ class ProfilePageState extends State<ProfilePage> {
                                             }),
                                         const Divider(),
                                         settingsCard(
-                                            title: "FAQS",
+                                            title: "FAQS".tr,
                                             onTap: () {
                                               Navigator.push(
                                                   context,

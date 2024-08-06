@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
@@ -18,6 +19,7 @@ import 'package:test_prj/routes/app_routes.dart';
 import 'package:test_prj/service/provider/lavavel_provider.dart';
 
 import '../helper/utils/shared_preference.dart';
+import '../main.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -154,7 +156,7 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                           ],
                         ),
-                        const SizedBox(height: 20),
+                        const SizedBox(height: 10),
                         Obx(
                           () => controller.isLoading.value == true
                               ? const Center(child: CircularProgressIndicator())
@@ -162,7 +164,10 @@ class _LoginPageState extends State<LoginPage> {
                                   init: SignupController(),
                                   builder: (signUpController) {
                                     return GestureDetector(
-                                      onTap: () {
+                                      onTap: () async {
+                                        device_token = await FirebaseMessaging
+                                            .instance
+                                            .getToken();
                                         if (_formKey.currentState!.validate()) {
                                           controller
                                               .login(
@@ -173,11 +178,29 @@ class _LoginPageState extends State<LoginPage> {
                                                   passwordController.text
                                                       .toString())
                                               .then((value) async {
-                                            if (value.containsKey("errors")) {
-                                              var data =
-                                                  value['errors'][0]['message'];
-                                              Fluttertoast.showToast(
-                                                  msg: "${data}");
+                                            if (value.containsKey("token")) {
+                                              SharedPreferencesService?
+                                                  instance =
+                                                  await SharedPreferencesService
+                                                      .getInstance();
+                                              instance.saveData(
+                                                  SharedPreferencesService
+                                                      .kTokenKey,
+                                                  value['token'].toString());
+                                              await controller.box.write(
+                                                  AppConstants.token,
+                                                  value['token']);
+
+                                              ///Reintialize the DioClient
+                                              Get.find<OrderFuelRepo>()
+                                                  .updateHeaders(
+                                                      value['token']);
+
+                                              Navigator.pushReplacement(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          Home()));
                                             } else if (value.containsKey(
                                                 'temporary_token')) {
                                               String token =
@@ -247,7 +270,7 @@ class _LoginPageState extends State<LoginPage> {
                                     );
                                   }),
                         ),
-                        const SizedBox(height: 100),
+                        const SizedBox(height: 30),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -347,27 +370,28 @@ class _LoginPageState extends State<LoginPage> {
   Widget showBusiness() {
     return Column(
       children: [
-        SizedBox(
-          height: 56,
-          child: TextFormField(
-            controller: memberShipController,
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Please enter Membership No.';
-              }
-              return null;
-            },
-            decoration: InputDecoration(
-              label: Text('Membership No.'),
-              labelStyle: TextStyle(color: Colors.grey.shade700),
-              enabled: true,
-              enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.grey.shade200),
-                  borderRadius: BorderRadius.circular(8)),
-              focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.grey.shade700),
-                  borderRadius: BorderRadius.circular(8)),
-            ),
+        TextFormField(
+          controller: memberShipController,
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return 'Please enter Membership No.';
+            }
+            return null;
+          },
+          decoration: InputDecoration(
+            label: Text('Membership No.'),
+            labelStyle: TextStyle(color: Colors.grey.shade700),
+            enabled: true,
+            isDense: true,
+            border: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.grey.shade200),
+                borderRadius: BorderRadius.circular(8)),
+            enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.grey.shade200),
+                borderRadius: BorderRadius.circular(8)),
+            focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.grey.shade700),
+                borderRadius: BorderRadius.circular(8)),
           ),
         ),
         const SizedBox(height: 15),
@@ -377,7 +401,7 @@ class _LoginPageState extends State<LoginPage> {
             controller: phoneEmailController,
             validator: (value) {
               if (value == null || value.isEmpty) {
-                return 'Please enter User name';
+                return 'Please enter Phone No. Or Email';
               }
               return null;
             },
@@ -402,7 +426,7 @@ class _LoginPageState extends State<LoginPage> {
             controller: passwordController,
             validator: (value) {
               if (value == null || value.isEmpty) {
-                return 'Password';
+                return 'Please enter Password';
               }
               return null;
             },

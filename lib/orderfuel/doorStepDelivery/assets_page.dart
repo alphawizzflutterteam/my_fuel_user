@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:test_prj/components/my_appbar.dart';
 import 'package:test_prj/components/my_button.dart';
 import 'package:test_prj/components/my_button2.dart';
@@ -292,10 +293,10 @@ class _AssetsPageState extends State<AssetsPage> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const SizedBox(
+                          SizedBox(
                               height: 48,
                               width: 160,
-                              child: DisButton(text: "Add Asset")),
+                              child: DisButton(text: "Add Asset".tr)),
                           SizedBox(
                               height: 48,
                               width: 160,
@@ -307,7 +308,7 @@ class _AssetsPageState extends State<AssetsPage> {
                                           const AddFuelQuantity(),
                                     );
                                   },
-                                  child: const MyButton(text: "Order"))),
+                                  child: MyButton(text: "Order".tr))),
                         ],
                       ),
                     ),
