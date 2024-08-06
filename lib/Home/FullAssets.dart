@@ -5,6 +5,7 @@ import 'package:test_prj/components/my_appbar.dart';
 import 'package:test_prj/components/my_button.dart';
 import 'package:test_prj/components/widgets/globle_widgets.dart';
 import 'package:test_prj/controller/asset_controller.dart';
+import 'package:test_prj/helper/utils/validator_all.dart';
 import 'package:test_prj/orderfuel/doorStepDelivery/assets_page.dart';
 
 import '../data/model/assetlist_model.dart';
@@ -164,123 +165,195 @@ class _AssetsState extends State<MyFullAssets> {
                             fontSize: 20, fontWeight: FontWeight.w500),
                       ),
                     ),
-                    SizedBox(
-                      height: 73,
-                      child: Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: TextFormField(
-                          controller: nameControiller,
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            hintText: 'Asset Name (eg: genset1)'.tr,
-                            hintStyle: const TextStyle(color: Colors.grey),
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: TextFormField(
+                        controller: nameControiller,
+                        validator: (value) => Validator.validateWithhint(
+                            value, "Asset Name (eg: genset1)".tr),
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
                           ),
+                          hintText: 'Asset Name (eg: genset1)'.tr,
+                          hintStyle: const TextStyle(color: Colors.grey),
                         ),
                       ),
                     ),
-                    SizedBox(
-                      height: 73,
-                      child: Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: TextFormField(
-                          controller: capacityControiller,
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            hintText: 'Asset Capacity/Power (eg: 120kva)'.tr,
-                            hintStyle: const TextStyle(color: Colors.grey),
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: TextFormField(
+                        controller: capacityControiller,
+                        validator: (value) => Validator.validateWithhint(
+                            value, "Asset Capacity/Power (eg: 120kva)".tr),
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
                           ),
+                          hintText: 'Asset Capacity/Power (eg: 120kva)'.tr,
+                          hintStyle: const TextStyle(color: Colors.grey),
                         ),
                       ),
                     ),
-                    SizedBox(
-                      height: 73,
-                      child: Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: TextFormField(
-                          controller: fuelcapacityControiller,
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            hintText: 'Fuel capacity(eg: 200 litres)'.tr,
-                            hintStyle: const TextStyle(color: Colors.grey),
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: TextFormField(
+                        controller: fuelcapacityControiller,
+                        validator: (value) => Validator.validateWithhint(
+                            value, "Fuel capacity(eg: 200 litres)".tr),
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
                           ),
+                          hintText: 'Fuel capacity(eg: 200 litres)'.tr,
+                          hintStyle: const TextStyle(color: Colors.grey),
                         ),
                       ),
                     ),
                     const SizedBox(height: 80),
-                    asetController.isLoading.value == true
-                        ? isCircularLoading()
-                        : Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Align(
-                              alignment: Alignment.centerRight,
-                              child: GestureDetector(
-                                  // onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const AssetsPage(),)),
-                                  child: InkWell(
-                                      onTap: () {
-                                        if (_formKeyReset.currentState!
-                                            .validate()) {
-                                          if (widget.update == true) {
-                                            asetController
-                                                .updateA(
-                                                    widget.data!.id.toString(),
-                                                    selectedValue == 1
-                                                        ? "genset"
-                                                        : selectedValue == 2
-                                                            ? "heavy_machinery"
-                                                            : "equipments",
-                                                    nameControiller.text,
-                                                    capacityControiller.text,
-                                                    fuelcapacityControiller
-                                                        .text)
-                                                .then((value) {
-                                              if (value['status'] == true) {
-                                                Fluttertoast.showToast(
-                                                    msg: "${value['message']}");
-                                                Get.back(result: "hello");
-                                              } else {
-                                                Fluttertoast.showToast(
-                                                    msg: "${value['message']}");
-                                              }
-                                            });
-                                          } else {
-                                            asetController
-                                                .createAst(
-                                                    selectedValue == 1
-                                                        ? "Genset"
-                                                        : selectedValue == 2
-                                                            ? "heavy_machinery"
-                                                            : "Equipments",
-                                                    nameControiller.text,
-                                                    capacityControiller.text,
-                                                    fuelcapacityControiller
-                                                        .text)
-                                                .then((value) {
-                                              if (value['status'] == true) {
-                                                Fluttertoast.showToast(
-                                                    msg: "${value['message']}");
-                                                Get.back(result: "hello");
-                                              } else {
-                                                Fluttertoast.showToast(
-                                                    msg: "${value['message']}");
-                                              }
-                                            });
-                                          }
-                                        }
-                                      },
-                                      child: MyButton(
-                                          text: widget.update == true
-                                              ? 'Update Asset'
-                                              : 'Add Asset type'.tr))),
-                            ),
-                          ),
+
+                    // asetController.isLoading.value == true
+                    //     ? isCircularLoading()
+                    //     :
+                    // Padding(
+                    //         padding: const EdgeInsets.all(10.0),
+                    //         child: Align(
+                    //           alignment: Alignment.centerRight,
+                    //           child: GestureDetector(
+                    //               // onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const AssetsPage(),)),
+                    //               child: InkWell(
+                    //                   onTap: () {
+                    //                     if (_formKeyReset.currentState!
+                    //                         .validate()) {
+                    //                       if (widget.update == true) {
+                    //                         asetController
+                    //                             .updateA(
+                    //                                 widget.data!.id.toString(),
+                    //                                 selectedValue == 1
+                    //                                     ? "genset"
+                    //                                     : selectedValue == 2
+                    //                                         ? "heavy_machinery"
+                    //                                         : "equipments",
+                    //                                 nameControiller.text,
+                    //                                 capacityControiller.text,
+                    //                                 fuelcapacityControiller
+                    //                                     .text)
+                    //                             .then((value) {
+                    //                           if (value['status'] == true) {
+                    //                             Fluttertoast.showToast(
+                    //                                 msg: "${value['message']}");
+                    //                             Get.back(result: "hello");
+                    //                           } else {
+                    //                             Fluttertoast.showToast(
+                    //                                 msg: "${value['message']}");
+                    //                           }
+                    //                         });
+                    //                       } else {
+                    //                         asetController
+                    //                             .createAst(
+                    //                                 selectedValue == 1
+                    //                                     ? "Genset"
+                    //                                     : selectedValue == 2
+                    //                                         ? "heavy_machinery"
+                    //                                         : "Equipments",
+                    //                                 nameControiller.text,
+                    //                                 capacityControiller.text,
+                    //                                 fuelcapacityControiller
+                    //                                     .text)
+                    //                             .then((value) {
+                    //                           if (value['status'] == true) {
+                    //                             Fluttertoast.showToast(
+                    //                                 msg: "${value['message']}");
+                    //                             Get.back(result: "hello");
+                    //                           } else {
+                    //                             Fluttertoast.showToast(
+                    //                                 msg: "${value['message']}");
+                    //                           }
+                    //                         });
+                    //                       }
+                    //                     }
+                    //                   },
+                    //                   child: MyButton(
+                    //                       text: widget.update == true
+                    //                           ? 'Update Asset'
+                    //                           : 'Add Asset type'.tr))),
+                    //         ),
+                    //       ),
                     const SizedBox(height: 20),
                   ],
+                ),
+              ),
+            ),
+            bottomNavigationBar: SizedBox(
+              height: 80,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                child: Align(
+                  alignment: Alignment.centerRight,
+                  child: Obx(() => asetController.isLoading.value == true
+                      ? isCircularLoading()
+                      : Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Align(
+                            alignment: Alignment.centerRight,
+                            child: GestureDetector(
+                                // onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const AssetsPage(),)),
+                                child: InkWell(
+                                    onTap: () {
+                                      if (_formKeyReset.currentState!
+                                          .validate()) {
+                                        if (widget.update == true) {
+                                          asetController
+                                              .updateA(
+                                                  widget.data!.id.toString(),
+                                                  selectedValue == 1
+                                                      ? "genset"
+                                                      : selectedValue == 2
+                                                          ? "heavy_machinery"
+                                                          : "equipments",
+                                                  nameControiller.text,
+                                                  capacityControiller.text,
+                                                  fuelcapacityControiller.text)
+                                              .then((value) {
+                                            if (value['status'] == true) {
+                                              Fluttertoast.showToast(
+                                                  msg: "${value['message']}");
+                                              Get.back(result: "hello");
+                                            } else {
+                                              Fluttertoast.showToast(
+                                                  msg: "${value['message']}");
+                                            }
+                                          });
+                                        } else {
+                                          asetController
+                                              .createAst(
+                                                  selectedValue == 1
+                                                      ? "Genset"
+                                                      : selectedValue == 2
+                                                          ? "heavy_machinery"
+                                                          : "Equipments",
+                                                  nameControiller.text,
+                                                  capacityControiller.text,
+                                                  fuelcapacityControiller.text)
+                                              .then((value) {
+                                            if (value['status'] == true) {
+                                              Fluttertoast.showToast(
+                                                  msg: "${value['message']}");
+                                              Get.back(result: "hello");
+                                            } else {
+                                              Fluttertoast.showToast(
+                                                  msg: "${value['message']}");
+                                            }
+                                          });
+                                        }
+                                      }
+                                    },
+                                    child: MyButton(
+                                        text: widget.update == true
+                                            ? 'Update Asset'
+                                            : 'Add Asset type'.tr))),
+                          ),
+                        )),
                 ),
               ),
             ),

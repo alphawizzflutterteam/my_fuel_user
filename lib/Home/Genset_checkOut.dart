@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:test_prj/components/my_appbar.dart';
 import 'package:test_prj/controller/cart_controller.dart';
 import 'package:test_prj/helper/utils/app_constants.dart';
@@ -1172,7 +1173,22 @@ class _GetSetCheckoutScreenState extends State<GetSetCheckoutScreen> {
                       builder: (carController) {
                         return Obx(() => carController.isLoading == true
                             ? Center(
-                                child: CircularProgressIndicator(),
+                                child: SizedBox(
+                                  width: 200.0,
+                                  height: 30.0,
+                                  child: Shimmer.fromColors(
+                                    baseColor: Colors.white,
+                                    highlightColor: Colors.white,
+                                    child: Text(
+                                      '     ',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        fontSize: 10.0,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                ),
                               )
                             : Padding(
                                 padding: const EdgeInsets.only(left: 30.0),
