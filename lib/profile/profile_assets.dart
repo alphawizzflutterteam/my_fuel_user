@@ -320,7 +320,19 @@ class _ProfileAssetsState extends State<ProfileAssets> {
                                                       CrossAxisAlignment.start,
                                                   children: [
                                                     Text(
-                                                      "${controller.assetDataList![index].assetType}",
+                                                      controller
+                                                                  .assetDataList![
+                                                                      index]
+                                                                  .assetType ==
+                                                              "heavy_machinery"
+                                                          ? "Heavy Machinery"
+                                                          : controller
+                                                                      .assetDataList![
+                                                                          index]
+                                                                      .assetType ==
+                                                                  "equipments"
+                                                              ? "Equipments"
+                                                              : "Genset",
                                                       style: const TextStyle(
                                                           fontSize: 16,
                                                           fontWeight:

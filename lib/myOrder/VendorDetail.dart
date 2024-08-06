@@ -9,6 +9,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:test_prj/components/my_appbar.dart';
 import 'package:test_prj/components/my_button.dart';
 import 'package:timeline_tile/timeline_tile.dart';
 
@@ -42,57 +43,60 @@ class _VenderDetailsState extends State<VenderDetails> {
       init: OrderController(),
       builder: (controller) {
         return Scaffold(
+            appBar: MyAppFinalbar(
+              title: "Order Details".tr,
+            ),
             backgroundColor: Colors.white,
             // backgroundColor: Colors.grey[200],
             body: SingleChildScrollView(
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                  Container(
-                    height: 100,
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.centerLeft,
-                        end: Alignment.centerRight,
-                        colors: [
-                          Color.fromRGBO(252, 130, 59, 1),
-                          Color.fromRGBO(252, 130, 59, 1),
-                          Color.fromRGBO(211, 83, 7, 1),
-                        ],
-                      ),
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(20),
-                        bottomRight: Radius.circular(20),
-                      ),
-                    ),
-                    child: Row(
-                      children: [
-                        InkWell(
-                          onTap: () {
-                            Navigator.pop(context);
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.only(top: 45.0, left: 20),
-                            child: Icon(
-                              Icons.arrow_back,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 45.0, left: 80),
-                          child: Text(
-                            'Order Details'.tr,
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 20,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                  // Container(
+                  //   height: 100,
+                  //   decoration: BoxDecoration(
+                  //     gradient: LinearGradient(
+                  //       begin: Alignment.centerLeft,
+                  //       end: Alignment.centerRight,
+                  //       colors: [
+                  //         Color.fromRGBO(252, 130, 59, 1),
+                  //         Color.fromRGBO(252, 130, 59, 1),
+                  //         Color.fromRGBO(211, 83, 7, 1),
+                  //       ],
+                  //     ),
+                  //     borderRadius: BorderRadius.only(
+                  //       bottomLeft: Radius.circular(20),
+                  //       bottomRight: Radius.circular(20),
+                  //     ),
+                  //   ),
+                  //   child: Row(
+                  //     children: [
+                  //       InkWell(
+                  //         onTap: () {
+                  //           Navigator.pop(context);
+                  //         },
+                  //         child: Padding(
+                  //           padding: const EdgeInsets.only(top: 45.0, left: 20),
+                  //           child: Icon(
+                  //             Icons.arrow_back,
+                  //             color: Colors.white,
+                  //           ),
+                  //         ),
+                  //       ),
+                  //       Padding(
+                  //         padding: const EdgeInsets.only(top: 45.0, left: 80),
+                  //         child: Text(
+                  //           'Order Details'.tr,
+                  //           style: TextStyle(
+                  //             color: Colors.white,
+                  //             fontSize: 20,
+                  //             fontWeight: FontWeight.w500,
+                  //           ),
+                  //         ),
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Column(
@@ -415,14 +419,13 @@ class _VenderDetailsState extends State<VenderDetails> {
                                                 fontSize: 14,
                                                 color: Colors.black54),
                                           ),
-                                          widget.booking?.createdAt == '' ||
-                                                  widget.booking?.createdAt ==
-                                                      null
+                                          widget.booking?.date == '' ||
+                                                  widget.booking?.date == null
                                               ? SizedBox()
                                               : Text(
                                                   DateFormat('dd MMM yyyy')
                                                       .format(DateTime.parse(
-                                                    "${widget.booking?.createdAt ?? ''}",
+                                                    "${widget.booking?.date ?? ''}",
                                                   )),
                                                   style: TextStyle(
                                                       fontSize: 14,
@@ -760,7 +763,7 @@ class _VenderDetailsState extends State<VenderDetails> {
                                           widget.booking?.createdAt
                                                   .toString() ??
                                               '',
-                                        ))}",
+                                        ).toLocal())}",
                                         // "Ordered ${DateTime.parse(
                                         //   widget.booking?.createdAt
                                         //           .toString() ??
@@ -786,7 +789,7 @@ class _VenderDetailsState extends State<VenderDetails> {
                                           widget.booking?.updatedAt
                                                   .toString() ??
                                               '',
-                                        ))}",
+                                        ).toLocal())}",
                                         style: TextStyle(
                                             fontSize: 14,
                                             color: Colors.black54),

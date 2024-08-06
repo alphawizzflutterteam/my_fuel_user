@@ -76,7 +76,7 @@ class _MyAddressScreenState extends State<MyAddressScreen> {
                                     child: CircularProgressIndicator(),
                                   )
                                 : ListView.builder(
-                                    physics: AlwaysScrollableScrollPhysics(),
+                                    physics: NeverScrollableScrollPhysics(),
                                     shrinkWrap: true,
                                     itemCount:
                                         controller.addressAList.value.length,
@@ -110,7 +110,7 @@ class _MyAddressScreenState extends State<MyAddressScreen> {
                         //   label: "Office",
                         // ),
                         SizedBox(
-                          height: MediaQuery.of(context).size.height / 1.9,
+                          height: 50,
                         ),
                       ],
                     ),

@@ -172,103 +172,102 @@ class _HomePageState extends State<HomePage> {
               child: GetBuilder<ProfileController>(
                   init: ProfileController(),
                   builder: (profileController) {
-                    return SingleChildScrollView(
-                      child: Container(
-                        decoration: const BoxDecoration(
-                          gradient: LinearGradient(
-                            begin: Alignment.centerLeft,
-                            end: Alignment.centerRight,
-                            colors: [
-                              Color.fromRGBO(252, 130, 59, 1),
-                              Color.fromRGBO(252, 130, 59, 1),
-                              Color.fromRGBO(211, 83, 7, 1),
-                            ],
-                          ),
+                    return Container(
+                      decoration: const BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.centerLeft,
+                          end: Alignment.centerRight,
+                          colors: [
+                            Color.fromRGBO(252, 130, 59, 1),
+                            Color.fromRGBO(252, 130, 59, 1),
+                            Color.fromRGBO(211, 83, 7, 1),
+                          ],
                         ),
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 48),
-                          child: Column(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 15.0, vertical: 8),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 48),
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 15.0, vertical: 8),
 
-                                // Top App bar
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        Image.asset(
-                                          "assets/mingcute_location-fill.png",
-                                          // scale: 20,
+                              // Top App bar
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Image.asset(
+                                        "assets/mingcute_location-fill.png",
+                                        // scale: 20,
+                                        height: 24,
+                                      ),
+                                      const SizedBox(width: 8),
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            "${address.toString().split(",")[0]}",
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 16,
+                                            ),
+                                          ),
+                                          Text(
+                                            "${address.toString()}",
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 12,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                  Row(
+                                    children: [
+                                      // Image.asset(
+                                      //   "assets/Group 2979.png",
+                                      //   height: 24,
+                                      // ),
+                                      // const Icon(
+                                      //   Icons.search,
+                                      //   color: Colors.white,
+                                      //   size: 30,
+                                      // ),
+                                      const SizedBox(width: 8),
+                                      GestureDetector(
+                                        onTap: () => Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const Notification1(),
+                                            )),
+                                        child: Image.asset(
+                                          "assets/Notification.png",
                                           height: 24,
                                         ),
-                                        const SizedBox(width: 8),
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              "${address.toString().split(",")[0]}",
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 16,
-                                              ),
-                                            ),
-                                            Text(
-                                              "${address.toString()}",
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 12,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                    Row(
-                                      children: [
-                                        // Image.asset(
-                                        //   "assets/Group 2979.png",
-                                        //   height: 24,
-                                        // ),
-                                        // const Icon(
-                                        //   Icons.search,
-                                        //   color: Colors.white,
-                                        //   size: 30,
-                                        // ),
-                                        const SizedBox(width: 8),
-                                        GestureDetector(
-                                          onTap: () => Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (context) =>
-                                                    const Notification1(),
-                                              )),
-                                          child: Image.asset(
-                                            "assets/Notification.png",
-                                            height: 24,
-                                          ),
-                                        ),
-                                      ],
-                                    )
-                                  ],
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              ),
+                            ),
+                            const SizedBox(height: 20),
+                            Container(
+                              decoration: const BoxDecoration(
+                                color: Colors.white38,
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(35),
+                                  topRight: Radius.circular(35),
                                 ),
                               ),
-                              const SizedBox(height: 20),
-                              Container(
-                                decoration: const BoxDecoration(
-                                  color: Colors.white38,
-                                  borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(35),
-                                    topRight: Radius.circular(35),
-                                  ),
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.only(top: 10),
-                                  child: Container(
+                              child: Padding(
+                                padding: const EdgeInsets.only(top: 10),
+                                child: Container(
                                     decoration: const BoxDecoration(
                                       color: Colors.white,
                                       borderRadius: BorderRadius.only(
@@ -276,445 +275,366 @@ class _HomePageState extends State<HomePage> {
                                         topRight: Radius.circular(35),
                                       ),
                                     ),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        const SizedBox(height: 27),
+                                    child: SizedBox(
+                                      height:
+                                          MediaQuery.sizeOf(context).height /
+                                              1.342,
+                                      child: SingleChildScrollView(
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            const SizedBox(height: 27),
 
-                                        // search bar
-                                        // Padding(
-                                        //   padding:
-                                        //       const EdgeInsets.symmetric(horizontal: 16.0),
-                                        //   child: SizedBox(
-                                        //     height: 55,
-                                        //     child: TextFormField(
-                                        //       decoration: InputDecoration(
-                                        //           prefixIcon: Image.asset(
-                                        //             "assets/Search.png",
-                                        //             scale: 20,
-                                        //           ),
-                                        //           fillColor: Color.fromRGBO(245, 245, 245, 1),
-                                        //           filled: true,
-                                        //           enabledBorder: OutlineInputBorder(
-                                        //             borderRadius: BorderRadius.circular(12),
-                                        //             borderSide: BorderSide.none,
-                                        //           ),
-                                        //           // enabled: true,
-                                        //           hintText: "Search"),
-                                        //     ),
-                                        //   ),
-                                        // ),
-                                        // SizedBox(height: 16),
+                                            // search bar
+                                            // Padding(
+                                            //   padding:
+                                            //       const EdgeInsets.symmetric(horizontal: 16.0),
+                                            //   child: SizedBox(
+                                            //     height: 55,
+                                            //     child: TextFormField(
+                                            //       decoration: InputDecoration(
+                                            //           prefixIcon: Image.asset(
+                                            //             "assets/Search.png",
+                                            //             scale: 20,
+                                            //           ),
+                                            //           fillColor: Color.fromRGBO(245, 245, 245, 1),
+                                            //           filled: true,
+                                            //           enabledBorder: OutlineInputBorder(
+                                            //             borderRadius: BorderRadius.circular(12),
+                                            //             borderSide: BorderSide.none,
+                                            //           ),
+                                            //           // enabled: true,
+                                            //           hintText: "Search"),
+                                            //     ),
+                                            //   ),
+                                            // ),
+                                            // SizedBox(height: 16),
 
-                                        // Order fuel section
-                                        InkWell(
-                                          onTap: () {
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      const LookingForCompany()),
-                                            );
-                                          },
-                                          child: Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 16.0),
-                                            child: Container(
-                                              height: 59,
-                                              decoration: BoxDecoration(
-                                                color: const Color.fromRGBO(
-                                                    138, 180, 2, 200),
-                                                border: Border.all(
-                                                  color: const Color.fromRGBO(
-                                                      138, 180, 2, 10),
+                                            // Order fuel section
+                                            InkWell(
+                                              onTap: () {
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          const LookingForCompany()),
+                                                );
+                                              },
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 16.0),
+                                                child: Container(
+                                                  height: 59,
+                                                  decoration: BoxDecoration(
+                                                    color: const Color.fromRGBO(
+                                                        138, 180, 2, 200),
+                                                    border: Border.all(
+                                                      color:
+                                                          const Color.fromRGBO(
+                                                              138, 180, 2, 10),
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8),
+                                                  ),
+                                                  padding: const EdgeInsets
+                                                      .symmetric(
+                                                      horizontal: 16),
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.start,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Image.asset(
+                                                          "assets/login-logo.png",
+                                                          height: 36),
+                                                      const SizedBox(width: 13),
+                                                      Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          Text(
+                                                            "Order Fuel".tr,
+                                                            style: TextStyle(
+                                                              fontSize: 16,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                            ),
+                                                          ),
+                                                          Text(
+                                                            "Door Step Delivery"
+                                                                .tr,
+                                                            style: TextStyle(
+                                                              fontSize: 12,
+                                                              color: Color
+                                                                  .fromRGBO(
+                                                                      89,
+                                                                      89,
+                                                                      89,
+                                                                      1),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      const SizedBox(
+                                                          width: 124),
+                                                      GestureDetector(
+                                                        // onTap: () => Navigator.push(
+                                                        //     context,
+                                                        //     MaterialPageRoute(
+                                                        //       builder: (context) =>
+                                                        //           const LookingForCompany(),
+                                                        //     )),
+                                                        child: Image.asset(
+                                                          "assets/Arrow - Down 2.png",
+                                                          height: 24,
+                                                        ),
+                                                      )
+                                                    ],
+                                                  ),
                                                 ),
-                                                borderRadius:
-                                                    BorderRadius.circular(8),
                                               ),
+                                            ),
+
+                                            // Padding(
+                                            //   padding:
+                                            //       const EdgeInsets.symmetric(horizontal: 20.0),
+                                            //   child: Divider(
+                                            //     color: Color.fromRGBO(138, 180, 2, 100),
+                                            //     thickness: 2,
+                                            //   ),
+                                            // ),
+                                            const SizedBox(height: 24),
+
+                                            // slider
+                                            const SliderHome(),
+                                            const SizedBox(height: 30),
+
+                                            // Products & Services
+                                            Container(
+                                              decoration: const BoxDecoration(
+                                                  color: Color.fromRGBO(
+                                                      255, 243, 236, 1)),
                                               padding:
                                                   const EdgeInsets.symmetric(
                                                       horizontal: 16),
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.start,
+                                              child: Column(
                                                 crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
+                                                    CrossAxisAlignment.start,
                                                 children: [
-                                                  Image.asset(
-                                                      "assets/login-logo.png",
-                                                      height: 36),
-                                                  const SizedBox(width: 13),
-                                                  Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
-                                                    children: [
-                                                      Text(
-                                                        "Order Fuel".tr,
-                                                        style: TextStyle(
-                                                          fontSize: 16,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                        ),
-                                                      ),
-                                                      Text(
-                                                        "Door Step Delivery".tr,
-                                                        style: TextStyle(
-                                                          fontSize: 12,
-                                                          color: Color.fromRGBO(
-                                                              89, 89, 89, 1),
-                                                        ),
-                                                      ),
-                                                    ],
+                                                  const SizedBox(height: 28),
+                                                  Text(
+                                                    "Products & Services".tr,
+                                                    style: TextStyle(
+                                                        fontSize: 20,
+                                                        fontWeight:
+                                                            FontWeight.bold),
                                                   ),
-                                                  const SizedBox(width: 124),
-                                                  GestureDetector(
-                                                    // onTap: () => Navigator.push(
-                                                    //     context,
-                                                    //     MaterialPageRoute(
-                                                    //       builder: (context) =>
-                                                    //           const LookingForCompany(),
-                                                    //     )),
-                                                    child: Image.asset(
-                                                      "assets/Arrow - Down 2.png",
-                                                      height: 24,
-                                                    ),
-                                                  )
+
+                                                  Obx(() {
+                                                    print(
+                                                        "controller.serviceList ${controller.serviceList} ");
+                                                    return controller.serviceList
+                                                            .isNotEmpty
+                                                        ? GridView.builder(
+                                                            physics:
+                                                                const NeverScrollableScrollPhysics(),
+                                                            shrinkWrap: true,
+                                                            primary: false,
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .all(10),
+                                                            itemCount:
+                                                                controller
+                                                                    .serviceList
+                                                                    .length,
+                                                            gridDelegate:
+                                                                const SliverGridDelegateWithFixedCrossAxisCount(
+                                                              crossAxisCount: 2,
+                                                              childAspectRatio:
+                                                                  95 / 120,
+                                                              crossAxisSpacing:
+                                                                  10,
+                                                              mainAxisSpacing:
+                                                                  10.0,
+                                                            ),
+                                                            itemBuilder:
+                                                                (BuildContext
+                                                                        context,
+                                                                    int i) {
+                                                              return Stack(
+                                                                  children: [
+                                                                    InkWell(
+                                                                      child:
+                                                                          Container(
+                                                                        // child: Image.asset('assets/fuel.png',fit: BoxFit.cover,),
+                                                                        decoration: BoxDecoration(
+                                                                            borderRadius: BorderRadius.circular(20),
+                                                                            image: DecorationImage(
+                                                                                image: NetworkImage(
+                                                                                  "${configModel?.baseUrls?.categoryImageUrl}/${controller.serviceList[i].icon}",
+                                                                                ),
+                                                                                fit: BoxFit.fill)),
+                                                                        height: MediaQuery.of(context).size.height /
+                                                                            2.4,
+                                                                        width: MediaQuery.of(context).size.width /
+                                                                            2.4,
+                                                                      ),
+                                                                      onTap:
+                                                                          () {
+                                                                        final now =
+                                                                            DateTime.now().millisecondsSinceEpoch;
+                                                                        if (now -
+                                                                                lastTimeClicked <
+                                                                            intervalMs) {
+                                                                          return;
+                                                                        }
+                                                                        lastTimeClicked =
+                                                                            now;
+                                                                        // Here Tap Sercice Detail
+                                                                        if (i ==
+                                                                            0) {
+                                                                          controller
+                                                                              .getServiceDetails(controller.serviceList[i].id.toString())
+                                                                              .then((value) {
+                                                                            categoryId =
+                                                                                controller.serviceList[i].id.toString();
+                                                                            genesetMaintenance(context);
+                                                                          });
+                                                                        } else if (i ==
+                                                                            1) {
+                                                                          fuelManagmentServices(
+                                                                              context,
+                                                                              controller.serviceList[i].id.toString());
+                                                                        } else if (i ==
+                                                                            2) {
+                                                                          controller
+                                                                              .getServiceDetails(controller.serviceList[i].id.toString())
+                                                                              .then((value) {
+                                                                            categoryId =
+                                                                                controller.serviceList[i].id.toString();
+                                                                            Get.to(FuelOnTabScreen());
+                                                                            // Navigator.push(
+                                                                            //     context,
+                                                                            //     MaterialPageRoute(
+                                                                            //       builder: (context) => FuelOnTabScreen(),
+                                                                            //     ));
+                                                                          });
+                                                                        } else {
+                                                                          controller
+                                                                              .getServiceDetails(controller.serviceList[i].id.toString())
+                                                                              .then((value) {
+                                                                            categoryId =
+                                                                                controller.serviceList[i].id.toString();
+                                                                            print("object categoryId $categoryId");
+                                                                            // Navigator.push(
+                                                                            //     context,
+                                                                            //     MaterialPageRoute(
+                                                                            //       builder: (context) => FuelOnTabScreen(title: "My Fuel Jerry Can"),
+                                                                            //     ));
+                                                                            Get.to(FuelOnTabScreen(title: "My Fuel Jerry Can"));
+                                                                          });
+                                                                        }
+                                                                      },
+                                                                    ),
+                                                                    Positioned(
+                                                                      bottom:
+                                                                          10,
+                                                                      left: 5,
+                                                                      child:
+                                                                          Column(
+                                                                        crossAxisAlignment:
+                                                                            CrossAxisAlignment.start,
+                                                                        children: [
+                                                                          SizedBox(
+                                                                            width:
+                                                                                100,
+                                                                            child:
+                                                                                Text(
+                                                                              "${controller.serviceList[i].name}",
+                                                                              maxLines: 2,
+                                                                              style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w700),
+                                                                              overflow: TextOverflow.visible,
+                                                                            ),
+                                                                          ),
+                                                                          i % 4 == 2 || i % 4 == 3
+                                                                              ? const Text(
+                                                                                  '0.5 kl/LK/2KI',
+                                                                                  style: TextStyle(color: Colors.grey),
+                                                                                  overflow: TextOverflow.visible,
+                                                                                )
+                                                                              : const SizedBox()
+                                                                        ],
+                                                                      ),
+                                                                    ),
+                                                                  ]);
+                                                            })
+                                                        : Container(
+                                                            child: Text(
+                                                                "No Self Service Found"),
+                                                          );
+                                                  }),
+
+                                                  // const SizedBox(height: 20),
+                                                  // productTile(),
+                                                  // const SizedBox(height: 12),
+                                                  // productTile(),
+                                                  // const SizedBox(height: 12),
+                                                  // productTile(),
+                                                  // const SizedBox(height: 50),
                                                 ],
                                               ),
                                             ),
-                                          ),
-                                        ),
 
-                                        // Padding(
-                                        //   padding:
-                                        //       const EdgeInsets.symmetric(horizontal: 20.0),
-                                        //   child: Divider(
-                                        //     color: Color.fromRGBO(138, 180, 2, 100),
-                                        //     thickness: 2,
-                                        //   ),
-                                        // ),
-                                        const SizedBox(height: 24),
-
-                                        // slider
-                                        const SliderHome(),
-                                        const SizedBox(height: 30),
-
-                                        // Products & Services
-                                        Container(
-                                          decoration: const BoxDecoration(
-                                              color: Color.fromRGBO(
-                                                  255, 243, 236, 1)),
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 16),
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              const SizedBox(height: 28),
-                                              Text(
-                                                "Products & Services".tr,
-                                                style: TextStyle(
-                                                    fontSize: 20,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              ),
-
-                                              Obx(() {
-                                                print(
-                                                    "controller.serviceList ${controller.serviceList} ");
-                                                return controller
-                                                        .serviceList.isNotEmpty
-                                                    ? GridView.builder(
-                                                        physics:
-                                                            const NeverScrollableScrollPhysics(),
-                                                        shrinkWrap: true,
-                                                        primary: false,
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .all(10),
-                                                        itemCount: controller
-                                                            .serviceList.length,
-                                                        gridDelegate:
-                                                            const SliverGridDelegateWithFixedCrossAxisCount(
-                                                          crossAxisCount: 2,
-                                                          childAspectRatio:
-                                                              95 / 120,
-                                                          crossAxisSpacing: 10,
-                                                          mainAxisSpacing: 10.0,
-                                                        ),
-                                                        itemBuilder:
-                                                            (BuildContext
-                                                                    context,
-                                                                int i) {
-                                                          return Stack(
-                                                              children: [
-                                                                InkWell(
-                                                                  child:
-                                                                      Container(
-                                                                    // child: Image.asset('assets/fuel.png',fit: BoxFit.cover,),
-                                                                    decoration: BoxDecoration(
-                                                                        borderRadius: BorderRadius.circular(20),
-                                                                        image: DecorationImage(
-                                                                            image: NetworkImage(
-                                                                              "${configModel?.baseUrls?.categoryImageUrl}/${controller.serviceList[i].icon}",
-                                                                            ),
-                                                                            fit: BoxFit.fill)),
-                                                                    height: MediaQuery.of(context)
-                                                                            .size
-                                                                            .height /
-                                                                        2.4,
-                                                                    width: MediaQuery.of(context)
-                                                                            .size
-                                                                            .width /
-                                                                        2.4,
-                                                                  ),
-                                                                  onTap: () {
-                                                                    final now =
-                                                                        DateTime.now()
-                                                                            .millisecondsSinceEpoch;
-                                                                    if (now -
-                                                                            lastTimeClicked <
-                                                                        intervalMs) {
-                                                                      return;
-                                                                    }
-                                                                    lastTimeClicked =
-                                                                        now;
-                                                                    // Here Tap Sercice Detail
-                                                                    if (i ==
-                                                                        0) {
-                                                                      controller
-                                                                          .getServiceDetails(controller
-                                                                              .serviceList[i]
-                                                                              .id
-                                                                              .toString())
-                                                                          .then((value) {
-                                                                        categoryId = controller
-                                                                            .serviceList[i]
-                                                                            .id
-                                                                            .toString();
-                                                                        genesetMaintenance(
-                                                                            context);
-                                                                      });
-                                                                    } else if (i ==
-                                                                        1) {
-                                                                      fuelManagmentServices(
-                                                                          context,
-                                                                          controller
-                                                                              .serviceList[i]
-                                                                              .id
-                                                                              .toString());
-                                                                    } else if (i ==
-                                                                        2) {
-                                                                      controller
-                                                                          .getServiceDetails(controller
-                                                                              .serviceList[i]
-                                                                              .id
-                                                                              .toString())
-                                                                          .then((value) {
-                                                                        categoryId = controller
-                                                                            .serviceList[i]
-                                                                            .id
-                                                                            .toString();
-                                                                        Get.to(
-                                                                            FuelOnTabScreen());
-                                                                        // Navigator.push(
-                                                                        //     context,
-                                                                        //     MaterialPageRoute(
-                                                                        //       builder: (context) => FuelOnTabScreen(),
-                                                                        //     ));
-                                                                      });
-                                                                    } else {
-                                                                      controller
-                                                                          .getServiceDetails(controller
-                                                                              .serviceList[i]
-                                                                              .id
-                                                                              .toString())
-                                                                          .then((value) {
-                                                                        categoryId = controller
-                                                                            .serviceList[i]
-                                                                            .id
-                                                                            .toString();
-                                                                        print(
-                                                                            "object categoryId $categoryId");
-                                                                        // Navigator.push(
-                                                                        //     context,
-                                                                        //     MaterialPageRoute(
-                                                                        //       builder: (context) => FuelOnTabScreen(title: "My Fuel Jerry Can"),
-                                                                        //     ));
-                                                                        Get.to(FuelOnTabScreen(
-                                                                            title:
-                                                                                "My Fuel Jerry Can"));
-                                                                      });
-                                                                    }
-                                                                  },
-                                                                ),
-                                                                Positioned(
-                                                                  bottom: 10,
-                                                                  left: 5,
-                                                                  child: Column(
-                                                                    crossAxisAlignment:
-                                                                        CrossAxisAlignment
-                                                                            .start,
-                                                                    children: [
-                                                                      SizedBox(
-                                                                        width:
-                                                                            100,
-                                                                        child:
-                                                                            Text(
-                                                                          "${controller.serviceList[i].name}",
-                                                                          maxLines:
-                                                                              2,
-                                                                          style: const TextStyle(
-                                                                              color: Colors.white,
-                                                                              fontWeight: FontWeight.w700),
-                                                                          overflow:
-                                                                              TextOverflow.visible,
-                                                                        ),
-                                                                      ),
-                                                                      i % 4 == 2 ||
-                                                                              i % 4 == 3
-                                                                          ? const Text(
-                                                                              '0.5 kl/LK/2KI',
-                                                                              style: TextStyle(color: Colors.grey),
-                                                                              overflow: TextOverflow.visible,
-                                                                            )
-                                                                          : const SizedBox()
-                                                                    ],
-                                                                  ),
-                                                                ),
-                                                              ]);
-                                                        })
-                                                    : Container(
-                                                        child: Text(
-                                                            "No Self Service Found"),
-                                                      );
-                                              }),
-
-                                              // const SizedBox(height: 20),
-                                              // productTile(),
-                                              // const SizedBox(height: 12),
-                                              // productTile(),
-                                              // const SizedBox(height: 12),
-                                              // productTile(),
-                                              // const SizedBox(height: 50),
-                                            ],
-                                          ),
-                                        ),
-
-                                        Obx(() => controller.otherList.length ==
-                                                0
-                                            ? Container()
-                                            : GridView.builder(
-                                                physics:
-                                                    const NeverScrollableScrollPhysics(),
-                                                shrinkWrap: true,
-                                                primary: false,
-                                                padding:
-                                                    const EdgeInsets.all(10),
-                                                itemCount:
-                                                    controller.otherList.length,
-                                                gridDelegate:
-                                                    const SliverGridDelegateWithFixedCrossAxisCount(
-                                                  crossAxisCount: 3,
-                                                  childAspectRatio: 95 / 108,
-                                                  crossAxisSpacing: 10,
-                                                  mainAxisSpacing: 5.0,
-                                                ),
-                                                itemBuilder:
-                                                    (BuildContext context,
-                                                        int i) {
-                                                  return InkWell(
-                                                    onTap: () {
-                                                      final now = DateTime.now()
-                                                          .millisecondsSinceEpoch;
-                                                      if (now -
-                                                              lastTimeClicked <
-                                                          intervalMs) {
-                                                        return;
-                                                      }
-                                                      lastTimeClicked = now;
-                                                      otherCategory =
-                                                          OtherCategory();
-                                                      print(
-                                                          "OtherId ${controller.otherList[i].id}");
-                                                      categoryId = controller
-                                                          .otherList[i].id
-                                                          .toString();
-                                                      otherCategory.categoryId =
-                                                          controller
-                                                              .otherList[i].id
-                                                              .toString();
-                                                      if (controller
-                                                              .otherList[i]
-                                                              .id ==
-                                                          16) {
-                                                        carServiceController
-                                                                .selectedVehicle
-                                                                .value =
-                                                            carServiceController
-                                                                .vehicleList![0];
-
-                                                        // carServiceController
-                                                        //         .selectedService
-                                                        //         .value =
-                                                        //     carServiceController
-                                                        //         .vehicleModelList![0];
-                                                        Navigator.push(
-                                                            context,
-                                                            MaterialPageRoute(
-                                                                builder:
-                                                                    (context) =>
-                                                                        RescueMe()));
-                                                      } else if (controller
-                                                              .otherList[i]
-                                                              .id ==
-                                                          9) {
-                                                        try {
-                                                          carServiceController
-                                                                  .selectedVehicleManufacture
-                                                                  .value =
-                                                              carServiceController
-                                                                  .vehicleList![0];
-                                                          carServiceController
-                                                                  .selectedService
-                                                                  .value =
-                                                              carServiceController
-                                                                  .vehicleModelList![0];
-                                                        } catch (e) {
-                                                          print(e);
-                                                        }
-                                                        tyresBottomSheet(
-                                                            context);
-                                                      } else if (controller
-                                                              .otherList[i]
-                                                              .id ==
-                                                          10) {
-                                                        try {
-                                                          carServiceController
-                                                                  .selectedVehicleManufacture
-                                                                  .value =
-                                                              carServiceController
-                                                                  .vehicleList![0];
-                                                          carServiceController
-                                                                  .selectedService
-                                                                  .value =
-                                                              carServiceController
-                                                                  .vehicleModelList![0];
-                                                        } catch (e) {
-                                                          print(e);
-                                                        }
-                                                        batteryBottomSheet(
-                                                            context);
-                                                      } else if (controller
-                                                              .otherList[i]
-                                                              .id ==
-                                                          11) {
-                                                        try {
+                                            Obx(() => controller
+                                                        .otherList.length ==
+                                                    0
+                                                ? Container()
+                                                : GridView.builder(
+                                                    physics:
+                                                        const NeverScrollableScrollPhysics(),
+                                                    shrinkWrap: true,
+                                                    primary: false,
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            10),
+                                                    itemCount: controller
+                                                        .otherList.length,
+                                                    gridDelegate:
+                                                        const SliverGridDelegateWithFixedCrossAxisCount(
+                                                      crossAxisCount: 3,
+                                                      childAspectRatio:
+                                                          95 / 108,
+                                                      crossAxisSpacing: 10,
+                                                      mainAxisSpacing: 5.0,
+                                                    ),
+                                                    itemBuilder:
+                                                        (BuildContext context,
+                                                            int i) {
+                                                      return InkWell(
+                                                        onTap: () {
+                                                          final now = DateTime
+                                                                  .now()
+                                                              .millisecondsSinceEpoch;
+                                                          if (now -
+                                                                  lastTimeClicked <
+                                                              intervalMs) {
+                                                            return;
+                                                          }
+                                                          lastTimeClicked = now;
+                                                          otherCategory =
+                                                              OtherCategory();
+                                                          print(
+                                                              "OtherId ${controller.otherList[i].id}");
                                                           categoryId =
                                                               controller
                                                                   .otherList[i]
@@ -726,277 +646,363 @@ class _HomePageState extends State<HomePage> {
                                                                   .otherList[i]
                                                                   .id
                                                                   .toString();
-                                                        } catch (e) {
-                                                          print(e);
-                                                        }
-                                                        carwashBottomShee(
-                                                            context);
-                                                      } else if (controller
-                                                              .otherList[i]
-                                                              .id ==
-                                                          8) {
-                                                        try {
-                                                          carServiceController
-                                                                  .selectedVehicleManufacture
-                                                                  .value =
+                                                          if (controller
+                                                                  .otherList[i]
+                                                                  .id ==
+                                                              16) {
+                                                            carServiceController
+                                                                    .selectedVehicle
+                                                                    .value =
+                                                                carServiceController
+                                                                    .vehicleList![0];
+
+                                                            // carServiceController
+                                                            //         .selectedService
+                                                            //         .value =
+                                                            //     carServiceController
+                                                            //         .vehicleModelList![0];
+                                                            Navigator.push(
+                                                                context,
+                                                                MaterialPageRoute(
+                                                                    builder:
+                                                                        (context) =>
+                                                                            RescueMe()));
+                                                          } else if (controller
+                                                                  .otherList[i]
+                                                                  .id ==
+                                                              9) {
+                                                            try {
                                                               carServiceController
-                                                                  .vehicleList![0];
-                                                          carServiceController
-                                                                  .selectedVehicle
-                                                                  .value =
+                                                                      .selectedVehicleManufacture
+                                                                      .value =
+                                                                  carServiceController
+                                                                      .vehicleList![0];
                                                               carServiceController
-                                                                  .vehicleList![0];
-                                                          carServiceController
-                                                                  .selectedService
-                                                                  .value =
+                                                                      .selectedService
+                                                                      .value =
+                                                                  carServiceController
+                                                                      .vehicleModelList![0];
+                                                            } catch (e) {
+                                                              print(e);
+                                                            }
+                                                            tyresBottomSheet(
+                                                                context);
+                                                          } else if (controller
+                                                                  .otherList[i]
+                                                                  .id ==
+                                                              10) {
+                                                            try {
                                                               carServiceController
-                                                                  .vehicleModelList![0];
-                                                        } catch (e) {
-                                                          print(e);
-                                                        }
-                                                        _showBottomSheet(
-                                                            context);
-                                                      } else if (controller
-                                                              .otherList[i]
-                                                              .id ==
-                                                          17) {
-                                                        Navigator.push(
-                                                            context,
-                                                            MaterialPageRoute(
-                                                                builder:
-                                                                    (context) =>
-                                                                        Insurance_Scr()));
-                                                      }
-                                                    },
-                                                    child: Container(
-                                                      height: 80,
-                                                      padding: const EdgeInsets
-                                                          .symmetric(
-                                                          vertical: 15),
-                                                      child: Column(
-                                                        children: [
-                                                          ClipRRect(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        15),
-                                                            child:
-                                                                Image.network(
-                                                              "${configModel?.baseUrls?.categoryImageUrl}/${controller.otherList[i].icon}",
-                                                              height: 60,
-                                                              width: 60,
-                                                              fit: BoxFit.fill,
-                                                              errorBuilder: (context,
-                                                                      error,
-                                                                      stackTrace) =>
-                                                                  Image.asset(
-                                                                "assets/rescue.png",
-                                                                height: 60,
+                                                                      .selectedVehicleManufacture
+                                                                      .value =
+                                                                  carServiceController
+                                                                      .vehicleList![0];
+                                                              carServiceController
+                                                                      .selectedService
+                                                                      .value =
+                                                                  carServiceController
+                                                                      .vehicleModelList![0];
+                                                            } catch (e) {
+                                                              print(e);
+                                                            }
+                                                            batteryBottomSheet(
+                                                                context);
+                                                          } else if (controller
+                                                                  .otherList[i]
+                                                                  .id ==
+                                                              11) {
+                                                            try {
+                                                              categoryId =
+                                                                  controller
+                                                                      .otherList[
+                                                                          i]
+                                                                      .id
+                                                                      .toString();
+                                                              otherCategory
+                                                                      .categoryId =
+                                                                  controller
+                                                                      .otherList[
+                                                                          i]
+                                                                      .id
+                                                                      .toString();
+                                                            } catch (e) {
+                                                              print(e);
+                                                            }
+                                                            carwashBottomShee(
+                                                                context);
+                                                          } else if (controller
+                                                                  .otherList[i]
+                                                                  .id ==
+                                                              8) {
+                                                            try {
+                                                              carServiceController
+                                                                      .selectedVehicleManufacture
+                                                                      .value =
+                                                                  carServiceController
+                                                                      .vehicleList![0];
+                                                              carServiceController
+                                                                      .selectedVehicle
+                                                                      .value =
+                                                                  carServiceController
+                                                                      .vehicleList![0];
+                                                              carServiceController
+                                                                      .selectedService
+                                                                      .value =
+                                                                  carServiceController
+                                                                      .vehicleModelList![0];
+                                                            } catch (e) {
+                                                              print(e);
+                                                            }
+                                                            _showBottomSheet(
+                                                                context);
+                                                          } else if (controller
+                                                                  .otherList[i]
+                                                                  .id ==
+                                                              17) {
+                                                            Navigator.push(
+                                                                context,
+                                                                MaterialPageRoute(
+                                                                    builder:
+                                                                        (context) =>
+                                                                            Insurance_Scr()));
+                                                          }
+                                                        },
+                                                        child: Container(
+                                                          height: 80,
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .symmetric(
+                                                                  vertical: 15),
+                                                          child: Column(
+                                                            children: [
+                                                              ClipRRect(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            15),
+                                                                child: Image
+                                                                    .network(
+                                                                  "${configModel?.baseUrls?.categoryImageUrl}/${controller.otherList[i].icon}",
+                                                                  height: 60,
+                                                                  width: 60,
+                                                                  fit: BoxFit
+                                                                      .fill,
+                                                                  errorBuilder: (context,
+                                                                          error,
+                                                                          stackTrace) =>
+                                                                      Image
+                                                                          .asset(
+                                                                    "assets/rescue.png",
+                                                                    height: 60,
+                                                                  ),
+                                                                ),
                                                               ),
-                                                            ),
+                                                              const SizedBox(
+                                                                  height: 10),
+                                                              Text(
+                                                                "${controller.otherList[i].name}",
+                                                                style:
+                                                                    TextStyle(
+                                                                  color: Color
+                                                                      .fromRGBO(
+                                                                          89,
+                                                                          89,
+                                                                          89,
+                                                                          1),
+                                                                ),
+                                                              )
+                                                            ],
                                                           ),
-                                                          const SizedBox(
-                                                              height: 10),
-                                                          Text(
-                                                            "${controller.otherList[i].name}",
-                                                            style: TextStyle(
-                                                              color: Color
-                                                                  .fromRGBO(
-                                                                      89,
-                                                                      89,
-                                                                      89,
-                                                                      1),
-                                                            ),
-                                                          )
-                                                        ],
-                                                      ),
-                                                    ),
-                                                  );
-                                                })),
+                                                        ),
+                                                      );
+                                                    })),
 
-                                        // Category section
-                                        Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 20.0, vertical: 10),
-                                          child: Container(
-                                            height: 20,
-                                            padding: const EdgeInsets.symmetric(
-                                                vertical: 20),
-                                            // child: Column(
-                                            //   mainAxisAlignment:
-                                            //       MainAxisAlignment.spaceBetween,
-                                            //   children: [
-                                            //     Row(
-                                            //       mainAxisAlignment:
-                                            //           MainAxisAlignment.spaceBetween,
-                                            //       children: [
-                                            //         InkWell(
-                                            //           onTap: () {
-                                            //             Navigator.push(
-                                            //                 context,
-                                            //                 MaterialPageRoute(
-                                            //                     builder: (context) =>
-                                            //                         const RescueMe()));
-                                            //           },
-                                            //           child: Container(
-                                            //             child: Column(
-                                            //               children: [
-                                            //                 Image.asset(
-                                            //                   "assets/rescue.png",
-                                            //                   height: 60,
-                                            //                 ),
-                                            //                 const SizedBox(height: 10),
-                                            //                 const Text(
-                                            //                   "Rescue Me",
-                                            //                   style: TextStyle(
-                                            //                     color: Color.fromRGBO(
-                                            //                         89, 89, 89, 1),
-                                            //                   ),
-                                            //                 )
-                                            //               ],
-                                            //             ),
-                                            //           ),
-                                            //         ),
-                                            //         InkWell(
-                                            //           onTap: () {
-                                            //             _showBottomSheet(context);
-                                            //           },
-                                            //           child: Container(
-                                            //             child: Column(
-                                            //               children: [
-                                            //                 Image.asset(
-                                            //                   "assets/dummy.png",
-                                            //                   height: 60,
-                                            //                 ),
-                                            //                 const SizedBox(height: 10),
-                                            //                 const Text(
-                                            //                   "Car Service",
-                                            //                   style: TextStyle(
-                                            //                     color: Color.fromRGBO(
-                                            //                         89, 89, 89, 1),
-                                            //                   ),
-                                            //                 )
-                                            //               ],
-                                            //             ),
-                                            //           ),
-                                            //         ),
-                                            //         InkWell(
-                                            //           onTap: () {
-                                            //             Navigator.push(
-                                            //                 context,
-                                            //                 MaterialPageRoute(
-                                            //                     builder: (context) =>
-                                            //                         const Insurance_Scr()));
-                                            //           },
-                                            //           child: Container(
-                                            //             child: Column(
-                                            //               children: [
-                                            //                 Image.asset(
-                                            //                   "assets/insurance.png",
-                                            //                   height: 60,
-                                            //                 ),
-                                            //                 const SizedBox(height: 10),
-                                            //                 const Text(
-                                            //                   "Insurance",
-                                            //                   style: TextStyle(
-                                            //                     color: Color.fromRGBO(
-                                            //                         89, 89, 89, 1),
-                                            //                   ),
-                                            //                 )
-                                            //               ],
-                                            //             ),
-                                            //           ),
-                                            //         ),
-                                            //       ],
-                                            //     ),
-                                            //     Row(
-                                            //       mainAxisAlignment:
-                                            //           MainAxisAlignment.spaceBetween,
-                                            //       children: [
-                                            //         InkWell(
-                                            //           onTap: () {
-                                            //             tyresBottomSheet(context);
-                                            //           },
-                                            //           child: Container(
-                                            //             child: Column(
-                                            //               children: [
-                                            //                 Image.asset(
-                                            //                   "assets/tyres.png",
-                                            //                   height: 60,
-                                            //                 ),
-                                            //                 const SizedBox(height: 10),
-                                            //                 const Text(
-                                            //                   "Tyres",
-                                            //                   style: TextStyle(
-                                            //                     color: Color.fromRGBO(
-                                            //                         89, 89, 89, 1),
-                                            //                   ),
-                                            //                 )
-                                            //               ],
-                                            //             ),
-                                            //           ),
-                                            //         ),
-                                            //         InkWell(
-                                            //           onTap: () {
-                                            //             batteryBottomSheet(context);
-                                            //           },
-                                            //           child: Container(
-                                            //             child: Column(
-                                            //               children: [
-                                            //                 Image.asset(
-                                            //                   "assets/insurance.png",
-                                            //                   height: 60,
-                                            //                 ),
-                                            //                 const SizedBox(height: 10),
-                                            //                 const Text(
-                                            //                   "Battery",
-                                            //                   style: TextStyle(
-                                            //                     color: Color.fromRGBO(
-                                            //                         89, 89, 89, 1),
-                                            //                   ),
-                                            //                 )
-                                            //               ],
-                                            //             ),
-                                            //           ),
-                                            //         ),
-                                            //         InkWell(
-                                            //           onTap: () {
-                                            //             carwashBottomShee(context);
-                                            //           },
-                                            //           child: Container(
-                                            //             child: Column(
-                                            //               children: [
-                                            //                 Image.asset(
-                                            //                   "assets/carwash.png",
-                                            //                   height: 60,
-                                            //                 ),
-                                            //                 const SizedBox(height: 10),
-                                            //                 const Text(
-                                            //                   "Car Wash",
-                                            //                   style: TextStyle(
-                                            //                     color: Color.fromRGBO(
-                                            //                         89, 89, 89, 1),
-                                            //                   ),
-                                            //                 )
-                                            //               ],
-                                            //             ),
-                                            //           ),
-                                            //         ),
-                                            //       ],
-                                            //     ),
-                                            //   ],
-                                            // ),
-                                          ),
+                                            // Category section
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 20.0,
+                                                      vertical: 10),
+                                              child: Container(
+                                                height: 20,
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        vertical: 20),
+                                                // child: Column(
+                                                //   mainAxisAlignment:
+                                                //       MainAxisAlignment.spaceBetween,
+                                                //   children: [
+                                                //     Row(
+                                                //       mainAxisAlignment:
+                                                //           MainAxisAlignment.spaceBetween,
+                                                //       children: [
+                                                //         InkWell(
+                                                //           onTap: () {
+                                                //             Navigator.push(
+                                                //                 context,
+                                                //                 MaterialPageRoute(
+                                                //                     builder: (context) =>
+                                                //                         const RescueMe()));
+                                                //           },
+                                                //           child: Container(
+                                                //             child: Column(
+                                                //               children: [
+                                                //                 Image.asset(
+                                                //                   "assets/rescue.png",
+                                                //                   height: 60,
+                                                //                 ),
+                                                //                 const SizedBox(height: 10),
+                                                //                 const Text(
+                                                //                   "Rescue Me",
+                                                //                   style: TextStyle(
+                                                //                     color: Color.fromRGBO(
+                                                //                         89, 89, 89, 1),
+                                                //                   ),
+                                                //                 )
+                                                //               ],
+                                                //             ),
+                                                //           ),
+                                                //         ),
+                                                //         InkWell(
+                                                //           onTap: () {
+                                                //             _showBottomSheet(context);
+                                                //           },
+                                                //           child: Container(
+                                                //             child: Column(
+                                                //               children: [
+                                                //                 Image.asset(
+                                                //                   "assets/dummy.png",
+                                                //                   height: 60,
+                                                //                 ),
+                                                //                 const SizedBox(height: 10),
+                                                //                 const Text(
+                                                //                   "Car Service",
+                                                //                   style: TextStyle(
+                                                //                     color: Color.fromRGBO(
+                                                //                         89, 89, 89, 1),
+                                                //                   ),
+                                                //                 )
+                                                //               ],
+                                                //             ),
+                                                //           ),
+                                                //         ),
+                                                //         InkWell(
+                                                //           onTap: () {
+                                                //             Navigator.push(
+                                                //                 context,
+                                                //                 MaterialPageRoute(
+                                                //                     builder: (context) =>
+                                                //                         const Insurance_Scr()));
+                                                //           },
+                                                //           child: Container(
+                                                //             child: Column(
+                                                //               children: [
+                                                //                 Image.asset(
+                                                //                   "assets/insurance.png",
+                                                //                   height: 60,
+                                                //                 ),
+                                                //                 const SizedBox(height: 10),
+                                                //                 const Text(
+                                                //                   "Insurance",
+                                                //                   style: TextStyle(
+                                                //                     color: Color.fromRGBO(
+                                                //                         89, 89, 89, 1),
+                                                //                   ),
+                                                //                 )
+                                                //               ],
+                                                //             ),
+                                                //           ),
+                                                //         ),
+                                                //       ],
+                                                //     ),
+                                                //     Row(
+                                                //       mainAxisAlignment:
+                                                //           MainAxisAlignment.spaceBetween,
+                                                //       children: [
+                                                //         InkWell(
+                                                //           onTap: () {
+                                                //             tyresBottomSheet(context);
+                                                //           },
+                                                //           child: Container(
+                                                //             child: Column(
+                                                //               children: [
+                                                //                 Image.asset(
+                                                //                   "assets/tyres.png",
+                                                //                   height: 60,
+                                                //                 ),
+                                                //                 const SizedBox(height: 10),
+                                                //                 const Text(
+                                                //                   "Tyres",
+                                                //                   style: TextStyle(
+                                                //                     color: Color.fromRGBO(
+                                                //                         89, 89, 89, 1),
+                                                //                   ),
+                                                //                 )
+                                                //               ],
+                                                //             ),
+                                                //           ),
+                                                //         ),
+                                                //         InkWell(
+                                                //           onTap: () {
+                                                //             batteryBottomSheet(context);
+                                                //           },
+                                                //           child: Container(
+                                                //             child: Column(
+                                                //               children: [
+                                                //                 Image.asset(
+                                                //                   "assets/insurance.png",
+                                                //                   height: 60,
+                                                //                 ),
+                                                //                 const SizedBox(height: 10),
+                                                //                 const Text(
+                                                //                   "Battery",
+                                                //                   style: TextStyle(
+                                                //                     color: Color.fromRGBO(
+                                                //                         89, 89, 89, 1),
+                                                //                   ),
+                                                //                 )
+                                                //               ],
+                                                //             ),
+                                                //           ),
+                                                //         ),
+                                                //         InkWell(
+                                                //           onTap: () {
+                                                //             carwashBottomShee(context);
+                                                //           },
+                                                //           child: Container(
+                                                //             child: Column(
+                                                //               children: [
+                                                //                 Image.asset(
+                                                //                   "assets/carwash.png",
+                                                //                   height: 60,
+                                                //                 ),
+                                                //                 const SizedBox(height: 10),
+                                                //                 const Text(
+                                                //                   "Car Wash",
+                                                //                   style: TextStyle(
+                                                //                     color: Color.fromRGBO(
+                                                //                         89, 89, 89, 1),
+                                                //                   ),
+                                                //                 )
+                                                //               ],
+                                                //             ),
+                                                //           ),
+                                                //         ),
+                                                //       ],
+                                                //     ),
+                                                //   ],
+                                                // ),
+                                              ),
+                                            ),
+
+                                            const Row(),
+                                          ],
                                         ),
-
-                                        const Row(),
-                                      ],
-                                    ),
-                                  ),
-                                ),
+                                      ),
+                                    )),
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       ),
                     );

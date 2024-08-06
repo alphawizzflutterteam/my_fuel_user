@@ -207,8 +207,8 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                             MaterialPageRoute(
                               builder: (context) => PlacePicker(
                                 apiKey: Platform.isAndroid
-                                    ? "AIzaSyDx6ckRsDin45KKzr4wOlAtfS0RsMM6_CY"
-                                    : "AIzaSyDx6ckRsDin45KKzr4wOlAtfS0RsMM6_CY",
+                                    ? "AIzaSyDi_XlHtopewZHtpWWxIO-EQ7mCegHr5o0"
+                                    : "AIzaSyDi_XlHtopewZHtpWWxIO-EQ7mCegHr5o0",
                                 onPlacePicked: (result) {
                                   print(result.formattedAddress);
                                   setState(() {
@@ -219,6 +219,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                                     longitude = result.geometry!.location.lng
                                         .toString();
                                   });
+                                  Get.back();
                                   _getAddressFromLatLng();
                                 },
                                 selectInitialPosition: true,
@@ -301,6 +302,12 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                                   Fluttertoast.showToast(
                                       msg:
                                           "Please Enter 10 digit phone number");
+                                  return;
+                                }
+                                if (pincodeController.text.toString().length <
+                                    6) {
+                                  Fluttertoast.showToast(
+                                      msg: "Please Enter 6 digit pin code");
                                   return;
                                 }
 

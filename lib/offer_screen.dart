@@ -67,112 +67,110 @@ class _OffersScreenState extends State<OffersScreen> {
               "_checkConnectivity offer ${connectivityController.isConnected.value}");
           return Obx(() => connectivityController.isConnected.value == true
               ? Scaffold(
-                  body: SingleChildScrollView(
-                    child: Container(
-                      decoration: const BoxDecoration(
-                        gradient: LinearGradient(
-                          begin: Alignment.centerLeft,
-                          end: Alignment.centerRight,
-                          colors: [
-                            Color.fromRGBO(252, 130, 59, 1),
-                            Color.fromRGBO(252, 130, 59, 1),
-                            Color.fromRGBO(211, 83, 7, 1),
-                          ],
-                        ),
+                  body: Container(
+                    decoration: const BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.centerLeft,
+                        end: Alignment.centerRight,
+                        colors: [
+                          Color.fromRGBO(252, 130, 59, 1),
+                          Color.fromRGBO(252, 130, 59, 1),
+                          Color.fromRGBO(211, 83, 7, 1),
+                        ],
                       ),
-                      padding: const EdgeInsets.only(top: 48),
-                      child: Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 15.0, vertical: 8),
+                    ),
+                    padding: const EdgeInsets.only(top: 48),
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 15.0, vertical: 8),
 
-                            // Top App bar
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Row(
-                                  children: [
-                                    Image.asset(
-                                      "assets/mingcute_location-fill.png",
-                                      // scale: 20,
+                          // Top App bar
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
+                                children: [
+                                  Image.asset(
+                                    "assets/mingcute_location-fill.png",
+                                    // scale: 20,
+                                    height: 24,
+                                  ),
+                                  const SizedBox(width: 8),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "${address.toString().split(",")[0]}",
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 16,
+                                        ),
+                                      ),
+                                      Text(
+                                        "${address.toString()}",
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 12,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  // Image.asset(
+                                  //   "assets/Group 2979.png",
+                                  //   height: 24,
+                                  // ),
+                                  const Icon(
+                                    Icons.search,
+                                    color: Colors.white,
+                                    size: 30,
+                                  ),
+                                  const SizedBox(width: 8),
+                                  GestureDetector(
+                                    onTap: () => Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              const Notification1(),
+                                        )),
+                                    child: Image.asset(
+                                      "assets/Notification.png",
                                       height: 24,
                                     ),
-                                    const SizedBox(width: 8),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          "Ward 35",
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 16,
-                                          ),
-                                        ),
-                                        Text(
-                                          "${address.toString()}",
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 12,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                                Row(
-                                  children: [
-                                    // Image.asset(
-                                    //   "assets/Group 2979.png",
-                                    //   height: 24,
-                                    // ),
-                                    const Icon(
-                                      Icons.search,
-                                      color: Colors.white,
-                                      size: 30,
-                                    ),
-                                    const SizedBox(width: 8),
-                                    GestureDetector(
-                                      onTap: () => Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                const Notification1(),
-                                          )),
-                                      child: Image.asset(
-                                        "assets/Notification.png",
-                                        height: 24,
-                                      ),
-                                    ),
-                                  ],
-                                )
-                              ],
+                                  ),
+                                ],
+                              )
+                            ],
+                          ),
+                        ),
+                        const SizedBox(height: 20),
+                        Container(
+                          decoration: const BoxDecoration(
+                            color: Colors.white38,
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(35),
+                              topRight: Radius.circular(35),
                             ),
                           ),
-                          const SizedBox(height: 20),
-                          Container(
+                          padding: const EdgeInsets.only(top: 10),
+                          child: Container(
                             decoration: const BoxDecoration(
-                              color: Colors.white38,
+                              color: Colors.white,
                               borderRadius: BorderRadius.only(
                                 topLeft: Radius.circular(35),
                                 topRight: Radius.circular(35),
                               ),
                             ),
-                            padding: const EdgeInsets.only(top: 10),
-                            child: Container(
-                              decoration: const BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(35),
-                                  topRight: Radius.circular(35),
-                                ),
-                              ),
-                              child: bodyWidget(),
-                            ),
-                          )
-                        ],
-                      ),
+                            child: bodyWidget(),
+                          ),
+                        )
+                      ],
                     ),
                   ),
                 )
@@ -222,61 +220,66 @@ class _OffersScreenState extends State<OffersScreen> {
   }
 
   Widget bodyWidget() {
-    return Padding(
-      padding: const EdgeInsets.all(15),
-      child: GetBuilder<OfferController>(
-          init: OfferController(),
-          builder: (controller) {
-            controller.getOffers();
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                const SizedBox(height: 27),
-                Text(
-                  'Best Offers'.tr,
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(height: 10),
-                Obx(() => controller.isLoading.value == true
-                    ? Center(
-                        child: CircularProgressIndicator(),
-                      )
-                    : controller.offerInfoModel.value.coupons!.length == 0
+    return SizedBox(
+      height: MediaQuery.of(context).size.height * 0.748,
+      child: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(15),
+          child: GetBuilder<OfferController>(
+              init: OfferController(),
+              builder: (controller) {
+                controller.getOffers();
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    const SizedBox(height: 27),
+                    Text(
+                      'Best Offers'.tr,
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    Obx(() => controller.isLoading.value == true
                         ? Center(
-                            child: Text("No data Found"),
+                            child: CircularProgressIndicator(),
                           )
-                        : ListView.builder(
-                            padding: EdgeInsets.zero,
-                            physics: NeverScrollableScrollPhysics(),
-                            shrinkWrap: true,
-                            itemCount:
-                                controller.offerInfoModel.value.coupons!.length,
-                            itemBuilder: (context, index) {
-                              return OfferCard(
-                                color: offers[0]['color'],
-                                text: controller
-                                    .offerInfoModel.value.coupons![index].title
-                                    .toString(),
-                                icon: offers[0]['icon'],
-                                title: controller
-                                    .offerInfoModel.value.coupons![index].title
-                                    .toString(),
-                                description:
-                                    "${controller.offerInfoModel.value.coupons![index].discount.toString()} ${controller.offerInfoModel.value.coupons![index].discountType.toString()} for code ${controller.offerInfoModel.value.coupons![index].code.toString()}",
-                                offer:
-                                    "${controller.offerInfoModel.value.coupons![index].discount.toString()} ${controller.offerInfoModel.value.coupons![index].discountType.toString()}",
-                                expiry: controller.offerInfoModel.value
-                                    .coupons![index].plainExpireDate
-                                    .toString(),
-                              );
-                            },
-                          )),
-              ],
-            );
-          }),
+                        : controller.offerInfoModel.value.coupons!.length == 0
+                            ? Center(
+                                child: Text("No data Found"),
+                              )
+                            : ListView.builder(
+                                padding: EdgeInsets.zero,
+                                physics: NeverScrollableScrollPhysics(),
+                                shrinkWrap: true,
+                                itemCount: controller
+                                    .offerInfoModel.value.coupons!.length,
+                                itemBuilder: (context, index) {
+                                  return OfferCard(
+                                    color: offers[0]['color'],
+                                    text: controller.offerInfoModel.value
+                                        .coupons![index].title
+                                        .toString(),
+                                    icon: offers[0]['icon'],
+                                    title: controller.offerInfoModel.value
+                                        .coupons![index].title
+                                        .toString(),
+                                    description:
+                                        "${controller.offerInfoModel.value.coupons![index].discount.toString()} ${controller.offerInfoModel.value.coupons![index].discountType.toString()} for code ${controller.offerInfoModel.value.coupons![index].code.toString()}",
+                                    offer:
+                                        "${controller.offerInfoModel.value.coupons![index].discount.toString()} ${controller.offerInfoModel.value.coupons![index].discountType.toString()}",
+                                    expiry: controller.offerInfoModel.value
+                                        .coupons![index].plainExpireDate
+                                        .toString(),
+                                  );
+                                },
+                              )),
+                  ],
+                );
+              }),
+        ),
+      ),
     );
   }
 

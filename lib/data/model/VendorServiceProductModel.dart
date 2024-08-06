@@ -328,7 +328,7 @@ class SelectProducts {
     }
     colorImage = json['color_image'];
     thumbnail = json['thumbnail'];
-    featured = json['featured'];
+    featured = json['featured'].toString();
     flashDeal = json['flash_deal'];
     videoProvider = json['video_provider'];
     videoUrl = json['video_url'];

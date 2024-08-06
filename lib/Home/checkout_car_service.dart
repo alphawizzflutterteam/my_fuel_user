@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:test_prj/components/my_appbar.dart';
 import 'package:test_prj/components/my_button.dart';
 import 'package:test_prj/controller/carservice_controller.dart';
@@ -192,8 +193,19 @@ class _Checkout_Car_ServiceState extends State<Checkout_Car_Service> {
                   floatingActionButtonLocation:
                       FloatingActionButtonLocation.centerFloat,
                   body: Obx(() => carController.isLoading.value == true
-                      ? const Center(
-                          child: CircularProgressIndicator(),
+                      ? Center(
+                          child: Shimmer.fromColors(
+                            baseColor: Colors.white,
+                            highlightColor: Colors.white,
+                            child: Text(
+                              '     ',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 10.0,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
                         )
                       : SingleChildScrollView(
                           child: carController

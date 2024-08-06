@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:test_prj/routes/app_routes.dart';
 
 import '../components/my_button.dart';
 import '../helper/colors.dart';
@@ -68,11 +69,12 @@ class _BatteryListingState extends State<BatteryListing> {
                     child: InkWell(
                       onTap: () {
                         if (widget.index == 1) {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      Checkout_Car_Service()));
+                          Get.toNamed(Routes.CarCheckout);
+                          // Navigator.push(
+                          //     context,
+                          //     MaterialPageRoute(
+                          //         builder: (context) =>
+                          //             Checkout_Car_Service()));
                         } else {
                           Navigator.push(
                               context,

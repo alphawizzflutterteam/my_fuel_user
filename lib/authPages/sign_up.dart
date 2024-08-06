@@ -152,13 +152,38 @@ class _SignUpState extends State<SignUp> {
                                                 "Please select privacy and terms & condition");
                                         return;
                                       }
-                                      if (panController.text.isNotEmpty &&
-                                          panController.text.length < 10) {
+
+                                      if (gstController.text.isNotEmpty &&
+                                          gstController.text.length < 15) {
                                         Fluttertoast.showToast(
                                             msg:
-                                                "Please enter pan number of 10");
+                                                "Please enter gst number of 15");
                                         return;
                                       }
+                                      if (phoneController.text.isNotEmpty &&
+                                          phoneController.text.length < 10) {
+                                        Fluttertoast.showToast(
+                                            msg:
+                                                "Please enter phone number of 10");
+                                        return;
+                                      }
+                                      if (data == "1") {
+                                        if (panController.text.isNotEmpty &&
+                                            panController.text.length < 10) {
+                                          Fluttertoast.showToast(
+                                              msg:
+                                                  "Please enter pan number of 10");
+                                          return;
+                                        }
+                                        if (msmeController.text.isNotEmpty &&
+                                            msmeController.text.length < 12) {
+                                          Fluttertoast.showToast(
+                                              msg:
+                                                  "Please enter msme number of 12");
+                                          return;
+                                        }
+                                      }
+
                                       if (_formKeyReset!.currentState!
                                           .validate()) {
                                         User user = User();

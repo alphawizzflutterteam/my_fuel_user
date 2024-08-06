@@ -68,6 +68,8 @@ class AddressController extends AppBaseController {
     List<AddressListModel> addressList = await _laravelApiClient.getAddress();
 
     addressAList.value = addressList;
+
+    isLoading(false);
     update();
     // offerInfoModel(OffersModel.fromJson(data));
     // isLoading(false);

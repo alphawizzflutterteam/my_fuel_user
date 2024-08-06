@@ -72,7 +72,7 @@ class _EditProfileState extends State<EditProfile> {
 
   void initUI() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ProfileController controller = Get.find();
+      ProfileController controller = Get.put(ProfileController());
       controller.getProfile().then((value) {
         nameController.text = controller.userInfoModel.value.fName.toString();
         phoneController.text = controller.userInfoModel.value.phone.toString();
@@ -212,64 +212,66 @@ class _EditProfileState extends State<EditProfile> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(height: 100),
-                GetBuilder<ProfileController>(builder: (profileController) {
-                  return GetBuilder<SignupController>(
-                      builder: (signUpController) {
-                    return Stack(
-                      alignment: Alignment.center,
-                      children: [
-                        Center(
-                          child: Container(
-                            height: 125,
-                            width: 125,
-                            decoration: BoxDecoration(
-                                //     image: DecorationImage(
-                                //         image: AssetImage(
-                                //   'assets/login-logo.png',
-                                // ))
-                                ),
-                            // color: Colors.deepOrange,
-                            child: ClipOval(
-                              child: profileImage != null
-                                  ? Image.file(
-                                      profileImage!,
-                                      height: 125,
-                                      width: 125,
-                                      fit: BoxFit.cover,
-                                    )
-                                  : Image.network(
-                                      '${configModel?.baseUrls?.customerImageUrl}/${Get.find<ProfileController>().userInfoModel?.value.image}',
-                                      height: 125,
-                                      width: 125,
-                                      fit: BoxFit.cover,
-                                      errorBuilder:
-                                          (context, error, stackTrace) {
-                                        return errorImage(125, 125);
-                                      },
+                GetBuilder<ProfileController>(
+                    init: ProfileController(),
+                    builder: (profileController) {
+                      return GetBuilder<SignupController>(
+                          builder: (signUpController) {
+                        return Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            Center(
+                              child: Container(
+                                height: 125,
+                                width: 125,
+                                decoration: BoxDecoration(
+                                    //     image: DecorationImage(
+                                    //         image: AssetImage(
+                                    //   'assets/login-logo.png',
+                                    // ))
                                     ),
+                                // color: Colors.deepOrange,
+                                child: ClipOval(
+                                  child: profileImage != null
+                                      ? Image.file(
+                                          profileImage!,
+                                          height: 125,
+                                          width: 125,
+                                          fit: BoxFit.cover,
+                                        )
+                                      : Image.network(
+                                          '${configModel?.baseUrls?.customerImageUrl}/${Get.find<ProfileController>().userInfoModel?.value.image}',
+                                          height: 125,
+                                          width: 125,
+                                          fit: BoxFit.cover,
+                                          errorBuilder:
+                                              (context, error, stackTrace) {
+                                            return errorImage(125, 125);
+                                          },
+                                        ),
+                                ),
+                              ),
                             ),
-                          ),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            showModalBottomSheet(
-                              context: context,
-                              builder: (context) => imagePick(),
-                            );
-                          },
-                          child: Padding(
-                            padding:
-                                const EdgeInsets.only(top: 105.0, left: 80),
-                            child: Image.asset(
-                              "assets/Editicon.png",
-                              height: 25,
+                            GestureDetector(
+                              onTap: () {
+                                showModalBottomSheet(
+                                  context: context,
+                                  builder: (context) => imagePick(),
+                                );
+                              },
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 105.0, left: 80),
+                                child: Image.asset(
+                                  "assets/Editicon.png",
+                                  height: 25,
+                                ),
+                              ),
                             ),
-                          ),
-                        ),
-                      ],
-                    );
-                  });
-                }),
+                          ],
+                        );
+                      });
+                    }),
 
                 // App Icon
                 // Center(
@@ -301,8 +303,16 @@ class _EditProfileState extends State<EditProfile> {
                             ? Center(child: CircularProgressIndicator())
                             : GestureDetector(
                                 onTap: () {
+                                  if (gstController.text.isNotEmpty &&
+                                      gstController.text.length < 15) {
+                                    Fluttertoast.showToast(
+                                        msg: "Please enter gst number of 15");
+                                    return;
+                                  }
+
                                   if (data.trim() != "normal" &&
-                                      msmeController.text.isNotEmpty) {
+                                      msmeController.text.isNotEmpty &&
+                                      msmeController.text.length < 12) {
                                     Fluttertoast.showToast(
                                         msg:
                                             "Please enter msme number of 12 digits");

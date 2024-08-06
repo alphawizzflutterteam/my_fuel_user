@@ -944,6 +944,10 @@ class _SelectNewAddressState extends State<SelectNewAddress> {
           Fluttertoast.showToast(msg: "Please enter valid mobile".tr);
           return;
         }
+        if (pincodeController.text.toString().length < 6) {
+          Fluttertoast.showToast(msg: "Please Enter 6 digit pin code");
+          return;
+        }
         controller
             .addAddress(
                 nameController.text,
