@@ -2,14 +2,18 @@ import 'package:flutter/material.dart';
 
 class MyHintTextField extends StatelessWidget {
   final Widget hintText;
+  final bool? isActive;
+  final TextEditingController? controller;
 
-  const MyHintTextField({super.key, required this.hintText});
+  const MyHintTextField(
+      {super.key, required this.hintText, this.isActive, this.controller});
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: 56,
       child: TextFormField(
+        controller: controller,
         decoration: InputDecoration(
           label: hintText,
           hintStyle: TextStyle(color: Colors.grey.shade700),
@@ -19,7 +23,10 @@ class MyHintTextField extends StatelessWidget {
               borderSide: BorderSide(color: Colors.grey.shade200),
               borderRadius: BorderRadius.circular(8)),
           focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.grey.shade700),
+              borderSide: BorderSide(
+                  color: isActive ?? false
+                      ? Colors.transparent
+                      : Colors.grey.shade700),
               borderRadius: BorderRadius.circular(8)),
         ),
       ),

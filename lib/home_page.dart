@@ -342,12 +342,15 @@ class _HomePageState extends State<HomePage> {
                                                   padding: const EdgeInsets
                                                       .symmetric(
                                                       horizontal: 16),
-                                                  child: Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.start,
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .center,
+
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.center,
+                                                children: [
+                                                  Row(
                                                     children: [
                                                       Image.asset(
                                                           "assets/login-logo.png",
@@ -385,23 +388,19 @@ class _HomePageState extends State<HomePage> {
                                                           ),
                                                         ],
                                                       ),
-                                                      const SizedBox(
-                                                          width: 124),
-                                                      GestureDetector(
-                                                        // onTap: () => Navigator.push(
-                                                        //     context,
-                                                        //     MaterialPageRoute(
-                                                        //       builder: (context) =>
-                                                        //           const LookingForCompany(),
-                                                        //     )),
-                                                        child: Image.asset(
-                                                          "assets/Arrow - Down 2.png",
-                                                          height: 24,
-                                                        ),
-                                                      )
-                                                    ],
-                                                  ),
-                                                ),
+                                                  GestureDetector(
+                                                    // onTap: () => Navigator.push(
+                                                    //     context,
+                                                    //     MaterialPageRoute(
+                                                    //       builder: (context) =>
+                                                    //           const LookingForCompany(),
+                                                    //     )),
+                                                    child: Image.asset(
+                                                      "assets/Arrow - Down 2.png",
+                                                      height: 24,
+                                                    ),
+                                                  )
+                                                ],
                                               ),
                                             ),
 
