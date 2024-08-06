@@ -203,15 +203,25 @@ class SettingModel {
         vendorFaq!.add(VendorFaq.fromJson(v));
       });
     }
-    refundPolicy = json['refund_policy'] != null
-        ? RefundPolicy.fromJson(json['refund_policy'])
-        : null;
-    returnPolicy = json['return_policy'] != null
-        ? RefundPolicy.fromJson(json['return_policy'])
-        : null;
-    cancellationPolicy = json['cancellation_policy'] != null
-        ? RefundPolicy.fromJson(json['cancellation_policy'])
-        : null;
+    try {
+      print("categoryImageUrl  refund_policy${json['refund_policy']}");
+      refundPolicy = json['refund_policy'] != null
+          ? RefundPolicy.fromJson(json['refund_policy'])
+          : null;
+    } catch (e) {
+      print(e);
+    }
+    try {
+      print("categoryImageUrl  return_policy${json['return_policy']}");
+      returnPolicy = json['return_policy'] != null
+          ? RefundPolicy.fromJson(json['return_policy'])
+          : null;
+      cancellationPolicy = json['cancellation_policy'] != null
+          ? RefundPolicy.fromJson(json['cancellation_policy'])
+          : null;
+    } catch (e) {
+      print(e);
+    }
     if (json['currency_list'] != null) {
       currencyList = <CurrencyList>[];
       json['currency_list'].forEach((v) {
@@ -489,6 +499,11 @@ class BaseUrls {
 
   BaseUrls.fromJson(Map<String, dynamic> json) {
     print("categoryImageUrl ${json['category_image_url']}");
+    print("categoryImageUrl ${json['category_image_url']}");
+    print("categoryImageUrl ${json['category_image_url']}");
+    print("categoryImageUrl ${json['notification_image_url']}");
+    print("categoryImageUrl ${json['support_ticket_image_url']}");
+    print("categoryImageUrl ${json['chatting_image_url']}");
     productImageUrl = json['product_image_url'];
     productThumbnailUrl = json['product_thumbnail_url'];
     digitalProductUrl = json['digital_product_url'];
@@ -912,6 +927,7 @@ class SellerServices {
 
   SellerServices.fromJson(Map<String, dynamic> json) {
     title = json['title'];
+    print("categoryImageUrl${json['title']}");
     if (json['data'] != null) {
       data = <Data>[];
       json['data'].forEach((v) {

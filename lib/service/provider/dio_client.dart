@@ -1,5 +1,9 @@
+import 'dart:async';
+import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:http/http.dart' as http;
 
 import 'package:dio/dio.dart' as dio;
 import 'package:dio/dio.dart';
@@ -10,6 +14,10 @@ import 'package:test_prj/helper/common/custom_trace.dart';
 import 'package:test_prj/helper/utils/app_constants.dart';
 import 'package:test_prj/main.dart';
 import 'package:test_prj/service/exceptions/network_exceptions.dart';
+import 'package:dio/dio.dart';
+import 'dart:convert';
+import 'dart:developer';
+import 'dart:io';
 
 const _defaultConnectTimeout = Duration.millisecondsPerMinute;
 const _defaultReceiveTimeout = Duration.millisecondsPerMinute;
@@ -208,6 +216,73 @@ class DioClient {
       throw NetworkExceptions.getDioException(e);
     } finally {
       _endProgress(programInfo);
+    }
+  }
+
+  Future<Map<String, dynamic>> postAPICallCompleteTest(
+    Uri url,
+    Map<String, String> param,
+    String tokena, {
+    File? testImages,
+  }) async {
+    var responseJson;
+    Map<String, String> headers = {'Authorization': 'Bearer $tokena'};
+    try {
+      print("object AAAAAAAAA ${param}");
+      log("object AAAAAAAAA ${token}");
+      var request = http.MultipartRequest('POST', url);
+      request.fields.addAll(param);
+      if (testImages != null) {
+        request.files
+            .add(await http.MultipartFile.fromPath('image', testImages.path));
+      }
+
+      request.headers.addAll(headers);
+      log('${url}');
+      log('${param}');
+      log('${request.files}');
+      log('${request.headers}');
+      final streamedResponse = await request.send();
+      final response = await http.Response.fromStream(streamedResponse);
+
+      // switch(response.statusCode)
+
+      // log('${response.body}');
+      // log('${headers}');
+      responseJson = _response(response);
+    } on SocketException catch (e) {
+      Fluttertoast.showToast(msg: 'No Internet connection '.tr);
+    } on TimeoutException {
+      Fluttertoast.showToast(msg: 'Something Went wrong'.tr);
+    } on Exception catch (e) {
+      Fluttertoast.showToast(msg: 'Something Went wrong with ${e.toString()}');
+    }
+    return responseJson;
+  }
+
+  dynamic _response(http.Response response) {
+    print("Response ${response.body.toString()}");
+    switch (response.statusCode) {
+      case 200:
+        var responseJson = json.decode(response.body.toString());
+        return responseJson;
+      // case 400:
+      //   throw BadRequestException(response.body.toString());
+      case 401:
+        var responseJson = json.decode(response.body.toString());
+        return responseJson;
+
+      case 404:
+        var responseJson = json.decode(response.body.toString());
+        return responseJson;
+      case 403:
+        var responseJson = json.decode(response.body.toString());
+        return responseJson;
+      // throw UnauthorisedException(response.body.toString());
+      case 500:
+      default:
+        throw Exception(
+            'Error occurred while Communication with Server with StatusCode: ${response.statusCode}');
     }
   }
 

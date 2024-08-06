@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../components/my_button.dart';
 import '../helper/colors.dart';
@@ -43,7 +44,7 @@ class _BatteryListingState extends State<BatteryListing> {
             ),
           ),
         ),
-        title: Text('Battery Listing'),
+        title: Text('Battery Listing'.tr),
         centerTitle: true,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
@@ -164,7 +165,7 @@ class _BatteryListingState extends State<BatteryListing> {
                     padding:
                         const EdgeInsets.only(top: 20, left: 30, right: 20),
                     child: Text(
-                      "Filter",
+                      "Filter".tr,
                       style:
                           TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                     ),

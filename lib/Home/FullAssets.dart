@@ -3,6 +3,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:test_prj/components/my_appbar.dart';
 import 'package:test_prj/components/my_button.dart';
+import 'package:test_prj/components/widgets/globle_widgets.dart';
 import 'package:test_prj/controller/asset_controller.dart';
 import 'package:test_prj/orderfuel/doorStepDelivery/assets_page.dart';
 
@@ -49,7 +50,7 @@ class _AssetsState extends State<MyFullAssets> {
         ],
       ),
       style: OutlinedButton.styleFrom(
-        minimumSize: const Size(280, 50),
+        minimumSize: const Size(double.infinity, 50),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadiusDirectional.circular(10),
         ),
@@ -81,7 +82,7 @@ class _AssetsState extends State<MyFullAssets> {
         builder: (asetController) {
           return Scaffold(
             appBar: MyAppFinalbar(
-              title: "Assets",
+              title: "Assets".tr,
             ),
             body: SingleChildScrollView(
               child: Form(
@@ -140,15 +141,15 @@ class _AssetsState extends State<MyFullAssets> {
                       padding: const EdgeInsets.all(10.0),
                       child: Column(
                         children: [
-                          customRadio("Genset", 1),
+                          customRadio("Genset".tr, 1),
                           const SizedBox(
                             height: 10,
                           ),
-                          customRadio("Heavy Machinery", 2),
+                          customRadio("Heavy Machinery".tr, 2),
                           const SizedBox(
                             height: 10,
                           ),
-                          customRadio("Equipments", 3),
+                          customRadio("Equipments".tr, 3),
                           const SizedBox(
                             height: 10,
                           ),
@@ -173,7 +174,7 @@ class _AssetsState extends State<MyFullAssets> {
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
                             ),
-                            hintText: 'Asset Name (eg: genset1)',
+                            hintText: 'Asset Name (eg: genset1)'.tr,
                             hintStyle: const TextStyle(color: Colors.grey),
                           ),
                         ),
@@ -189,7 +190,7 @@ class _AssetsState extends State<MyFullAssets> {
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
                             ),
-                            hintText: 'Asset Capacity/Power (eg: 120kva)',
+                            hintText: 'Asset Capacity/Power (eg: 120kva)'.tr,
                             hintStyle: const TextStyle(color: Colors.grey),
                           ),
                         ),
@@ -205,69 +206,79 @@ class _AssetsState extends State<MyFullAssets> {
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
                             ),
-                            hintText: 'Fuel capacity(eg: 200 litres)',
+                            hintText: 'Fuel capacity(eg: 200 litres)'.tr,
                             hintStyle: const TextStyle(color: Colors.grey),
                           ),
                         ),
                       ),
                     ),
                     const SizedBox(height: 80),
-                    Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Align(
-                        alignment: Alignment.centerRight,
-                        child: GestureDetector(
-                            // onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const AssetsPage(),)),
-                            child: InkWell(
-                                onTap: () {
-                                  if (_formKeyReset.currentState!.validate()) {
-                                    if (widget.update == true) {
-                                      asetController
-                                          .updateA(
-                                              widget.data!.id.toString(),
-                                              selectedValue == 1
-                                                  ? "Genset"
-                                                  : selectedValue == 2
-                                                      ? "Heavy Machinery"
-                                                      : "Equipments",
-                                              nameControiller.text,
-                                              capacityControiller.text,
-                                              fuelcapacityControiller.text)
-                                          .then((value) {
-                                        Fluttertoast.showToast(
-                                            msg: "${value['message']}");
-                                        if (value['status'] == true) {
-                                          Fluttertoast.showToast(
-                                              msg: "${value['message']}");
-                                          Get.back(result: "hello");
+                    asetController.isLoading.value == true
+                        ? isCircularLoading()
+                        : Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Align(
+                              alignment: Alignment.centerRight,
+                              child: GestureDetector(
+                                  // onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const AssetsPage(),)),
+                                  child: InkWell(
+                                      onTap: () {
+                                        if (_formKeyReset.currentState!
+                                            .validate()) {
+                                          if (widget.update == true) {
+                                            asetController
+                                                .updateA(
+                                                    widget.data!.id.toString(),
+                                                    selectedValue == 1
+                                                        ? "genset"
+                                                        : selectedValue == 2
+                                                            ? "heavy_machinery"
+                                                            : "equipments",
+                                                    nameControiller.text,
+                                                    capacityControiller.text,
+                                                    fuelcapacityControiller
+                                                        .text)
+                                                .then((value) {
+                                              if (value['status'] == true) {
+                                                Fluttertoast.showToast(
+                                                    msg: "${value['message']}");
+                                                Get.back(result: "hello");
+                                              } else {
+                                                Fluttertoast.showToast(
+                                                    msg: "${value['message']}");
+                                              }
+                                            });
+                                          } else {
+                                            asetController
+                                                .createAst(
+                                                    selectedValue == 1
+                                                        ? "Genset"
+                                                        : selectedValue == 2
+                                                            ? "heavy_machinery"
+                                                            : "Equipments",
+                                                    nameControiller.text,
+                                                    capacityControiller.text,
+                                                    fuelcapacityControiller
+                                                        .text)
+                                                .then((value) {
+                                              if (value['status'] == true) {
+                                                Fluttertoast.showToast(
+                                                    msg: "${value['message']}");
+                                                Get.back(result: "hello");
+                                              } else {
+                                                Fluttertoast.showToast(
+                                                    msg: "${value['message']}");
+                                              }
+                                            });
+                                          }
                                         }
-                                      });
-                                    } else {
-                                      asetController
-                                          .createAst(
-                                              selectedValue == 1
-                                                  ? "Genset"
-                                                  : selectedValue == 2
-                                                      ? "Heavy Machinery"
-                                                      : "Equipments",
-                                              nameControiller.text,
-                                              capacityControiller.text,
-                                              fuelcapacityControiller.text)
-                                          .then((value) {
-                                        Fluttertoast.showToast(
-                                            msg: "${value['message']}");
-                                        if (value['status'] == true) {
-                                          Fluttertoast.showToast(
-                                              msg: "${value['message']}");
-                                          Get.back(result: "hello");
-                                        }
-                                      });
-                                    }
-                                  }
-                                },
-                                child: MyButton(text: 'Add Asset type'.tr))),
-                      ),
-                    ),
+                                      },
+                                      child: MyButton(
+                                          text: widget.update == true
+                                              ? 'Update Asset'
+                                              : 'Add Asset type'.tr))),
+                            ),
+                          ),
                     const SizedBox(height: 20),
                   ],
                 ),
@@ -279,11 +290,13 @@ class _AssetsState extends State<MyFullAssets> {
 
   void initUI() {
     if (widget.update == true) {
+      print(
+          "object Edit Data ${widget.data!.assetType.toString().toLowerCase()}");
       if (widget.data!.assetType.toString().toLowerCase() ==
           "Genset".toString().toLowerCase()) {
         selectedValue = 1;
       } else if (widget.data!.assetType.toString().toLowerCase() ==
-          "Heavy Machinery".toString().toLowerCase()) {
+          "heavy_machinery".toString().toLowerCase()) {
         selectedValue = 2;
       } else if (widget.data!.assetType.toString().toLowerCase() ==
           "Equipments".toString().toLowerCase()) {

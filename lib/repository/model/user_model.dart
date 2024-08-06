@@ -61,7 +61,13 @@ class UpdateProfile {
   String? lName;
   String? email;
   String? phone;
+  String? guest_id;
+  String? pan;
+  String? msme;
+  String? gst;
+  String? profile;
   String? password;
+  String? address;
 
   UpdateProfile({
     this.fName,
@@ -69,6 +75,12 @@ class UpdateProfile {
     this.email,
     this.phone,
     this.password,
+    this.guest_id,
+    this.pan,
+    this.msme,
+    this.gst,
+    this.profile,
+    this.address,
   });
 
   UpdateProfile.fromJson(Map<String, dynamic> json) {
@@ -77,6 +89,12 @@ class UpdateProfile {
     email = json['email'];
     phone = json['phone'];
     password = json['password'];
+    guest_id = json['guest_id'];
+    pan = json['pan'];
+    msme = json['msme'];
+    gst = json['gst'];
+    profile = json['profile'];
+    address = json['address'];
   }
 
   Map<String, dynamic> toJson() {
@@ -86,6 +104,12 @@ class UpdateProfile {
     data['email'] = email;
     data['phone'] = phone;
     data['password'] = password;
+    data['guest_id'] = "123";
+    data['pan'] = pan;
+    data['msme'] = msme;
+    data['gst'] = gst;
+    data['profile'] = profile;
+    data['address'] = address;
 
     return data;
   }

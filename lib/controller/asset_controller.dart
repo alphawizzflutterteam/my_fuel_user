@@ -31,8 +31,10 @@ class AssetController extends AppBaseController {
 
     Map<String, dynamic> value = await _laravelApiClient.createAsset(
         asset_type, name, capacity, fuel_capacity);
-    if (value.containsKey("errors")) {
-      Fluttertoast.showToast(msg: "$value");
+
+    if (value['status'] == true) {
+      Fluttertoast.showToast(msg: "${value['message']}");
+    } else if (value.containsKey("errors")) {
     } else if (value['token'] != "") {}
 
     isLoading(false);
@@ -45,8 +47,9 @@ class AssetController extends AppBaseController {
 
     Map<String, dynamic> value = await _laravelApiClient.updateAsset(
         id, asset_type, name, capacity, fuel_capacity);
+
+    getAssets();
     if (value.containsKey("errors")) {
-      Fluttertoast.showToast(msg: "$value");
     } else if (value['token'] != "") {}
 
     isLoading(false);
@@ -60,7 +63,7 @@ class AssetController extends AppBaseController {
       id,
     );
     if (value.containsKey("errors")) {
-      Fluttertoast.showToast(msg: "$value");
+      // Fluttertoast.showToast(msg: "$value");
     } else if (value['token'] != "") {}
 
     isLoading(false);

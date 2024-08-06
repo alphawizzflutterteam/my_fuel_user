@@ -134,20 +134,54 @@ class _OTPScreenState extends State<OTPScreen2> {
                             //       builder: (context) => CreatePasswordPage(),
                             //     ));
                           } else {
-                            Fluttertoast.showToast(
-                                msg: "Enter Correct password");
+                            Fluttertoast.showToast(msg: "Enter Correct Otp".tr);
                           }
                         },
-                        child: MyButton(text: "Verify")),
+                        child: MyButton(text: "Verify".tr)),
                     SizedBox(height: 20),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text("Don't received Otp? "),
-                        Text(
-                          "Resend OTP",
-                          style: TextStyle(
-                            color: Color.fromRGBO(138, 180, 2, 1),
+                        InkWell(
+                          onTap: () {
+                            controller.forgetpass(phone).then((value) {
+                              if (value['status'] == true) {
+                                print("object ${value['token']}");
+
+                                token = value['token'];
+                                Fluttertoast.showToast(
+                                    msg: "${value['message']}");
+                                setState(() {});
+
+                                //PASSWORD_VERIFICATION
+                                // Get.toNamed(
+                                //     Routes
+                                //         .PASSWORD_VERIFICATION,
+                                //     arguments: {
+                                //       'token': value['token'],
+                                //       'type': value['token'],
+                                //       'phone':
+                                //       '${phoneController.text}',
+                                //       'otp':
+                                //       '${value['token']}'
+                                //     });
+                                // Navigator.push(
+                                //     context,
+                                //     MaterialPageRoute(
+                                //         builder: (context) =>
+                                //             const OTPScreen()));
+                              } else {
+                                Fluttertoast.showToast(
+                                    msg: "${value['message']}");
+                              }
+                            });
+                          },
+                          child: Text(
+                            "Resend OTP",
+                            style: TextStyle(
+                              color: Color.fromRGBO(138, 180, 2, 1),
+                            ),
                           ),
                         ),
                       ],

@@ -246,13 +246,25 @@ class _Insurance_ScrState extends State<Insurance_Scr> {
                   SizedBox(
                     height: 20,
                   ),
-                  Text(
-                    'On of our agents will connect',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                  Center(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'One of our agents will\n connect you shortly'.tr,
+                          maxLines: 2,
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 18),
+                        ),
+                      ],
+                    ),
                   ),
-                  Text(
-                    'you shortly',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                  Center(
+                    child: Text(
+                      '',
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                    ),
                   ),
                   SizedBox(
                     height: 20,
@@ -262,8 +274,8 @@ class _Insurance_ScrState extends State<Insurance_Scr> {
                       Navigator.pop(context);
                       Get.offAllNamed(Routes.HOME);
                     },
-                    child: const MyButton(
-                      text: "Back to home",
+                    child:  MyButton(
+                      text: "Back to home".tr,
                     ),
                   )
                 ],

@@ -29,7 +29,9 @@ class _AddMoneyplacedState extends State<AddMoneyplaced> {
             );
           } else {
             Navigator.push(
-                context, MaterialPageRoute(builder: (context) => const PaymentScreenTree()));
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const PaymentScreenTree()));
           }
         },
         child: Container(
@@ -78,11 +80,13 @@ class _AddMoneyplacedState extends State<AddMoneyplaced> {
                         SizedBox(height: 10),
                         Padding(
                           padding: EdgeInsets.only(left: 90),
-                          child: Row(
-                              children: [
+                          child: Row(children: [
                             Text(
                               "Added Successfully",
-                              style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold),
                               textAlign: TextAlign.center,
                             ),
                           ]),
@@ -174,7 +178,7 @@ class _RateDriverDialogState extends State<RateDriverDialog> {
               decoration: InputDecoration(
                 border: OutlineInputBorder(
                     borderSide:
-                    BorderSide(color: colors.greenTemp.withOpacity(0.2))),
+                        BorderSide(color: colors.greenTemp.withOpacity(0.2))),
                 hintText: 'Write here...',
               ),
               maxLines: 3,
@@ -185,7 +189,7 @@ class _RateDriverDialogState extends State<RateDriverDialog> {
                   Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const Home(),
+                        builder: (context) => Home(),
                       ));
                 },
                 child: const SizedBox(

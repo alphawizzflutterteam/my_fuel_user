@@ -30,11 +30,13 @@ class _RegisterCompleteState extends State<RegisterComplete> {
 
     return GestureDetector(
       onTap: () async {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const Home(),
-            ));
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+            builder: (context) => Home(),
+          ),
+          (route) => false,
+        );
       },
       child: Scaffold(
         body: Container(
@@ -192,8 +194,18 @@ class _RegisterCompleteState extends State<RegisterComplete> {
     );
   }
 
-  void initUI() {
+  Future<void> initUI() async {
     receivedList = Get.arguments;
     setState(() {});
+
+    await Future.delayed(const Duration(milliseconds: 800), () async {
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(
+          builder: (context) => Home(),
+        ),
+        (route) => false,
+      );
+    });
   }
 }

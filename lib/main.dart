@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:test_prj/language/language_transtation.dart';
 import 'package:test_prj/orderfuel/repository/order_fuel_repository.dart';
+import 'package:test_prj/payment/pay_success_page.dart';
 import 'package:test_prj/routes/app_pages.dart';
 import 'package:test_prj/routes/bindings/inial_binding.dart';
 import 'package:test_prj/service/NotificationServices.dart';
@@ -20,6 +21,8 @@ Future<void> backgroundHandler(RemoteMessage message) async {
   print(message.data.toString());
   print(message.notification!.title);
 }
+
+String? device_token;
 
 @pragma('vm:entry-point')
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
@@ -43,6 +46,7 @@ void main() async {
 
   LocalNotificationService.initialize();
   String? token = await FirebaseMessaging.instance.getToken();
+  device_token = await FirebaseMessaging.instance.getToken();
   print('${token}_______________token');
 
   //await Get.putAsync(() => AuthService().init());

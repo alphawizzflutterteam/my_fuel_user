@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:test_prj/authPages/login_page.dart';
 import 'package:test_prj/orderfuel/doorStepDelivery/forLooking.dart';
+import 'package:test_prj/routes/app_routes.dart';
 import '../components/my_button.dart';
 import '../helper/utils/shared_preference.dart';
 
@@ -31,15 +33,15 @@ class _LogoutPageState extends State<LogoutPage> {
               width: 55,
             ),
             // const SizedBox(height: 10),
-            const Text(
-              "Logout",
+            Text(
+              "Logout".tr,
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
             const SizedBox(
               height: 10,
             ),
-            const Text(
-              "Are you sure , that you want to logout?",
+            Text(
+              "Are you sure , that you want to logout?".tr,
               style: TextStyle(
                   fontWeight: FontWeight.w500,
                   color: Colors.grey,
@@ -59,8 +61,8 @@ class _LogoutPageState extends State<LogoutPage> {
                       decoration: BoxDecoration(
                           border: Border.all(color: Colors.black),
                           borderRadius: BorderRadius.circular(8)),
-                      child: const Text(
-                        "Cancel",
+                      child: Text(
+                        "Cancel".tr,
                         style: TextStyle(fontWeight: FontWeight.bold),
                       )),
                 ),
@@ -79,13 +81,15 @@ class _LogoutPageState extends State<LogoutPage> {
                             await SharedPreferencesService.getInstance();
 
                         instance.clear();
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => LoginPage()));
+                        // Get.offAll(Routes.LOGIN);
+                        Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(builder: (context) => LoginPage()),
+                          (route) => false,
+                        );
                       },
-                      child: const MyButton(
-                        text: "Logout",
+                      child: MyButton(
+                        text: "Logout".tr,
                       ),
                     ),
                   ),

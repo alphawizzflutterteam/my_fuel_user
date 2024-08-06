@@ -12,25 +12,21 @@ class TermsConditionScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     print(" Data Show ${configModel!.termsConditions}");
-    return GetBuilder<SplashController>(
-        init: SplashController(),
-        builder: (controller) {
-          return Scaffold(
-            body: SingleChildScrollView(
-              child: Column(
-                children: [
-                  const MyAppbar(title: 'Terms & Conditions'),
-                  Html(
-                    // data: htmlContent,
-                    data: '''
+    return Scaffold(
+      appBar: MyAppbar(title: 'Terms & Conditions'.tr),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Html(
+              // data: htmlContent,
+              data: '''
                     <!DOCTYPE html> ${configModel!.termsConditions} </html>
     ''',
-                  )
-                ],
-              ),
-            ),
-          );
-        });
+            )
+          ],
+        ),
+      ),
+    );
   }
 
   final String htmlContent = '''

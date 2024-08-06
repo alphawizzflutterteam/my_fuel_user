@@ -19,12 +19,12 @@ class SplashController extends AppBaseController {
   void onInit() {
     // TODO: implement onInit
     super.onInit();
-    _navigateToHome();
     try {
       getSettingAPi();
     } catch (e) {
       print(e);
     }
+    _navigateToHome();
   }
 
   _navigateToHome() async {

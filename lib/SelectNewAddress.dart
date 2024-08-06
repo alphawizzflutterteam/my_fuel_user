@@ -26,6 +26,7 @@ import 'package:test_prj/splashScreen.dart';
 import 'Home/checkout_car_service.dart';
 
 import 'components/my_textfield.dart';
+import 'helper/utils/app_constants.dart';
 import 'helper/utils/validator_all.dart';
 import 'orderfuel/doorStepDelivery/my_assets.dart';
 
@@ -119,10 +120,11 @@ class _SelectNewAddressState extends State<SelectNewAddress> {
 
     ProfileController profileController = Get.put(ProfileController());
     AddressController addressController = Get.put(AddressController());
+
     addressController
         .addAddress(
-            profileController.userInfoModel.value.fName.toString(),
-            profileController.userInfoModel.value.phone.toString(),
+            profileController.userInfoModel.value.fName ?? fName.toString(),
+            profileController.userInfoModel.value.phone ?? Phone.toString(),
             "Home",
             place.street.toString(),
             place.locality.toString(),
@@ -188,10 +190,9 @@ class _SelectNewAddressState extends State<SelectNewAddress> {
     return GetBuilder<AddressController>(
         init: AddressController(),
         builder: (controller) {
-          controller.getAddRess();
           return Scaffold(
-            appBar: const MyAppbar(
-              title: 'Select Address',
+            appBar: MyAppbar(
+              title: 'Select Address'.tr,
             ),
             bottomNavigationBar: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -200,8 +201,10 @@ class _SelectNewAddressState extends State<SelectNewAddress> {
                 child: Align(
                   alignment: Alignment.centerRight,
                   child: GestureDetector(
-                    child: const MyButton(text: 'Save Address & Next'),
+                    child: MyButton(text: 'Save Address & Next'.tr),
                     onTap: () {
+                      print("objectcategoryId ${categoryId}");
+
                       ///for OrderFuelFlow
                       if (widget.isFromOrderFuel ?? false) {
                         checkAndNavigate(controller, 'orderFuel');
@@ -215,6 +218,10 @@ class _SelectNewAddressState extends State<SelectNewAddress> {
                           categoryId == "8") {
                         print('__________________');
 
+                        if (controller.addressAList.isEmpty) {
+                          Fluttertoast.showToast(msg: "Please Select Address");
+                          return;
+                        }
                         otherCategory.billingAddressId = controller
                             .addressAList[selectedValueAddress.value].id
                             .toString();
@@ -242,6 +249,8 @@ class _SelectNewAddressState extends State<SelectNewAddress> {
                           'category_id': '${categoryId}',
                         });
                       } else {
+                        // if()
+
                         Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -253,70 +262,32 @@ class _SelectNewAddressState extends State<SelectNewAddress> {
                 ),
               ),
             ),
-            body: SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 8),
-                      child: Text(
-                        'Shipping Address'.tr,
-                        style: const TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 20),
+            body: RefreshIndicator(
+              onRefresh: () async {
+                controller.getAddRess();
+              },
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 8),
+                        child: Text(
+                          'Shipping Address'.tr,
+                          style: const TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 20),
+                        ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Align(
-                        alignment: Alignment.centerRight,
-                        child: GestureDetector(
-                          child: Row(
-                            children: [
-                              Container(
-                                height: 50,
-                                width: 155,
-                                decoration: BoxDecoration(
-                                  gradient: colors.buttonGradient,
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                                alignment: Alignment.center,
-                                child: TextButton(
-                                    onPressed: () {
-                                      _determinePosition();
-                                    },
-                                    child: Row(
-                                      children: [
-                                        Icon(
-                                          Icons.my_location,
-                                          color: colors.whiteTemp,
-                                        ),
-                                        SizedBox(
-                                          width: 10,
-                                        ),
-                                        Text(
-                                          'Use My Location'.tr,
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 12),
-                                        ) // MyButton(text: 'Use my location'),
-                                      ],
-                                    )),
-                              ),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              InkWell(
-                                onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            AddAddressScreen(),
-                                      ));
-                                },
-                                child: Container(
+                      Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Align(
+                          alignment: Alignment.centerRight,
+                          child: GestureDetector(
+                            child: Row(
+                              children: [
+                                Container(
                                   height: 50,
                                   width: 155,
                                   decoration: BoxDecoration(
@@ -326,24 +297,19 @@ class _SelectNewAddressState extends State<SelectNewAddress> {
                                   alignment: Alignment.center,
                                   child: TextButton(
                                       onPressed: () {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  AddAddressScreen(),
-                                            ));
+                                        _determinePosition();
                                       },
-                                      child: const Row(
+                                      child: Row(
                                         children: [
                                           Icon(
-                                            Icons.add,
+                                            Icons.my_location,
                                             color: colors.whiteTemp,
                                           ),
                                           SizedBox(
                                             width: 10,
                                           ),
                                           Text(
-                                            'New Address',
+                                            'Use My Location'.tr,
                                             style: TextStyle(
                                                 color: Colors.white,
                                                 fontSize: 12),
@@ -351,476 +317,603 @@ class _SelectNewAddressState extends State<SelectNewAddress> {
                                         ],
                                       )),
                                 ),
-                              )
-                            ],
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                InkWell(
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              AddAddressScreen(),
+                                        ));
+                                  },
+                                  child: Container(
+                                    height: 50,
+                                    width: 155,
+                                    decoration: BoxDecoration(
+                                      gradient: colors.buttonGradient,
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                    alignment: Alignment.center,
+                                    child: TextButton(
+                                        onPressed: () async {
+                                          var data = await Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    AddAddressScreen(),
+                                              ));
+
+                                          if (data != null) {
+                                            controller
+                                                .getAddRess()
+                                                .then((value) {});
+                                          }
+                                        },
+                                        child: Row(
+                                          children: [
+                                            Icon(
+                                              Icons.add,
+                                              color: colors.whiteTemp,
+                                            ),
+                                            SizedBox(
+                                              width: 10,
+                                            ),
+                                            Text(
+                                              'New Address'.tr,
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 12),
+                                            ) // MyButton(text: 'Use my location'),
+                                          ],
+                                        )),
+                                  ),
+                                )
+                              ],
+                            ),
+                            onTap: () {
+                              // Navigator.push(context,
+                              //     MaterialPageRoute(builder: (context) => ()));
+                            },
                           ),
-                          onTap: () {
-                            // Navigator.push(context,
-                            //     MaterialPageRoute(builder: (context) => ()));
-                          },
                         ),
                       ),
-                    ),
-                    //SizedBox(height: 20),
-                    /*Padding(
-                      padding: EdgeInsets.only(left: 10),
-                      child: Text(
-                        'Select Delivery type'.tr,
-                        style: const TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 16),
-                      ),
-                    ),*/
-                    //SizedBox(height: 10),
+                      //SizedBox(height: 20),
+                      /*Padding(
+                        padding: EdgeInsets.only(left: 10),
+                        child: Text(
+                          'Select Delivery type'.tr,
+                          style: const TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 16),
+                        ),
+                      ),*/
+                      //SizedBox(height: 10),
 
-                    Padding(
-                      padding: const EdgeInsets.only(left: 10, right: 10),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          customRadio("Home".tr, 1),
-                          customRadio("Office".tr, 2),
-                          customRadio("Other".tr, 3),
-                        ],
+                      // Padding(
+                      //   padding: const EdgeInsets.only(left: 10, right: 10),
+                      //   child: Row(
+                      //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      //     children: [
+                      //       customRadio("Home".tr, 1),
+                      //       customRadio("Office".tr, 2),
+                      //       customRadio("Other".tr, 3),
+                      //     ],
+                      //   ),
+                      // ),
+                      Obx(() => controller.addressAList.isNotEmpty
+                          ? Column(
+                              children: [
+                                ListView.builder(
+                                  shrinkWrap: true,
+                                  padding: EdgeInsets.zero,
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  itemCount: controller.isTab.value
+                                      ? 1
+                                      : controller.addressAList.length,
+                                  // .value.products!.length,
+                                  itemBuilder: (context, index) {
+                                    return Obx(() {
+                                      return InkWell(
+                                        onTap: () {
+                                          selectedValueAddress.value = index;
+                                        },
+                                        child: Stack(
+                                          children: [
+                                            Column(
+                                              children: [
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(8.0),
+                                                  child: Container(
+                                                    decoration: BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(10),
+                                                        color:
+                                                            colors.myCardColor,
+                                                        border: Border.all(
+                                                            color: selectedValueAddress
+                                                                        .value ==
+                                                                    index
+                                                                ? colors
+                                                                    .darkYellow
+                                                                : colors
+                                                                    .transparent)),
+                                                    //height: 87,
+                                                    width: MediaQuery.sizeOf(
+                                                            context)
+                                                        .width,
+                                                    //     width: 500,
+                                                    child: Padding(
+                                                      padding: const EdgeInsets
+                                                          .symmetric(
+                                                          horizontal: 10.0,
+                                                          vertical: 15),
+                                                      child: Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          // Row(
+                                                          //   mainAxisAlignment: MainAxisAlignment.end,
+                                                          //   children: [
+                                                          //     Padding(
+                                                          //       padding: const EdgeInsets.only(
+                                                          //         right: 20,
+                                                          //       ),
+                                                          //     )
+                                                          //   ],
+                                                          // ),
+                                                          Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceBetween,
+                                                            children: [
+                                                              Container(
+                                                                width: 250,
+                                                                child: Text(
+                                                                  '${controller.addressAList[index].contactPersonName},${controller.addressAList[index].zip}',
+                                                                  style: const TextStyle(
+                                                                      overflow:
+                                                                          TextOverflow
+                                                                              .ellipsis,
+                                                                      fontSize:
+                                                                          16,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold),
+                                                                ),
+                                                              ),
+                                                              /*Checkbox(
+                                                          activeColor:
+                                                              Colors.deepOrange,
+                                                          checkColor: Colors.white,
+                                                          value: selectedValueAddress ==
+                                                                  index
+                                                              ? true
+                                                              : false,
+                                                          onChanged: (bool? newValue) {
+                                                            setState(() {
+                                                              selectedValueAddress = index;
+                                                              isCheckedAddress = newValue!;
+                                                            });
+                                                          },
+                                                        ),*/
+                                                            ],
+                                                          ),
+                                                          Text(
+                                                            '${controller.addressAList[index].building},${controller.addressAList[index].landmark} ${controller.addressAList[index].city} ',
+                                                            // 'sobari nagar,sukhliya..',
+                                                            style: const TextStyle(
+                                                                overflow:
+                                                                    TextOverflow
+                                                                        .ellipsis,
+                                                                color: Colors
+                                                                    .black,
+                                                                fontSize: 14,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w300),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                                // const SizedBox(height: 10.0),
+                                              ],
+                                            ),
+                                            Positioned(
+                                                top: 15,
+                                                right: 15,
+                                                child: Container(
+                                                  height: 24,
+                                                  width: 57,
+                                                  decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              4),
+                                                      color: colors.primary
+                                                          .withOpacity(.1),
+                                                      border: Border.all(
+                                                          color:
+                                                              colors.primary)),
+                                                  child: Center(
+                                                    child: Text(
+                                                      '${controller.addressAList[index].addressType}'
+                                                          .tr,
+                                                      style: TextStyle(
+                                                        fontSize: 12,
+                                                        color: colors.primary,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ))
+                                          ],
+                                        ),
+                                      );
+                                    });
+                                  },
+                                ),
+                                InkWell(
+                                    onTap: () {
+                                      controller.isTab.value =
+                                          !controller.isTab.value;
+                                    },
+                                    child: Align(
+                                      alignment: Alignment.topRight,
+                                      child: Text(controller.isTab.value
+                                          ? 'See more...'
+                                          : 'See less...'),
+                                    ))
+                              ],
+                            )
+                          : Center(
+                              child: Text("No Address Found".tr),
+                            )),
+                      Padding(
+                        padding: EdgeInsets.only(left: 8),
+                        child: Text(
+                          'Billing Address'.tr,
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 20),
+                        ),
                       ),
-                    ),
-                    Obx(() => controller.addressAList.isNotEmpty
-                        ? Column(
-                            children: [
-                              ListView.builder(
-                                shrinkWrap: true,
-                                padding: EdgeInsets.zero,
-                                physics: const NeverScrollableScrollPhysics(),
-                                itemCount: controller.isTab.value
-                                    ? 1
-                                    : controller.addressAList.length,
-                                // .value.products!.length,
-                                itemBuilder: (context, index) {
-                                  return Obx(() {
-                                    return InkWell(
-                                      onTap: () {
-                                        selectedValueAddress.value = index;
-                                      },
+
+                      Obx(() {
+                        return Row(
+                          children: [
+                            Checkbox(
+                              activeColor: Colors.deepOrange,
+                              value: controller.isBillDeilivery.value,
+                              onChanged: (value) {
+                                controller.isBillDeilivery.value = value!;
+                              },
+                            ),
+                            Text(
+                              'Same as Shipping address'.tr,
+                              style: const TextStyle(color: colors.greyTemp),
+                            )
+                          ],
+                        );
+                      }),
+
+                      Obx(() {
+                        return Visibility(
+                          visible: !controller.isBillDeilivery.value,
+                          child: SizedBox(
+                            height: Get.height / 2.7,
+                            child: SingleChildScrollView(
+                              padding: EdgeInsets.zero,
+                              child: Column(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 20.0),
+                                    child: Form(
+                                      key: _formKeyReset,
                                       child: Column(
                                         children: [
                                           Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: Container(
-                                              decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(10),
-                                                  color: colors.myCardColor,
-                                                  border: Border.all(
-                                                      color: selectedValueAddress
-                                                                  .value ==
-                                                              index
-                                                          ? colors.darkYellow
-                                                          : colors
-                                                              .transparent)),
-                                              //height: 87,
-                                              width: MediaQuery.sizeOf(context)
-                                                  .width,
-                                              //     width: 500,
-                                              child: Padding(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        horizontal: 10.0,
-                                                        vertical: 15),
-                                                child: Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    // Row(
-                                                    //   mainAxisAlignment: MainAxisAlignment.end,
-                                                    //   children: [
-                                                    //     Padding(
-                                                    //       padding: const EdgeInsets.only(
-                                                    //         right: 20,
-                                                    //       ),
-                                                    //     )
-                                                    //   ],
-                                                    // ),
-                                                    Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceBetween,
-                                                      children: [
-                                                        Text(
-                                                          '${controller.addressAList[index].contactPersonName},${controller.addressAList[index].zip}',
-                                                          style: const TextStyle(
-                                                              fontSize: 16,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold),
-                                                        ),
-                                                        /*Checkbox(
-                                                    activeColor:
-                                                        Colors.deepOrange,
-                                                    checkColor: Colors.white,
-                                                    value: selectedValueAddress ==
-                                                            index
-                                                        ? true
-                                                        : false,
-                                                    onChanged: (bool? newValue) {
-                                                      setState(() {
-                                                        selectedValueAddress = index;
-                                                        isCheckedAddress = newValue!;
-                                                      });
-                                                    },
-                                                  ),*/
-                                                      ],
-                                                    ),
-                                                    Text(
-                                                      '${controller.addressAList[index].building},${controller.addressAList[index].landmark} ${controller.addressAList[index].city} ',
-                                                      // 'sobari nagar,sukhliya..',
-                                                      style: const TextStyle(
-                                                          overflow: TextOverflow
-                                                              .ellipsis,
-                                                          color: Colors.black,
-                                                          fontSize: 14,
-                                                          fontWeight:
-                                                              FontWeight.w300),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical: 8.0),
+                                            child: MyTextField(
+                                              validator: (value) =>
+                                                  Validator.validateName(value),
+                                              controller: nameController,
+                                              labelText: Text("Name".tr),
                                             ),
                                           ),
-                                          // const SizedBox(height: 10.0),
+                                          Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical: 8.0),
+                                            child: MyTextField(
+                                              isAmount: true,
+                                              maxLenth:
+                                                  AppConstants.phoneValidation,
+                                              validator: (value) =>
+                                                  Validator.validatePhone(
+                                                      value),
+                                              controller: mobileController,
+                                              labelText:
+                                                  Text("Mobile Number".tr),
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical: 8.0),
+                                            child: MyTextField(
+                                              isAmount: true,
+                                              maxLenth:
+                                                  AppConstants.phoneValidation,
+                                              validator: (value) => null,
+                                              // validator: (value) => Validator.validateWithhint(
+                                              //     value, "Alternate Mobile Number".tr),
+                                              controller:
+                                                  alternatemobileController,
+                                              labelText: Text(
+                                                  "Alternate Mobile Number(Optional)"
+                                                      .tr),
+                                            ),
+                                          ),
+                                          // Padding(
+                                          //   padding: const EdgeInsets.symmetric(
+                                          //       vertical: 8.0),
+                                          //   child: MyTextField(
+                                          //     maxLenth:
+                                          //         AppConstants.phoneValidation,
+                                          //     isAmount: true,
+                                          //     validator: (value) =>
+                                          //         Validator.validatePhone(
+                                          //             value),
+                                          //     controller:
+                                          //         alternatemobileController,
+                                          //     labelText: Text(
+                                          //         "Alternate Mobile Number".tr),
+                                          //   ),
+                                          // ),
+                                          Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical: 8.0),
+                                            child: MyTextField(
+                                              validator: (value) =>
+                                                  Validator.validateWithhint(
+                                                      value,
+                                                      "House no., Building Name"
+                                                          .tr),
+                                              controller: houseNoController,
+                                              labelText: Text(
+                                                  "House no., Building Name"
+                                                      .tr),
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical: 8.0),
+                                            child: MyTextField(
+                                              validator: (value) =>
+                                                  Validator.validateWithhint(
+                                                      value,
+                                                      "Road name, Area Colony"
+                                                          .tr),
+                                              controller: roadNameController,
+                                              labelText: Text(
+                                                  "Road name, Area Colony".tr),
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical: 8.0),
+                                            child: MyTextField(
+                                              validator: (value) =>
+                                                  Validator.validateWithhint(
+                                                      value, "Country".tr),
+                                              controller: countryController,
+                                              labelText: Text("Country".tr),
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical: 8.0),
+                                            child: MyTextField(
+                                              validator: (value) =>
+                                                  Validator.validateWithhint(
+                                                      value, "State".tr),
+                                              controller: stateController,
+                                              labelText: Text("State".tr),
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical: 8.0),
+                                            child: MyTextField(
+                                              validator: (value) =>
+                                                  Validator.validateWithhint(
+                                                      value, "City".tr),
+                                              controller: cityController,
+                                              labelText: Text("City".tr),
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical: 8.0),
+                                            child: MyTextField(
+                                              maxLenth:
+                                                  AppConstants.pinValidation,
+                                              isAmount: true,
+                                              validator: (value) => Validator
+                                                  .validatePincodeWithhint(
+                                                      value, "Pincode".tr),
+                                              controller: pincodeController,
+                                              labelText: Text("Pincode".tr),
+                                            ),
+                                          ),
+                                          const SizedBox(
+                                            height: 20,
+                                          ),
                                         ],
                                       ),
-                                    );
-                                  });
-                                },
-                              ),
-                              InkWell(
-                                  onTap: () {
-                                    controller.isTab.value =
-                                        !controller.isTab.value;
-                                  },
-                                  child: Align(
-                                    alignment: Alignment.topRight,
-                                    child: Text(controller.isTab.value
-                                        ? 'See more...'
-                                        : 'See less...'),
-                                  ))
-                            ],
-                          )
-                        : Center(
-                            child: Text("No Address Found".tr),
-                          )),
-                    const Padding(
-                      padding: EdgeInsets.only(left: 8),
-                      child: Text(
-                        'Billing Address',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 20),
-                      ),
-                    ),
-
-                    Obx(() {
-                      return Row(
-                        children: [
-                          Checkbox(
-                            activeColor: Colors.deepOrange,
-                            value: controller.isBillDeilivery.value,
-                            onChanged: (value) {
-                              controller.isBillDeilivery.value = value!;
-                            },
-                          ),
-                          Text(
-                            'Same as Shipping address'.tr,
-                            style: const TextStyle(color: colors.greyTemp),
-                          )
-                        ],
-                      );
-                    }),
-
-                    Obx(() {
-                      return Visibility(
-                        visible: !controller.isBillDeilivery.value,
-                        child: SizedBox(
-                          height: Get.height / 2.7,
-                          child: SingleChildScrollView(
-                            padding: EdgeInsets.zero,
-                            child: Column(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 20.0),
-                                  child: Form(
-                                    key: _formKeyReset,
-                                    child: Column(
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              vertical: 8.0),
-                                          child: MyTextField(
-                                            validator: (value) =>
-                                                Validator.validateName(value),
-                                            controller: nameController,
-                                            labelText: Text("Name".tr),
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              vertical: 8.0),
-                                          child: MyTextField(
-                                            isAmount: true,
-                                            validator: (value) =>
-                                                Validator.validatePhone(value),
-                                            controller: mobileController,
-                                            labelText: Text("Mobile Number".tr),
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              vertical: 8.0),
-                                          child: MyTextField(
-                                            isAmount: true,
-                                            validator: (value) =>
-                                                Validator.validatePhone(value),
-                                            controller:
-                                                alternatemobileController,
-                                            labelText: Text(
-                                                "Alternate Mobile Number".tr),
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              vertical: 8.0),
-                                          child: MyTextField(
-                                            validator: (value) =>
-                                                Validator.validateWithhint(
-                                                    value,
-                                                    "House no., Building Name"
-                                                        .tr),
-                                            controller: houseNoController,
-                                            labelText: Text(
-                                                "House no., Building Name".tr),
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              vertical: 8.0),
-                                          child: MyTextField(
-                                            validator: (value) =>
-                                                Validator.validateWithhint(
-                                                    value,
-                                                    "Road name, Area Colony"
-                                                        .tr),
-                                            controller: roadNameController,
-                                            labelText: Text(
-                                                "Road name, Area Colony".tr),
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              vertical: 8.0),
-                                          child: MyTextField(
-                                            validator: (value) =>
-                                                Validator.validateWithhint(
-                                                    value, "Country".tr),
-                                            controller: countryController,
-                                            labelText: Text("Country".tr),
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              vertical: 8.0),
-                                          child: MyTextField(
-                                            validator: (value) =>
-                                                Validator.validateWithhint(
-                                                    value, "State".tr),
-                                            controller: stateController,
-                                            labelText: Text("State".tr),
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              vertical: 8.0),
-                                          child: MyTextField(
-                                            validator: (value) =>
-                                                Validator.validateWithhint(
-                                                    value, "City".tr),
-                                            controller: cityController,
-                                            labelText: Text("City".tr),
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              vertical: 8.0),
-                                          child: MyTextField(
-                                            isAmount: true,
-                                            validator: (value) =>
-                                                Validator.validateWithhint(
-                                                    value, "PinCode".tr),
-                                            controller: pincodeController,
-                                            labelText: Text("PinCode".tr),
-                                          ),
-                                        ),
-                                        const SizedBox(
-                                          height: 20,
-                                        ),
-                                      ],
                                     ),
-                                  ),
-                                )
-                                // SizedBox(
-                                //   height: 70,
-                                //   child: Padding(
-                                //     padding: const EdgeInsets.all(10.0),
-                                //     child: TextFormField(
-                                //       decoration: InputDecoration(
-                                //         label: const Text('Name'),
-                                //         border: OutlineInputBorder(
-                                //           borderRadius: BorderRadius.circular(12),
-                                //         ),
-                                //         hintText: 'Enter your name',
-                                //         hintStyle: const TextStyle(color: Colors.grey),
-                                //       ),
-                                //     ),
-                                //   ),
-                                // ),
-                                // SizedBox(
-                                //   height: 70,
-                                //   child: Padding(
-                                //     padding: const EdgeInsets.all(10.0),
-                                //     child: TextFormField(
-                                //       keyboardType: TextInputType.number,
-                                //       decoration: InputDecoration(
-                                //         label: const Text('Mobile Number'),
-                                //         border: OutlineInputBorder(
-                                //           borderRadius: BorderRadius.circular(12),
-                                //         ),
-                                //         hintText: 'Enter your Mobile number',
-                                //         hintStyle: const TextStyle(color: Colors.grey),
-                                //       ),
-                                //     ),
-                                //   ),
-                                // ),
-                                // SizedBox(
-                                //   height: 70,
-                                //   child: Padding(
-                                //     padding: const EdgeInsets.all(10.0),
-                                //     child: TextFormField(
-                                //       decoration: InputDecoration(
-                                //         label: const Text('Alternate Mobile number'),
-                                //         border: OutlineInputBorder(
-                                //           borderRadius: BorderRadius.circular(12),
-                                //         ),
-                                //         hintText: 'Enter your Alternate Mobile number',
-                                //         hintStyle: const TextStyle(color: Colors.grey),
-                                //       ),
-                                //     ),
-                                //   ),
-                                // ),
-                                // SizedBox(
-                                //   height: 70,
-                                //   child: Padding(
-                                //     padding: const EdgeInsets.all(10.0),
-                                //     child: TextFormField(
-                                //       decoration: InputDecoration(
-                                //         label: const Text('House no., Building Name'),
-                                //         border: OutlineInputBorder(
-                                //           borderRadius: BorderRadius.circular(12),
-                                //         ),
-                                //         hintText: 'Enter your Home no.. Building Name',
-                                //         hintStyle: const TextStyle(color: Colors.grey),
-                                //       ),
-                                //     ),
-                                //   ),
-                                // ),
-                                // SizedBox(
-                                //   height: 70,
-                                //   child: Padding(
-                                //     padding: const EdgeInsets.all(10.0),
-                                //     child: TextFormField(
-                                //       decoration: InputDecoration(
-                                //         label: const Text('Road name ,Area Colony'),
-                                //         border: OutlineInputBorder(
-                                //           borderRadius: BorderRadius.circular(12),
-                                //         ),
-                                //         hintText: 'Enter your Road name ,area colony',
-                                //         hintStyle: const TextStyle(color: Colors.grey),
-                                //       ),
-                                //     ),
-                                //   ),
-                                // ),
-                                //
-                                // SizedBox(
-                                //   height: 70,
-                                //   child: Padding(
-                                //     padding: const EdgeInsets.all(10.0),
-                                //     child: TextFormField(
-                                //       decoration: InputDecoration(
-                                //         label: const Text('Country'),
-                                //         border: OutlineInputBorder(
-                                //           borderRadius: BorderRadius.circular(12),
-                                //           borderSide:
-                                //           const BorderSide(color: Colors.red), //
-                                //         ),
-                                //         hintText: 'Enter your country name',
-                                //         hintStyle: const TextStyle(color: Colors.grey),
-                                //       ),
-                                //     ),
-                                //   ),
-                                // ),
-                                // SizedBox(
-                                //   height: 70,
-                                //   child: Padding(
-                                //     padding: const EdgeInsets.all(10.0),
-                                //     child: TextFormField(
-                                //       keyboardType: TextInputType.number,
-                                //       decoration: InputDecoration(
-                                //         label: const Text('State'),
-                                //         border: OutlineInputBorder(
-                                //           borderRadius: BorderRadius.circular(12),
-                                //         ),
-                                //         hintText: 'Enter your State name',
-                                //         hintStyle: const TextStyle(color: Colors.grey),
-                                //       ),
-                                //     ),
-                                //   ),
-                                // ),
-                                // SizedBox(
-                                //   height: 70,
-                                //   child: Padding(
-                                //     padding: const EdgeInsets.all(10.0),
-                                //     child: TextFormField(
-                                //       decoration: InputDecoration(
-                                //         label: const Text('City '),
-                                //         border: OutlineInputBorder(
-                                //           borderRadius: BorderRadius.circular(12),
-                                //         ),
-                                //         hintText: 'Enter your city name',
-                                //         hintStyle: const TextStyle(color: Colors.grey),
-                                //       ),
-                                //     ),
-                                //   ),
-                                // ),
-                                // SizedBox(
-                                //   height: 70,
-                                //   child: Padding(
-                                //     padding: const EdgeInsets.all(10.0),
-                                //     child: TextFormField(
-                                //       decoration: InputDecoration(
-                                //         label: const Text('Pincode'),
-                                //         border: OutlineInputBorder(
-                                //           borderRadius: BorderRadius.circular(12),
-                                //         ),
-                                //         hintText: 'Enter your Pincode ',
-                                //         hintStyle: const TextStyle(color: Colors.grey),
-                                //       ),
-                                //     ),
-                                //   ),
-                                // ),
-                              ],
+                                  )
+                                  // SizedBox(
+                                  //   height: 70,
+                                  //   child: Padding(
+                                  //     padding: const EdgeInsets.all(10.0),
+                                  //     child: TextFormField(
+                                  //       decoration: InputDecoration(
+                                  //         label: const Text('Name'),
+                                  //         border: OutlineInputBorder(
+                                  //           borderRadius: BorderRadius.circular(12),
+                                  //         ),
+                                  //         hintText: 'Enter your name',
+                                  //         hintStyle: const TextStyle(color: Colors.grey),
+                                  //       ),
+                                  //     ),
+                                  //   ),
+                                  // ),
+                                  // SizedBox(
+                                  //   height: 70,
+                                  //   child: Padding(
+                                  //     padding: const EdgeInsets.all(10.0),
+                                  //     child: TextFormField(
+                                  //       keyboardType: TextInputType.number,
+                                  //       decoration: InputDecoration(
+                                  //         label: const Text('Mobile Number'),
+                                  //         border: OutlineInputBorder(
+                                  //           borderRadius: BorderRadius.circular(12),
+                                  //         ),
+                                  //         hintText: 'Enter your Mobile number',
+                                  //         hintStyle: const TextStyle(color: Colors.grey),
+                                  //       ),
+                                  //     ),
+                                  //   ),
+                                  // ),
+                                  // SizedBox(
+                                  //   height: 70,
+                                  //   child: Padding(
+                                  //     padding: const EdgeInsets.all(10.0),
+                                  //     child: TextFormField(
+                                  //       decoration: InputDecoration(
+                                  //         label: const Text('Alternate Mobile number'),
+                                  //         border: OutlineInputBorder(
+                                  //           borderRadius: BorderRadius.circular(12),
+                                  //         ),
+                                  //         hintText: 'Enter your Alternate Mobile number',
+                                  //         hintStyle: const TextStyle(color: Colors.grey),
+                                  //       ),
+                                  //     ),
+                                  //   ),
+                                  // ),
+                                  // SizedBox(
+                                  //   height: 70,
+                                  //   child: Padding(
+                                  //     padding: const EdgeInsets.all(10.0),
+                                  //     child: TextFormField(
+                                  //       decoration: InputDecoration(
+                                  //         label: const Text('House no., Building Name'),
+                                  //         border: OutlineInputBorder(
+                                  //           borderRadius: BorderRadius.circular(12),
+                                  //         ),
+                                  //         hintText: 'Enter your Home no.. Building Name',
+                                  //         hintStyle: const TextStyle(color: Colors.grey),
+                                  //       ),
+                                  //     ),
+                                  //   ),
+                                  // ),
+                                  // SizedBox(
+                                  //   height: 70,
+                                  //   child: Padding(
+                                  //     padding: const EdgeInsets.all(10.0),
+                                  //     child: TextFormField(
+                                  //       decoration: InputDecoration(
+                                  //         label: const Text('Road name ,Area Colony'),
+                                  //         border: OutlineInputBorder(
+                                  //           borderRadius: BorderRadius.circular(12),
+                                  //         ),
+                                  //         hintText: 'Enter your Road name ,area colony',
+                                  //         hintStyle: const TextStyle(color: Colors.grey),
+                                  //       ),
+                                  //     ),
+                                  //   ),
+                                  // ),
+                                  //
+                                  // SizedBox(
+                                  //   height: 70,
+                                  //   child: Padding(
+                                  //     padding: const EdgeInsets.all(10.0),
+                                  //     child: TextFormField(
+                                  //       decoration: InputDecoration(
+                                  //         label: const Text('Country'),
+                                  //         border: OutlineInputBorder(
+                                  //           borderRadius: BorderRadius.circular(12),
+                                  //           borderSide:
+                                  //           const BorderSide(color: Colors.red), //
+                                  //         ),
+                                  //         hintText: 'Enter your country name',
+                                  //         hintStyle: const TextStyle(color: Colors.grey),
+                                  //       ),
+                                  //     ),
+                                  //   ),
+                                  // ),
+                                  // SizedBox(
+                                  //   height: 70,
+                                  //   child: Padding(
+                                  //     padding: const EdgeInsets.all(10.0),
+                                  //     child: TextFormField(
+                                  //       keyboardType: TextInputType.number,
+                                  //       decoration: InputDecoration(
+                                  //         label: const Text('State'),
+                                  //         border: OutlineInputBorder(
+                                  //           borderRadius: BorderRadius.circular(12),
+                                  //         ),
+                                  //         hintText: 'Enter your State name',
+                                  //         hintStyle: const TextStyle(color: Colors.grey),
+                                  //       ),
+                                  //     ),
+                                  //   ),
+                                  // ),
+                                  // SizedBox(
+                                  //   height: 70,
+                                  //   child: Padding(
+                                  //     padding: const EdgeInsets.all(10.0),
+                                  //     child: TextFormField(
+                                  //       decoration: InputDecoration(
+                                  //         label: const Text('City '),
+                                  //         border: OutlineInputBorder(
+                                  //           borderRadius: BorderRadius.circular(12),
+                                  //         ),
+                                  //         hintText: 'Enter your city name',
+                                  //         hintStyle: const TextStyle(color: Colors.grey),
+                                  //       ),
+                                  //     ),
+                                  //   ),
+                                  // ),
+                                  // SizedBox(
+                                  //   height: 70,
+                                  //   child: Padding(
+                                  //     padding: const EdgeInsets.all(10.0),
+                                  //     child: TextFormField(
+                                  //       decoration: InputDecoration(
+                                  //         label: const Text('Pincode'),
+                                  //         border: OutlineInputBorder(
+                                  //           borderRadius: BorderRadius.circular(12),
+                                  //         ),
+                                  //         hintText: 'Enter your Pincode ',
+                                  //         hintStyle: const TextStyle(color: Colors.grey),
+                                  //       ),
+                                  //     ),
+                                  //   ),
+                                  // ),
+                                ],
+                              ),
                             ),
                           ),
-                        ),
-                      );
-                    })
-                  ],
+                        );
+                      })
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -842,11 +935,15 @@ class _SelectNewAddressState extends State<SelectNewAddress> {
       } else if (title == 'ev') {
         Navigator.pop(context, true);
       } else {
-        Get.to(const Checkout_Car_Service());
+        Get.toNamed(Routes.CarCheckout);
       }
     } else {
       otherCategory.billingSameAsShipping = "0";
       if (_formKeyReset.currentState!.validate()) {
+        if (mobileController.text.toString().length < 10) {
+          Fluttertoast.showToast(msg: "Please enter valid mobile".tr);
+          return;
+        }
         controller
             .addAddress(
                 nameController.text,
@@ -871,7 +968,7 @@ class _SelectNewAddressState extends State<SelectNewAddress> {
               isFromFuel: true,
             ));
           } else {
-            Get.to(const Checkout_Car_Service());
+            Get.to(Routes.CarCheckout);
           }
         });
       }

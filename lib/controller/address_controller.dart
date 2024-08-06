@@ -43,7 +43,10 @@ class AddressController extends AppBaseController {
         latitude,
         longitude,
         is_billing);
-    if (value.containsKey("errors")) {
+
+    if (value['status'] == true) {
+      Fluttertoast.showToast(msg: "${value['message']}");
+    } else if (value.containsKey("errors")) {
       Fluttertoast.showToast(msg: "$value");
     } else if (value['token'] != "") {}
     isLoading(false);
@@ -65,7 +68,20 @@ class AddressController extends AppBaseController {
     List<AddressListModel> addressList = await _laravelApiClient.getAddress();
 
     addressAList.value = addressList;
+    update();
+    // offerInfoModel(OffersModel.fromJson(data));
+    // isLoading(false);
+    // print("getBanner ${offerInfoModel.value.coupons?.length}");
+  }
 
+  Future<Map> delete(id) async {
+    isLoading(true);
+    addressAList = <AddressListModel>[].obs;
+    Map data = await _laravelApiClient.delete(id);
+
+    update();
+
+    return data;
     // offerInfoModel(OffersModel.fromJson(data));
     // isLoading(false);
     // print("getBanner ${offerInfoModel.value.coupons?.length}");

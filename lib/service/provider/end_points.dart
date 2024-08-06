@@ -29,11 +29,13 @@ class ApiConstants {
   static const String UPDATEPROFILE = '/api/v1/customer/update-profile';
   static const String VENDORCHEKOUT = '/api/v1/customer/order/vendor-checkout';
   static const String addWallet = '/api/v1/customer/add_wallet';
+  static const String DeleteAddress = '/api/v1/customer/address';
   static const String ConfirmPlaceOrder =
       '/api/v1/customer/order/confirm-vendor-service';
   static const String ORDERLIST =
       '/api/v1/customer/order/list?limit=10&offset=0';
   static const String AllORDERLIST = '/api/v1/customer/bookings';
+  static const String CASHFREEE = '/api/v1/pay-now-with-cash-free';
   static const String UPDATEORDERAPI =
       '/api/v1/customer/order/update-booking-status';
 
@@ -49,8 +51,6 @@ class ApiConstants {
   static const String TIMESLOTS = '/api/v1/customer/order/time-slots';
 
   static const String NOTIFICATIONS = '/api/v1/notifications';
-
-
 
   ///gopal
   static const String SUBMITREVIEW = '/api/v1/products/reviews/submit';

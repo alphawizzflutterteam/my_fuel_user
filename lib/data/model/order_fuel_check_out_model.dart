@@ -32,6 +32,7 @@ class OrderFuelCheckData {
   String? productId;
   String? tyreSize;
   String? timeSlotId;
+  String? quantity;
   String? date;
   String? notes;
   String? service;
@@ -65,6 +66,7 @@ class OrderFuelCheckData {
     this.productId,
     this.tyreSize,
     this.timeSlotId,
+    this.quantity,
     this.date,
     this.notes,
     this.service,
@@ -101,6 +103,7 @@ class OrderFuelCheckData {
     productId = json['product_id'];
     tyreSize = json['tyre_size'];
     timeSlotId = json['time_slot_id'];
+    quantity = json['quantity'].toString();
     date = json['date'];
     notes = json['notes'];
     service = json['service'];
@@ -147,6 +150,7 @@ class OrderFuelCheckData {
     data['product_id'] = productId;
     data['tyre_size'] = tyreSize;
     data['time_slot_id'] = timeSlotId;
+    data['quantity'] = quantity;
     data['date'] = date;
     data['notes'] = notes;
     data['service'] = service;

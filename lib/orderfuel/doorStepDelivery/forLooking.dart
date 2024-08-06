@@ -73,8 +73,8 @@ class _LookingForCompanyState extends State<LookingForCompany> {
       init: OrderFuelController(),
       builder: (controller) {
         return Scaffold(
-          appBar: const MyAppbar(
-            title: 'Order Fuel',
+          appBar: MyAppbar(
+            title: 'Order Fuel'.tr,
           ),
           bottomNavigationBar: Padding(
             padding: const EdgeInsets.all(10.0),
@@ -132,7 +132,7 @@ class _LookingForCompanyState extends State<LookingForCompany> {
                     }
                   }
                 },
-                child: const MyButton(text: 'Next')),
+                child: MyButton(text: 'Next'.tr)),
           ),
           body: controller.isLoading
               ? const Center(
@@ -147,8 +147,8 @@ class _LookingForCompanyState extends State<LookingForCompany> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            tabWidget("Door Step Delivery", controller, 0),
-                            tabWidget("Fuel to Go", controller, 1),
+                            tabWidget("Door Step Delivery".tr, controller, 0),
+                            tabWidget("Fuel to Go".tr, controller, 1),
                           ],
                         ),
                       );

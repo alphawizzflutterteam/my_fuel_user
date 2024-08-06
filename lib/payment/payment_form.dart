@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:get/get.dart';
 import 'package:test_prj/components/my_appbar.dart';
 import 'package:test_prj/components/my_button.dart';
 import 'package:test_prj/components/my_hinttext_field.dart';
@@ -17,7 +18,7 @@ class PaymentForm extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: [
-          const MyAppbar(title: "Payment"),
+           MyAppbar(title: "Payment".tr),
           Padding(
             padding: const EdgeInsets.all(18.0),
             child: Column(

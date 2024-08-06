@@ -14,7 +14,7 @@ class ForgetPasswordController extends AppBaseController {
 
     Map<String, dynamic> value = await _laravelApiClient.forgetPassWord(membNo);
     if (value.containsKey("errors")) {
-      Fluttertoast.showToast(msg: "$value");
+      Fluttertoast.showToast(msg: "${value['message']}");
     } else if (value['token'] != "") {}
     isLoading(false);
     return value;

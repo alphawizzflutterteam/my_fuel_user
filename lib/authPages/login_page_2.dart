@@ -145,7 +145,7 @@ class _LoginPage2State extends State<LoginPage2> {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => const Home()));
+                                        builder: (context) => Home()));
                               }
                             },
                             child: const MyButton(text: "Login"),

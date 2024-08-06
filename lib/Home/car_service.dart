@@ -53,7 +53,7 @@ class _CarServiceState extends State<CarService> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: MyAppbar(
-        title: "Car Service",
+        title: "Car Service".tr,
       ),
       // AppBar(
       //   leading: Icon(Icons.arrow_back_ios_new_outlined),
@@ -276,7 +276,7 @@ class _CarServiceState extends State<CarService> {
                       });
                       if (data.isEmpty) {
                         Fluttertoast.showToast(
-                            msg: "Please select one service");
+                            msg: "Please select one service".tr);
                         return;
                       }
                       CarServiceController carServiceController = Get.find();
@@ -286,8 +286,8 @@ class _CarServiceState extends State<CarService> {
                       otherCategory.service = "At Your Station";
                       _showBottomSheet(context);
                     },
-                    child: const MyButton(
-                      text: "Schedule Car Service",
+                    child: MyButton(
+                      text: "Schedule Car Service".tr,
                     ),
                   ),
                 ],
@@ -321,7 +321,7 @@ class _CarServiceState extends State<CarService> {
                             padding: const EdgeInsets.only(
                                 top: 20, left: 30, right: 20),
                             child: Text(
-                              "Schedule data and timing",
+                              "Schedule data and timing".tr,
                               style: TextStyle(
                                   fontSize: 20, fontWeight: FontWeight.bold),
                             ),
@@ -335,10 +335,10 @@ class _CarServiceState extends State<CarService> {
                           child: TextFormField(
                               controller: dateController,
                               validator: (value) => Validator.validateWithhint(
-                                  value, "Select Date"),
+                                  value, "Select Date".tr),
                               decoration: InputDecoration(
                                 // labelText: 'Schedule date and timing',
-                                hintText: 'Schedule date and timing',
+                                hintText: 'Schedule date and timing'.tr,
                                 //filled: true,
                                 suffixIcon: const Icon(Icons.calendar_today),
                                 enabledBorder: const OutlineInputBorder(
@@ -354,9 +354,9 @@ class _CarServiceState extends State<CarService> {
                         ),
                         SizedBox(height: 7),
                         Padding(
-                          padding: const EdgeInsets.only(right: 290),
+                          padding: EdgeInsets.only(right: 290),
                           child: Text(
-                            "Slots",
+                            "Slots".tr,
                             style: TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.bold),
                           ),
@@ -533,7 +533,7 @@ class _CarServiceState extends State<CarService> {
                                     otherCategory.timeSlotId!.isEmpty ||
                                     otherCategory.timeSlotId == "") {
                                   Fluttertoast.showToast(
-                                      msg: "Please select Slot");
+                                      msg: "Please select Slot".tr);
                                   return;
                                 }
                                 if (_formKeyReset.currentState!.validate()) {
@@ -552,7 +552,7 @@ class _CarServiceState extends State<CarService> {
                                   //             Checkout_Car_Service()));
                                 }
                               },
-                              child: MyButton(text: 'Book Now')),
+                              child: MyButton(text: 'Book Now'.tr)),
                         ),
                       ],
                     );

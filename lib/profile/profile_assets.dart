@@ -7,11 +7,13 @@ import 'package:test_prj/Home/FuelAddQuantity.dart';
 import 'package:test_prj/components/my_appbar.dart';
 import 'package:test_prj/components/my_button.dart';
 import 'package:test_prj/components/my_button2.dart';
+import 'package:test_prj/components/widgets/globle_widgets.dart';
 import 'package:test_prj/controller/asset_controller.dart';
 import 'package:test_prj/helper/colors.dart';
 import 'package:test_prj/orderfuel/doorStepDelivery/vendors_page.dart';
 
 import '../Home/FullAssets.dart';
+import '../orderfuel/doorStepDelivery/controller/order_fuel_controller.dart';
 
 class ProfileAssets extends StatefulWidget {
   final bool? isFromFuel;
@@ -23,6 +25,7 @@ class ProfileAssets extends StatefulWidget {
 
 class _ProfileAssetsState extends State<ProfileAssets> {
   bool _index = true;
+
   final TextEditingController _fuelQuantityController = TextEditingController();
   final TextEditingController _dateController = TextEditingController();
 
@@ -40,8 +43,8 @@ class _ProfileAssetsState extends State<ProfileAssets> {
         builder: (controller) {
           controller.getAssets();
           return Scaffold(
-            appBar: const MyAppbar(
-              title: "My Assets",
+            appBar: MyAppbar(
+              title: "My Assets".tr,
             ),
             backgroundColor: Colors.white,
             floatingActionButton: selectIndex == 2
@@ -84,7 +87,7 @@ class _ProfileAssetsState extends State<ProfileAssets> {
                                             8), // Optional padding for inner elements
                                     child: Center(
                                       child: Text(
-                                        'Add Assets',
+                                        'Add Assets'.tr,
                                         style: TextStyle(
                                             fontWeight: FontWeight.w700,
                                             color: controller
@@ -102,6 +105,12 @@ class _ProfileAssetsState extends State<ProfileAssets> {
                                   onTap: () async {
                                     controller.selectedButton.value = 1;
 
+                                    if (controller.assetDataList?.length == 0) {
+                                      Fluttertoast.showToast(
+                                          msg: "Please add assets");
+                                      return;
+                                    }
+
                                     showModalBottomSheet(
                                       context: context,
                                       isScrollControlled: true,
@@ -117,7 +126,16 @@ class _ProfileAssetsState extends State<ProfileAssets> {
                                                 .text.isEmpty) {
                                               Fluttertoast.showToast(
                                                   msg:
-                                                      'please add fuel quantity');
+                                                      'please add fuel quantity'
+                                                          .tr);
+                                            } else if (double.parse(
+                                                    _fuelQuantityController.text
+                                                        .toString()) <
+                                                0) {
+                                              Fluttertoast.showToast(
+                                                  msg:
+                                                      'please enter quantity greater than 0'
+                                                          .tr);
                                             } else {
                                               Navigator.pop(context);
                                               shoTimeSlot(controller);
@@ -149,7 +167,7 @@ class _ProfileAssetsState extends State<ProfileAssets> {
                                             8), // Optional padding for inner elements
                                     child: Center(
                                       child: Text(
-                                        'Order',
+                                        'Order'.tr,
                                         style: TextStyle(
                                             fontWeight: FontWeight.w700,
                                             color: controller
@@ -190,9 +208,9 @@ class _ProfileAssetsState extends State<ProfileAssets> {
                                   margin: const EdgeInsets.symmetric(
                                       horizontal:
                                           8), // Optional padding for inner elements
-                                  child: const Center(
+                                  child: Center(
                                     child: Text(
-                                      'Add Assets',
+                                      'Add Assets'.tr,
                                       style: TextStyle(
                                           fontWeight: FontWeight.w700,
                                           color: colors.blackTemp),
@@ -260,377 +278,378 @@ class _ProfileAssetsState extends State<ProfileAssets> {
                                 height: widget.isFromFuel ?? false
                                     ? MediaQuery.of(context).size.height * 0.75
                                     : MediaQuery.of(context).size.height * 0.66,
-                                child: ListView.builder(
-                                  itemCount: controller.assetDataList!.length!,
-                                  shrinkWrap: true,
-                                  physics:
-                                      const AlwaysScrollableScrollPhysics(),
-                                  itemBuilder: (context, index) {
-                                    return Obx(() {
-                                      return InkWell(
-                                        onTap: widget.isFromFuel ?? false
-                                            ? () {
-                                                controller.selectedAsset.value =
-                                                    index;
-                                              }
-                                            : null,
-                                        child: Container(
-                                          margin:
-                                              const EdgeInsets.only(top: 16),
-                                          padding: const EdgeInsets.all(12),
-                                          decoration: BoxDecoration(
-                                              color: Colors.grey.shade200,
-                                              borderRadius:
-                                                  BorderRadius.circular(12),
-                                              border: Border.all(
-                                                  color: (widget.isFromFuel ??
-                                                              false) &&
-                                                          controller
-                                                                  .selectedAsset
-                                                                  .value ==
-                                                              index
-                                                      ? colors.darkYellow
-                                                      : colors.transparent)),
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                "${controller.assetDataList![index].assetType}",
-                                                style: const TextStyle(
-                                                    fontSize: 16,
-                                                    fontWeight:
-                                                        FontWeight.w900),
-                                              ),
-                                              const SizedBox(height: 12),
-                                              Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      Text(
-                                                        "Asset Name".tr,
-                                                        style: TextStyle(
-                                                            color: Colors
-                                                                .grey.shade600),
-                                                      ),
-                                                      Text(
-                                                        "${controller.assetDataList![index].name}",
-                                                        style: const TextStyle(
-                                                            color: Colors.black,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .w800),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                  Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      Text(
-                                                        "Asset Capacity/Power"
-                                                            .tr,
-                                                        style: TextStyle(
-                                                            color: Colors
-                                                                .grey.shade600),
-                                                      ),
-                                                      Text(
-                                                        "${controller.assetDataList![index].capacity}",
-                                                        style: const TextStyle(
-                                                            color: Colors.black,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .w800),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ],
-                                              ),
-                                              const SizedBox(height: 12),
-                                              Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Text(
-                                                    "Fuel capacity".tr,
-                                                    style: TextStyle(
-                                                        color: Colors
-                                                            .grey.shade600),
-                                                  ),
-                                                  Text(
-                                                    "${controller.assetDataList![index].fuelCapacity}",
-                                                    style: const TextStyle(
-                                                        color: Colors.black,
-                                                        fontWeight:
-                                                            FontWeight.w800),
-                                                  ),
-                                                ],
-                                              ),
-                                              const SizedBox(height: 8),
-                                              Row(
-                                                children: [
-                                                  Container(
-                                                    width:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .width *
-                                                            0.39,
-
-                                                    decoration: BoxDecoration(
-                                                        color: Colors.white,
-                                                        border: Border.all(
-                                                            color: Colors.black,
-                                                            width: 0.50),
-                                                        borderRadius:
-                                                            const BorderRadius
-                                                                .all(
-                                                                Radius.circular(
-                                                                    15.0))),
-                                                    margin: const EdgeInsets
-                                                        .symmetric(
-                                                        horizontal:
-                                                            5.0), // Optional padding for inner elements
-                                                    child: TextButton(
-                                                      // backgroundColor: Colors.white,
-                                                      // backgroundColor: Colors.grey.shade200,
-                                                      onPressed: () {
-                                                        Navigator.push(
-                                                            context,
-                                                            MaterialPageRoute(
-                                                              builder: (context) =>
-                                                                  MyFullAssets(
-                                                                      data: controller
-                                                                              .assetDataList![
-                                                                          index],
-                                                                      update:
-                                                                          true),
-                                                            ));
-                                                        // Navigato
-                                                        // Add your onPressed logic here
-                                                      },
-                                                      child: Row(
-                                                        children: [
-                                                          const Icon(
-                                                            Icons.edit_outlined,
-                                                            color: Colors.black,
-                                                            size: 20,
-                                                          ),
-                                                          const SizedBox(
-                                                            width: 5,
-                                                          ),
-                                                          Text(
-                                                            'Edit Assets'.tr,
-                                                            style: const TextStyle(
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w700,
-                                                                color: Colors
-                                                                    .black),
-                                                          ),
-                                                        ],
-                                                      ),
-
-                                                      // Optionally, adjust other properties like background color, elevation, etc.
+                                child: controller.assetDataList!.length! == 0
+                                    ? Nodata()
+                                    : ListView.builder(
+                                        itemCount:
+                                            controller.assetDataList!.length!,
+                                        shrinkWrap: true,
+                                        physics:
+                                            const AlwaysScrollableScrollPhysics(),
+                                        itemBuilder: (context, index) {
+                                          return Obx(() {
+                                            return InkWell(
+                                              onTap: widget.isFromFuel ?? false
+                                                  ? () {
+                                                      controller.selectedAsset
+                                                          .value = index;
+                                                    }
+                                                  : null,
+                                              child: Container(
+                                                margin: const EdgeInsets.only(
+                                                    top: 16),
+                                                padding:
+                                                    const EdgeInsets.all(12),
+                                                decoration: BoxDecoration(
+                                                    color: Colors.grey.shade200,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            12),
+                                                    border: Border.all(
+                                                        color: (widget.isFromFuel ??
+                                                                    false) &&
+                                                                controller
+                                                                        .selectedAsset
+                                                                        .value ==
+                                                                    index
+                                                            ? colors.darkYellow
+                                                            : colors
+                                                                .transparent)),
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                      "${controller.assetDataList![index].assetType}",
+                                                      style: const TextStyle(
+                                                          fontSize: 16,
+                                                          fontWeight:
+                                                              FontWeight.w900),
                                                     ),
-                                                  ),
-                                                  Container(
-                                                    width:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .width *
-                                                            0.39,
-
-                                                    decoration: BoxDecoration(
-                                                        color: Colors.white,
-                                                        border: Border.all(
-                                                            color: Colors.black,
-                                                            width: 0.50),
-                                                        borderRadius:
-                                                            const BorderRadius
-                                                                .all(
-                                                                Radius.circular(
-                                                                    15.0))),
-                                                    margin: const EdgeInsets
-                                                        .symmetric(
-                                                        horizontal:
-                                                            5.0), // Optional padding for inner elements
-                                                    child: TextButton(
-                                                      // backgroundColor: Colors.white,
-                                                      // backgroundColor: Colors.grey.shade200,
-                                                      onPressed: () {
-                                                        showDialog(
-                                                          context: context,
-                                                          builder: (context) =>
-                                                              Dialog(
-                                                            child: Container(
-                                                              height: 292,
-                                                              decoration: BoxDecoration(
+                                                    const SizedBox(height: 12),
+                                                    Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      children: [
+                                                        Column(
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .start,
+                                                          children: [
+                                                            Text(
+                                                              "Asset Name".tr,
+                                                              style: TextStyle(
                                                                   color: Colors
-                                                                      .white,
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              20)),
-                                                              child: Center(
-                                                                child: Column(
-                                                                  children: [
-                                                                    const SizedBox(
-                                                                        height:
-                                                                            32),
-                                                                    const CircleAvatar(
-                                                                        radius:
-                                                                            40,
-                                                                        backgroundColor:
-                                                                            Color(
-                                                                                0xFFFFF7EF),
-                                                                        child:
-                                                                            Icon(
-                                                                          Icons
-                                                                              .delete,
-                                                                          size:
-                                                                              44,
-                                                                          color:
-                                                                              Colors.red,
-                                                                        )),
-                                                                    const SizedBox(
-                                                                        height:
-                                                                            20),
-                                                                    Text(
-                                                                      "Are you Sure you want to"
-                                                                          .tr,
-                                                                      style:
-                                                                          const TextStyle(
-                                                                        fontSize:
-                                                                            20,
-                                                                        fontWeight:
-                                                                            FontWeight.w700,
-                                                                      ),
-                                                                    ),
-                                                                    Text(
-                                                                      "delete"
-                                                                          .tr,
-                                                                      style:
-                                                                          const TextStyle(
-                                                                        fontSize:
-                                                                            20,
-                                                                        fontWeight:
-                                                                            FontWeight.w700,
-                                                                      ),
-                                                                    ),
-                                                                    const SizedBox(
-                                                                        height:
-                                                                            24),
-                                                                    Container(
-                                                                      height:
-                                                                          48,
-                                                                      padding: const EdgeInsets
-                                                                          .symmetric(
-                                                                          horizontal:
-                                                                              24),
-                                                                      child:
-                                                                          GestureDetector(
-                                                                        onTap:
-                                                                            () {
-                                                                          Get.back();
-                                                                          controller
-                                                                              .delete(controller.assetDataList![index].id.toString())
-                                                                              .then((value) {
-                                                                            controller.getAssets();
-                                                                          });
-                                                                        },
-                                                                        child:
-                                                                            Container(
-                                                                          height:
-                                                                              56,
-                                                                          decoration:
-                                                                              BoxDecoration(
-                                                                            gradient:
-                                                                                const LinearGradient(
-                                                                              colors: [
-                                                                                Color(0xFFF3B781F),
-                                                                                Color(0xFF8AB402)
-                                                                              ],
-                                                                              stops: [
-                                                                                0,
-                                                                                1
-                                                                              ],
-                                                                              begin: AlignmentDirectional(0.94, -1),
-                                                                              end: AlignmentDirectional(-0.94, 1),
-                                                                            ),
-                                                                            borderRadius:
-                                                                                BorderRadius.circular(12),
-                                                                          ),
-                                                                          alignment:
-                                                                              Alignment.center,
-                                                                          child:
-                                                                              InkWell(
-                                                                            onTap:
-                                                                                () {
-                                                                              Get.back();
-                                                                              controller.delete(controller.assetDataList![index].id.toString()).then((value) {
-                                                                                controller.getAssets();
-                                                                              });
-                                                                            },
-                                                                            child:
-                                                                                Text(
-                                                                              "Done".tr,
-                                                                              style: const TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
-                                                                            ),
-                                                                          ),
-                                                                        ),
-                                                                      ),
-                                                                    )
-                                                                  ],
-                                                                ),
-                                                              ),
+                                                                      .grey
+                                                                      .shade600),
                                                             ),
-                                                          ),
-                                                        );
-                                                        // Navigato
-                                                        // Add your onPressed logic here
-                                                      },
-                                                      child: const Row(
-                                                        children: [
-                                                          Icon(
-                                                            Icons
-                                                                .delete_outline,
-                                                            color: Colors.black,
-                                                            size: 20,
-                                                          ),
-                                                          SizedBox(
-                                                            width: 5,
-                                                          ),
-                                                          Text(
-                                                            'Delete Assets',
-                                                            style: TextStyle(
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w700,
-                                                                color: Colors
-                                                                    .black),
-                                                          ),
-                                                        ],
-                                                      ),
-
-                                                      // Optionally, adjust other properties like background color, elevation, etc.
+                                                            Text(
+                                                              "${controller.assetDataList![index].name}",
+                                                              style: const TextStyle(
+                                                                  color: Colors
+                                                                      .black,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w800),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                        Column(
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .start,
+                                                          children: [
+                                                            Text(
+                                                              "Asset Capacity/Power"
+                                                                  .tr,
+                                                              style: TextStyle(
+                                                                  color: Colors
+                                                                      .grey
+                                                                      .shade600),
+                                                            ),
+                                                            Text(
+                                                              "${controller.assetDataList![index].capacity}",
+                                                              style: const TextStyle(
+                                                                  color: Colors
+                                                                      .black,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w800),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ],
                                                     ),
-                                                  ),
-                                                ],
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                      );
-                                    });
-                                  },
-                                ),
+                                                    const SizedBox(height: 12),
+                                                    Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Text(
+                                                          "Fuel capacity".tr,
+                                                          style: TextStyle(
+                                                              color: Colors.grey
+                                                                  .shade600),
+                                                        ),
+                                                        Text(
+                                                          "${controller.assetDataList![index].fuelCapacity}",
+                                                          style: const TextStyle(
+                                                              color:
+                                                                  Colors.black,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w800),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    const SizedBox(height: 8),
+                                                    Row(
+                                                      children: [
+                                                        Container(
+                                                          width: MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width *
+                                                              0.39,
+
+                                                          decoration: BoxDecoration(
+                                                              color:
+                                                                  Colors.white,
+                                                              border: Border.all(
+                                                                  color: Colors
+                                                                      .black,
+                                                                  width: 0.50),
+                                                              borderRadius:
+                                                                  const BorderRadius
+                                                                      .all(
+                                                                      Radius.circular(
+                                                                          15.0))),
+                                                          margin: const EdgeInsets
+                                                              .symmetric(
+                                                              horizontal:
+                                                                  5.0), // Optional padding for inner elements
+                                                          child: TextButton(
+                                                            // backgroundColor: Colors.white,
+                                                            // backgroundColor: Colors.grey.shade200,
+                                                            onPressed: () {
+                                                              Navigator.push(
+                                                                  context,
+                                                                  MaterialPageRoute(
+                                                                    builder: (context) => MyFullAssets(
+                                                                        data: controller.assetDataList![
+                                                                            index],
+                                                                        update:
+                                                                            true),
+                                                                  ));
+                                                              // Navigato
+                                                              // Add your onPressed logic here
+                                                            },
+                                                            child: Row(
+                                                              children: [
+                                                                const Icon(
+                                                                  Icons
+                                                                      .edit_outlined,
+                                                                  color: Colors
+                                                                      .black,
+                                                                  size: 20,
+                                                                ),
+                                                                const SizedBox(
+                                                                  width: 5,
+                                                                ),
+                                                                Text(
+                                                                  'Edit Assets'
+                                                                      .tr,
+                                                                  style: const TextStyle(
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w700,
+                                                                      color: Colors
+                                                                          .black),
+                                                                ),
+                                                              ],
+                                                            ),
+
+                                                            // Optionally, adjust other properties like background color, elevation, etc.
+                                                          ),
+                                                        ),
+                                                        Container(
+                                                          width: MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width *
+                                                              0.39,
+
+                                                          decoration: BoxDecoration(
+                                                              color:
+                                                                  Colors.white,
+                                                              border: Border.all(
+                                                                  color: Colors
+                                                                      .black,
+                                                                  width: 0.50),
+                                                              borderRadius:
+                                                                  const BorderRadius
+                                                                      .all(
+                                                                      Radius.circular(
+                                                                          15.0))),
+                                                          margin: const EdgeInsets
+                                                              .symmetric(
+                                                              horizontal:
+                                                                  5.0), // Optional padding for inner elements
+                                                          child: TextButton(
+                                                            // backgroundColor: Colors.white,
+                                                            // backgroundColor: Colors.grey.shade200,
+                                                            onPressed: () {
+                                                              showDialog(
+                                                                context:
+                                                                    context,
+                                                                builder:
+                                                                    (context) =>
+                                                                        Dialog(
+                                                                  child:
+                                                                      Container(
+                                                                    height: 292,
+                                                                    decoration: BoxDecoration(
+                                                                        color: Colors
+                                                                            .white,
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(20)),
+                                                                    child:
+                                                                        Center(
+                                                                      child:
+                                                                          Column(
+                                                                        children: [
+                                                                          const SizedBox(
+                                                                              height: 32),
+                                                                          const CircleAvatar(
+                                                                              radius: 40,
+                                                                              backgroundColor: Color(0xFFFFF7EF),
+                                                                              child: Icon(
+                                                                                Icons.delete,
+                                                                                size: 44,
+                                                                                color: Colors.red,
+                                                                              )),
+                                                                          const SizedBox(
+                                                                              height: 20),
+                                                                          Text(
+                                                                            "Are you Sure you want to".tr,
+                                                                            style:
+                                                                                const TextStyle(
+                                                                              fontSize: 20,
+                                                                              fontWeight: FontWeight.w700,
+                                                                            ),
+                                                                          ),
+                                                                          Text(
+                                                                            "delete".tr,
+                                                                            style:
+                                                                                const TextStyle(
+                                                                              fontSize: 20,
+                                                                              fontWeight: FontWeight.w700,
+                                                                            ),
+                                                                          ),
+                                                                          const SizedBox(
+                                                                              height: 24),
+                                                                          Container(
+                                                                            height:
+                                                                                48,
+                                                                            padding:
+                                                                                const EdgeInsets.symmetric(horizontal: 24),
+                                                                            child:
+                                                                                GestureDetector(
+                                                                              onTap: () {
+                                                                                Navigator.pop(context);
+                                                                                controller.delete(controller.assetDataList![index].id.toString()).then((value) {
+                                                                                  if (value['status'] == true) {
+                                                                                    Fluttertoast.showToast(msg: "${value['message']}");
+                                                                                  } else {
+                                                                                    Fluttertoast.showToast(msg: "${value['message']}");
+                                                                                  }
+                                                                                  controller.getAssets();
+                                                                                });
+                                                                              },
+                                                                              child: Container(
+                                                                                height: 56,
+                                                                                decoration: BoxDecoration(
+                                                                                  gradient: const LinearGradient(
+                                                                                    colors: [
+                                                                                      Color(0xFFF3B781F),
+                                                                                      Color(0xFF8AB402)
+                                                                                    ],
+                                                                                    stops: [0, 1],
+                                                                                    begin: AlignmentDirectional(0.94, -1),
+                                                                                    end: AlignmentDirectional(-0.94, 1),
+                                                                                  ),
+                                                                                  borderRadius: BorderRadius.circular(12),
+                                                                                ),
+                                                                                alignment: Alignment.center,
+                                                                                child: InkWell(
+                                                                                  onTap: () {
+                                                                                    Navigator.pop(context);
+
+                                                                                    controller.delete(controller.assetDataList![index].id.toString()).then((value) {
+                                                                                      if (value['status'] == true) {
+                                                                                        Fluttertoast.showToast(msg: "${value['message']}");
+                                                                                      } else {
+                                                                                        Fluttertoast.showToast(msg: "${value['message']}");
+                                                                                      }
+                                                                                      controller.getAssets();
+                                                                                    });
+                                                                                  },
+                                                                                  child: Text(
+                                                                                    "Done".tr,
+                                                                                    style: const TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
+                                                                                  ),
+                                                                                ),
+                                                                              ),
+                                                                            ),
+                                                                          )
+                                                                        ],
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              );
+                                                              // Navigato
+                                                              // Add your onPressed logic here
+                                                            },
+                                                            child: Row(
+                                                              children: [
+                                                                Icon(
+                                                                  Icons
+                                                                      .delete_outline,
+                                                                  color: Colors
+                                                                      .black,
+                                                                  size: 20,
+                                                                ),
+                                                                SizedBox(
+                                                                  width: 5,
+                                                                ),
+                                                                Text(
+                                                                  'Delete Assets'
+                                                                      .tr,
+                                                                  style: TextStyle(
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w700,
+                                                                      color: Colors
+                                                                          .black),
+                                                                ),
+                                                              ],
+                                                            ),
+
+                                                            // Optionally, adjust other properties like background color, elevation, etc.
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    )
+                                                  ],
+                                                ),
+                                              ),
+                                            );
+                                          });
+                                        },
+                                      ),
                               ))
                           : ListView.builder(
                               itemCount: 3,
@@ -702,7 +721,7 @@ class _ProfileAssetsState extends State<ProfileAssets> {
           return Evdoorbottom(
             onTab: () {
               if (_dateController.text.isEmpty) {
-                Fluttertoast.showToast(msg: 'please select date');
+                Fluttertoast.showToast(msg: 'please select date'.tr);
               } else {
                 Get.to(const VendorsPage(), arguments: {
                   'from': 'asset',

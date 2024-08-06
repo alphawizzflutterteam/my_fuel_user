@@ -6,9 +6,6 @@ import 'package:test_prj/components/my_button.dart';
 import 'package:test_prj/orderfuel/doorStepDelivery/vendors_page.dart';
 import '../../charging_stations.dart';
 
-
-
-
 class Fuelbottom extends StatefulWidget {
   const Fuelbottom({super.key});
 
@@ -154,9 +151,10 @@ class _FuelbottomState extends State<Fuelbottom> {
             width: 330,
             child: GestureDetector(
                 onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => const Checkout_Car_Service()));
-
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => Checkout_Car_Service()));
                 },
                 child: MyButton(text: 'Book Now')),
           ),

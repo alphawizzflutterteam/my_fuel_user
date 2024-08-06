@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:test_prj/components/my_appbar.dart';
 import 'package:test_prj/components/my_button.dart';
 import 'package:test_prj/components/my_button2.dart';
@@ -75,7 +76,7 @@ class _PickupState extends State<Pickup> {
                   ),
                   SizedBox(
                       height: 48,
-                      child: DisButton(text: "Change or add new address"))
+                      child: DisButton(text: "Change or add new address".tr))
                 ],
               ),
             ),
@@ -85,7 +86,7 @@ class _PickupState extends State<Pickup> {
       floatingActionButton: Container(
           height: 48,
           margin: EdgeInsets.all(16),
-          child: MyButton(text: "Continue")),
+          child: MyButton(text: "Continue".tr)),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }

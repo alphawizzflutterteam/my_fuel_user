@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:test_prj/components/my_appbar.dart';
 import 'package:test_prj/components/my_button.dart';
 import 'package:test_prj/components/my_button2.dart';
@@ -69,10 +70,10 @@ class _AssetsPage2State extends State<AssetsPage2> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const SizedBox(
+                      SizedBox(
                           height: 48,
                           width: 160,
-                          child: DisButton(text: "Add Asset")),
+                          child: DisButton(text: "Add Asset".tr)),
                       SizedBox(
                           height: 48,
                           width: 160,

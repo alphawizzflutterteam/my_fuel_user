@@ -4,7 +4,8 @@
 
 import 'dart:convert';
 
-AllOrdersModel allOrdersModelFromJson(String str) => AllOrdersModel.fromJson(json.decode(str));
+AllOrdersModel allOrdersModelFromJson(String str) =>
+    AllOrdersModel.fromJson(json.decode(str));
 
 String allOrdersModelToJson(AllOrdersModel data) => json.encode(data.toJson());
 
@@ -20,16 +21,21 @@ class AllOrdersModel {
   });
 
   factory AllOrdersModel.fromJson(Map<String, dynamic> json) => AllOrdersModel(
-    status: json["status"],
-    message: json["message"],
-    orderTypeList: json["data"] == null ? [] : List<OrderTypeList>.from(json["data"]!.map((x) => OrderTypeList.fromJson(x))),
-  );
+        status: json["status"],
+        message: json["message"],
+        orderTypeList: json["data"] == null
+            ? []
+            : List<OrderTypeList>.from(
+                json["data"]!.map((x) => OrderTypeList.fromJson(x))),
+      );
 
   Map<String, dynamic> toJson() => {
-    "status": status,
-    "message": message,
-    "data": orderTypeList == null ? [] : List<dynamic>.from(orderTypeList!.map((x) => x.toJson())),
-  };
+        "status": status,
+        "message": message,
+        "data": orderTypeList == null
+            ? []
+            : List<dynamic>.from(orderTypeList!.map((x) => x.toJson())),
+      };
 }
 
 class OrderTypeList {
@@ -46,18 +52,28 @@ class OrderTypeList {
   });
 
   factory OrderTypeList.fromJson(Map<String, dynamic> json) => OrderTypeList(
-    id: json["id"],
-    name: json["name"],
-    insurances: json["insurances"] == null ? [] : List<Insurance>.from(json["insurances"]!.map((x) => Insurance.fromJson(x))),
-    bookings: json["bookings"] == null ? [] : List<Booking>.from(json["bookings"]!.map((x) => Booking.fromJson(x))),
-  );
+        id: json["id"],
+        name: json["name"],
+        insurances: json["insurances"] == null
+            ? []
+            : List<Insurance>.from(
+                json["insurances"]!.map((x) => Insurance.fromJson(x))),
+        bookings: json["bookings"] == null
+            ? []
+            : List<Booking>.from(
+                json["bookings"]!.map((x) => Booking.fromJson(x))),
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "name": name,
-    "insurances": insurances == null ? [] : List<dynamic>.from(insurances!.map((x) => x.toJson())),
-    "bookings": bookings == null ? [] : List<dynamic>.from(bookings!.map((x) => x.toJson())),
-  };
+        "id": id,
+        "name": name,
+        "insurances": insurances == null
+            ? []
+            : List<dynamic>.from(insurances!.map((x) => x.toJson())),
+        "bookings": bookings == null
+            ? []
+            : List<dynamic>.from(bookings!.map((x) => x.toJson())),
+      };
 }
 
 class Booking {
@@ -160,104 +176,128 @@ class Booking {
   });
 
   factory Booking.fromJson(Map<String, dynamic> json) => Booking(
-    id: json["id"],
-    categoryId: json["category_id"],
-    userId: json["user_id"],
-    sellerId: json["seller_id"],
-    serviceName: json["service_name"],
-    serviceType: serviceTypeValues.map[json["service_type"]],
-    quantity: json["quantity"],
-    vehicleType: json["vehicle_type"] == null ? null : Vehicle.fromJson(json["vehicle_type"]),
-    vehicleModel: json["vehicle_model"] == null ? null : Vehicle.fromJson(json["vehicle_model"]),
-    productId: json["product_id"],
-    tyreSize: json["tyre_size"],
-    timeSlotId: json["time_slot_id"],
-    date: json["date"] == null ? null : DateTime.parse(json["date"]),
-    notes: json["notes"],
-    service: serviceValues.map[json["service"]],
-    shippingAddressId: json["shipping_address_id"],
-    billingSameAsShipping: json["billing_same_as_shipping"],
-    billingAddressId: json["billing_address_id"],
-    subtotal: json["subtotal"],
-    discount: json["discount"],
-    coupanDiscount: json["coupan_discount"],
-    serviceCharges: json["service_charges"],
-    total: json["total"],
-    isPaid: json["is_paid"],
-    paymentMethod: paymentMethodValues.map[json["payment_method"]],
-    invoiceId: invoiceIdValues.map[json["invoice_id"]],
-    otp: json["otp"],
-    deliveryManId: json["delivery_man_id"],
-    transactionId: json["transaction_id"],
-    status: json["status"],
-    poc: pocValues.map[json["poc"]],
-    deliveryChalan: json["delivery_chalan"],
-    remarks: pocValues.map[json["remarks"]],
-    createdAt: json["created_at"] == null ? null : DateTime.parse(json["created_at"]),
-    updatedAt: json["updated_at"] == null ? null : DateTime.parse(json["updated_at"]),
-    products: json["products"] == null ? [] : List<Product>.from(json["products"]!.map((x) => Product.fromJson(x))),
-    category: json["category"] == null ? null : Category.fromJson(json["category"]),
-    customer: json["customer"] == null ? null : Customer.fromJson(json["customer"]),
-    seller: json["seller"] == null ? null : Seller.fromJson(json["seller"]),
-    timeSlot: json["time_slot"] == null ? null : TimeSlot.fromJson(json["time_slot"]),
-    shippingAddress: json["shipping_address"] == null ? null : IngAddress.fromJson(json["shipping_address"]),
-    billingAddress: json["billing_address"] == null ? null : IngAddress.fromJson(json["billing_address"]),
-    vehicleNumber: json["vehicle_number"],
-    name: json["name"],
-    email: json["email"],
-    mobile: json["mobile"],
-    statusText: json["status_text"],
-  );
+        id: json["id"],
+        categoryId: json["category_id"],
+        userId: json["user_id"],
+        sellerId: json["seller_id"],
+        serviceName: json["service_name"],
+        serviceType: serviceTypeValues.map[json["service_type"]],
+        quantity: json["quantity"],
+        vehicleType: json["vehicle_type"] == null
+            ? null
+            : Vehicle.fromJson(json["vehicle_type"]),
+        vehicleModel: json["vehicle_model"] == null
+            ? null
+            : Vehicle.fromJson(json["vehicle_model"]),
+        productId: json["product_id"],
+        tyreSize: json["tyre_size"],
+        timeSlotId: json["time_slot_id"],
+        date: json["date"] == null ? null : DateTime.parse(json["date"]),
+        notes: json["notes"],
+        service: serviceValues.map[json["service"]],
+        shippingAddressId: json["shipping_address_id"],
+        billingSameAsShipping: json["billing_same_as_shipping"],
+        billingAddressId: json["billing_address_id"],
+        subtotal: json["subtotal"],
+        discount: json["discount"],
+        coupanDiscount: json["coupan_discount"],
+        serviceCharges: json["service_charges"],
+        total: json["total"],
+        isPaid: json["is_paid"],
+        paymentMethod: paymentMethodValues.map[json["payment_method"]],
+        invoiceId: invoiceIdValues.map[json["invoice_id"]],
+        otp: json["otp"],
+        deliveryManId: json["delivery_man_id"],
+        transactionId: json["transaction_id"],
+        status: json["status"],
+        poc: pocValues.map[json["poc"]],
+        deliveryChalan: json["delivery_chalan"],
+        remarks: pocValues.map[json["remarks"]],
+        createdAt: json["created_at"] == null
+            ? null
+            : DateTime.parse(json["created_at"]),
+        updatedAt: json["updated_at"] == null
+            ? null
+            : DateTime.parse(json["updated_at"]),
+        products: json["products"] == null
+            ? []
+            : List<Product>.from(
+                json["products"]!.map((x) => Product.fromJson(x))),
+        category: json["category"] == null
+            ? null
+            : Category.fromJson(json["category"]),
+        customer: json["customer"] == null
+            ? null
+            : Customer.fromJson(json["customer"]),
+        seller: json["seller"] == null ? null : Seller.fromJson(json["seller"]),
+        timeSlot: json["time_slot"] == null
+            ? null
+            : TimeSlot.fromJson(json["time_slot"]),
+        shippingAddress: json["shipping_address"] == null
+            ? null
+            : IngAddress.fromJson(json["shipping_address"]),
+        billingAddress: json["billing_address"] == null
+            ? null
+            : IngAddress.fromJson(json["billing_address"]),
+        vehicleNumber: json["vehicle_number"],
+        name: json["name"],
+        email: json["email"],
+        mobile: json["mobile"],
+        statusText: json["status_text"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "category_id": categoryId,
-    "user_id": userId,
-    "seller_id": sellerId,
-    "service_name": serviceName,
-    "service_type": serviceTypeValues.reverse[serviceType],
-    "quantity": quantity,
-    "vehicle_type": vehicleType?.toJson(),
-    "vehicle_model": vehicleModel?.toJson(),
-    "product_id": productId,
-    "tyre_size": tyreSize,
-    "time_slot_id": timeSlotId,
-    "date": "${date!.year.toString().padLeft(4, '0')}-${date!.month.toString().padLeft(2, '0')}-${date!.day.toString().padLeft(2, '0')}",
-    "notes": notes,
-    "service": serviceValues.reverse[service],
-    "shipping_address_id": shippingAddressId,
-    "billing_same_as_shipping": billingSameAsShipping,
-    "billing_address_id": billingAddressId,
-    "subtotal": subtotal,
-    "discount": discount,
-    "coupan_discount": coupanDiscount,
-    "service_charges": serviceCharges,
-    "total": total,
-    "is_paid": isPaid,
-    "payment_method": paymentMethodValues.reverse[paymentMethod],
-    "invoice_id": invoiceIdValues.reverse[invoiceId],
-    "otp": otp,
-    "delivery_man_id": deliveryManId,
-    "transaction_id": transactionId,
-    "status": status,
-    "poc": pocValues.reverse[poc],
-    "delivery_chalan": deliveryChalan,
-    "remarks": pocValues.reverse[remarks],
-    "created_at": createdAt?.toIso8601String(),
-    "updated_at": updatedAt?.toIso8601String(),
-    "products": products == null ? [] : List<dynamic>.from(products!.map((x) => x.toJson())),
-    "category": category?.toJson(),
-    "customer": customer?.toJson(),
-    "seller": seller?.toJson(),
-    "time_slot": timeSlot?.toJson(),
-    "shipping_address": shippingAddress?.toJson(),
-    "billing_address": billingAddress?.toJson(),
-    "vehicle_number": vehicleNumber,
-    "name": name,
-    "email": email,
-    "mobile": mobile,
-    "status_text": statusText,
-  };
+        "id": id,
+        "category_id": categoryId,
+        "user_id": userId,
+        "seller_id": sellerId,
+        "service_name": serviceName,
+        "service_type": serviceTypeValues.reverse[serviceType],
+        "quantity": quantity,
+        "vehicle_type": vehicleType?.toJson(),
+        "vehicle_model": vehicleModel?.toJson(),
+        "product_id": productId,
+        "tyre_size": tyreSize,
+        "time_slot_id": timeSlotId,
+        "date":
+            "${date!.year.toString().padLeft(4, '0')}-${date!.month.toString().padLeft(2, '0')}-${date!.day.toString().padLeft(2, '0')}",
+        "notes": notes,
+        "service": serviceValues.reverse[service],
+        "shipping_address_id": shippingAddressId,
+        "billing_same_as_shipping": billingSameAsShipping,
+        "billing_address_id": billingAddressId,
+        "subtotal": subtotal,
+        "discount": discount,
+        "coupan_discount": coupanDiscount,
+        "service_charges": serviceCharges,
+        "total": total,
+        "is_paid": isPaid,
+        "payment_method": paymentMethodValues.reverse[paymentMethod],
+        "invoice_id": invoiceIdValues.reverse[invoiceId],
+        "otp": otp,
+        "delivery_man_id": deliveryManId,
+        "transaction_id": transactionId,
+        "status": status,
+        "poc": pocValues.reverse[poc],
+        "delivery_chalan": deliveryChalan,
+        "remarks": pocValues.reverse[remarks],
+        "created_at": createdAt?.toIso8601String(),
+        "updated_at": updatedAt?.toIso8601String(),
+        "products": products == null
+            ? []
+            : List<dynamic>.from(products!.map((x) => x.toJson())),
+        "category": category?.toJson(),
+        "customer": customer?.toJson(),
+        "seller": seller?.toJson(),
+        "time_slot": timeSlot?.toJson(),
+        "shipping_address": shippingAddress?.toJson(),
+        "billing_address": billingAddress?.toJson(),
+        "vehicle_number": vehicleNumber,
+        "name": name,
+        "email": email,
+        "mobile": mobile,
+        "status_text": statusText,
+      };
 }
 
 class IngAddress {
@@ -304,75 +344,66 @@ class IngAddress {
   });
 
   factory IngAddress.fromJson(Map<String, dynamic> json) => IngAddress(
-    id: json["id"],
-    customerId: json["customer_id"],
-    isGuest: json["is_guest"],
-    contactPersonName: json["contact_person_name"],
-    email: json["email"],
-    addressType: addressTypeValues.map[json["address_type"]],
-    address: json["address"],
-    building: buildingValues.map[json["building"]],
-    landmark: buildingValues.map[json["landmark"]],
-    city: cityValues.map[json["city"]],
-    zip: json["zip"],
-    phone: json["phone"],
-    createdAt: json["created_at"] == null ? null : DateTime.parse(json["created_at"]),
-    updatedAt: json["updated_at"] == null ? null : DateTime.parse(json["updated_at"]),
-    state: json["state"],/*stateValues.map[json["state"]],*/
-    country: countryValues.map[json["country"]],
-    latitude: json["latitude"],
-    longitude: json["longitude"],
-    isBilling: json["is_billing"],
-  );
+        id: json["id"],
+        customerId: json["customer_id"],
+        isGuest: json["is_guest"],
+        contactPersonName: json["contact_person_name"],
+        email: json["email"],
+        addressType: addressTypeValues.map[json["address_type"]],
+        address: json["address"],
+        building: buildingValues.map[json["building"]],
+        landmark: buildingValues.map[json["landmark"]],
+        city: cityValues.map[json["city"]],
+        zip: json["zip"],
+        phone: json["phone"],
+        createdAt: json["created_at"] == null
+            ? null
+            : DateTime.parse(json["created_at"]),
+        updatedAt: json["updated_at"] == null
+            ? null
+            : DateTime.parse(json["updated_at"]),
+        state: json["state"],
+        /*stateValues.map[json["state"]],*/
+        country: countryValues.map[json["country"]],
+        latitude: json["latitude"],
+        longitude: json["longitude"],
+        isBilling: json["is_billing"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "customer_id": customerId,
-    "is_guest": isGuest,
-    "contact_person_name":contactPersonName,
-    "email": email,
-    "address_type": addressTypeValues.reverse[addressType],
-    "address": address,
-    "building": buildingValues.reverse[building],
-    "landmark": buildingValues.reverse[landmark],
-    "city": cityValues.reverse[city],
-    "zip": zip,
-    "phone": phone,
-    "created_at": createdAt?.toIso8601String(),
-    "updated_at": updatedAt?.toIso8601String(),
-    "state":state,
-    "country": countryValues.reverse[country],
-    "latitude": latitude,
-    "longitude": longitude,
-    "is_billing": isBilling,
-  };
+        "id": id,
+        "customer_id": customerId,
+        "is_guest": isGuest,
+        "contact_person_name": contactPersonName,
+        "email": email,
+        "address_type": addressTypeValues.reverse[addressType],
+        "address": address,
+        "building": buildingValues.reverse[building],
+        "landmark": buildingValues.reverse[landmark],
+        "city": cityValues.reverse[city],
+        "zip": zip,
+        "phone": phone,
+        "created_at": createdAt?.toIso8601String(),
+        "updated_at": updatedAt?.toIso8601String(),
+        "state": state,
+        "country": countryValues.reverse[country],
+        "latitude": latitude,
+        "longitude": longitude,
+        "is_billing": isBilling,
+      };
 }
 
-enum AddressType {
-  HOME
-}
+enum AddressType { HOME }
 
-final addressTypeValues = EnumValues({
-  "Home": AddressType.HOME
-});
+final addressTypeValues = EnumValues({"Home": AddressType.HOME});
 
-enum Building {
-  HSH,
-  RAU
-}
+enum Building { HSH, RAU }
 
-final buildingValues = EnumValues({
-  "hsh": Building.HSH,
-  "rau": Building.RAU
-});
+final buildingValues = EnumValues({"hsh": Building.HSH, "rau": Building.RAU});
 
-enum City {
-  INDORE
-}
+enum City { INDORE }
 
-final cityValues = EnumValues({
-  "indore": City.INDORE
-});
+final cityValues = EnumValues({"indore": City.INDORE});
 
 // enum ContactPersonName {
 //   CONTACT_PERSON_NAME_DEEPAK_BARIA,
@@ -384,23 +415,13 @@ final cityValues = EnumValues({
 //   "Deepak baria": ContactPersonName.DEEPAK_BARIA
 // });
 
-enum Country {
-  INDIA
-}
+enum Country { INDIA }
 
-final countryValues = EnumValues({
-  "india": Country.INDIA
-});
+final countryValues = EnumValues({"india": Country.INDIA});
 
-enum StateData {
-  MP,
-  M_P
-}
+enum StateData { MP, M_P }
 
-final stateValues = EnumValues({
-  "mp": StateData.MP,
-  "m.p": StateData.M_P
-});
+final stateValues = EnumValues({"mp": StateData.MP, "m.p": StateData.M_P});
 
 class Category {
   int? id;
@@ -413,7 +434,7 @@ class Category {
   DateTime? updatedAt;
   int? homeStatus;
   int? priority;
-  Type? type;
+  String? type;
   int? isFuel;
   List<dynamic>? translations;
 
@@ -434,45 +455,51 @@ class Category {
   });
 
   factory Category.fromJson(Map<String, dynamic> json) => Category(
-    id: json["id"],
-    name: json["name"],
-    slug: json["slug"],
-    icon: json["icon"],
-    parentId: json["parent_id"],
-    position: json["position"],
-    createdAt: json["created_at"] == null ? null : DateTime.parse(json["created_at"]),
-    updatedAt: json["updated_at"] == null ? null : DateTime.parse(json["updated_at"]),
-    homeStatus: json["home_status"],
-    priority: json["priority"],
-    type: typeValues.map[json["type"]]!,
-    isFuel: json["is_fuel"],
-    translations: json["translations"] == null ? [] : List<dynamic>.from(json["translations"]!.map((x) => x)),
-  );
+        id: json["id"],
+        name: json["name"],
+        slug: json["slug"],
+        icon: json["icon"],
+        parentId: json["parent_id"],
+        position: json["position"],
+        createdAt: json["created_at"] == null
+            ? null
+            : DateTime.parse(json["created_at"]),
+        updatedAt: json["updated_at"] == null
+            ? null
+            : DateTime.parse(json["updated_at"]),
+        homeStatus: json["home_status"],
+        priority: json["priority"],
+        type: json["type"],
+        isFuel: json["is_fuel"],
+        translations: json["translations"] == null
+            ? []
+            : List<dynamic>.from(json["translations"]!.map((x) => x)),
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "name": name,
-    "slug": slug,
-    "icon": icon,
-    "parent_id": parentId,
-    "position": position,
-    "created_at": createdAt?.toIso8601String(),
-    "updated_at": updatedAt?.toIso8601String(),
-    "home_status": homeStatus,
-    "priority": priority,
-    "type": typeValues.reverse[type],
-    "is_fuel": isFuel,
-    "translations": translations == null ? [] : List<dynamic>.from(translations!.map((x) => x)),
-  };
+        "id": id,
+        "name": name,
+        "slug": slug,
+        "icon": icon,
+        "parent_id": parentId,
+        "position": position,
+        "created_at": createdAt?.toIso8601String(),
+        "updated_at": updatedAt?.toIso8601String(),
+        "home_status": homeStatus,
+        "priority": priority,
+        "type": type,
+        "is_fuel": isFuel,
+        "translations": translations == null
+            ? []
+            : List<dynamic>.from(translations!.map((x) => x)),
+      };
 }
 
-enum Type {
-  DOOR_STEP_AT_YOUR_STATION_HOME_SERVICE,
-  HOME_SERVICE
-}
+enum Type { DOOR_STEP_AT_YOUR_STATION_HOME_SERVICE, HOME_SERVICE }
 
 final typeValues = EnumValues({
-  "Door Step,At your station,Home Service": Type.DOOR_STEP_AT_YOUR_STATION_HOME_SERVICE,
+  "Door Step,At your station,Home Service":
+      Type.DOOR_STEP_AT_YOUR_STATION_HOME_SERVICE,
   "Home Service": Type.HOME_SERVICE
 });
 
@@ -503,9 +530,9 @@ class Customer {
   bool? isPhoneVerified;
   TemporaryToken? temporaryToken;
   bool? isEmailVerified;
-  int? walletBalance;
-  int? loyaltyPoint;
-  int? loginHitCount;
+  String? walletBalance;
+  String? loyaltyPoint;
+  String? loginHitCount;
   bool? isTempBlocked;
   dynamic tempBlockTime;
   ReferralCode? referralCode;
@@ -562,163 +589,136 @@ class Customer {
   });
 
   factory Customer.fromJson(Map<String, dynamic> json) => Customer(
-    id: json["id"],
-    name: fNameEnumValues.map[json["name"]],
-    fName: fNameEnumValues.map[json["f_name"]],
-    lName: fNameEnumValues.map[json["l_name"]],
-    phone: json["phone"],
-    image: customerImageValues.map[json["image"]],
-    email: customerEmailValues.map[json["email"]],
-    emailVerifiedAt: json["email_verified_at"],
-    createdAt: json["created_at"] == null ? null : DateTime.parse(json["created_at"]),
-    updatedAt: json["updated_at"] == null ? null : DateTime.parse(json["updated_at"]),
-    streetAddress: json["street_address"],
-    country: json["country"],
-    city: json["city"],
-    zip: json["zip"],
-    houseNo: json["house_no"],
-    apartmentNo: json["apartment_no"],
-    cmFirebaseToken: json["cm_firebase_token"],
-    isActive: json["is_active"],
-    paymentCardLastFour: json["payment_card_last_four"],
-    paymentCardBrand: json["payment_card_brand"],
-    paymentCardFawryToken: json["payment_card_fawry_token"],
-    loginMedium: json["login_medium"],
-    socialId: json["social_id"],
-    isPhoneVerified: json["is_phone_verified"],
-    temporaryToken: temporaryTokenValues.map[json["temporary_token"]],
-    isEmailVerified: json["is_email_verified"],
-    walletBalance: json["wallet_balance"],
-    loyaltyPoint: json["loyalty_point"],
-    loginHitCount: json["login_hit_count"],
-    isTempBlocked: json["is_temp_blocked"],
-    tempBlockTime: json["temp_block_time"],
-    referralCode: referralCodeValues.map[json["referral_code"]],
-    referredBy: json["referred_by"],
-    appLanguage: appLanguageValues.map[json["app_language"]],
-    address: json["address"],
-    pan: json["pan"],
-    msme: json["msme"],
-    profile: json["profile"],
-    gst: json["gst"],
-    walletId: json["wallet_id"],
-  );
+        id: json["id"],
+        name: fNameEnumValues.map[json["name"]],
+        fName: fNameEnumValues.map[json["f_name"]],
+        lName: fNameEnumValues.map[json["l_name"]],
+        phone: json["phone"],
+        image: customerImageValues.map[json["image"]],
+        email: customerEmailValues.map[json["email"]],
+        emailVerifiedAt: json["email_verified_at"],
+        createdAt: json["created_at"] == null
+            ? null
+            : DateTime.parse(json["created_at"]),
+        updatedAt: json["updated_at"] == null
+            ? null
+            : DateTime.parse(json["updated_at"]),
+        streetAddress: json["street_address"],
+        country: json["country"],
+        city: json["city"],
+        zip: json["zip"],
+        houseNo: json["house_no"],
+        apartmentNo: json["apartment_no"],
+        cmFirebaseToken: json["cm_firebase_token"],
+        isActive: json["is_active"],
+        paymentCardLastFour: json["payment_card_last_four"],
+        paymentCardBrand: json["payment_card_brand"],
+        paymentCardFawryToken: json["payment_card_fawry_token"],
+        loginMedium: json["login_medium"],
+        socialId: json["social_id"],
+        isPhoneVerified: json["is_phone_verified"],
+        temporaryToken: temporaryTokenValues.map[json["temporary_token"]],
+        isEmailVerified: json["is_email_verified"],
+        walletBalance: json["wallet_balance"].toString(),
+        loyaltyPoint: json["loyalty_point"].toString(),
+        loginHitCount: json["login_hit_count"].toString(),
+        isTempBlocked: json["is_temp_blocked"],
+        tempBlockTime: json["temp_block_time"],
+        referralCode: referralCodeValues.map[json["referral_code"]],
+        referredBy: json["referred_by"],
+        appLanguage: appLanguageValues.map[json["app_language"]],
+        address: json["address"],
+        pan: json["pan"],
+        msme: json["msme"],
+        profile: json["profile"],
+        gst: json["gst"],
+        walletId: json["wallet_id"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "name": fNameEnumValues.reverse[name],
-    "f_name": fNameEnumValues.reverse[fName],
-    "l_name": fNameEnumValues.reverse[lName],
-    "phone": phone,
-    "image": customerImageValues.reverse[image],
-    "email": customerEmailValues.reverse[email],
-    "email_verified_at": emailVerifiedAt,
-    "created_at": createdAt?.toIso8601String(),
-    "updated_at": updatedAt?.toIso8601String(),
-    "street_address": streetAddress,
-    "country": country,
-    "city": city,
-    "zip": zip,
-    "house_no": houseNo,
-    "apartment_no": apartmentNo,
-    "cm_firebase_token": cmFirebaseToken,
-    "is_active": isActive,
-    "payment_card_last_four": paymentCardLastFour,
-    "payment_card_brand": paymentCardBrand,
-    "payment_card_fawry_token": paymentCardFawryToken,
-    "login_medium": loginMedium,
-    "social_id": socialId,
-    "is_phone_verified": isPhoneVerified,
-    "temporary_token": temporaryTokenValues.reverse[temporaryToken],
-    "is_email_verified": isEmailVerified,
-    "wallet_balance": walletBalance,
-    "loyalty_point": loyaltyPoint,
-    "login_hit_count": loginHitCount,
-    "is_temp_blocked": isTempBlocked,
-    "temp_block_time": tempBlockTime,
-    "referral_code": referralCodeValues.reverse[referralCode],
-    "referred_by": referredBy,
-    "app_language": appLanguageValues.reverse[appLanguage],
-    "address": address,
-    "pan": pan,
-    "msme": msme,
-    "profile": profile,
-    "gst": gst,
-    "wallet_id": walletId,
-  };
+        "id": id,
+        "name": fNameEnumValues.reverse[name],
+        "f_name": fNameEnumValues.reverse[fName],
+        "l_name": fNameEnumValues.reverse[lName],
+        "phone": phone,
+        "image": customerImageValues.reverse[image],
+        "email": customerEmailValues.reverse[email],
+        "email_verified_at": emailVerifiedAt,
+        "created_at": createdAt?.toIso8601String(),
+        "updated_at": updatedAt?.toIso8601String(),
+        "street_address": streetAddress,
+        "country": country,
+        "city": city,
+        "zip": zip,
+        "house_no": houseNo,
+        "apartment_no": apartmentNo,
+        "cm_firebase_token": cmFirebaseToken,
+        "is_active": isActive,
+        "payment_card_last_four": paymentCardLastFour,
+        "payment_card_brand": paymentCardBrand,
+        "payment_card_fawry_token": paymentCardFawryToken,
+        "login_medium": loginMedium,
+        "social_id": socialId,
+        "is_phone_verified": isPhoneVerified,
+        "temporary_token": temporaryTokenValues.reverse[temporaryToken],
+        "is_email_verified": isEmailVerified,
+        "wallet_balance": walletBalance,
+        "loyalty_point": loyaltyPoint,
+        "login_hit_count": loginHitCount,
+        "is_temp_blocked": isTempBlocked,
+        "temp_block_time": tempBlockTime,
+        "referral_code": referralCodeValues.reverse[referralCode],
+        "referred_by": referredBy,
+        "app_language": appLanguageValues.reverse[appLanguage],
+        "address": address,
+        "pan": pan,
+        "msme": msme,
+        "profile": profile,
+        "gst": gst,
+        "wallet_id": walletId,
+      };
 }
 
-enum AppLanguage {
-  EN
-}
+enum AppLanguage { EN }
 
-final appLanguageValues = EnumValues({
-  "en": AppLanguage.EN
-});
+final appLanguageValues = EnumValues({"en": AppLanguage.EN});
 
-enum CustomerEmail {
-  BARIYADPK95_GMAIL_COM
-}
+enum CustomerEmail { BARIYADPK95_GMAIL_COM }
 
-final customerEmailValues = EnumValues({
-  "bariyadpk95@gmail.com": CustomerEmail.BARIYADPK95_GMAIL_COM
-});
+final customerEmailValues =
+    EnumValues({"bariyadpk95@gmail.com": CustomerEmail.BARIYADPK95_GMAIL_COM});
 
-enum FNameEnum {
-  DEEPAK_BARIYA
-}
+enum FNameEnum { DEEPAK_BARIYA }
 
-final fNameEnumValues = EnumValues({
-  "Deepak bariya": FNameEnum.DEEPAK_BARIYA
-});
+final fNameEnumValues = EnumValues({"Deepak bariya": FNameEnum.DEEPAK_BARIYA});
 
-enum CustomerImage {
-  DEF_PNG
-}
+enum CustomerImage { DEF_PNG }
 
-final customerImageValues = EnumValues({
-  "def.png": CustomerImage.DEF_PNG
-});
+final customerImageValues = EnumValues({"def.png": CustomerImage.DEF_PNG});
 
-enum ReferralCode {
-  QFMZF1_HWDVLUZ2_N8_ZZYS
-}
+enum ReferralCode { QFMZF1_HWDVLUZ2_N8_ZZYS }
 
-final referralCodeValues = EnumValues({
-  "QFMZF1HWDVLUZ2N8ZZYS": ReferralCode.QFMZF1_HWDVLUZ2_N8_ZZYS
-});
+final referralCodeValues =
+    EnumValues({"QFMZF1HWDVLUZ2N8ZZYS": ReferralCode.QFMZF1_HWDVLUZ2_N8_ZZYS});
 
-enum TemporaryToken {
-  XL_C_JZC7_UP3_T_D_GK4_L5_Y_LUMCA6_SQ_JYMS_E6_PQ_VF_AT4_U
-}
+enum TemporaryToken { XL_C_JZC7_UP3_T_D_GK4_L5_Y_LUMCA6_SQ_JYMS_E6_PQ_VF_AT4_U }
 
 final temporaryTokenValues = EnumValues({
-  "xlCJzc7up3tDGk4L5YLumca6SQJymsE6PQVfAt4u": TemporaryToken.XL_C_JZC7_UP3_T_D_GK4_L5_Y_LUMCA6_SQ_JYMS_E6_PQ_VF_AT4_U
+  "xlCJzc7up3tDGk4L5YLumca6SQJymsE6PQVfAt4u":
+      TemporaryToken.XL_C_JZC7_UP3_T_D_GK4_L5_Y_LUMCA6_SQ_JYMS_E6_PQ_VF_AT4_U
 });
 
-enum InvoiceId {
-  OID
-}
+enum InvoiceId { OID }
 
-final invoiceIdValues = EnumValues({
-  "OID": InvoiceId.OID
-});
+final invoiceIdValues = EnumValues({"OID": InvoiceId.OID});
 
-enum PaymentMethod {
-  COD
-}
+enum PaymentMethod { COD }
 
-final paymentMethodValues = EnumValues({
-  "cod": PaymentMethod.COD
-});
+final paymentMethodValues = EnumValues({"cod": PaymentMethod.COD});
 
-enum Poc {
-  EMPTY
-}
+enum Poc { EMPTY }
 
-final pocValues = EnumValues({
-  "-": Poc.EMPTY
-});
+final pocValues = EnumValues({"-": Poc.EMPTY});
 
 class Product {
   int? id;
@@ -731,7 +731,7 @@ class Product {
   int? categoryId;
   dynamic subCategoryId;
   dynamic subSubCategoryId;
-  int? brandId;
+  String? brandId;
   Unit? unit;
   int? minQty;
   int? refundable;
@@ -840,143 +840,147 @@ class Product {
   });
 
   factory Product.fromJson(Map<String, dynamic> json) => Product(
-    id: json["id"],
-    addedBy: addedByValues.map[json["added_by"]],
-    userId: json["user_id"],
-    name: json["name"],
-    slug: json["slug"],
-    productType: productTypeValues.map[json["product_type"]],
-    // categoryIds: json["category_ids"] == null ? [] : List<CategoryId>.from(json["category_ids"].map((x) => CategoryId.fromJson(x))),
-    categoryId: json["category_id"],
-    subCategoryId: json["sub_category_id"],
-    subSubCategoryId: json["sub_sub_category_id"],
-    brandId: json["brand_id"],
-    unit: unitValues.map[json["unit"]],
-    minQty: json["min_qty"],
-    refundable: json["refundable"],
-    digitalProductType: json["digital_product_type"],
-    digitalFileReady: json["digital_file_ready"],
-    images: json["images"],
-    colorImage: choiceOptionsValues.map[json["color_image"]],
-    thumbnail: json["thumbnail"],
-    featured: json["featured"],
-    flashDeal: json["flash_deal"],
-    videoProvider: videoProviderValues.map[json["video_provider"]],
-    videoUrl: json["video_url"],
-    colors: choiceOptionsValues.map[json["colors"]],
-    variantProduct: json["variant_product"],
-    attributes: attributesValues.map[json["attributes"]]!,
-    choiceOptions: choiceOptionsValues.map[json["choice_options"]],
-    variation: choiceOptionsValues.map[json["variation"]],
-    published: json["published"],
-    unitPrice: json["unit_price"],
-    purchasePrice: json["purchase_price"],
-    tax: json["tax"],
-    taxType: discountTypeEnumValues.map[json["tax_type"]],
-    taxModel: taxModelValues.map[json["tax_model"]],
-    discount: json["discount"],
-    discountType: discountTypeEnumValues.map[json["discount_type"]],
-    currentStock: json["current_stock"],
-    minimumOrderQty: json["minimum_order_qty"],
-    details: json["details"],
-    freeShipping: json["free_shipping"],
-    attachment: json["attachment"],
-    createdAt: json["created_at"] == null ? null : DateTime.parse(json["created_at"]),
-    updatedAt: json["updated_at"] == null ? null : DateTime.parse(json["updated_at"]),
-    status: json["status"],
-    featuredStatus: json["featured_status"],
-    metaTitle: json["meta_title"],
-    metaDescription: json["meta_description"],
-    metaImage: json["meta_image"],
-    requestStatus: json["request_status"],
-    deniedNote: json["denied_note"],
-    shippingCost: json["shipping_cost"],
-    multiplyQty: json["multiply_qty"],
-    tempShippingCost: json["temp_shipping_cost"],
-    isShippingCostUpdated: json["is_shipping_cost_updated"],
-    code: json["code"],
-    translations: json["translations"] == null ? [] : List<dynamic>.from(json["translations"]!.map((x) => x)),
-    reviews: json["reviews"] == null ? [] : List<dynamic>.from(json["reviews"]!.map((x) => x)),
-  );
+        id: json["id"],
+        addedBy: addedByValues.map[json["added_by"]],
+        userId: json["user_id"],
+        name: json["name"],
+        slug: json["slug"],
+        productType: productTypeValues.map[json["product_type"]],
+        // categoryIds: json["category_ids"] == null ? [] : List<CategoryId>.from(json["category_ids"].map((x) => CategoryId.fromJson(x))),
+        categoryId: json["category_id"],
+        subCategoryId: json["sub_category_id"],
+        subSubCategoryId: json["sub_sub_category_id"],
+        brandId: json["brand_id"].toString(),
+        unit: unitValues.map[json["unit"]],
+        minQty: json["min_qty"],
+        refundable: json["refundable"],
+        digitalProductType: json["digital_product_type"],
+        digitalFileReady: json["digital_file_ready"],
+        images: json["images"],
+        colorImage: choiceOptionsValues.map[json["color_image"]],
+        thumbnail: json["thumbnail"],
+        featured: json["featured"],
+        flashDeal: json["flash_deal"],
+        videoProvider: videoProviderValues.map[json["video_provider"]],
+        videoUrl: json["video_url"],
+        colors: choiceOptionsValues.map[json["colors"]],
+        variantProduct: json["variant_product"],
+        attributes: attributesValues.map[json["attributes"]]!,
+        choiceOptions: choiceOptionsValues.map[json["choice_options"]],
+        variation: choiceOptionsValues.map[json["variation"]],
+        published: json["published"],
+        unitPrice: json["unit_price"],
+        purchasePrice: json["purchase_price"],
+        tax: json["tax"],
+        taxType: discountTypeEnumValues.map[json["tax_type"]],
+        taxModel: taxModelValues.map[json["tax_model"]],
+        discount: json["discount"],
+        discountType: discountTypeEnumValues.map[json["discount_type"]],
+        currentStock: json["current_stock"],
+        minimumOrderQty: json["minimum_order_qty"],
+        details: json["details"],
+        freeShipping: json["free_shipping"],
+        attachment: json["attachment"],
+        createdAt: json["created_at"] == null
+            ? null
+            : DateTime.parse(json["created_at"]),
+        updatedAt: json["updated_at"] == null
+            ? null
+            : DateTime.parse(json["updated_at"]),
+        status: json["status"],
+        featuredStatus: json["featured_status"],
+        metaTitle: json["meta_title"],
+        metaDescription: json["meta_description"],
+        metaImage: json["meta_image"],
+        requestStatus: json["request_status"],
+        deniedNote: json["denied_note"],
+        shippingCost: json["shipping_cost"],
+        multiplyQty: json["multiply_qty"],
+        tempShippingCost: json["temp_shipping_cost"],
+        isShippingCostUpdated: json["is_shipping_cost_updated"],
+        code: json["code"],
+        translations: json["translations"] == null
+            ? []
+            : List<dynamic>.from(json["translations"]!.map((x) => x)),
+        reviews: json["reviews"] == null
+            ? []
+            : List<dynamic>.from(json["reviews"]!.map((x) => x)),
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "added_by": addedByValues.reverse[addedBy],
-    "user_id": userId,
-    "name": name,
-    "slug": slug,
-    "product_type": productTypeValues.reverse[productType],
-    "category_ids": categoryIds == null ? [] : List<dynamic>.from(categoryIds!.map((x) => x.toJson())),
-    "category_id": categoryId,
-    "sub_category_id": subCategoryId,
-    "sub_sub_category_id": subSubCategoryId,
-    "brand_id": brandId,
-    "unit": unitValues.reverse[unit],
-    "min_qty": minQty,
-    "refundable": refundable,
-    "digital_product_type": digitalProductType,
-    "digital_file_ready": digitalFileReady,
-    "images": images,
-    "color_image": choiceOptionsValues.reverse[colorImage],
-    "thumbnail": thumbnail,
-    "featured": featured,
-    "flash_deal": flashDeal,
-    "video_provider": videoProviderValues.reverse[videoProvider],
-    "video_url": videoUrl,
-    "colors": choiceOptionsValues.reverse[colors],
-    "variant_product": variantProduct,
-    "attributes": attributesValues.reverse[attributes],
-    "choice_options": choiceOptionsValues.reverse[choiceOptions],
-    "variation": choiceOptionsValues.reverse[variation],
-    "published": published,
-    "unit_price": unitPrice,
-    "purchase_price": purchasePrice,
-    "tax": tax,
-    "tax_type": discountTypeEnumValues.reverse[taxType],
-    "tax_model": taxModelValues.reverse[taxModel],
-    "discount": discount,
-    "discount_type": discountTypeEnumValues.reverse[discountType],
-    "current_stock": currentStock,
-    "minimum_order_qty": minimumOrderQty,
-    "details": details,
-    "free_shipping": freeShipping,
-    "attachment": attachment,
-    "created_at": createdAt?.toIso8601String(),
-    "updated_at": updatedAt?.toIso8601String(),
-    "status": status,
-    "featured_status": featuredStatus,
-    "meta_title": metaTitle,
-    "meta_description": metaDescription,
-    "meta_image": metaImage,
-    "request_status": requestStatus,
-    "denied_note": deniedNote,
-    "shipping_cost": shippingCost,
-    "multiply_qty": multiplyQty,
-    "temp_shipping_cost": tempShippingCost,
-    "is_shipping_cost_updated": isShippingCostUpdated,
-    "code": code,
-    "translations": translations == null ? [] : List<dynamic>.from(translations!.map((x) => x)),
-    "reviews": reviews == null ? [] : List<dynamic>.from(reviews!.map((x) => x)),
-  };
+        "id": id,
+        "added_by": addedByValues.reverse[addedBy],
+        "user_id": userId,
+        "name": name,
+        "slug": slug,
+        "product_type": productTypeValues.reverse[productType],
+        "category_ids": categoryIds == null
+            ? []
+            : List<dynamic>.from(categoryIds!.map((x) => x.toJson())),
+        "category_id": categoryId,
+        "sub_category_id": subCategoryId,
+        "sub_sub_category_id": subSubCategoryId,
+        "brand_id": brandId,
+        "unit": unitValues.reverse[unit],
+        "min_qty": minQty,
+        "refundable": refundable,
+        "digital_product_type": digitalProductType,
+        "digital_file_ready": digitalFileReady,
+        "images": images,
+        "color_image": choiceOptionsValues.reverse[colorImage],
+        "thumbnail": thumbnail,
+        "featured": featured,
+        "flash_deal": flashDeal,
+        "video_provider": videoProviderValues.reverse[videoProvider],
+        "video_url": videoUrl,
+        "colors": choiceOptionsValues.reverse[colors],
+        "variant_product": variantProduct,
+        "attributes": attributesValues.reverse[attributes],
+        "choice_options": choiceOptionsValues.reverse[choiceOptions],
+        "variation": choiceOptionsValues.reverse[variation],
+        "published": published,
+        "unit_price": unitPrice,
+        "purchase_price": purchasePrice,
+        "tax": tax,
+        "tax_type": discountTypeEnumValues.reverse[taxType],
+        "tax_model": taxModelValues.reverse[taxModel],
+        "discount": discount,
+        "discount_type": discountTypeEnumValues.reverse[discountType],
+        "current_stock": currentStock,
+        "minimum_order_qty": minimumOrderQty,
+        "details": details,
+        "free_shipping": freeShipping,
+        "attachment": attachment,
+        "created_at": createdAt?.toIso8601String(),
+        "updated_at": updatedAt?.toIso8601String(),
+        "status": status,
+        "featured_status": featuredStatus,
+        "meta_title": metaTitle,
+        "meta_description": metaDescription,
+        "meta_image": metaImage,
+        "request_status": requestStatus,
+        "denied_note": deniedNote,
+        "shipping_cost": shippingCost,
+        "multiply_qty": multiplyQty,
+        "temp_shipping_cost": tempShippingCost,
+        "is_shipping_cost_updated": isShippingCostUpdated,
+        "code": code,
+        "translations": translations == null
+            ? []
+            : List<dynamic>.from(translations!.map((x) => x)),
+        "reviews":
+            reviews == null ? [] : List<dynamic>.from(reviews!.map((x) => x)),
+      };
 }
 
-enum AddedBy {
-  ADMIN,
-  SELLER
-}
+enum AddedBy { ADMIN, SELLER }
 
-final addedByValues = EnumValues({
-  "admin": AddedBy.ADMIN,
-  "seller": AddedBy.SELLER
-});
+final addedByValues =
+    EnumValues({"admin": AddedBy.ADMIN, "seller": AddedBy.SELLER});
 
-enum Attributes {
-  NULL
-}
+enum Attributes { NULL }
 
-final attributesValues = EnumValues({
-  "null": Attributes.NULL
-});
+final attributesValues = EnumValues({"null": Attributes.NULL});
 
 class CategoryId {
   String? id;
@@ -988,69 +992,41 @@ class CategoryId {
   });
 
   factory CategoryId.fromJson(Map<String, dynamic> json) => CategoryId(
-    id: json["id"],
-    position: json["position"],
-  );
+        id: json["id"],
+        position: json["position"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "position": position,
-  };
+        "id": id,
+        "position": position,
+      };
 }
 
-enum ChoiceOptions {
-  EMPTY
-}
+enum ChoiceOptions { EMPTY }
 
-final choiceOptionsValues = EnumValues({
-  "[]": ChoiceOptions.EMPTY
-});
+final choiceOptionsValues = EnumValues({"[]": ChoiceOptions.EMPTY});
 
-enum DiscountTypeEnum {
-  FLAT,
-  PERCENT
-}
+enum DiscountTypeEnum { FLAT, PERCENT }
 
-final discountTypeEnumValues = EnumValues({
-  "flat": DiscountTypeEnum.FLAT,
-  "percent": DiscountTypeEnum.PERCENT
-});
+final discountTypeEnumValues = EnumValues(
+    {"flat": DiscountTypeEnum.FLAT, "percent": DiscountTypeEnum.PERCENT});
 
-enum ProductType {
-  PHYSICAL
-}
+enum ProductType { PHYSICAL }
 
-final productTypeValues = EnumValues({
-  "physical": ProductType.PHYSICAL
-});
+final productTypeValues = EnumValues({"physical": ProductType.PHYSICAL});
 
-enum TaxModel {
-  INCLUDE
-}
+enum TaxModel { INCLUDE }
 
-final taxModelValues = EnumValues({
-  "include": TaxModel.INCLUDE
-});
+final taxModelValues = EnumValues({"include": TaxModel.INCLUDE});
 
-enum Unit {
-  KG,
-  PAIR,
-  PC
-}
+enum Unit { KG, PAIR, PC }
 
-final unitValues = EnumValues({
-  "kg": Unit.KG,
-  "pair": Unit.PAIR,
-  "pc": Unit.PC
-});
+final unitValues =
+    EnumValues({"kg": Unit.KG, "pair": Unit.PAIR, "pc": Unit.PC});
 
-enum VideoProvider {
-  YOUTUBE
-}
+enum VideoProvider { YOUTUBE }
 
-final videoProviderValues = EnumValues({
-  "youtube": VideoProvider.YOUTUBE
-});
+final videoProviderValues = EnumValues({"youtube": VideoProvider.YOUTUBE});
 
 class Seller {
   int? id;
@@ -1110,62 +1086,66 @@ class Seller {
   });
 
   factory Seller.fromJson(Map<String, dynamic> json) => Seller(
-    id: json["id"],
-    fName: json["f_name"],
-    lName: json["l_name"],
-    phone: json["phone"],
-    image: sellerImageValues.map[json["image"]],
-    email: sellerEmailValues.map[json["email"]],
-    password: passwordValues.map[json["password"]],
-    status: statusValues.map[json["status"]],
-    rememberToken: json["remember_token"],
-    createdAt: json["created_at"] == null ? null : DateTime.parse(json["created_at"]),
-    updatedAt: json["updated_at"] == null ? null : DateTime.parse(json["updated_at"]),
-    bankName: json["bank_name"],
-    branch: json["branch"],
-    accountNo: json["account_no"],
-    holderName: json["holder_name"],
-    authToken: authTokenValues.map[json["auth_token"]],
-    salesCommissionPercentage: json["sales_commission_percentage"],
-    gst: gstValues.map[json["gst"]],
-    pan: panValues.map[json["pan"]],
-    cmFirebaseToken: cmFirebaseTokenValues.map[json["cm_firebase_token"]],
-    posStatus: json["pos_status"],
-    minimumOrderAmount: json["minimum_order_amount"],
-    freeDeliveryStatus: json["free_delivery_status"],
-    freeDeliveryOverAmount: json["free_delivery_over_amount"],
-    appLanguage: appLanguageValues.map[json["app_language"]],
-    wallet: json["wallet"],
-  );
+        id: json["id"],
+        fName: json["f_name"],
+        lName: json["l_name"],
+        phone: json["phone"],
+        image: sellerImageValues.map[json["image"]],
+        email: sellerEmailValues.map[json["email"]],
+        password: passwordValues.map[json["password"]],
+        status: statusValues.map[json["status"]],
+        rememberToken: json["remember_token"],
+        createdAt: json["created_at"] == null
+            ? null
+            : DateTime.parse(json["created_at"]),
+        updatedAt: json["updated_at"] == null
+            ? null
+            : DateTime.parse(json["updated_at"]),
+        bankName: json["bank_name"],
+        branch: json["branch"],
+        accountNo: json["account_no"],
+        holderName: json["holder_name"],
+        authToken: authTokenValues.map[json["auth_token"]],
+        salesCommissionPercentage: json["sales_commission_percentage"],
+        gst: gstValues.map[json["gst"]],
+        pan: panValues.map[json["pan"]],
+        cmFirebaseToken: cmFirebaseTokenValues.map[json["cm_firebase_token"]],
+        posStatus: json["pos_status"],
+        minimumOrderAmount: json["minimum_order_amount"],
+        freeDeliveryStatus: json["free_delivery_status"],
+        freeDeliveryOverAmount: json["free_delivery_over_amount"],
+        appLanguage: appLanguageValues.map[json["app_language"]],
+        wallet: json["wallet"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "f_name": fNameValues.reverse[fName],
-    "l_name": lName,
-    "phone": phone,
-    "image": sellerImageValues.reverse[image],
-    "email": sellerEmailValues.reverse[email],
-    "password": passwordValues.reverse[password],
-    "status": statusValues.reverse[status],
-    "remember_token": rememberToken,
-    "created_at": createdAt?.toIso8601String(),
-    "updated_at": updatedAt?.toIso8601String(),
-    "bank_name": bankName,
-    "branch": branch,
-    "account_no": accountNo,
-    "holder_name": holderName,
-    "auth_token": authTokenValues.reverse[authToken],
-    "sales_commission_percentage": salesCommissionPercentage,
-    "gst": gstValues.reverse[gst],
-    "pan": panValues.reverse[pan],
-    "cm_firebase_token": cmFirebaseTokenValues.reverse[cmFirebaseToken],
-    "pos_status": posStatus,
-    "minimum_order_amount": minimumOrderAmount,
-    "free_delivery_status": freeDeliveryStatus,
-    "free_delivery_over_amount": freeDeliveryOverAmount,
-    "app_language": appLanguageValues.reverse[appLanguage],
-    "wallet": wallet,
-  };
+        "id": id,
+        "f_name": fNameValues.reverse[fName],
+        "l_name": lName,
+        "phone": phone,
+        "image": sellerImageValues.reverse[image],
+        "email": sellerEmailValues.reverse[email],
+        "password": passwordValues.reverse[password],
+        "status": statusValues.reverse[status],
+        "remember_token": rememberToken,
+        "created_at": createdAt?.toIso8601String(),
+        "updated_at": updatedAt?.toIso8601String(),
+        "bank_name": bankName,
+        "branch": branch,
+        "account_no": accountNo,
+        "holder_name": holderName,
+        "auth_token": authTokenValues.reverse[authToken],
+        "sales_commission_percentage": salesCommissionPercentage,
+        "gst": gstValues.reverse[gst],
+        "pan": panValues.reverse[pan],
+        "cm_firebase_token": cmFirebaseTokenValues.reverse[cmFirebaseToken],
+        "pos_status": posStatus,
+        "minimum_order_amount": minimumOrderAmount,
+        "free_delivery_status": freeDeliveryStatus,
+        "free_delivery_over_amount": freeDeliveryOverAmount,
+        "app_language": appLanguageValues.reverse[appLanguage],
+        "wallet": wallet,
+      };
 }
 
 enum AuthToken {
@@ -1174,44 +1154,30 @@ enum AuthToken {
 }
 
 final authTokenValues = EnumValues({
-  "NQKegjfClRdPkJSbKC0QDzTVMWpeg9JTaX4gxGtZ7pTozj0yJg": AuthToken.NQ_KEGJF_CL_RD_PK_J_SB_KC0_Q_DZ_TVM_WPEG9_J_TA_X4_GX_GT_Z7_P_TOZJ0_Y_JG,
-  "2qTfRxV17TFv97qEdO9ZNQ6nDRpMKGiJ4lwZSUm6zhk6hJGXh1": AuthToken.THE_2_Q_TF_RX_V17_T_FV97_Q_ED_O9_ZNQ6_N_D_RP_MK_GI_J4_LW_ZS_UM6_ZHK6_H_JG_XH1
+  "NQKegjfClRdPkJSbKC0QDzTVMWpeg9JTaX4gxGtZ7pTozj0yJg": AuthToken
+      .NQ_KEGJF_CL_RD_PK_J_SB_KC0_Q_DZ_TVM_WPEG9_J_TA_X4_GX_GT_Z7_P_TOZJ0_Y_JG,
+  "2qTfRxV17TFv97qEdO9ZNQ6nDRpMKGiJ4lwZSUm6zhk6hJGXh1": AuthToken
+      .THE_2_Q_TF_RX_V17_T_FV97_Q_ED_O9_ZNQ6_N_D_RP_MK_GI_J4_LW_ZS_UM6_ZHK6_H_JG_XH1
 });
 
-enum CmFirebaseToken {
-  FGSDG,
-  SDFGSFDG
-}
+enum CmFirebaseToken { FGSDG, SDFGSFDG }
 
-final cmFirebaseTokenValues = EnumValues({
-  "fgsdg": CmFirebaseToken.FGSDG,
-  "sdfgsfdg": CmFirebaseToken.SDFGSFDG
-});
+final cmFirebaseTokenValues = EnumValues(
+    {"fgsdg": CmFirebaseToken.FGSDG, "sdfgsfdg": CmFirebaseToken.SDFGSFDG});
 
-enum SellerEmail {
-  GOPAL_MAILINATOR_COM,
-  RAJESHKUMAR_GMAIL_COM
-}
+enum SellerEmail { GOPAL_MAILINATOR_COM, RAJESHKUMAR_GMAIL_COM }
 
 final sellerEmailValues = EnumValues({
   "gopal@mailinator.com": SellerEmail.GOPAL_MAILINATOR_COM,
   "rajeshkumar@gmail.com": SellerEmail.RAJESHKUMAR_GMAIL_COM
 });
 
-enum FName {
-  GOPAL,
-  RAJESH_KUMAR1
-}
+enum FName { GOPAL, RAJESH_KUMAR1 }
 
-final fNameValues = EnumValues({
-  "Gopal": FName.GOPAL,
-  "rajesh kumar1": FName.RAJESH_KUMAR1
-});
+final fNameValues =
+    EnumValues({"Gopal": FName.GOPAL, "rajesh kumar1": FName.RAJESH_KUMAR1});
 
-enum Gst {
-  GJ8766778_GGGGHH,
-  HSHSH7727273_HSH
-}
+enum Gst { GJ8766778_GGGGHH, HSHSH7727273_HSH }
 
 final gstValues = EnumValues({
   "gj8766778gggghh": Gst.GJ8766778_GGGGHH,
@@ -1224,19 +1190,15 @@ enum SellerImage {
 }
 
 final sellerImageValues = EnumValues({
-  "2024-07-30-66a8e4efa2d49.webp": SellerImage.THE_2024073066_A8_E4_EFA2_D49_WEBP,
+  "2024-07-30-66a8e4efa2d49.webp":
+      SellerImage.THE_2024073066_A8_E4_EFA2_D49_WEBP,
   "2024-07-31-66a9e039260d2.webp": SellerImage.THE_2024073166_A9_E039260_D2_WEBP
 });
 
-enum Pan {
-  GVGGHH5677,
-  THE_7373773737
-}
+enum Pan { GVGGHH5677, THE_7373773737 }
 
-final panValues = EnumValues({
-  "gvgghh5677": Pan.GVGGHH5677,
-  "7373773737": Pan.THE_7373773737
-});
+final panValues = EnumValues(
+    {"gvgghh5677": Pan.GVGGHH5677, "7373773737": Pan.THE_7373773737});
 
 enum Password {
   THE_2_Y_10_O_NZ_GT_Q_KYT_UL1_IR8_S_CP6_UH_S_SSZ_CE9_C9_T_KQ_NU_QY_KRV3_RE_HW_FE_ZCE,
@@ -1244,23 +1206,19 @@ enum Password {
 }
 
 final passwordValues = EnumValues({
-  "\u00242y\u002410\u0024oNZGt/qKYTUl1ir8s/Cp6uhSSsz.ce9C9tKQNuQYKrv3reHWFeZce": Password.THE_2_Y_10_O_NZ_GT_Q_KYT_UL1_IR8_S_CP6_UH_S_SSZ_CE9_C9_T_KQ_NU_QY_KRV3_RE_HW_FE_ZCE,
-  "\u00242y\u002410\u0024uXoMitxkG/L7Zg3vYe8BHOBPIJwSW1DWjtw62.URj1FS29BfpO2/C": Password.THE_2_Y_10_U_XO_MITXK_G_L7_ZG3_V_YE8_BHOBPI_JW_SW1_D_WJTW62_U_RJ1_FS29_BFP_O2_C
+  "\u00242y\u002410\u0024oNZGt/qKYTUl1ir8s/Cp6uhSSsz.ce9C9tKQNuQYKrv3reHWFeZce":
+      Password
+          .THE_2_Y_10_O_NZ_GT_Q_KYT_UL1_IR8_S_CP6_UH_S_SSZ_CE9_C9_T_KQ_NU_QY_KRV3_RE_HW_FE_ZCE,
+  "\u00242y\u002410\u0024uXoMitxkG/L7Zg3vYe8BHOBPIJwSW1DWjtw62.URj1FS29BfpO2/C":
+      Password
+          .THE_2_Y_10_U_XO_MITXK_G_L7_ZG3_V_YE8_BHOBPI_JW_SW1_D_WJTW62_U_RJ1_FS29_BFP_O2_C
 });
 
-enum Status {
-  APPROVED
-}
+enum Status { APPROVED }
 
-final statusValues = EnumValues({
-  "approved": Status.APPROVED
-});
+final statusValues = EnumValues({"approved": Status.APPROVED});
 
-enum Service {
-  AT_YOUR_STATION,
-  DOOR_STEP,
-  SERVICE_AT_YOUR_STATION
-}
+enum Service { AT_YOUR_STATION, DOOR_STEP, SERVICE_AT_YOUR_STATION }
 
 final serviceValues = EnumValues({
   "At your station": Service.AT_YOUR_STATION,
@@ -1268,15 +1226,10 @@ final serviceValues = EnumValues({
   "At Your Station": Service.SERVICE_AT_YOUR_STATION
 });
 
-enum ServiceType {
-  EMPTY,
-  FUEL
-}
+enum ServiceType { EMPTY, FUEL }
 
-final serviceTypeValues = EnumValues({
-  "": ServiceType.EMPTY,
-  "Fuel": ServiceType.FUEL
-});
+final serviceTypeValues =
+    EnumValues({"": ServiceType.EMPTY, "Fuel": ServiceType.FUEL});
 
 class TimeSlot {
   int? id;
@@ -1298,24 +1251,28 @@ class TimeSlot {
   });
 
   factory TimeSlot.fromJson(Map<String, dynamic> json) => TimeSlot(
-    id: json["id"],
-    title: json["title"],
-    fromTime: json["from_time"],
-    toTime: json["to_time"],
-    status: json["status"],
-    createdAt: json["created_at"] == null ? null : DateTime.parse(json["created_at"]),
-    updatedAt: json["updated_at"] == null ? null : DateTime.parse(json["updated_at"]),
-  );
+        id: json["id"],
+        title: json["title"],
+        fromTime: json["from_time"],
+        toTime: json["to_time"],
+        status: json["status"],
+        createdAt: json["created_at"] == null
+            ? null
+            : DateTime.parse(json["created_at"]),
+        updatedAt: json["updated_at"] == null
+            ? null
+            : DateTime.parse(json["updated_at"]),
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "title": titleValues.reverse[title],
-    "from_time": fromTime,
-    "to_time": toTime,
-    "status": status,
-    "created_at": createdAt?.toIso8601String(),
-    "updated_at": updatedAt?.toIso8601String(),
-  };
+        "id": id,
+        "title": titleValues.reverse[title],
+        "from_time": fromTime,
+        "to_time": toTime,
+        "status": status,
+        "created_at": createdAt?.toIso8601String(),
+        "updated_at": updatedAt?.toIso8601String(),
+      };
 }
 
 enum Title {
@@ -1348,28 +1305,29 @@ class Vehicle {
   });
 
   factory Vehicle.fromJson(Map<String, dynamic> json) => Vehicle(
-    id: json["id"],
-    vehicleTypeId: json["vehicle_type_id"],
-    name: vehicleModelNameValues.map[json["name"]],
-    status: json["status"],
-    createdAt: json["created_at"] == null ? null : DateTime.parse(json["created_at"]),
-    updatedAt: json["updated_at"] == null ? null : DateTime.parse(json["updated_at"]),
-  );
+        id: json["id"],
+        vehicleTypeId: json["vehicle_type_id"],
+        name: vehicleModelNameValues.map[json["name"]],
+        status: json["status"],
+        createdAt: json["created_at"] == null
+            ? null
+            : DateTime.parse(json["created_at"]),
+        updatedAt: json["updated_at"] == null
+            ? null
+            : DateTime.parse(json["updated_at"]),
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "vehicle_type_id": vehicleTypeId,
-    "name": vehicleModelNameValues.reverse[name],
-    "status": status,
-    "created_at": createdAt?.toIso8601String(),
-    "updated_at": updatedAt?.toIso8601String(),
-  };
+        "id": id,
+        "vehicle_type_id": vehicleTypeId,
+        "name": vehicleModelNameValues.reverse[name],
+        "status": status,
+        "created_at": createdAt?.toIso8601String(),
+        "updated_at": updatedAt?.toIso8601String(),
+      };
 }
 
-enum VehicleModelName {
-  HONDA,
-  TWO_WHEELER
-}
+enum VehicleModelName { HONDA, TWO_WHEELER }
 
 final vehicleModelNameValues = EnumValues({
   "Honda": VehicleModelName.HONDA,
@@ -1387,41 +1345,6 @@ class EnumValues<T> {
     return reverseMap;
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 //
 //
@@ -2546,30 +2469,34 @@ class Insurance {
   });
 
   factory Insurance.fromJson(Map<String, dynamic> json) => Insurance(
-    id: json["id"],
-    userId: json["user_id"],
-    vehicleNumber: json["vehicle_number"],
-    name: json["name"],
-    email: json["email"],
-    mobile: json["mobile"],
-    status: json["status"],
-    remark: json["remark"],
-    createdAt: json["created_at"] == null ? null : DateTime.parse(json["created_at"]),
-    updatedAt: json["updated_at"] == null ? null : DateTime.parse(json["updated_at"]),
-    statusText: json["status_text"],
-  );
+        id: json["id"],
+        userId: json["user_id"],
+        vehicleNumber: json["vehicle_number"],
+        name: json["name"],
+        email: json["email"],
+        mobile: json["mobile"],
+        status: json["status"],
+        remark: json["remark"],
+        createdAt: json["created_at"] == null
+            ? null
+            : DateTime.parse(json["created_at"]),
+        updatedAt: json["updated_at"] == null
+            ? null
+            : DateTime.parse(json["updated_at"]),
+        statusText: json["status_text"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "user_id": userId,
-    "vehicle_number": vehicleNumber,
-    "name": name,
-    "email": email,
-    "mobile": mobile,
-    "status": status,
-    "remark": remark,
-    "created_at": createdAt?.toIso8601String(),
-    "updated_at": updatedAt?.toIso8601String(),
-    "status_text": statusText,
-  };
+        "id": id,
+        "user_id": userId,
+        "vehicle_number": vehicleNumber,
+        "name": name,
+        "email": email,
+        "mobile": mobile,
+        "status": status,
+        "remark": remark,
+        "created_at": createdAt?.toIso8601String(),
+        "updated_at": updatedAt?.toIso8601String(),
+        "status_text": statusText,
+      };
 }

@@ -69,7 +69,7 @@ class _CarWashListState extends State<CarWashList> {
                   ),
                 ),
               ),
-              title: Text('Vendor List'),
+              title: Text('Vendor List'.tr),
               centerTitle: true,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.only(
@@ -117,165 +117,177 @@ class _CarWashListState extends State<CarWashList> {
                         ? Center(
                             child: CircularProgressIndicator(),
                           )
-                        : ListView.builder(
-                            physics: AlwaysScrollableScrollPhysics(),
-                            shrinkWrap: true,
-                            itemCount: carServiceController.sellerList!.length,
-                            itemBuilder: (context, index) {
-                              return Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: InkWell(
-                                  onTap: () {
-                                    Get.off(Carwashdetails(
-                                        sellerData: carServiceController
-                                            .sellerList![index]));
-                                    // Navigator.push(
-                                    //     context,
-                                    //     MaterialPageRoute(
-                                    //         builder: (context) =>
-                                    //             Carwashdetails()));
-                                  },
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                        color: colors.lightgray),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Container(
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                              // Add additional decoration properties here as needed
-                                            ),
-                                            width: 100,
-                                            height: 100,
-                                            child: ClipRRect(
-                                              // Use ClipRRect to clip the image with the specified border radius
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                              child: Image.network(
-                                                "${configModel?.baseUrls?.sellerImageUrl}/${carServiceController.sellerList?[index].seller?.image.toString()}",
-                                                errorBuilder: (context, error,
-                                                    stackTrace) {
-                                                  return errorImage(100, 100);
-                                                },
-                                              ),
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            width: 20,
-                                          ),
-                                          Column(
-                                            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        : carServiceController.sellerList!.length == 0
+                            ? Center(
+                                child: Text("No Vendors Found"),
+                              )
+                            : ListView.builder(
+                                physics: AlwaysScrollableScrollPhysics(),
+                                shrinkWrap: true,
+                                itemCount:
+                                    carServiceController.sellerList!.length,
+                                itemBuilder: (context, index) {
+                                  return Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: InkWell(
+                                      onTap: () {
+                                        Get.off(Carwashdetails(
+                                            sellerData: carServiceController
+                                                .sellerList![index]));
+                                        // Navigator.push(
+                                        //     context,
+                                        //     MaterialPageRoute(
+                                        //         builder: (context) =>
+                                        //             Carwashdetails()));
+                                      },
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                            color: colors.lightgray),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Row(
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
                                             children: [
-                                              SizedBox(
-                                                height: 5,
-                                              ),
-                                              Text(
-                                                '${carServiceController.sellerList![index].seller!.fName.toString()}',
-                                                style: TextStyle(
-                                                    fontSize: 16,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              ),
-                                              SizedBox(
-                                                height: 5,
-                                              ),
-                                              Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.start,
-                                                children: [
-                                                  Icon(Icons
-                                                      .location_on_outlined),
-                                                  Text(
-                                                    "${carServiceController.sellerList![index].seller!.shop!.address.toString()}",
-                                                    style: TextStyle(
-                                                      fontSize: 16,
-                                                      color: Colors.black54,
-                                                    ),
+                                              Container(
+                                                decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                  // Add additional decoration properties here as needed
+                                                ),
+                                                width: 100,
+                                                height: 100,
+                                                child: ClipRRect(
+                                                  // Use ClipRRect to clip the image with the specified border radius
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                  child: Image.network(
+                                                    "${configModel?.baseUrls?.sellerImageUrl}/${carServiceController.sellerList?[index].seller?.image.toString()}",
+                                                    errorBuilder: (context,
+                                                        error, stackTrace) {
+                                                      return errorImage(
+                                                          100, 100);
+                                                    },
                                                   ),
-                                                ],
+                                                ),
                                               ),
                                               SizedBox(
-                                                height: 5,
+                                                width: 20,
                                               ),
-                                              Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
+                                              Column(
+                                                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
                                                 children: [
-                                                  Text(
-                                                      carServiceController
-                                                                  .sellerList?[
-                                                                      index]
-                                                                  .products
-                                                                  ?.length ==
-                                                              0
-                                                          ? "₹ 0.0"
-                                                          : '₹ ${carServiceController.sellerList![index].products![0].unitPrice.toString()}',
-                                                      style: TextStyle(
-                                                          fontSize: 16,
-                                                          fontWeight:
-                                                              FontWeight.bold)),
                                                   SizedBox(
-                                                    width: 75,
+                                                    height: 5,
                                                   ),
-                                                  Container(
-                                                    height: 30,
-                                                    width: 60,
-                                                    decoration: BoxDecoration(
-                                                      color: Colors.black,
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              5),
-                                                      boxShadow: [
-                                                        BoxShadow(
-                                                          color: Colors.grey
-                                                              .withOpacity(0.1),
-                                                          spreadRadius: 1,
-                                                          blurRadius: 10,
-                                                        )
-                                                      ],
-                                                    ),
-                                                    child: Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
-                                                      children: [
-                                                        Icon(
-                                                          CupertinoIcons
-                                                              .star_fill,
-                                                          size: 18,
-                                                          color: Colors.orange,
+                                                  Text(
+                                                    '${carServiceController.sellerList![index].seller!.fName.toString()}',
+                                                    style: TextStyle(
+                                                        fontSize: 16,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ),
+                                                  SizedBox(
+                                                    height: 5,
+                                                  ),
+                                                  Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.start,
+                                                    children: [
+                                                      Icon(Icons
+                                                          .location_on_outlined),
+                                                      Text(
+                                                        "${carServiceController.sellerList![index].seller!.shop!.address.toString()}",
+                                                        style: TextStyle(
+                                                          fontSize: 16,
+                                                          color: Colors.black54,
                                                         ),
-                                                        SizedBox(width: 5),
-                                                        Text(
-                                                          '${carServiceController.sellerList![index].reviews!.length}',
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  SizedBox(
+                                                    height: 5,
+                                                  ),
+                                                  Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Text(
+                                                          carServiceController
+                                                                      .sellerList?[
+                                                                          index]
+                                                                      .products
+                                                                      ?.length ==
+                                                                  0
+                                                              ? "₹ 0.0"
+                                                              : '₹ ${carServiceController.sellerList![index].products![0].unitPrice.toString()}',
                                                           style: TextStyle(
-                                                            color: Colors.white,
-                                                          ),
+                                                              fontSize: 16,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold)),
+                                                      SizedBox(
+                                                        width: 75,
+                                                      ),
+                                                      Container(
+                                                        height: 30,
+                                                        width: 60,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color: Colors.black,
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(5),
+                                                          boxShadow: [
+                                                            BoxShadow(
+                                                              color: Colors.grey
+                                                                  .withOpacity(
+                                                                      0.1),
+                                                              spreadRadius: 1,
+                                                              blurRadius: 10,
+                                                            )
+                                                          ],
                                                         ),
-                                                      ],
-                                                    ),
+                                                        child: Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .center,
+                                                          children: [
+                                                            Icon(
+                                                              CupertinoIcons
+                                                                  .star_fill,
+                                                              size: 18,
+                                                              color:
+                                                                  Colors.orange,
+                                                            ),
+                                                            SizedBox(width: 5),
+                                                            Text(
+                                                              '${carServiceController.sellerList![index].reviews!.length}',
+                                                              style: TextStyle(
+                                                                color: Colors
+                                                                    .white,
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      )
+                                                    ],
                                                   )
                                                 ],
                                               )
                                             ],
-                                          )
-                                        ],
+                                          ),
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                ),
-                              );
-                            },
-                          ))
+                                  );
+                                },
+                              ))
                   ],
                 ),
               ),

@@ -4,7 +4,9 @@ class MyTextField extends StatefulWidget {
   final Widget labelText;
   final TextEditingController? controller;
   final bool isPassword;
+  final bool enable;
   final bool isAmount;
+  final VoidCallback? onPressed;
   final maxLenth;
   final TextInputType? textInputType;
   final Function(String text)? onChanged;
@@ -14,10 +16,12 @@ class MyTextField extends StatefulWidget {
   // final String? Function(String?)?
   MyTextField({
     super.key,
+    this.onPressed,
     required this.labelText,
     required this.controller,
     this.textInputType,
     this.isPassword = false,
+    this.enable = false,
     this.isAmount = false,
     this.onChanged,
     this.maxLenth,
@@ -40,6 +44,8 @@ class _MyTextFieldState extends State<MyTextField> {
   Widget build(BuildContext context) {
     return TextFormField(
       controller: widget.controller,
+      readOnly: widget.enable ?? false,
+      onTap: widget.onPressed,
       obscureText: widget.isPassword ? _obscureText : false,
       onChanged: widget.onChanged,
       validator: widget.validator!,
@@ -48,6 +54,7 @@ class _MyTextFieldState extends State<MyTextField> {
           ? TextInputType.number
           : widget.textInputType ?? TextInputType.text,
       decoration: InputDecoration(
+        counter: SizedBox(),
         label: widget.labelText,
         suffixIcon: widget.isPassword
             ? GestureDetector(

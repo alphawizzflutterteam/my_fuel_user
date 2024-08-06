@@ -8,6 +8,7 @@ import 'package:test_prj/components/my_button.dart';
 import 'package:test_prj/components/my_textfield.dart';
 
 import '../controller/forget_controller.dart';
+import '../helper/utils/validator_all.dart';
 import '../routes/app_routes.dart';
 
 class ForgetPassword extends StatelessWidget {
@@ -70,65 +71,73 @@ class ForgetPassword extends StatelessWidget {
                                   ),
                                   SizedBox(height: 20),
                                   Text(
-                                    "Enter your Phone No",
+                                    "Enter your Phone No".tr,
                                     style: TextStyle(
                                         fontSize: 28,
                                         fontWeight: FontWeight.bold),
                                   ),
                                   Text(
-                                    "Or Email",
+                                    "Or Email".tr,
                                     style: TextStyle(
                                         fontSize: 28,
                                         fontWeight: FontWeight.bold),
                                   ),
                                   SizedBox(height: 10),
-                                  Text(
-                                    "We Have sent the 4 digit Verification code",
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                    ),
-                                  ),
+                                  // Text(
+                                  //   "We Have sent the 4 digit Verification code"
+                                  //       .tr,
+                                  //   style: TextStyle(
+                                  //     fontSize: 16,
+                                  //   ),
+                                  // ),
                                   SizedBox(height: 32),
 
                                   SizedBox(
-                                    height: 56,
-                                    child: TextFormField(
-                                      controller: phoneController,
-                                      validator: (value) {
-                                        if (value == null || value.isEmpty) {
-                                          return 'Please enter "Phone No Or Email';
-                                        }
-                                        return null;
-                                      },
-                                      decoration: InputDecoration(
-                                        label: Text('Phone No Or Email'),
-                                        labelStyle: TextStyle(
-                                            color: Colors.grey.shade700),
-                                        enabled: true,
-                                        isDense: true,
-                                        border: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                                color: Colors.grey.shade200),
-                                            borderRadius:
-                                                BorderRadius.circular(8)),
-                                        errorBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                                color: Colors.grey.shade200),
-                                            borderRadius:
-                                                BorderRadius.circular(8)),
-                                        enabledBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                                color: Colors.grey.shade200),
-                                            borderRadius:
-                                                BorderRadius.circular(8)),
-                                        focusedBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                                color: Colors.grey.shade700),
-                                            borderRadius:
-                                                BorderRadius.circular(8)),
+                                      height: 56,
+                                      child: MyTextField(
+                                        controller: phoneController,
+                                        validator: (value) =>
+                                            Validator.validateWithhint(
+                                                value, "Phone No. Or Email".tr),
+                                        labelText: Text("Phone No Or Email"),
+                                      )
+                                      // TextFormField(
+                                      //   controller: phoneController,
+                                      //   validator: (value) {
+                                      //     if (value == null || value.isEmpty) {
+                                      //       return 'Please enter "Phone No Or Email';
+                                      //     }
+                                      //     return null;
+                                      //   },
+                                      //   decoration: InputDecoration(
+                                      //     label: Text('Phone No Or Email'.tr),
+                                      //     labelStyle: TextStyle(
+                                      //         color: Colors.grey.shade700),
+                                      //     enabled: true,
+                                      //     isDense: true,
+                                      //     border: OutlineInputBorder(
+                                      //         borderSide: BorderSide(
+                                      //             color: Colors.grey.shade200),
+                                      //         borderRadius:
+                                      //             BorderRadius.circular(8)),
+                                      //     errorBorder: OutlineInputBorder(
+                                      //         borderSide: BorderSide(
+                                      //             color: Colors.grey.shade200),
+                                      //         borderRadius:
+                                      //             BorderRadius.circular(8)),
+                                      //     enabledBorder: OutlineInputBorder(
+                                      //         borderSide: BorderSide(
+                                      //             color: Colors.grey.shade200),
+                                      //         borderRadius:
+                                      //             BorderRadius.circular(8)),
+                                      //     focusedBorder: OutlineInputBorder(
+                                      //         borderSide: BorderSide(
+                                      //             color: Colors.grey.shade700),
+                                      //         borderRadius:
+                                      //             BorderRadius.circular(8)),
+                                      //   ),
+                                      // ),
                                       ),
-                                    ),
-                                  ),
                                   // MyTextField(
                                   //   labelText: Text("Phone No Or Email"),
                                   // ),
@@ -174,18 +183,18 @@ class ForgetPassword extends StatelessWidget {
                                           },
                                           child: MyButton(text: "Verify"))),
                                   SizedBox(height: 24),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text("Didn't recieved Otp? "),
-                                      Text(
-                                        "Resend OTP",
-                                        style: TextStyle(
-                                          color: Color.fromRGBO(138, 180, 2, 1),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
+                                  // Row(
+                                  //   mainAxisAlignment: MainAxisAlignment.center,
+                                  //   children: [
+                                  //     Text("Didn't recieved Otp? "),
+                                  //     Text(
+                                  //       "Resend OTP",
+                                  //       style: TextStyle(
+                                  //         color: Color.fromRGBO(138, 180, 2, 1),
+                                  //       ),
+                                  //     ),
+                                  //   ],
+                                  // ),
                                 ],
                               ),
                             ),
@@ -208,9 +217,6 @@ class ForgetPassword extends StatelessWidget {
                             Icons.arrow_back,
                             color: Colors.white,
                           ),
-                        ),
-                        SizedBox(
-                          width: 80,
                         ),
                         Text(
                           'Forgot Password',

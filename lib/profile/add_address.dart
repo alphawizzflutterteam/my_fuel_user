@@ -1,8 +1,12 @@
+import 'dart:io';
+//
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:get/get.dart';
+import 'package:google_maps_place_picker_mb/google_maps_place_picker.dart';
 import 'package:test_prj/components/my_appbar.dart';
 import 'package:test_prj/components/my_button.dart';
 import 'package:test_prj/components/my_textfield.dart';
@@ -32,6 +36,8 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
   final _formKeyReset = GlobalKey<FormState>();
   int selectedValueAddress = -1;
   int selectedValue = 1;
+
+  LatLng? initialPosition;
   Widget customRadio(String text, int value) {
     return GestureDetector(
       onTap: () {
@@ -79,7 +85,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
       // Location services are not enabled don't continue
       // accessing the position and request users of the
       // App to enable the location services.
-      return Future.error('Location services are disabled.');
+      return Future.error('Location services are disabled.'.tr);
     }
 
     permission = await Geolocator.checkPermission();
@@ -91,14 +97,15 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
         // Android's shouldShowRequestPermissionRationale
         // returned true. According to Android guidelines
         // your App should show an explanatory UI now.
-        return Future.error('Location permissions are denied');
+        return Future.error('Location permissions are denied'.tr);
       }
     }
 
     if (permission == LocationPermission.deniedForever) {
       // Permissions are denied forever, handle appropriately.
       return Future.error(
-          'Location permissions are permanently denied, we cannot request permissions.');
+          'Location permissions are permanently denied, we cannot request permissions.'
+              .tr);
     }
 
     Position position = await Geolocator.getCurrentPosition();
@@ -134,7 +141,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.only(left: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 12),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -153,7 +160,8 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 8.0),
                       child: MyTextField(
-                        validator: (value) => Validator.validateName(value),
+                        validator: (value) =>
+                            Validator.validateWithhint(value, "Name".tr),
                         controller: nameController,
                         labelText: Text("Name".tr),
                       ),
@@ -173,16 +181,19 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                       child: MyTextField(
                         isAmount: true,
                         maxLenth: AppConstants.phoneValidation,
-                        validator: (value) => Validator.validatePhone(value),
+                        validator: (value) => null,
+                        // validator: (value) => Validator.validateWithhint(
+                        //     value, "Alternate Mobile Number".tr),
                         controller: alternatemobileController,
-                        labelText: Text("Alternate Mobile Number".tr),
+                        labelText: Text("Alternate Mobile Number(Optional)".tr),
                       ),
                     ),
 
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 8.0),
                       child: MyTextField(
-                        validator: (value) => Validator.validateName(value),
+                        validator: (value) => Validator.validateWithhint(
+                            value, "House no., Building Name".tr),
                         controller: houseNoController,
                         labelText: Text("House no., Building Name".tr),
                       ),
@@ -190,15 +201,51 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 8.0),
                       child: MyTextField(
-                        validator: (value) => Validator.validateName(value),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => PlacePicker(
+                                apiKey: Platform.isAndroid
+                                    ? "AIzaSyDx6ckRsDin45KKzr4wOlAtfS0RsMM6_CY"
+                                    : "AIzaSyDx6ckRsDin45KKzr4wOlAtfS0RsMM6_CY",
+                                onPlacePicked: (result) {
+                                  print(result.formattedAddress);
+                                  setState(() {
+                                    roadNameController.text =
+                                        result.formattedAddress.toString();
+                                    latitude = result.geometry!.location.lat
+                                        .toString();
+                                    longitude = result.geometry!.location.lng
+                                        .toString();
+                                  });
+                                  _getAddressFromLatLng();
+                                },
+                                selectInitialPosition: true,
+                                usePinPointingSearch: true,
+                                usePlaceDetailSearch: true,
+                                zoomGesturesEnabled: true,
+                                zoomControlsEnabled: true,
+                                ignoreLocationPermissionErrors: true,
+                                initialPosition: LatLng(
+                                    double.parse(latitude.toString()),
+                                    double.parse(longitude.toString())),
+                                useCurrentLocation: true,
+                              ),
+                            ),
+                          );
+                        },
+                        validator: (value) =>
+                            Validator.validateWithhint(value, "Address".tr),
                         controller: roadNameController,
-                        labelText: Text("Road name, Area Colony".tr),
+                        labelText: Text("Address".tr),
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 8.0),
                       child: MyTextField(
-                        validator: (value) => Validator.validateName(value),
+                        validator: (value) =>
+                            Validator.validateWithhint(value, "Country".tr),
                         controller: countryController,
                         labelText: Text("Country".tr),
                       ),
@@ -206,7 +253,8 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 8.0),
                       child: MyTextField(
-                        validator: (value) => Validator.validateName(value),
+                        validator: (value) =>
+                            Validator.validateWithhint(value, "State".tr),
                         controller: stateController,
                         labelText: Text("State".tr),
                       ),
@@ -214,7 +262,8 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 8.0),
                       child: MyTextField(
-                        validator: (value) => Validator.validateName(value),
+                        validator: (value) =>
+                            Validator.validateWithhint(value, "City".tr),
                         controller: cityController,
                         labelText: Text("City".tr),
                       ),
@@ -223,10 +272,11 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                       padding: const EdgeInsets.symmetric(vertical: 8.0),
                       child: MyTextField(
                         isAmount: true,
-                        validator: (value) => Validator.validateName(value),
+                        validator: (value) => Validator.validatePincodeWithhint(
+                            value, "PinCode".tr),
                         controller: pincodeController,
                         maxLenth: AppConstants.pinValidation,
-                        labelText: Text("PinCode".tr),
+                        labelText: Text("Pincode".tr),
                       ),
                     ),
                     // _buildTextField(label: 'Name', hintText: 'Navin Pawa'),
@@ -246,6 +296,14 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                         builder: (controller) {
                           return InkWell(
                               onTap: () {
+                                if (mobileController.text.toString().length <
+                                    10) {
+                                  Fluttertoast.showToast(
+                                      msg:
+                                          "Please Enter 10 digit phone number");
+                                  return;
+                                }
+
                                 if (_formKeyReset.currentState!.validate()) {
                                   controller
                                       .addAddress(
@@ -254,8 +312,8 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                                           selectedValue == 1
                                               ? "Home"
                                               : selectedValue == 2
-                                                  ? "Home"
-                                                  : "Office",
+                                                  ? "Office"
+                                                  : "Other",
                                           houseNoController.text.toString(),
                                           roadNameController.text.toString(),
                                           roadNameController.text.toString(),
@@ -270,9 +328,8 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                                     Fluttertoast.showToast(
                                         msg: "${value['message']}");
                                     controller.getAddRess();
+                                    Get.back(result: "new ");
                                   });
-
-                                  Navigator.pop(context);
                                 }
                               },
                               child: MyButton(text: 'Save Address'.tr));
@@ -285,6 +342,25 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
         ),
       ),
     );
+  }
+
+  Future<void> _getAddressFromLatLng() async {
+    await placemarkFromCoordinates(double.parse(latitude.toString()),
+            double.parse(longitude.toString()))
+        .then((List<Placemark> placemarks) {
+      Placemark place = placemarks[0];
+      pincodeController.text = place.postalCode.toString();
+      setState(() {
+        print('${place.name}____________');
+        print('${place.postalCode}____________');
+        print('${place.administrativeArea}____________');
+        print('${place.isoCountryCode}____________');
+        print('${place.subAdministrativeArea}____________');
+        print('${place.subLocality}____________');
+      });
+    }).catchError((e) {
+      debugPrint(e);
+    });
   }
 
   Widget _buildTextField({required String label, String? hintText}) {

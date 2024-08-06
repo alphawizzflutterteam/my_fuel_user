@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:test_prj/components/my_button.dart';
 import 'package:test_prj/payment/payment_form.dart';
@@ -25,14 +26,14 @@ class _PaymentScreenState extends State<PaymentScreen> {
   }
 
   Future<void> _handlePaymentSuccess(PaymentSuccessResponse response) async {
-    Fluttertoast.showToast(msg: "Payment successfully");
+    Fluttertoast.showToast(msg: "Payment successfully".tr);
     // addWallet();
     Navigator.pop(context);
     // Navigator.push(context, MaterialPageRoute(builder: (context)=>HomeScreen()));
   }
 
   void _handlePaymentError(PaymentFailureResponse response) {
-    Fluttertoast.showToast(msg: "Payment cancelled by user");
+    Fluttertoast.showToast(msg: "Payment cancelled by user".tr);
   }
 
   void _handleExternalWallet(ExternalWalletResponse response) {}

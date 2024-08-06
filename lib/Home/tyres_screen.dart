@@ -106,8 +106,8 @@ class _TyresScreenState extends State<TyresScreen> {
                                     setState(() {});
                                   },
                                   child: selectIndex == 1
-                                      ? MyButton(text: "Door Step ")
-                                      : DisButton(text: "Door Step"))),
+                                      ? MyButton(text: "Door Step".tr)
+                                      : DisButton(text: "Door Step".tr))),
                           InkWell(
                             onTap: () {
                               selectIndex = 2;
@@ -120,11 +120,11 @@ class _TyresScreenState extends State<TyresScreen> {
                                     ? MyButton(
                                         text: widget.title == "carWash"
                                             ? "Self Service"
-                                            : "Outlet")
+                                            : "Outlet".tr)
                                     : DisButton(
                                         text: widget.title == "carWash"
                                             ? "Self Service"
-                                            : "Outlet")),
+                                            : "Outlet".tr)),
                           ),
                         ],
                       ),
@@ -142,7 +142,7 @@ class _TyresScreenState extends State<TyresScreen> {
                           Padding(
                             padding: const EdgeInsets.only(right: 190),
                             child: Text(
-                              "Select Date & Slot",
+                              "Select Date & Slot".tr,
                               style: TextStyle(
                                   fontSize: 16, fontWeight: FontWeight.bold),
                             ),
@@ -153,12 +153,12 @@ class _TyresScreenState extends State<TyresScreen> {
                                 controller: dateController,
                                 validator: (value) =>
                                     Validator.validateWithhint(
-                                        value, "Select Date"),
+                                        value, "Select Date".tr),
                                 decoration: InputDecoration(
                                   border: InputBorder.none,
 
                                   // labelText: 'Schedule date and timing',
-                                  hintText: 'Schedule date ',
+                                  hintText: 'Schedule date'.tr,
                                   //filled: true,
                                   suffixIcon: const Icon(Icons.calendar_today),
                                   enabledBorder: OutlineInputBorder(
@@ -175,7 +175,7 @@ class _TyresScreenState extends State<TyresScreen> {
                           Padding(
                             padding: const EdgeInsets.only(right: 280),
                             child: Text(
-                              "Slots",
+                              "Slots".tr,
                               style: TextStyle(
                                   fontSize: 16, fontWeight: FontWeight.bold),
                             ),
@@ -355,9 +355,9 @@ class _TyresScreenState extends State<TyresScreen> {
                             height: 20,
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(right: 140),
+                            padding: EdgeInsets.only(right: 140),
                             child: Text(
-                              "Note to service provider",
+                              "Note to service provider".tr,
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 16,
@@ -377,7 +377,7 @@ class _TyresScreenState extends State<TyresScreen> {
                                 controller: noteController,
                                 validator: (value) =>
                                     Validator.validateWithhint(
-                                        value, "Select Note"),
+                                        value, "Select Note".tr),
                                 decoration: InputDecoration(
                                   isDense: true,
                                   border: OutlineInputBorder(
@@ -411,13 +411,14 @@ class _TyresScreenState extends State<TyresScreen> {
                                   otherCategory.timeSlotId!.isEmpty ||
                                   otherCategory.timeSlotId == "") {
                                 Fluttertoast.showToast(
-                                    msg: "PLease select Slot");
+                                    msg: "Please select Slot".tr);
                                 return;
                               }
 
                               if (_formKeyReset.currentState!.validate()) {
-                                otherCategory.service =
-                                    selectIndex == 1 ? "Door Step" : "Outlet";
+                                otherCategory.service = selectIndex == 1
+                                    ? "Door Step"
+                                    : "At your station";
                                 otherCategory.notes =
                                     noteController.text.toString();
                                 // otherCategory.timeSlotId = "1";

@@ -12,7 +12,7 @@ import 'data/model/all_orders_model.dart';
 
 class OrderDetails extends StatefulWidget {
   Booking booking;
-   OrderDetails({super.key,required this.booking});
+  OrderDetails({super.key, required this.booking});
 
   @override
   State<OrderDetails> createState() => _OrderDetailsState();
@@ -71,229 +71,231 @@ class _OrderDetailsState extends State<OrderDetails> {
                 ],
               ),
             ),
-            widget.booking.products?.isEmpty ?? true ?   Card(
-              color: Colors.white,
-              elevation: 0,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12), // Optional: Rounded corners
-                side: BorderSide.none, // Remove bottom border
-              ),
-
-              //  margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-
-              child: Padding(
-                padding: EdgeInsets.all(4),
-                child: Row(
-                  children: [
-
-                    FadeInImage
-                        .assetNetwork(
-                      fit: BoxFit.cover,
-                      height:
-                      80,
-                      placeholder:
-                      'assets/indianoil.png', // Placeholder image path
-                      image:
-                      '${configModel!.baseUrls!.categoryImageUrl}/${ widget.booking.category?.icon}', // Network image URL
-                      imageErrorBuilder: (context,
-                          error,
-                          stackTrace) {
-                        // Widget to display in case of an error
-                        return Image.asset("assets/indianoil.png", height: 80);
-                      },
-                      placeholderScale:
-                      1.0, // Optional: scale of the placeholder
+            widget.booking.products?.isEmpty ?? true
+                ? Card(
+                    color: Colors.white,
+                    elevation: 0,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(
+                          12), // Optional: Rounded corners
+                      side: BorderSide.none, // Remove bottom border
                     ),
-                    // Image
-                    //     .network(
-                    //   "${configModel!.baseUrls!.productThumbnailUrl}${controller.ordersList[index].details![0].product!.thumbnail!.toUpperCase()}",
-                    //   errorBuilder: (context,
-                    //       error,
-                    //       stackTrace) {
-                    //     return Image.asset(
-                    //         "assets/indianoil.png",
-                    //         height: 94);
-                    //   },
-                    // ),
-                    // Container(
-                    //   height: 100,
-                    //   width: 80,
-                    //   decoration: BoxDecoration(
-                    //     borderRadius: BorderRadius.circular(10),
-                    //   ),
-                    //   // margin: EdgeInsets.only(right: 10),
-                    //   child: Image.network( '${configModel!.baseUrls!.categoryImageUrl}/${ widget.booking.category?.icon}',),
-                    // ),
-                    SizedBox(width: 20,),
-                    Expanded(
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(vertical: 10),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "${widget.booking.serviceName}",
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
+
+                    //  margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+
+                    child: Padding(
+                      padding: EdgeInsets.all(4),
+                      child: Row(
+                        children: [
+                          FadeInImage.assetNetwork(
+                            fit: BoxFit.cover,
+                            height: 80,
+                            placeholder:
+                                'assets/indianoil.png', // Placeholder image path
+                            image:
+                                '${configModel!.baseUrls!.categoryImageUrl}/${widget.booking.category?.icon}', // Network image URL
+                            imageErrorBuilder: (context, error, stackTrace) {
+                              // Widget to display in case of an error
+                              return Image.asset("assets/indianoil.png",
+                                  height: 80);
+                            },
+                            placeholderScale:
+                                1.0, // Optional: scale of the placeholder
+                          ),
+                          // Image
+                          //     .network(
+                          //   "${configModel!.baseUrls!.productThumbnailUrl}${controller.ordersList[index].details![0].product!.thumbnail!.toUpperCase()}",
+                          //   errorBuilder: (context,
+                          //       error,
+                          //       stackTrace) {
+                          //     return Image.asset(
+                          //         "assets/indianoil.png",
+                          //         height: 94);
+                          //   },
+                          // ),
+                          // Container(
+                          //   height: 100,
+                          //   width: 80,
+                          //   decoration: BoxDecoration(
+                          //     borderRadius: BorderRadius.circular(10),
+                          //   ),
+                          //   // margin: EdgeInsets.only(right: 10),
+                          //   child: Image.network( '${configModel!.baseUrls!.categoryImageUrl}/${ widget.booking.category?.icon}',),
+                          // ),
+                          SizedBox(
+                            width: 20,
+                          ),
+                          Expanded(
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(vertical: 10),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    "${widget.booking.serviceName}",
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                  //   SizedBox(height: 4),
+
+                                  // Text(
+                                  //   "Lorem lpush is simply dumm",
+                                  //   style: TextStyle(
+                                  //     fontSize: 12,
+                                  //     color: Colors.black54,
+                                  //   ),
+                                  // ),
+
+                                  SizedBox(height: 7),
+                                ],
                               ),
                             ),
-                            //   SizedBox(height: 4),
-
-                            // Text(
-                            //   "Lorem lpush is simply dumm",
-                            //   style: TextStyle(
-                            //     fontSize: 12,
-                            //     color: Colors.black54,
-                            //   ),
-                            // ),
-
-                            SizedBox(height: 7),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ),
-                  ],
-                ),
-              ),
-            )  :
-
-            ListView.builder(
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              itemCount: widget.booking.products?.length,
-              itemBuilder:  (context, index) {
-                return   Card(
-
-                  color: Colors.white,
-                  elevation: 0,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12), // Optional: Rounded corners
-                    side: BorderSide.none, // Remove bottom border
-                  ),
-                  // elevation: 3,
-                  //  margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-
-                  child: Padding(
-                    padding: EdgeInsets.all(4),
-                    child: Row(
-                      children: [
-
-                        FadeInImage
-                            .assetNetwork(
-                          fit: BoxFit.cover,
-                          height:
-                          80,
-                          placeholder:
-                          'assets/indianoil.png', // Placeholder image path
-                          image:
-                          '${configModel!.baseUrls!.categoryImageUrl}/${widget.booking.products?[index].images}', // Network image URL
-                          imageErrorBuilder: (context,
-                              error,
-                              stackTrace) {
-                            // Widget to display in case of an error
-                            return Image.asset("assets/indianoil.png", height: 80);
-                          },
-                          placeholderScale:
-                          1.0, // Optional: scale of the placeholder
+                  )
+                : ListView.builder(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemCount: widget.booking.products?.length,
+                    itemBuilder: (context, index) {
+                      return Card(
+                        color: Colors.white,
+                        elevation: 0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(
+                              12), // Optional: Rounded corners
+                          side: BorderSide.none, // Remove bottom border
                         ),
+                        // elevation: 3,
+                        //  margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
 
-                        SizedBox(width: 20,),
+                        child: Padding(
+                          padding: EdgeInsets.all(4),
+                          child: Row(
+                            children: [
+                              FadeInImage.assetNetwork(
+                                fit: BoxFit.cover,
+                                height: 80,
+                                placeholder:
+                                    'assets/indianoil.png', // Placeholder image path
+                                image:
+                                    '${configModel!.baseUrls!.categoryImageUrl}/${widget.booking.products?[index].images}', // Network image URL
+                                imageErrorBuilder:
+                                    (context, error, stackTrace) {
+                                  // Widget to display in case of an error
+                                  return Image.asset("assets/indianoil.png",
+                                      height: 80);
+                                },
+                                placeholderScale:
+                                    1.0, // Optional: scale of the placeholder
+                              ),
 
-                        Expanded(
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(vertical: 10),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  "${widget.booking.products?[index].name}",
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black,
+                              SizedBox(
+                                width: 20,
+                              ),
+
+                              Expanded(
+                                child: Padding(
+                                  padding: EdgeInsets.symmetric(vertical: 10),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        "${widget.booking.products?[index].name}",
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                      //   SizedBox(height: 4),
+
+                                      Text(
+                                        "${widget.booking.products?[index].slug}",
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          color: Colors.black54,
+                                        ),
+                                      ),
+
+                                      SizedBox(height: 7),
+                                    ],
                                   ),
                                 ),
-                                //   SizedBox(height: 4),
-
-                                Text(
-                                  "${widget.booking.products?[index].slug}",
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    color: Colors.black54,
-                                  ),
-                                ),
-
-                                SizedBox(height: 7),
-                              ],
-                            ),
+                              ),
+                              // Image
+                              //     .network(
+                              //   "${configModel!.baseUrls!.productThumbnailUrl}${controller.ordersList[index].details![0].product!.thumbnail!.toUpperCase()}",
+                              //   errorBuilder: (context,
+                              //       error,
+                              //       stackTrace) {
+                              //     return Image.asset(
+                              //         "assets/indianoil.png",
+                              //         height: 94);
+                              //   },
+                              // ),
+                              // Container(
+                              //   height: 100,
+                              //   width: 80,
+                              //   decoration: BoxDecoration(
+                              //     borderRadius: BorderRadius.circular(10),
+                              //   ),
+                              //   // margin: EdgeInsets.only(right: 10),
+                              //   child: Image.network( '${configModel!.baseUrls!.categoryImageUrl}/${ widget.booking.category?.icon}',),
+                              // ),
+                              // SizedBox(width: 20,),
+                              // ListView.builder(
+                              //   shrinkWrap: true,
+                              //   physics: NeverScrollableScrollPhysics(),
+                              //   itemCount: widget.booking.products?.length,
+                              //   itemBuilder:  (context, index) {
+                              //     return    Expanded(
+                              //       child: Padding(
+                              //         padding: EdgeInsets.symmetric(vertical: 10),
+                              //         child: Column(
+                              //           crossAxisAlignment: CrossAxisAlignment.start,
+                              //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              //           children: [
+                              //             Text(
+                              //               "${widget.booking.products?[index].name}",
+                              //               style: TextStyle(
+                              //                 fontSize: 16,
+                              //                 fontWeight: FontWeight.bold,
+                              //                 color: Colors.black,
+                              //               ),
+                              //             ),
+                              //             //   SizedBox(height: 4),
+                              //
+                              //             Text(
+                              //               "${widget.booking.products?[index].slug}",
+                              //               style: TextStyle(
+                              //                 fontSize: 12,
+                              //                 color: Colors.black54,
+                              //               ),
+                              //             ),
+                              //
+                              //             SizedBox(height: 7),
+                              //           ],
+                              //         ),
+                              //       ),
+                              //     );
+                              //   },)
+                            ],
                           ),
                         ),
-                        // Image
-                        //     .network(
-                        //   "${configModel!.baseUrls!.productThumbnailUrl}${controller.ordersList[index].details![0].product!.thumbnail!.toUpperCase()}",
-                        //   errorBuilder: (context,
-                        //       error,
-                        //       stackTrace) {
-                        //     return Image.asset(
-                        //         "assets/indianoil.png",
-                        //         height: 94);
-                        //   },
-                        // ),
-                        // Container(
-                        //   height: 100,
-                        //   width: 80,
-                        //   decoration: BoxDecoration(
-                        //     borderRadius: BorderRadius.circular(10),
-                        //   ),
-                        //   // margin: EdgeInsets.only(right: 10),
-                        //   child: Image.network( '${configModel!.baseUrls!.categoryImageUrl}/${ widget.booking.category?.icon}',),
-                        // ),
-                        // SizedBox(width: 20,),
-                        // ListView.builder(
-                        //   shrinkWrap: true,
-                        //   physics: NeverScrollableScrollPhysics(),
-                        //   itemCount: widget.booking.products?.length,
-                        //   itemBuilder:  (context, index) {
-                        //     return    Expanded(
-                        //       child: Padding(
-                        //         padding: EdgeInsets.symmetric(vertical: 10),
-                        //         child: Column(
-                        //           crossAxisAlignment: CrossAxisAlignment.start,
-                        //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        //           children: [
-                        //             Text(
-                        //               "${widget.booking.products?[index].name}",
-                        //               style: TextStyle(
-                        //                 fontSize: 16,
-                        //                 fontWeight: FontWeight.bold,
-                        //                 color: Colors.black,
-                        //               ),
-                        //             ),
-                        //             //   SizedBox(height: 4),
-                        //
-                        //             Text(
-                        //               "${widget.booking.products?[index].slug}",
-                        //               style: TextStyle(
-                        //                 fontSize: 12,
-                        //                 color: Colors.black54,
-                        //               ),
-                        //             ),
-                        //
-                        //             SizedBox(height: 7),
-                        //           ],
-                        //         ),
-                        //       ),
-                        //     );
-                        //   },)
-                      ],
-                    ),
+                      );
+                    },
                   ),
-                );
-              },),
             // Card(
             //   elevation: 0,
             //   // color: Colors.white,
@@ -403,14 +405,16 @@ class _OrderDetailsState extends State<OrderDetails> {
                   ),
                   SizedBox(
                       width:
-                      10), // Add some spacing between the icon and the text
+                          10), // Add some spacing between the icon and the text
                   // Text(
                   //   "Ordered Saturday, 13 Oct, 10:10 PM",
                   //   style: TextStyle(fontSize: 14, color: Colors.black54),
                   // ),
 
                   Text(
-                    "Ordered ${DateFormat('EEEE, dd MMM, hh:mm a').format(DateTime.parse(widget.booking?.createdAt.toString() ?? '',))}",
+                    "Ordered ${DateFormat('EEEE, dd MMM, hh:mm a').format(DateTime.parse(
+                      widget.booking?.createdAt.toString() ?? '',
+                    ))}",
                     style: TextStyle(fontSize: 14, color: Colors.black54),
                   )
                 ],
@@ -463,7 +467,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                     ),
                     SizedBox(
                         width:
-                        10), // Add some spacing between the icon and the text
+                            10), // Add some spacing between the icon and the text
                     Text(
                       "Out for delivery",
                       style: TextStyle(fontSize: 14, color: Colors.black54),
@@ -478,8 +482,6 @@ class _OrderDetailsState extends State<OrderDetails> {
     );
   }
 }
-
-
 
 // class OrderDetails extends StatelessWidget {
 //   // List<step.Step> steps=[

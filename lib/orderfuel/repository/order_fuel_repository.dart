@@ -12,6 +12,8 @@ import 'package:test_prj/orderfuel/doorStepDelivery/order_fuel_checkout.dart';
 import 'package:test_prj/service/provider/api_provider.dart';
 import 'package:get/get.dart';
 
+import '../../service/provider/end_points.dart';
+
 class OrderFuelRepo extends GetxService with ApiClient {
   OrderFuelRepo() {
     baseUrl = AppConstants.baseUrl;
@@ -73,6 +75,18 @@ class OrderFuelRepo extends GetxService with ApiClient {
       required String billing,
       required String assetId,
       required String vehicleType}) async {
+    log(AppConstants.token);
+    log('${{
+      "service_id": id,
+      'service_type': serviceType,
+      'slot_id': slotId,
+      'date': date,
+      'asset_id': assetId,
+      'vehicle_type': vehicleType,
+      'quantity': quantity,
+      'shipping_address_id': shipping,
+      'billing_address_id': billing
+    }}');
     var response = await httpClient.post(
       '/api/v1/customer/order/service-vendor',
       data: jsonEncode({
@@ -89,6 +103,17 @@ class OrderFuelRepo extends GetxService with ApiClient {
       options: optionsNetwork,
     );
     log('${response.data}');
+    log('${{
+      "service_id": id,
+      'service_type': serviceType,
+      'slot_id': slotId,
+      'date': date,
+      'asset_id': assetId,
+      'vehicle_type': vehicleType,
+      'quantity': quantity,
+      'shipping_address_id': shipping,
+      'billing_address_id': billing
+    }}');
     if (response.statusCode == 200) {
       return VendorsModel.fromJson(json.decode(response.toString()));
     } else {
@@ -200,11 +225,34 @@ class OrderFuelRepo extends GetxService with ApiClient {
       }),
       options: optionsNetwork,
     );
+    print("AAAAAAAAAAAAA ${response.toString()}");
 
     if (response.statusCode == 200) {
       return json.decode(response.toString());
     } else {
       throw Exception(response.data['message']);
+    }
+  }
+
+  ///
+  Future<Map> getPaymentId(String name, String email, String mobile,
+      String amount, String id) async {
+    var response = await httpClient.post(
+      '${ApiConstants.CASHFREEE}',
+      data: jsonEncode({
+        "customer_id": id ?? "1",
+        "customer_name": name ?? "Shubham",
+        "customer_email": email ?? "shubhamsamnotra@gmail.com",
+        "customer_phone": mobile ?? "9149970345",
+        "order_amount": amount ?? 1
+      }),
+      options: optionsNetwork,
+    );
+
+    if (response.statusCode == 200) {
+      return json.decode(response.toString());
+    } else {
+      return json.decode(response.toString());
     }
   }
 

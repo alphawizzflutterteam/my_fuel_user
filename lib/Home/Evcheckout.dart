@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:test_prj/components/my_appbar.dart';
 import 'package:test_prj/components/my_button.dart';
 import 'package:test_prj/helper/colors.dart';
@@ -49,7 +50,7 @@ class _EvcheckoutState extends State<Evcheckout> {
             ),
           ),
         ),
-        title: Text('Checkout'),
+        title: Text('Checkout'.tr),
         centerTitle: true,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
@@ -74,7 +75,7 @@ class _EvcheckoutState extends State<Evcheckout> {
             child: Align(
               alignment: Alignment.centerRight,
               child: GestureDetector(
-                child: const MyButton(text: 'Checkout'),
+                child:  MyButton(text: 'Checkout'.tr),
                 onTap: () {
                   Navigator.push(
                       context,
@@ -104,23 +105,23 @@ class _EvcheckoutState extends State<Evcheckout> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    'Scheduled Date and Time',
+                   Text(
+                    'Scheduled Date and Time'.tr,
                     // style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 10),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Column(
+                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            '11:00 Pm to 12:00 Pm',
+                            '11:00 Pm to 12:00 Pm'.tr,
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
                           Text(
-                            '13 jan 2024,mon',
+                            '13 jan 2024,mon'.tr,
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
                         ],
@@ -219,8 +220,8 @@ class _EvcheckoutState extends State<Evcheckout> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  "Price Detail",
+                 Text(
+                  "Price Detail".tr,
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
