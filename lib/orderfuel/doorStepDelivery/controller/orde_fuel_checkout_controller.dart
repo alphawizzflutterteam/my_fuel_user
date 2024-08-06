@@ -1,6 +1,8 @@
 import 'dart:developer';
 
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:get/get_rx/get_rx.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:test_prj/controller/appBase/appbase_controller.dart';
 import 'package:test_prj/data/model/order_fuel_check_out_model.dart';
@@ -19,11 +21,13 @@ class OrderFuelCheckoutController extends AppBaseController {
   String? productId;
   String? vendorId;
   Map? data;
+  RxBool isApply = false.obs;
 
   /// Check
   /// Payment id and Order id
   String paymentId = "";
   String orderId = "";
+  RxDouble discountAmount = 0.0.obs;
 
   @override
   void onInit() {
@@ -142,5 +146,21 @@ class OrderFuelCheckoutController extends AppBaseController {
 
     orderFuelCheckData = response.data;
     isLoading.value = false;
+  }
+
+  Future<void> applyCoupon(String amount, String coupon) async {
+    isApply.value = true;
+    Map response = await orderFuelRepo.applyCoupon(amount, coupon);
+
+    if (response['status']) {
+      discountAmount.value =
+          double.parse(response['coupon_discount'].toString());
+
+      Fluttertoast.showToast(msg: response['message']);
+      isApply.value = false;
+    } else {
+      Fluttertoast.showToast(msg: response['message']);
+      isApply.value = false;
+    }
   }
 }

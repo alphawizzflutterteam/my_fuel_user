@@ -337,41 +337,51 @@ class _HomePageState extends State<HomePage> {
                                                       horizontal: 16),
                                               child: Row(
                                                 mainAxisAlignment:
-                                                    MainAxisAlignment.start,
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.center,
                                                 children: [
-                                                  Image.asset(
-                                                      "assets/login-logo.png",
-                                                      height: 36),
-                                                  const SizedBox(width: 13),
-                                                  Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
+                                                  Row(
                                                     children: [
-                                                      Text(
-                                                        "Order Fuel".tr,
-                                                        style: TextStyle(
-                                                          fontSize: 16,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                        ),
-                                                      ),
-                                                      Text(
-                                                        "Door Step Delivery".tr,
-                                                        style: TextStyle(
-                                                          fontSize: 12,
-                                                          color: Color.fromRGBO(
-                                                              89, 89, 89, 1),
-                                                        ),
+                                                      Image.asset(
+                                                          "assets/login-logo.png",
+                                                          height: 36),
+                                                      const SizedBox(width: 13),
+                                                      Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          Text(
+                                                            "Order Fuel".tr,
+                                                            style: TextStyle(
+                                                              fontSize: 16,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                            ),
+                                                          ),
+                                                          Text(
+                                                            "Door Step Delivery"
+                                                                .tr,
+                                                            style: TextStyle(
+                                                              fontSize: 12,
+                                                              color: Color
+                                                                  .fromRGBO(
+                                                                      89,
+                                                                      89,
+                                                                      89,
+                                                                      1),
+                                                            ),
+                                                          ),
+                                                        ],
                                                       ),
                                                     ],
                                                   ),
-                                                  const SizedBox(width: 124),
                                                   GestureDetector(
                                                     // onTap: () => Navigator.push(
                                                     //     context,
