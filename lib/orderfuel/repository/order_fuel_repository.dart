@@ -256,6 +256,17 @@ class OrderFuelRepo extends GetxService with ApiClient {
     }
   }
 
+  Future<Map> applyCoupon(String amount, String code) async {
+    var response = await httpClient
+        .get('/api/v1/coupon/booking-apply?amount=$amount&code=$code');
+
+    if (response.statusCode == 200) {
+      return json.decode(response.toString());
+    } else {
+      return json.decode(response.toString());
+    }
+  }
+
   Future<VehicleListModel> getVehicle({required String catId}) async {
     var response = await httpClient.get(
       '/api/v1/customer/vehicle-service?id=6',

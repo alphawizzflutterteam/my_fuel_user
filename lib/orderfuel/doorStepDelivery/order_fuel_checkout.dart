@@ -1,9 +1,13 @@
+import 'dart:ui';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:test_prj/components/my_appbar.dart';
 import 'package:test_prj/components/my_button.dart';
+import 'package:test_prj/components/my_hinttext_field.dart';
 import 'package:test_prj/components/widgets/globle_widgets.dart';
 import 'package:test_prj/controller/profile_controller.dart';
 import 'package:test_prj/helper/colors.dart';
@@ -22,6 +26,8 @@ class OrderFuelCheckOut extends StatefulWidget {
 }
 
 class _OrderFuelCheckOutState extends State<OrderFuelCheckOut> {
+  final couponController = TextEditingController();
+
   @override
   void initState() {
     // TODO: implement initState
@@ -302,6 +308,68 @@ class _OrderFuelCheckOutState extends State<OrderFuelCheckOut> {
                                 ],
                               ),
                             ),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            Obx(() {
+                              return Container(
+                                  width: double.maxFinite,
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 15),
+                                  decoration: const BoxDecoration(
+                                      color: colors.myCardColor,
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(15))),
+                                  child: Row(
+                                    children: [
+                                      Expanded(
+                                          flex: 2,
+                                          child: MyHintTextField(
+                                            hintText: const Text('Coupon'),
+                                            isActive: true,
+                                            controller: couponController,
+                                          )),
+                                      Expanded(
+                                        flex: 1,
+                                        child: InkWell(
+                                          onTap: () {
+                                            controller.applyCoupon(
+                                                controller
+                                                    .orderFuelCheckData!.total
+                                                    .toString(),
+                                                couponController.text);
+                                          },
+                                          child: Container(
+                                            height: 55,
+                                            decoration: const BoxDecoration(
+                                                borderRadius: BorderRadius.only(
+                                                    topRight:
+                                                        Radius.circular(10),
+                                                    bottomRight:
+                                                        Radius.circular(10)),
+                                                gradient:
+                                                    colors.buttonGradient),
+                                            child: Center(
+                                              child: controller.isApply.value
+                                                  ? const CircularProgressIndicator(
+                                                      color: colors.whiteTemp,
+                                                    )
+                                                  : const Text(
+                                                      'Apply',
+                                                      style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                          fontSize: 16,
+                                                          color:
+                                                              colors.whiteTemp),
+                                                    ),
+                                            ),
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  ));
+                            }),
                             Padding(
                               padding: const EdgeInsets.all(15.0),
                               child: Column(
@@ -309,7 +377,7 @@ class _OrderFuelCheckOutState extends State<OrderFuelCheckOut> {
                                 children: [
                                   Text(
                                     "Price Detail".tr,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold,
                                     ),
@@ -363,7 +431,7 @@ class _OrderFuelCheckOutState extends State<OrderFuelCheckOut> {
                                     children: [
                                       Text(
                                         "Delivery free".tr,
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             fontSize: 16,
                                             color: Colors.black54),
                                       ),
@@ -384,13 +452,13 @@ class _OrderFuelCheckOutState extends State<OrderFuelCheckOut> {
                                     children: [
                                       Text(
                                         "GST on delivery Fee".tr,
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             fontSize: 16,
                                             color: Colors.black54),
                                       ),
-                                      Text(
+                                      const Text(
                                         '₹ ${0}',
-                                        style: const TextStyle(
+                                        style: TextStyle(
                                           fontSize: 18,
                                           color: Colors.black,
                                           fontWeight: FontWeight.bold,
@@ -405,13 +473,13 @@ class _OrderFuelCheckOutState extends State<OrderFuelCheckOut> {
                                     children: [
                                       Text(
                                         "Other Charges".tr,
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             fontSize: 16,
                                             color: Colors.black54),
                                       ),
-                                      Text(
+                                      const Text(
                                         '₹ ${0}',
-                                        style: const TextStyle(
+                                        style: TextStyle(
                                           fontSize: 18,
                                           color: Colors.black,
                                           fontWeight: FontWeight.bold,
@@ -420,26 +488,28 @@ class _OrderFuelCheckOutState extends State<OrderFuelCheckOut> {
                                     ],
                                   ),
                                   const SizedBox(height: 2),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        "Discount".tr,
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            color: Colors.black54),
-                                      ),
-                                      Text(
-                                        '₹ ${controller.orderFuelCheckData?.coupanDiscount}',
-                                        style: const TextStyle(
-                                          fontSize: 18,
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold,
+                                  Obx(() {
+                                    return Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          "Discount".tr,
+                                          style: const TextStyle(
+                                              fontSize: 16,
+                                              color: Colors.black54),
                                         ),
-                                      ),
-                                    ],
-                                  ),
+                                        Text(
+                                          '₹ ${controller.discountAmount}',
+                                          style: const TextStyle(
+                                            fontSize: 18,
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ],
+                                    );
+                                  }),
                                   const SizedBox(height: 5),
                                   const Divider(
                                     thickness: 2,
@@ -447,28 +517,30 @@ class _OrderFuelCheckOutState extends State<OrderFuelCheckOut> {
                                     // indent: 15,
                                     //endIndent: 10,
                                   ),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        "Total Amount".tr,
-                                        style: TextStyle(
-                                          fontSize: 16,
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold,
+                                  Obx(() {
+                                    return Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          "Total Amount".tr,
+                                          style: const TextStyle(
+                                            fontSize: 16,
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.bold,
+                                          ),
                                         ),
-                                      ),
-                                      Text(
-                                        '₹ ${controller.orderFuelCheckData?.total}',
-                                        style: const TextStyle(
-                                          fontSize: 18,
-                                          color: colors.green1,
-                                          fontWeight: FontWeight.bold,
+                                        Text(
+                                          '₹ ${(controller.orderFuelCheckData!.total! - controller.discountAmount.value)}',
+                                          style: const TextStyle(
+                                            fontSize: 18,
+                                            color: colors.green1,
+                                            fontWeight: FontWeight.bold,
+                                          ),
                                         ),
-                                      ),
-                                    ],
-                                  ),
+                                      ],
+                                    );
+                                  }),
                                   const Divider(
                                     thickness: 2,
                                     color: Colors.black26,
@@ -479,7 +551,7 @@ class _OrderFuelCheckOutState extends State<OrderFuelCheckOut> {
                                 ],
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 50,
                             )
                           ],
