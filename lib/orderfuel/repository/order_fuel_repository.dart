@@ -169,7 +169,8 @@ class OrderFuelRepo extends GetxService with ApiClient {
         'billing_address_id': billing,
         'billing_same_as_shipping': isBillingSameAsShipping,
         'seller_id': vendorId,
-        'quantity': quantity
+        'quantity': quantity,
+        'coupan_discount_amount': quantity
       }),
       options: optionsNetwork,
     );
@@ -200,7 +201,30 @@ class OrderFuelRepo extends GetxService with ApiClient {
     required String transactionId,
     required String quantity,
     required String walletUsed,
+    required String discount,
   }) async {
+    var data = jsonEncode({
+      "category_id": categoryId,
+      'vehicle_type': vehicleType,
+      'vehicle_model': vehicleModel,
+      'tyre_size': tyreSize,
+      'time_slot_id': slotId,
+      'date': date,
+      'service': serviceType,
+      'notes': note,
+      'product_id': productId,
+      'shipping_address_id': shipping,
+      'billing_address_id': billing,
+      'billing_same_as_shipping': isBillingSameAsShipping,
+      'payment_method': paymentMethod,
+      'wallet_used': walletUsed,
+      'transaction_id': transactionId,
+      'quantity': quantity,
+      'seller_id': vendorId,
+      'asset_id': assetId,
+      'coupan_discount_amount': discount
+    });
+    print("object ASSS $data");
     var response = await httpClient.post(
       '/api/v1/customer/order/confirm-vendor-service',
       data: jsonEncode({
@@ -221,7 +245,8 @@ class OrderFuelRepo extends GetxService with ApiClient {
         'transaction_id': transactionId,
         'quantity': quantity,
         'seller_id': vendorId,
-        'asset_id': assetId
+        'asset_id': assetId,
+        'coupan_discount_amount': discount
       }),
       options: optionsNetwork,
     );

@@ -200,7 +200,7 @@ class Booking {
         billingAddressId: json["billing_address_id"],
         subtotal: json["subtotal"],
         discount: json["discount"],
-        coupanDiscount: json["coupan_discount"],
+        coupanDiscount: json["coupan_discount"].toString(),
         serviceCharges: json["service_charges"],
         total: json["total"],
         isPaid: json["is_paid"],

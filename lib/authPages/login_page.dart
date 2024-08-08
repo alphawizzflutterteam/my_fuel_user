@@ -317,12 +317,12 @@ class _LoginPageState extends State<LoginPage> {
           controller: phoneEmailController,
           validator: (value) {
             if (value == null || value.isEmpty) {
-              return 'Please enter Phone No. Or Email';
+              return 'Please enter Phone No. Or Email'.tr;
             }
             return null;
           },
           decoration: InputDecoration(
-            label: Text('Phone No. Or Email'),
+            label: Text('Phone No. Or Email'.tr),
             labelStyle: TextStyle(color: Colors.grey.shade700),
             enabled: true,
             isDense: true,
@@ -340,7 +340,7 @@ class _LoginPageState extends State<LoginPage> {
           obscureText: isPassword ? _obscureText : false,
           validator: (value) {
             if (value == null || value.isEmpty) {
-              return 'Please enter password';
+              return 'Please enter password'.tr;
             }
             return null;
           },
@@ -351,7 +351,7 @@ class _LoginPageState extends State<LoginPage> {
                     child: Icon(
                         _obscureText ? Icons.visibility_off : Icons.visibility))
                 : const SizedBox.shrink(),
-            label: Text('Password'),
+            label: Text('Password'.tr),
             labelStyle: TextStyle(color: Colors.grey.shade700),
             enabled: true,
             isDense: true,
@@ -379,7 +379,7 @@ class _LoginPageState extends State<LoginPage> {
             return null;
           },
           decoration: InputDecoration(
-            label: Text('Membership No.'),
+            label: Text('Membership No.'.tr),
             labelStyle: TextStyle(color: Colors.grey.shade700),
             enabled: true,
             isDense: true,
@@ -401,12 +401,12 @@ class _LoginPageState extends State<LoginPage> {
             controller: phoneEmailController,
             validator: (value) {
               if (value == null || value.isEmpty) {
-                return 'Please enter Phone No. Or Email';
+                return 'Please enter Phone No. Or Email'.tr;
               }
               return null;
             },
             decoration: InputDecoration(
-              label: Text('Phone No. Or Email'),
+              label: Text('Phone No. Or Email'.tr),
               labelStyle: TextStyle(color: Colors.grey.shade700),
               enabled: true,
               enabledBorder: OutlineInputBorder(
@@ -426,12 +426,12 @@ class _LoginPageState extends State<LoginPage> {
             controller: passwordController,
             validator: (value) {
               if (value == null || value.isEmpty) {
-                return 'Please enter Password';
+                return 'Please enter Password'.tr;
               }
               return null;
             },
             decoration: InputDecoration(
-              label: Text('Password'),
+              label: Text('Password'.tr),
               suffixIcon: isPassword
                   ? GestureDetector(
                       onTap: _toggle,

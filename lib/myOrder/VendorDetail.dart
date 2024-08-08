@@ -628,7 +628,7 @@ class _VenderDetailsState extends State<VenderDetails> {
                                           fontSize: 14, color: Colors.black54),
                                     ),
                                     Text(
-                                      "₹ ${widget.booking?.discount}",
+                                      "₹ ${widget.booking?.coupanDiscount}",
                                       style: TextStyle(
                                         fontSize: 18,
                                         color: Colors.black,
@@ -657,7 +657,7 @@ class _VenderDetailsState extends State<VenderDetails> {
                                       ),
                                     ),
                                     Text(
-                                      "₹ ${widget.booking?.total}",
+                                      "₹ ${calculate()}",
                                       style: TextStyle(
                                         fontSize: 18,
                                         color: Colors.lightGreen,
@@ -1334,5 +1334,12 @@ class _VenderDetailsState extends State<VenderDetails> {
         });
       },
     );
+  }
+
+  double calculate() {
+    double? one =
+        double.tryParse(widget.booking!.total?.replaceAll(",", "") ?? "0.0");
+    double? two = double.tryParse(widget.booking?.coupanDiscount ?? "0.0");
+    return one! - two!;
   }
 }

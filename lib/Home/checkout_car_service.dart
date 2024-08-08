@@ -13,6 +13,7 @@ import 'package:test_prj/home_page.dart';
 import 'package:test_prj/payment/paymentScreen.dart';
 import 'package:test_prj/payment/payment_form.dart';
 
+import '../components/my_hinttext_field.dart';
 import '../controller/cart_controller.dart';
 import '../data/model/CheckRequestModel.dart';
 import '../helper/utils/app_constants.dart';
@@ -28,6 +29,7 @@ class Checkout_Car_Service extends StatefulWidget {
 }
 
 class _Checkout_Car_ServiceState extends State<Checkout_Car_Service> {
+  final couponController = TextEditingController();
   @override
   void initState() {
     // TODO: implement initState
@@ -85,13 +87,15 @@ class _Checkout_Car_ServiceState extends State<Checkout_Car_Service> {
     checkOutRequest.shippingAddressId = otherCategory.shippingAddressId;
     checkOutRequest.billingSameAsShipping = otherCategory.billingSameAsShipping;
     checkOutRequest.billingAddressId = otherCategory.billingAddressId;
-    checkOutRequest.payment_method = "razorpay";
+    checkOutRequest.payment_method = "cashfree";
     checkOutRequest.wallet_used = "";
     checkOutRequest.wallet_used = "";
     checkOutRequest.transaction_id = "${response.paymentId}";
     checkOutRequest.quantity = otherCategory.quantity ?? "1";
     checkOutRequest.fuel_type = otherCategory.fuel_type;
     checkOutRequest.service_type = otherCategory.service_type;
+    checkOutRequest.coupan_discount_amount =
+        carController.discountAmount.toString();
     carController.PlaceOtherCatOrder(checkOutRequest).then((value) {
       if (value['status'] == true) {
         String messgae = "${value['message'].toString()}";
@@ -597,6 +601,107 @@ class _Checkout_Car_ServiceState extends State<Checkout_Car_Service> {
                                               ),
                                             ),
                                             SizedBox(height: 5),
+                                            Obx(() {
+                                              return Container(
+                                                  width: double.maxFinite,
+                                                  padding: const EdgeInsets
+                                                      .symmetric(
+                                                      horizontal: 15),
+                                                  decoration:
+                                                      const BoxDecoration(
+                                                          color: colors
+                                                              .myCardColor,
+                                                          borderRadius:
+                                                              BorderRadius.all(
+                                                                  Radius
+                                                                      .circular(
+                                                                          15))),
+                                                  child: Row(
+                                                    children: [
+                                                      Expanded(
+                                                          flex: 2,
+                                                          child:
+                                                              MyHintTextField(
+                                                            isReadOnly:
+                                                                carController
+                                                                    .isApply
+                                                                    .value,
+                                                            hintText:
+                                                                const Text(
+                                                                    'Coupon'),
+                                                            isActive: true,
+                                                            controller:
+                                                                couponController,
+                                                          )),
+                                                      Expanded(
+                                                        flex: 1,
+                                                        child: InkWell(
+                                                          onTap: () {
+                                                            if (carController
+                                                                    .isApply
+                                                                    .value ==
+                                                                true) {
+                                                              carController
+                                                                      .isApply
+                                                                      .value =
+                                                                  false;
+                                                              couponController
+                                                                  .text = "";
+                                                              carController
+                                                                  .discountAmount
+                                                                  .value = 0.0;
+                                                            } else {
+                                                              carController.applyCoupon(
+                                                                  carController
+                                                                      .batterTyreCheckOut!
+                                                                      .value
+                                                                      .data!
+                                                                      .total
+                                                                      .toString(),
+                                                                  couponController
+                                                                      .text);
+                                                            }
+                                                          },
+                                                          child: Container(
+                                                            height: 55,
+                                                            decoration: const BoxDecoration(
+                                                                borderRadius: BorderRadius.only(
+                                                                    topRight: Radius
+                                                                        .circular(
+                                                                            10),
+                                                                    bottomRight:
+                                                                        Radius.circular(
+                                                                            10)),
+                                                                gradient: colors
+                                                                    .buttonGradient),
+                                                            child: Center(
+                                                              child: carController
+                                                                      .isLoadingcoupon
+                                                                      .value
+                                                                  ? const CircularProgressIndicator(
+                                                                      color: colors
+                                                                          .whiteTemp,
+                                                                    )
+                                                                  : Text(
+                                                                      carController.isApply.value ==
+                                                                              false
+                                                                          ? 'Apply'
+                                                                          : 'Remove',
+                                                                      style: TextStyle(
+                                                                          fontWeight: FontWeight
+                                                                              .w500,
+                                                                          fontSize:
+                                                                              16,
+                                                                          color:
+                                                                              colors.whiteTemp),
+                                                                    ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      )
+                                                    ],
+                                                  ));
+                                            }),
                                             Padding(
                                               padding: const EdgeInsets.only(
                                                   top: 20, right: 250),
@@ -662,35 +767,25 @@ class _Checkout_Car_ServiceState extends State<Checkout_Car_Service> {
                                                 ],
                                               ),
                                             ),
-                                            SizedBox(height: 5),
-                                            Divider(
-                                              color: Colors.black54,
-                                              thickness: 0.2,
-                                              //indent: 5,
-                                              // endIndent: 10,
-                                            ),
                                             Padding(
-                                              padding: const EdgeInsets.only(
-                                                  left: 15, right: 10, top: 7),
+                                              padding: EdgeInsets.only(
+                                                  left: 15, right: 10),
                                               child: Row(
                                                 mainAxisAlignment:
                                                     MainAxisAlignment
                                                         .spaceBetween,
                                                 children: [
                                                   Text(
-                                                    "Total Amount",
+                                                    "Discount".tr,
                                                     style: TextStyle(
-                                                      fontSize: 14,
-                                                      color: Colors.black,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                    ),
+                                                        fontSize: 16,
+                                                        color: Colors.black54),
                                                   ),
                                                   Text(
-                                                    "${AppConstants.currencySymbol} ${carController.batterTyreCheckOut.value.data!.total.toString()}",
+                                                    "${AppConstants.currencySymbol}${carController.discountAmount}",
                                                     style: TextStyle(
                                                       fontSize: 18,
-                                                      color: Colors.lightGreen,
+                                                      color: Colors.black,
                                                       fontWeight:
                                                           FontWeight.bold,
                                                     ),
@@ -698,6 +793,46 @@ class _Checkout_Car_ServiceState extends State<Checkout_Car_Service> {
                                                 ],
                                               ),
                                             ),
+                                            SizedBox(height: 5),
+                                            Divider(
+                                              color: Colors.black54,
+                                              thickness: 0.2,
+                                              //indent: 5,
+                                              // endIndent: 10,
+                                            ),
+                                            Obx(() => Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 15,
+                                                          right: 10,
+                                                          top: 7),
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Text(
+                                                        "Total Amount",
+                                                        style: TextStyle(
+                                                          fontSize: 14,
+                                                          color: Colors.black,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                        ),
+                                                      ),
+                                                      Text(
+                                                        "${AppConstants.currencySymbol} ${calculate(carController)}",
+                                                        style: TextStyle(
+                                                          fontSize: 18,
+                                                          color:
+                                                              Colors.lightGreen,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                )),
                                             Divider(
                                               color: Colors.black54,
                                               thickness: 0.2,
@@ -864,6 +999,107 @@ class _Checkout_Car_ServiceState extends State<Checkout_Car_Service> {
                                                 ),
                                               ),
                                             ),
+                                            Obx(() {
+                                              return Container(
+                                                  width: double.maxFinite,
+                                                  padding: const EdgeInsets
+                                                      .symmetric(
+                                                      horizontal: 15),
+                                                  decoration:
+                                                      const BoxDecoration(
+                                                          color: colors
+                                                              .myCardColor,
+                                                          borderRadius:
+                                                              BorderRadius.all(
+                                                                  Radius
+                                                                      .circular(
+                                                                          15))),
+                                                  child: Row(
+                                                    children: [
+                                                      Expanded(
+                                                          flex: 2,
+                                                          child:
+                                                              MyHintTextField(
+                                                            isReadOnly:
+                                                                carController
+                                                                    .isApply
+                                                                    .value,
+                                                            hintText:
+                                                                const Text(
+                                                                    'Coupon'),
+                                                            isActive: true,
+                                                            controller:
+                                                                couponController,
+                                                          )),
+                                                      Expanded(
+                                                        flex: 1,
+                                                        child: InkWell(
+                                                          onTap: () {
+                                                            if (carController
+                                                                    .isApply
+                                                                    .value ==
+                                                                true) {
+                                                              carController
+                                                                      .isApply
+                                                                      .value =
+                                                                  false;
+                                                              couponController
+                                                                  .text = "";
+                                                              carController
+                                                                  .discountAmount
+                                                                  .value = 0.0;
+                                                            } else {
+                                                              carController.applyCoupon(
+                                                                  carController
+                                                                      .batterTyreCheckOut!
+                                                                      .value
+                                                                      .data!
+                                                                      .total
+                                                                      .toString(),
+                                                                  couponController
+                                                                      .text);
+                                                            }
+                                                          },
+                                                          child: Container(
+                                                            height: 55,
+                                                            decoration: const BoxDecoration(
+                                                                borderRadius: BorderRadius.only(
+                                                                    topRight: Radius
+                                                                        .circular(
+                                                                            10),
+                                                                    bottomRight:
+                                                                        Radius.circular(
+                                                                            10)),
+                                                                gradient: colors
+                                                                    .buttonGradient),
+                                                            child: Center(
+                                                              child: carController
+                                                                      .isLoadingcoupon
+                                                                      .value
+                                                                  ? const CircularProgressIndicator(
+                                                                      color: colors
+                                                                          .whiteTemp,
+                                                                    )
+                                                                  : Text(
+                                                                      carController.isApply.value ==
+                                                                              false
+                                                                          ? 'Apply'
+                                                                          : 'Remove',
+                                                                      style: TextStyle(
+                                                                          fontWeight: FontWeight
+                                                                              .w500,
+                                                                          fontSize:
+                                                                              16,
+                                                                          color:
+                                                                              colors.whiteTemp),
+                                                                    ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      )
+                                                    ],
+                                                  ));
+                                            }),
                                             Padding(
                                               padding: EdgeInsets.only(
                                                   top: 10, right: 225),
@@ -932,13 +1168,6 @@ class _Checkout_Car_ServiceState extends State<Checkout_Car_Service> {
                                                 ],
                                               ),
                                             ),
-                                            const SizedBox(height: 5),
-                                            const Divider(
-                                              // thickness: 2,
-                                              color: Colors.black26,
-                                              indent: 15,
-                                              endIndent: 10,
-                                            ),
                                             Padding(
                                               padding: EdgeInsets.only(
                                                   left: 15, right: 10),
@@ -948,19 +1177,16 @@ class _Checkout_Car_ServiceState extends State<Checkout_Car_Service> {
                                                         .spaceBetween,
                                                 children: [
                                                   Text(
-                                                    "Total Amount".tr,
+                                                    "Discount".tr,
                                                     style: TextStyle(
-                                                      fontSize: 16,
-                                                      color: Colors.black,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                    ),
+                                                        fontSize: 16,
+                                                        color: Colors.black54),
                                                   ),
                                                   Text(
-                                                    "${AppConstants.currencySymbol}${carController.batterTyreCheckOut.value.data!.total}",
+                                                    "${AppConstants.currencySymbol}${carController.discountAmount}",
                                                     style: TextStyle(
                                                       fontSize: 18,
-                                                      color: Colors.green,
+                                                      color: Colors.black,
                                                       fontWeight:
                                                           FontWeight.bold,
                                                     ),
@@ -968,6 +1194,42 @@ class _Checkout_Car_ServiceState extends State<Checkout_Car_Service> {
                                                 ],
                                               ),
                                             ),
+                                            const SizedBox(height: 5),
+                                            const Divider(
+                                              // thickness: 2,
+                                              color: Colors.black26,
+                                              indent: 15,
+                                              endIndent: 10,
+                                            ),
+                                            Obx(() => Padding(
+                                                  padding: EdgeInsets.only(
+                                                      left: 15, right: 10),
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Text(
+                                                        "Total Amount".tr,
+                                                        style: TextStyle(
+                                                          fontSize: 16,
+                                                          color: Colors.black,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                        ),
+                                                      ),
+                                                      Text(
+                                                        "${AppConstants.currencySymbol}${calculate(carController)}",
+                                                        style: TextStyle(
+                                                          fontSize: 18,
+                                                          color: Colors.green,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                )),
                                             const Divider(
                                               // thickness: 2,
                                               color: Colors.black26,
@@ -1136,6 +1398,107 @@ class _Checkout_Car_ServiceState extends State<Checkout_Car_Service> {
                                                 ),
                                               ),
                                             ),
+                                            Obx(() {
+                                              return Container(
+                                                  width: double.maxFinite,
+                                                  padding: const EdgeInsets
+                                                      .symmetric(
+                                                      horizontal: 15),
+                                                  decoration:
+                                                      const BoxDecoration(
+                                                          color: colors
+                                                              .myCardColor,
+                                                          borderRadius:
+                                                              BorderRadius.all(
+                                                                  Radius
+                                                                      .circular(
+                                                                          15))),
+                                                  child: Row(
+                                                    children: [
+                                                      Expanded(
+                                                          flex: 2,
+                                                          child:
+                                                              MyHintTextField(
+                                                            isReadOnly:
+                                                                carController
+                                                                    .isApply
+                                                                    .value,
+                                                            hintText:
+                                                                const Text(
+                                                                    'Coupon'),
+                                                            isActive: true,
+                                                            controller:
+                                                                couponController,
+                                                          )),
+                                                      Expanded(
+                                                        flex: 1,
+                                                        child: InkWell(
+                                                          onTap: () {
+                                                            if (carController
+                                                                    .isApply
+                                                                    .value ==
+                                                                true) {
+                                                              carController
+                                                                      .isApply
+                                                                      .value =
+                                                                  false;
+                                                              couponController
+                                                                  .text = "";
+                                                              carController
+                                                                  .discountAmount
+                                                                  .value = 0.0;
+                                                            } else {
+                                                              carController.applyCoupon(
+                                                                  carController
+                                                                      .batterTyreCheckOut!
+                                                                      .value
+                                                                      .data!
+                                                                      .total
+                                                                      .toString(),
+                                                                  couponController
+                                                                      .text);
+                                                            }
+                                                          },
+                                                          child: Container(
+                                                            height: 55,
+                                                            decoration: const BoxDecoration(
+                                                                borderRadius: BorderRadius.only(
+                                                                    topRight: Radius
+                                                                        .circular(
+                                                                            10),
+                                                                    bottomRight:
+                                                                        Radius.circular(
+                                                                            10)),
+                                                                gradient: colors
+                                                                    .buttonGradient),
+                                                            child: Center(
+                                                              child: carController
+                                                                      .isLoadingcoupon
+                                                                      .value
+                                                                  ? const CircularProgressIndicator(
+                                                                      color: colors
+                                                                          .whiteTemp,
+                                                                    )
+                                                                  : Text(
+                                                                      carController.isApply.value ==
+                                                                              false
+                                                                          ? 'Apply'
+                                                                          : 'Remove',
+                                                                      style: TextStyle(
+                                                                          fontWeight: FontWeight
+                                                                              .w500,
+                                                                          fontSize:
+                                                                              16,
+                                                                          color:
+                                                                              colors.whiteTemp),
+                                                                    ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      )
+                                                    ],
+                                                  ));
+                                            }),
                                             Padding(
                                               padding: EdgeInsets.only(
                                                   top: 10, right: 225),
@@ -1204,13 +1567,6 @@ class _Checkout_Car_ServiceState extends State<Checkout_Car_Service> {
                                                 ],
                                               ),
                                             ),
-                                            const SizedBox(height: 5),
-                                            const Divider(
-                                              // thickness: 2,
-                                              color: Colors.black26,
-                                              indent: 15,
-                                              endIndent: 10,
-                                            ),
                                             Padding(
                                               padding: EdgeInsets.only(
                                                   left: 15, right: 10),
@@ -1220,19 +1576,16 @@ class _Checkout_Car_ServiceState extends State<Checkout_Car_Service> {
                                                         .spaceBetween,
                                                 children: [
                                                   Text(
-                                                    "Total Amount".tr,
+                                                    "Discount".tr,
                                                     style: TextStyle(
-                                                      fontSize: 16,
-                                                      color: Colors.black,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                    ),
+                                                        fontSize: 16,
+                                                        color: Colors.black54),
                                                   ),
                                                   Text(
-                                                    "${AppConstants.currencySymbol}${carController.batterTyreCheckOut.value.data!.total}",
+                                                    "${AppConstants.currencySymbol}${carController.discountAmount}",
                                                     style: TextStyle(
                                                       fontSize: 18,
-                                                      color: Colors.green,
+                                                      color: Colors.black,
                                                       fontWeight:
                                                           FontWeight.bold,
                                                     ),
@@ -1240,6 +1593,42 @@ class _Checkout_Car_ServiceState extends State<Checkout_Car_Service> {
                                                 ],
                                               ),
                                             ),
+                                            const SizedBox(height: 5),
+                                            const Divider(
+                                              // thickness: 2,
+                                              color: Colors.black26,
+                                              indent: 15,
+                                              endIndent: 10,
+                                            ),
+                                            Obx(() => Padding(
+                                                  padding: EdgeInsets.only(
+                                                      left: 15, right: 10),
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Text(
+                                                        "Total Amount".tr,
+                                                        style: TextStyle(
+                                                          fontSize: 16,
+                                                          color: Colors.black,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                        ),
+                                                      ),
+                                                      Text(
+                                                        "${AppConstants.currencySymbol}${calculate(carController)}",
+                                                        style: TextStyle(
+                                                          fontSize: 18,
+                                                          color: Colors.green,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                )),
                                             const Divider(
                                               // thickness: 2,
                                               color: Colors.black26,
@@ -1315,6 +1704,107 @@ class _Checkout_Car_ServiceState extends State<Checkout_Car_Service> {
                                       Container(
                                         child: Column(
                                           children: [
+                                            Obx(() {
+                                              return Container(
+                                                  width: double.maxFinite,
+                                                  padding: const EdgeInsets
+                                                      .symmetric(
+                                                      horizontal: 15),
+                                                  decoration:
+                                                      const BoxDecoration(
+                                                          color: colors
+                                                              .myCardColor,
+                                                          borderRadius:
+                                                              BorderRadius.all(
+                                                                  Radius
+                                                                      .circular(
+                                                                          15))),
+                                                  child: Row(
+                                                    children: [
+                                                      Expanded(
+                                                          flex: 2,
+                                                          child:
+                                                              MyHintTextField(
+                                                            isReadOnly:
+                                                                carController
+                                                                    .isApply
+                                                                    .value,
+                                                            hintText:
+                                                                const Text(
+                                                                    'Coupon'),
+                                                            isActive: true,
+                                                            controller:
+                                                                couponController,
+                                                          )),
+                                                      Expanded(
+                                                        flex: 1,
+                                                        child: InkWell(
+                                                          onTap: () {
+                                                            if (carController
+                                                                    .isApply
+                                                                    .value ==
+                                                                true) {
+                                                              carController
+                                                                      .isApply
+                                                                      .value =
+                                                                  false;
+                                                              couponController
+                                                                  .text = "";
+                                                              carController
+                                                                  .discountAmount
+                                                                  .value = 0.0;
+                                                            } else {
+                                                              carController.applyCoupon(
+                                                                  carController
+                                                                      .batterTyreCheckOut!
+                                                                      .value
+                                                                      .data!
+                                                                      .total
+                                                                      .toString(),
+                                                                  couponController
+                                                                      .text);
+                                                            }
+                                                          },
+                                                          child: Container(
+                                                            height: 55,
+                                                            decoration: const BoxDecoration(
+                                                                borderRadius: BorderRadius.only(
+                                                                    topRight: Radius
+                                                                        .circular(
+                                                                            10),
+                                                                    bottomRight:
+                                                                        Radius.circular(
+                                                                            10)),
+                                                                gradient: colors
+                                                                    .buttonGradient),
+                                                            child: Center(
+                                                              child: carController
+                                                                      .isLoadingcoupon
+                                                                      .value
+                                                                  ? const CircularProgressIndicator(
+                                                                      color: colors
+                                                                          .whiteTemp,
+                                                                    )
+                                                                  : Text(
+                                                                      carController.isApply.value ==
+                                                                              false
+                                                                          ? 'Apply'
+                                                                          : 'Remove',
+                                                                      style: TextStyle(
+                                                                          fontWeight: FontWeight
+                                                                              .w500,
+                                                                          fontSize:
+                                                                              16,
+                                                                          color:
+                                                                              colors.whiteTemp),
+                                                                    ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      )
+                                                    ],
+                                                  ));
+                                            }),
                                             Padding(
                                               padding: EdgeInsets.only(
                                                   top: 10, right: 225),
@@ -1396,7 +1886,7 @@ class _Checkout_Car_ServiceState extends State<Checkout_Car_Service> {
                                                         color: Colors.black54),
                                                   ),
                                                   Text(
-                                                    "0",
+                                                    "${AppConstants.currencySymbol}${carController.discountAmount}",
                                                     style: TextStyle(
                                                       fontSize: 18,
                                                       color: Colors.black,
@@ -1414,35 +1904,35 @@ class _Checkout_Car_ServiceState extends State<Checkout_Car_Service> {
                                               indent: 15,
                                               endIndent: 10,
                                             ),
-                                            Padding(
-                                              padding: EdgeInsets.only(
-                                                  left: 15, right: 10),
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  Text(
-                                                    "Total Amount".tr,
-                                                    style: TextStyle(
-                                                      fontSize: 16,
-                                                      color: Colors.black,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                    ),
+                                            Obx(() => Padding(
+                                                  padding: EdgeInsets.only(
+                                                      left: 15, right: 10),
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Text(
+                                                        "Total Amount".tr,
+                                                        style: TextStyle(
+                                                          fontSize: 16,
+                                                          color: Colors.black,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                        ),
+                                                      ),
+                                                      Text(
+                                                        "${AppConstants.currencySymbol}${calculate(carController)}",
+                                                        style: TextStyle(
+                                                          fontSize: 18,
+                                                          color: Colors.green,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                        ),
+                                                      ),
+                                                    ],
                                                   ),
-                                                  Text(
-                                                    "${AppConstants.currencySymbol}${carController.batterTyreCheckOut.value.data!.total}",
-                                                    style: TextStyle(
-                                                      fontSize: 18,
-                                                      color: Colors.green,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
+                                                )),
                                             const Divider(
                                               // thickness: 2,
                                               color: Colors.black26,
@@ -1650,13 +2140,14 @@ class _Checkout_Car_ServiceState extends State<Checkout_Car_Service> {
                                           MaterialPageRoute(
                                               builder: (context) =>
                                                   PaymentScreenTree(
-                                                    totalAmount: carController
-                                                        .batterTyreCheckOut
-                                                        .value
-                                                        .data!
-                                                        .total,
-                                                  )));
-
+                                                      totalAmount: calculate(
+                                                              carController)
+                                                          .toString())));
+                                      // carController
+                                      //     .batterTyreCheckOut
+                                      //     .value
+                                      //     .data!
+                                      //     .total,
                                       if (data != null) {
                                         if (data == "payment") {
                                           controller
@@ -1737,7 +2228,7 @@ class _Checkout_Car_ServiceState extends State<Checkout_Car_Service> {
                                                             .billingAddressId;
                                                     checkOutRequest
                                                             .payment_method =
-                                                        "razorpay";
+                                                        "cashfree";
                                                     checkOutRequest
                                                         .wallet_used = "";
                                                     checkOutRequest
@@ -1755,6 +2246,11 @@ class _Checkout_Car_ServiceState extends State<Checkout_Car_Service> {
                                                             .service_type =
                                                         otherCategory
                                                             .service_type;
+                                                    checkOutRequest
+                                                            .coupan_discount_amount =
+                                                        carController
+                                                            .discountAmount
+                                                            .toString();
                                                     carController
                                                             .PlaceOtherCatOrder(
                                                                 checkOutRequest)
@@ -1843,6 +2339,10 @@ class _Checkout_Car_ServiceState extends State<Checkout_Car_Service> {
                                               otherCategory.fuel_type;
                                           checkOutRequest.service_type =
                                               otherCategory.service_type;
+                                          checkOutRequest
+                                                  .coupan_discount_amount =
+                                              carController.discountAmount
+                                                  .toString();
                                           carController.PlaceOtherCatOrder(
                                                   checkOutRequest)
                                               .then((value) {
@@ -1906,6 +2406,10 @@ class _Checkout_Car_ServiceState extends State<Checkout_Car_Service> {
                                               otherCategory.fuel_type;
                                           checkOutRequest.service_type =
                                               otherCategory.service_type;
+                                          checkOutRequest
+                                                  .coupan_discount_amount =
+                                              carController.discountAmount
+                                                  .toString();
                                           carController.PlaceOtherCatOrder(
                                                   checkOutRequest)
                                               .then((value) {
@@ -1943,5 +2447,15 @@ class _Checkout_Car_ServiceState extends State<Checkout_Car_Service> {
                 );
               });
         });
+  }
+
+  double calculate(CarServiceController carController) {
+    double? one = double.tryParse(carController
+            .batterTyreCheckOut.value.data!.total
+            ?.replaceAll(",", "") ??
+        "0.0");
+    double? two =
+        double.tryParse(carController.discountAmount.value.toString() ?? "0.0");
+    return one! - two!;
   }
 }

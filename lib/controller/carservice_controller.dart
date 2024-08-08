@@ -1,3 +1,4 @@
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:get/get_rx/get_rx.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
@@ -34,12 +35,38 @@ class CarServiceController extends AppBaseController {
   // String? selectedService;
   var selectedService = VehicleModelData().obs;
   var selectModel = VehicleModelData().obs;
+
+  RxBool isApply = false.obs;
+  RxBool isLoadingcoupon = false.obs;
+  RxDouble discountAmount = 0.0.obs;
+
   @override
   void onInit() {
     super.onInit();
+    isApply.value = false;
+    isLoadingcoupon.value = false;
     getVehiCleType();
 
     getSlots();
+  }
+
+  Future<void> applyCoupon(String amount, String coupon) async {
+    isApply.value = true;
+    isLoadingcoupon.value = true;
+    Map response = await orderFuelRepo.applyCoupon(amount, coupon);
+
+    if (response['status']) {
+      discountAmount.value =
+          double.parse(response['coupon_discount'].toString());
+
+      Fluttertoast.showToast(msg: response['message']);
+      isLoadingcoupon.value = false;
+      isApply.value = true;
+    } else {
+      Fluttertoast.showToast(msg: response['message']);
+      isLoadingcoupon.value = false;
+      isApply.value = false;
+    }
   }
 
   Future<void> getVendors(String service_id, String service_type,

@@ -319,6 +319,7 @@ class _SignUpState extends State<SignUp> {
         const SizedBox(height: 15),
         MyTextField(
           maxLenth: 16,
+          isGst: true,
           validator: (value) => null,
           controller: gstController,
           labelText: const Text("Gst Number (optional)"),
@@ -390,6 +391,7 @@ class _SignUpState extends State<SignUp> {
         const SizedBox(height: 15),
         MyTextField(
           maxLenth: 16,
+          isGst: true,
           validator: (value) => null,
           controller: gstController,
           labelText: const Text("Gst Number (optional)"),

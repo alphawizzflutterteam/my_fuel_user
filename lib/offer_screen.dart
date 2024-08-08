@@ -347,9 +347,9 @@ class OfferCard extends StatelessWidget {
                   child: Text(
                     text,
                     style: const TextStyle(
-                      color: colors.blackTemp,
-                      fontWeight: FontWeight.bold,
-                    ),
+                        color: colors.blackTemp,
+                        fontWeight: FontWeight.bold,
+                        overflow: TextOverflow.ellipsis),
                   ),
                 ),
                 const SizedBox(height: 5),

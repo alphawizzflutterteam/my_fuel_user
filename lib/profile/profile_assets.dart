@@ -128,14 +128,16 @@ class _ProfileAssetsState extends State<ProfileAssets> {
                                                   msg:
                                                       'please add fuel quantity'
                                                           .tr);
+                                              return;
                                             } else if (double.parse(
                                                     _fuelQuantityController.text
-                                                        .toString()) <
+                                                        .toString()) <=
                                                 0) {
                                               Fluttertoast.showToast(
                                                   msg:
                                                       'please enter quantity greater than 0'
                                                           .tr);
+                                              return;
                                             } else {
                                               Navigator.pop(context);
                                               shoTimeSlot(controller);

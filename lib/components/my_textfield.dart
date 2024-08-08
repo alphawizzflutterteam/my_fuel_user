@@ -6,6 +6,7 @@ class MyTextField extends StatefulWidget {
   final bool isPassword;
   final bool enable;
   final bool isAmount;
+  final bool isGst;
   final VoidCallback? onPressed;
   final maxLenth;
   final TextInputType? textInputType;
@@ -22,6 +23,7 @@ class MyTextField extends StatefulWidget {
     this.textInputType,
     this.isPassword = false,
     this.enable = false,
+    this.isGst = false,
     this.isAmount = false,
     this.onChanged,
     this.maxLenth,
@@ -46,6 +48,10 @@ class _MyTextFieldState extends State<MyTextField> {
       controller: widget.controller,
       readOnly: widget.enable ?? false,
       onTap: widget.onPressed,
+      textCapitalization: widget.isGst
+          ? TextCapitalization.characters
+          : TextCapitalization.none, // This makes all input uppercase
+
       obscureText: widget.isPassword ? _obscureText : false,
       onChanged: widget.onChanged,
       validator: widget.validator!,

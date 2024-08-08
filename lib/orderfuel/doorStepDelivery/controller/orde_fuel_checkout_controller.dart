@@ -22,6 +22,7 @@ class OrderFuelCheckoutController extends AppBaseController {
   String? vendorId;
   Map? data;
   RxBool isApply = false.obs;
+  RxBool isLoadingcoupon = false.obs;
 
   /// Check
   /// Payment id and Order id
@@ -33,6 +34,8 @@ class OrderFuelCheckoutController extends AppBaseController {
   void onInit() {
     // TODO: implement onInit
     super.onInit();
+    isApply.value = false;
+    isLoadingcoupon.value = false;
     if (Get.isRegistered<VendorController>()) {
       vendorController = Get.find<VendorController>();
     } else {
@@ -48,30 +51,31 @@ class OrderFuelCheckoutController extends AppBaseController {
     isLoading.value = true;
     OrderFuelCheckOutModel response =
         await orderFuelRepo.orderFuelCheckOutDetailApi(
-            date: vendorController.argument['date'].toString(),
-            billing: otherCategory.billingAddressId ?? '',
-            shipping: otherCategory.shippingAddressId ?? '',
-            slotId: vendorController.argument['selectedSlot'].toString(),
-            serviceType: orderFuelController.selectedIndex.value == 0
-                ? 'Door Step'
-                : 'At your station',
-            categoryId: vendorController.orderFuelController.selectedData!.id
-                .toString(),
-            vehicleType: vendorController.argument['vehicleType'].toString(),
-            note: '',
-            isBillingSameAsShipping: otherCategory.billingSameAsShipping ?? '1',
-            vehicleModel: '',
-            tyreSize: '',
-            productId: productId ?? '',
-            vendorId: vendorId ?? '',
-            quantity: vendorController.argument['quantity'].toString());
+      date: vendorController.argument['date'].toString(),
+      billing: otherCategory.billingAddressId ?? '',
+      shipping: otherCategory.shippingAddressId ?? '',
+      slotId: vendorController.argument['selectedSlot'].toString(),
+      serviceType: orderFuelController.selectedIndex.value == 0
+          ? 'Door Step'
+          : 'At your station',
+      categoryId:
+          vendorController.orderFuelController.selectedData!.id.toString(),
+      vehicleType: vendorController.argument['vehicleType'].toString(),
+      note: '',
+      isBillingSameAsShipping: otherCategory.billingSameAsShipping ?? '1',
+      vehicleModel: '',
+      tyreSize: '',
+      productId: productId ?? '',
+      vendorId: vendorId ?? '',
+      quantity: vendorController.argument['quantity'].toString(),
+    );
 
     orderFuelCheckData = response.data;
     isLoading.value = false;
   }
 
-  Future<void> placeBooking(
-      String transactionId, String paymentType, String wallet) async {
+  Future<void> placeBooking(String transactionId, String paymentType,
+      String wallet, String discountAmount) async {
     Map response = await orderFuelRepo.placeOrderFuelCheckOutApi(
         date: vendorController.argument['date'].toString(),
         billing: otherCategory.billingAddressId ?? '',
@@ -93,7 +97,8 @@ class OrderFuelCheckoutController extends AppBaseController {
         paymentMethod: paymentType,
         walletUsed: wallet,
         vendorId: vendorId ?? '',
-        assetId: vendorController.argument['assetId'] ?? '');
+        assetId: vendorController.argument['assetId'] ?? '',
+        discount: discountAmount ?? '');
 
     if (response['status']) {
       Get.to(OrderPlaced(
@@ -150,6 +155,7 @@ class OrderFuelCheckoutController extends AppBaseController {
 
   Future<void> applyCoupon(String amount, String coupon) async {
     isApply.value = true;
+    isLoadingcoupon.value = true;
     Map response = await orderFuelRepo.applyCoupon(amount, coupon);
 
     if (response['status']) {
@@ -157,9 +163,11 @@ class OrderFuelCheckoutController extends AppBaseController {
           double.parse(response['coupon_discount'].toString());
 
       Fluttertoast.showToast(msg: response['message']);
-      isApply.value = false;
+      isLoadingcoupon.value = false;
+      isApply.value = true;
     } else {
       Fluttertoast.showToast(msg: response['message']);
+      isLoadingcoupon.value = false;
       isApply.value = false;
     }
   }

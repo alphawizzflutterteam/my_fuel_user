@@ -1,3 +1,4 @@
+import 'dart:ffi';
 import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
@@ -325,6 +326,8 @@ class _OrderFuelCheckOutState extends State<OrderFuelCheckOut> {
                                       Expanded(
                                           flex: 2,
                                           child: MyHintTextField(
+                                            isReadOnly:
+                                                controller.isApply.value,
                                             hintText: const Text('Coupon'),
                                             isActive: true,
                                             controller: couponController,
@@ -333,11 +336,19 @@ class _OrderFuelCheckOutState extends State<OrderFuelCheckOut> {
                                         flex: 1,
                                         child: InkWell(
                                           onTap: () {
-                                            controller.applyCoupon(
-                                                controller
-                                                    .orderFuelCheckData!.total
-                                                    .toString(),
-                                                couponController.text);
+                                            if (controller.isApply.value ==
+                                                true) {
+                                              controller.isApply.value = false;
+                                              couponController.text = "";
+                                              controller.discountAmount.value =
+                                                  0.0;
+                                            } else {
+                                              controller.applyCoupon(
+                                                  controller
+                                                      .orderFuelCheckData!.total
+                                                      .toString(),
+                                                  couponController.text);
+                                            }
                                           },
                                           child: Container(
                                             height: 55,
@@ -350,12 +361,17 @@ class _OrderFuelCheckOutState extends State<OrderFuelCheckOut> {
                                                 gradient:
                                                     colors.buttonGradient),
                                             child: Center(
-                                              child: controller.isApply.value
+                                              child: controller
+                                                      .isLoadingcoupon.value
                                                   ? const CircularProgressIndicator(
                                                       color: colors.whiteTemp,
                                                     )
-                                                  : const Text(
-                                                      'Apply',
+                                                  : Text(
+                                                      controller.isApply
+                                                                  .value ==
+                                                              false
+                                                          ? 'Apply'
+                                                          : 'Remove',
                                                       style: TextStyle(
                                                           fontWeight:
                                                               FontWeight.w500,
@@ -597,7 +613,11 @@ class _OrderFuelCheckOutState extends State<OrderFuelCheckOut> {
                                   (value) {
                                     if (value != "error") {
                                       controller.placeBooking(
-                                          value, 'online', '0');
+                                          value,
+                                          'online',
+                                          '0',
+                                          controller.discountAmount.value
+                                              .toString());
                                     } else {
                                       Fluttertoast.showToast(
                                           msg: 'Something went wrong');
@@ -631,10 +651,11 @@ class _OrderFuelCheckOutState extends State<OrderFuelCheckOut> {
                             controller.placeBooking(
                                 '',
                                 'wallet',
-                                controller.orderFuelCheckData!.total
-                                    .toString());
+                                controller.orderFuelCheckData!.total.toString(),
+                                controller.discountAmount.value.toString());
                           } else if (value == 'cod') {
-                            controller.placeBooking('', 'cod', '0');
+                            controller.placeBooking('', 'cod', '0',
+                                controller.discountAmount.value.toString());
                           } else {}
                         });
                       },

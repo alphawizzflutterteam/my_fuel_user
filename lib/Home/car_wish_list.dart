@@ -267,7 +267,7 @@ class _CarWashListState extends State<CarWashList> {
                                                             ),
                                                             SizedBox(width: 5),
                                                             Text(
-                                                              '${carServiceController.sellerList![index].reviews!.length}',
+                                                              '${carServiceController.sellerList![index].avg_rating}',
                                                               style: TextStyle(
                                                                 color: Colors
                                                                     .white,

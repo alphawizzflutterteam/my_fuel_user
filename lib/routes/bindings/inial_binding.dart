@@ -19,6 +19,7 @@ import '../../controller/forget_controller.dart';
 import '../../controller/internet_controller.dart';
 import '../../controller/offers_controller.dart';
 import '../../controller/otherservice_controller.dart';
+import '../../controller/paymnet_screen_controller.dart';
 import '../../controller/wallet_controller.dart';
 import '../../orderfuel/doorStepDelivery/controller/order_fuel_controller.dart';
 
@@ -42,6 +43,7 @@ class InitialBinding implements Bindings {
     Get.lazyPut(() => AssetController());
     Get.lazyPut(() => OtherServiceController());
     Get.lazyPut(() => CartController());
+    Get.lazyPut(() => PaymentScreenController());
     // Get.lazyPut(() => OrderFuelController());
     // Get.lazyPut(() => VendorController());
     // Get.lazyPut(() => OrderFuelCheckoutController());

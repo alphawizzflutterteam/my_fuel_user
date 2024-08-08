@@ -182,7 +182,7 @@ class ProfilePageState extends State<ProfilePage> {
                                                       height: 68,
                                                       width: 68,
                                                       fit: BoxFit.fill,
-                                                      "${configModel?.baseUrls?.customerImageUrl}/${Get.find<ProfileController>().userInfoModel?.value.image}",
+                                                      "${configModel?.baseUrls?.customerImageUrl}/${controller.userInfoModel?.value.image}",
                                                       errorBuilder: (context,
                                                           error, stackTrace) {
                                                         return errorImage(
