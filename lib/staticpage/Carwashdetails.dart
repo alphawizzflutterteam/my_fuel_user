@@ -228,7 +228,7 @@ class _CarwashdetailsState extends State<Carwashdetails> {
                                       ),
                                       SizedBox(width: 5),
                                       Text(
-                                        '0.0',
+                                        '${widget.sellerData?.avg_rating}',
                                         style: TextStyle(
                                           color: Colors.white,
                                         ),
@@ -438,7 +438,7 @@ class _CarwashdetailsState extends State<Carwashdetails> {
                             Padding(
                               padding: const EdgeInsets.only(right: 65),
                               child: Text(
-                                "0.0",
+                                "${widget.sellerData!.avg_rating}",
                                 style: TextStyle(
                                   fontSize: 40,
                                   fontWeight: FontWeight.bold,
@@ -471,7 +471,7 @@ class _CarwashdetailsState extends State<Carwashdetails> {
                             Padding(
                               padding: const EdgeInsets.only(right: 45),
                               child: Text(
-                                "14,575 Global Rating",
+                                "${widget.sellerData?.reviews?.length} Global Rating",
                                 style: TextStyle(
                                   fontSize: 14,
                                   color: Colors.black54,

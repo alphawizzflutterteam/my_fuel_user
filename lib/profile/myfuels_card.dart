@@ -102,7 +102,7 @@ class _MyFuelsCardState extends State<MyFuelsCard> {
                                     WalletController controller = Get.find();
                                     controller
                                         .addMoney("${amountA.toString()}",
-                                            "${paymentId}", "razorpay")
+                                            "${paymentId}", "cashfree")
                                         .then((value) {
                                       Get.back();
                                       Navigator.pop(context);
@@ -185,7 +185,7 @@ class _MyFuelsCardState extends State<MyFuelsCard> {
     //     MaterialPageRoute(builder: (context) => const PaymentScreenTree()));
     WalletController controller = Get.find();
     controller
-        .addMoney("$amountA", "${response.paymentId}", "razorpay")
+        .addMoney("$amountA", "${response.paymentId}", "cashfree")
         .then((value) {
       Get.back();
     });

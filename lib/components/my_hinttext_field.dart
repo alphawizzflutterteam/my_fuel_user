@@ -3,16 +3,23 @@ import 'package:flutter/material.dart';
 class MyHintTextField extends StatelessWidget {
   final Widget hintText;
   final bool? isActive;
+  final bool? isReadOnly;
+
   final TextEditingController? controller;
 
   const MyHintTextField(
-      {super.key, required this.hintText, this.isActive, this.controller});
+      {super.key,
+      required this.hintText,
+      this.isActive,
+      this.isReadOnly = false,
+      this.controller});
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: 56,
       child: TextFormField(
+        readOnly: isReadOnly ?? false,
         controller: controller,
         decoration: InputDecoration(
           label: hintText,

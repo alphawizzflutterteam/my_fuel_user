@@ -79,6 +79,7 @@ class SellerData {
   String? updatedAt;
   List<SelectProducts>? products;
   String? unitPrice;
+  String? avg_rating;
   String? productId;
   Category? category;
   Seller? seller;
@@ -101,6 +102,7 @@ class SellerData {
       this.updatedAt,
       this.products,
       this.unitPrice,
+      this.avg_rating,
       this.productId,
       this.category,
       this.reviews,
@@ -134,6 +136,7 @@ class SellerData {
       });
     }
     unitPrice = json['unit_price'].toString();
+    avg_rating = json['avg_rating'].toString();
     productId = json['product_id'].toString();
     category = json['category'] != null
         ? new Category.fromJson(json['category'])
@@ -156,6 +159,7 @@ class SellerData {
     data['type'] = this.type;
     data['status'] = this.status;
     data['is_fuel'] = this.isFuel;
+    data['avg_rating'] = this.avg_rating;
     data['created_at'] = this.createdAt;
     data['updated_at'] = this.updatedAt;
     if (this.products != null) {

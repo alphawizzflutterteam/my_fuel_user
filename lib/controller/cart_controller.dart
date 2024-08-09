@@ -10,11 +10,15 @@ class CartController extends AppBaseController {
 
   String address_id = "";
   String category_id = "";
-
+  RxBool isApply = false.obs;
+  RxBool isLoadingcoupon = false.obs;
+  RxDouble discountAmount = 0.0.obs;
   @override
   void onInit() {
     // TODO: implement onInit
     super.onInit();
+    isApply.value = false;
+    isLoadingcoupon.value = false;
     initUI();
   }
 
@@ -53,6 +57,25 @@ class CartController extends AppBaseController {
 
     isLoading(false);
     return value;
+  }
+
+  Future<void> applyCoupon(String amount, String coupon) async {
+    isApply.value = true;
+    isLoadingcoupon.value = true;
+    Map response = await orderFuelRepo.applyCoupon(amount, coupon);
+
+    if (response['status']) {
+      discountAmount.value =
+          double.parse(response['coupon_discount'].toString());
+
+      Fluttertoast.showToast(msg: response['message']);
+      isLoadingcoupon.value = false;
+      isApply.value = true;
+    } else {
+      Fluttertoast.showToast(msg: response['message']);
+      isLoadingcoupon.value = false;
+      isApply.value = false;
+    }
   }
 
   Future<Map> cashFree(String name, String email, String mobile, String amount,

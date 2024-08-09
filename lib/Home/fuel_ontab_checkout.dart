@@ -12,6 +12,8 @@ import 'package:test_prj/helper/colors.dart';
 import 'package:test_prj/payment/paymentScreen.dart';
 import 'package:test_prj/payment/payment_form.dart';
 
+import '../components/my_hinttext_field.dart';
+import '../helper/utils/app_constants.dart';
 import '../main.dart';
 import '../payment/pay_success_page.dart';
 import '../service/paymnet_service/cashFree_pay.dart';
@@ -27,6 +29,7 @@ class FuelOnTabCheckoutScreen extends StatefulWidget {
 }
 
 class _FuelOnTabCheckoutScreenState extends State<FuelOnTabCheckoutScreen> {
+  final couponController = TextEditingController();
   @override
   void initState() {
     // TODO: implement initState
@@ -78,7 +81,7 @@ class _FuelOnTabCheckoutScreenState extends State<FuelOnTabCheckoutScreen> {
     Fluttertoast.showToast(msg: "Payment successfully".tr);
 
     CartController controller = Get.find();
-    controller.placeOrder(address_id.toString(), "razorpay", "").then((value) {
+    controller.placeOrder(address_id.toString(), "cashfree", "").then((value) {
       // Get.toNamed(Routes.ORDERPLACED,
       //     arguments: controller
       //         .verifyModel.value.data);
@@ -248,7 +251,7 @@ class _FuelOnTabCheckoutScreenState extends State<FuelOnTabCheckoutScreen> {
                                                 controller
                                                     .placeOrder(
                                                         address_id.toString(),
-                                                        "razorpay",
+                                                        "cashfree",
                                                         "")
                                                     .then((value) {
                                                   // Get.toNamed(Routes.ORDERPLACED,
@@ -541,6 +544,83 @@ class _FuelOnTabCheckoutScreenState extends State<FuelOnTabCheckoutScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            Obx(() {
+                              return Container(
+                                  width: double.maxFinite,
+                                  padding:
+                                      const EdgeInsets.symmetric(horizontal: 1),
+                                  decoration: const BoxDecoration(
+                                      color: colors.myCardColor,
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(15))),
+                                  child: Row(
+                                    children: [
+                                      Expanded(
+                                          flex: 2,
+                                          child: MyHintTextField(
+                                            isReadOnly:
+                                                controller.isApply.value,
+                                            hintText: const Text('Coupon'),
+                                            isActive: true,
+                                            controller: couponController,
+                                          )),
+                                      Expanded(
+                                        flex: 1,
+                                        child: InkWell(
+                                          onTap: () {
+                                            if (controller.isApply.value ==
+                                                true) {
+                                              controller.isApply.value = false;
+                                              couponController.text = "";
+                                              controller.discountAmount.value =
+                                                  0.0;
+                                            } else {
+                                              controller.applyCoupon(
+                                                  controller
+                                                      .checkOutModel.value.total
+                                                      .toString(),
+                                                  couponController.text);
+                                            }
+                                          },
+                                          child: Container(
+                                            height: 55,
+                                            decoration: const BoxDecoration(
+                                                borderRadius: BorderRadius.only(
+                                                    topRight:
+                                                        Radius.circular(10),
+                                                    bottomRight:
+                                                        Radius.circular(10)),
+                                                gradient:
+                                                    colors.buttonGradient),
+                                            child: Center(
+                                              child: controller
+                                                      .isLoadingcoupon.value
+                                                  ? const CircularProgressIndicator(
+                                                      color: colors.whiteTemp,
+                                                    )
+                                                  : Text(
+                                                      controller.isApply
+                                                                  .value ==
+                                                              false
+                                                          ? 'Apply'
+                                                          : 'Remove',
+                                                      style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                          fontSize: 16,
+                                                          color:
+                                                              colors.whiteTemp),
+                                                    ),
+                                            ),
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  ));
+                            }),
+                            SizedBox(
+                              height: 5,
+                            ),
                             Text(
                               "Price Detail".tr,
                               style: TextStyle(
@@ -567,6 +647,29 @@ class _FuelOnTabCheckoutScreenState extends State<FuelOnTabCheckoutScreen> {
                                     )),
                               ],
                             ),
+                            Padding(
+                              padding: EdgeInsets.only(left: 0, right: 0),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    "Discount".tr,
+                                    style: TextStyle(
+                                        fontSize: 16, color: Colors.black54),
+                                  ),
+                                  Text(
+                                    "${AppConstants.currencySymbol}${controller.discountAmount}",
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+
                             /*const SizedBox(height: 2),
                         const Padding(
                           padding: EdgeInsets.only(left: 15, right: 10),
@@ -626,7 +729,8 @@ class _FuelOnTabCheckoutScreenState extends State<FuelOnTabCheckoutScreen> {
                                   ),
                                 ),
                                 Obx(() => Text(
-                                      "₹${controller.checkOutModel.value.total}",
+                                      // "₹${controller.checkOutModel.value.total}",
+                                      "₹${calculate(controller)}",
                                       style: TextStyle(
                                         fontSize: 18,
                                         color: colors.greenTemp,
@@ -648,5 +752,15 @@ class _FuelOnTabCheckoutScreenState extends State<FuelOnTabCheckoutScreen> {
                 );
               });
         });
+  }
+
+  double calculate(CartController carController) {
+    double? one = double.tryParse(carController.checkOutModel.value.total
+            .toString()
+            ?.replaceAll(",", "") ??
+        "0.0");
+    double? two =
+        double.tryParse(carController.discountAmount.value.toString() ?? "0.0");
+    return one! - two!;
   }
 }

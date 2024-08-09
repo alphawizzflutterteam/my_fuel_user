@@ -39,6 +39,7 @@ class AssetData {
   String? createdAt;
   String? updatedAt;
   User? user;
+  bool? selectedAsset = false;
 
   AssetData(
       {this.id,
@@ -49,6 +50,7 @@ class AssetData {
       this.userId,
       this.status,
       this.createdAt,
+      this.selectedAsset,
       this.updatedAt,
       this.user});
 

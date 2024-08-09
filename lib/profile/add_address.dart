@@ -300,14 +300,26 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                                 if (mobileController.text.toString().length <
                                     10) {
                                   Fluttertoast.showToast(
-                                      msg:
-                                          "Please Enter 10 digit phone number");
+                                      msg: "Please Enter 10 digit phone number"
+                                          .tr);
                                   return;
                                 }
+                                if (alternatemobileController.text.isNotEmpty &&
+                                    alternatemobileController.text
+                                            .toString()
+                                            .length <
+                                        10) {
+                                  Fluttertoast.showToast(
+                                      msg:
+                                          "Please Enter 10 digit alternate phone number"
+                                              .tr);
+                                  return;
+                                }
+
                                 if (pincodeController.text.toString().length <
                                     6) {
                                   Fluttertoast.showToast(
-                                      msg: "Please Enter 6 digit pin code");
+                                      msg: "Please Enter 6 digit pin code".tr);
                                   return;
                                 }
 

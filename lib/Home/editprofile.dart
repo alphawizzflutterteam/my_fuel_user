@@ -216,61 +216,62 @@ class _EditProfileState extends State<EditProfile> {
                     init: ProfileController(),
                     builder: (profileController) {
                       return GetBuilder<SignupController>(
+                          init: SignupController(),
                           builder: (signUpController) {
-                        return Stack(
-                          alignment: Alignment.center,
-                          children: [
-                            Center(
-                              child: Container(
-                                height: 125,
-                                width: 125,
-                                decoration: BoxDecoration(
-                                    //     image: DecorationImage(
-                                    //         image: AssetImage(
-                                    //   'assets/login-logo.png',
-                                    // ))
-                                    ),
-                                // color: Colors.deepOrange,
-                                child: ClipOval(
-                                  child: profileImage != null
-                                      ? Image.file(
-                                          profileImage!,
-                                          height: 125,
-                                          width: 125,
-                                          fit: BoxFit.cover,
-                                        )
-                                      : Image.network(
-                                          '${configModel?.baseUrls?.customerImageUrl}/${Get.find<ProfileController>().userInfoModel?.value.image}',
-                                          height: 125,
-                                          width: 125,
-                                          fit: BoxFit.cover,
-                                          errorBuilder:
-                                              (context, error, stackTrace) {
-                                            return errorImage(125, 125);
-                                          },
+                            return Stack(
+                              alignment: Alignment.center,
+                              children: [
+                                Center(
+                                  child: Container(
+                                    height: 125,
+                                    width: 125,
+                                    decoration: BoxDecoration(
+                                        //     image: DecorationImage(
+                                        //         image: AssetImage(
+                                        //   'assets/login-logo.png',
+                                        // ))
                                         ),
+                                    // color: Colors.deepOrange,
+                                    child: ClipOval(
+                                      child: profileImage != null
+                                          ? Image.file(
+                                              profileImage!,
+                                              height: 125,
+                                              width: 125,
+                                              fit: BoxFit.cover,
+                                            )
+                                          : Image.network(
+                                              '${configModel?.baseUrls?.customerImageUrl}/${Get.find<ProfileController>().userInfoModel?.value.image}',
+                                              height: 125,
+                                              width: 125,
+                                              fit: BoxFit.cover,
+                                              errorBuilder:
+                                                  (context, error, stackTrace) {
+                                                return errorImage(125, 125);
+                                              },
+                                            ),
+                                    ),
+                                  ),
                                 ),
-                              ),
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                showModalBottomSheet(
-                                  context: context,
-                                  builder: (context) => imagePick(),
-                                );
-                              },
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 105.0, left: 80),
-                                child: Image.asset(
-                                  "assets/Editicon.png",
-                                  height: 25,
+                                GestureDetector(
+                                  onTap: () {
+                                    showModalBottomSheet(
+                                      context: context,
+                                      builder: (context) => imagePick(),
+                                    );
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(
+                                        top: 105.0, left: 80),
+                                    child: Image.asset(
+                                      "assets/Editicon.png",
+                                      height: 25,
+                                    ),
+                                  ),
                                 ),
-                              ),
-                            ),
-                          ],
-                        );
-                      });
+                              ],
+                            );
+                          });
                     }),
 
                 // App Icon
@@ -459,6 +460,7 @@ class _EditProfileState extends State<EditProfile> {
         const SizedBox(height: 15),
         MyTextField(
           maxLenth: 16,
+          isGst: true,
           validator: (value) => null,
           controller: gstController,
           labelText: Text("Gst Number (optional)".tr),
@@ -519,6 +521,7 @@ class _EditProfileState extends State<EditProfile> {
         const SizedBox(height: 15),
         MyTextField(
           maxLenth: 16,
+          isGst: true,
           validator: (value) => null,
           controller: gstController,
           labelText: const Text("Gst Number (optional)"),

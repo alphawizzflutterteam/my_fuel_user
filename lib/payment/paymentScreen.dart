@@ -285,7 +285,7 @@ class _PaymentScreenTreeState extends State<PaymentScreenTree> {
                                   ),
                                   SizedBox(
                                     width: 100,
-                                    child: Text("Pay at Station/Home".tr,
+                                    child: Text("COD".tr,
                                         textAlign: TextAlign.start,
                                         style: _type == 2
                                             ? const TextStyle(

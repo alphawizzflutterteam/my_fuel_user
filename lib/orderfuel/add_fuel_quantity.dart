@@ -24,7 +24,7 @@ class _AddFuelQuantityState extends State<AddFuelQuantity> {
               height: 10,
             ),
             Text(
-              'Add Fuel Quantity',
+              'Add Fuel Quantity AAAA',
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.w500),
             ),
             const SizedBox(
@@ -32,7 +32,7 @@ class _AddFuelQuantityState extends State<AddFuelQuantity> {
             ),
             MyHintTextField(
                 hintText: Text(
-              "Add Fuel Quantity",
+              "Add Fuel Quantity AAAA",
               style: TextStyle(color: Colors.grey, fontWeight: FontWeight.w500),
             )),
             const SizedBox(
@@ -40,6 +40,8 @@ class _AddFuelQuantityState extends State<AddFuelQuantity> {
             ),
             InkWell(
               onTap: () {
+                // if()
+
                 showModalBottomSheet(
                   context: context,
                   builder: (context) => BottamSheet(),
@@ -47,7 +49,7 @@ class _AddFuelQuantityState extends State<AddFuelQuantity> {
               },
               child: Container(
                 child: MyButton(
-                  text: "Add Quantity",
+                  text: "Add Quantity AAA",
                 ),
               ),
             ),

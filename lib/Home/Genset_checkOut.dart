@@ -11,6 +11,7 @@ import 'package:test_prj/payment/paymentScreen.dart';
 import 'package:test_prj/splashScreen.dart';
 
 import '../components/my_button.dart';
+import '../components/my_hinttext_field.dart';
 import '../controller/profile_controller.dart';
 import '../helper/colors.dart';
 import '../main.dart';
@@ -32,6 +33,7 @@ class _GetSetCheckoutScreenState extends State<GetSetCheckoutScreen> {
   Razorpay? razorpay;
   int? pricerazorpayy;
   String payment_type = "";
+  final couponController = TextEditingController();
   @override
   void initState() {
     // TODO: implement initState
@@ -61,7 +63,7 @@ class _GetSetCheckoutScreenState extends State<GetSetCheckoutScreen> {
     Fluttertoast.showToast(msg: "Payment successfully".tr);
 
     CartController controller = Get.find();
-    controller.placeOrder(address_id.toString(), "razorpay", "").then((value) {
+    controller.placeOrder(address_id.toString(), "cashfree", "").then((value) {
       if (value['status'] == true) {
         Get.offAll(
           OrderPlaced(
@@ -609,30 +611,38 @@ class _GetSetCheckoutScreenState extends State<GetSetCheckoutScreen> {
                                                         ),
                                                         const SizedBox(
                                                             height: 2),
-                                                        Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .spaceBetween,
-                                                          children: [
-                                                            Text(
-                                                              "Discount",
-                                                              style: TextStyle(
-                                                                  fontSize: 16,
-                                                                  color: Colors
-                                                                      .black54),
-                                                            ),
-                                                            Text(
-                                                              "₹0",
-                                                              style: TextStyle(
-                                                                fontSize: 18,
-                                                                color: Colors
-                                                                    .black,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
+                                                        Padding(
+                                                          padding:
+                                                              EdgeInsets.only(
+                                                                  left: 15,
+                                                                  right: 10),
+                                                          child: Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceBetween,
+                                                            children: [
+                                                              Text(
+                                                                "Discount".tr,
+                                                                style: TextStyle(
+                                                                    fontSize:
+                                                                        16,
+                                                                    color: Colors
+                                                                        .black54),
                                                               ),
-                                                            ),
-                                                          ],
+                                                              Text(
+                                                                "${AppConstants.currencySymbol}${controller.discountAmount}",
+                                                                style:
+                                                                    TextStyle(
+                                                                  fontSize: 18,
+                                                                  color: Colors
+                                                                      .black,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
                                                         ),
                                                         const SizedBox(
                                                             height: 5),
@@ -659,7 +669,7 @@ class _GetSetCheckoutScreenState extends State<GetSetCheckoutScreen> {
                                                               ),
                                                             ),
                                                             Text(
-                                                              "${AppConstants.currencySymbol}${controller.checkOutModel.value.total}",
+                                                              "${AppConstants.currencySymbol}${calculate(controller)}",
                                                               style: TextStyle(
                                                                 fontSize: 18,
                                                                 color: Colors
@@ -699,7 +709,8 @@ class _GetSetCheckoutScreenState extends State<GetSetCheckoutScreen> {
                                                                     context,
                                                                     MaterialPageRoute(
                                                                         builder: (context) => PaymentScreenTree(
-                                                                              totalAmount: controller.checkOutModel.value.total.toString(),
+                                                                              totalAmount: calculate(controller).toString(),
+                                                                              // totalAmount: controller.checkOutModel.value.total.toString(),
                                                                             )));
 
                                                                 if (data !=
@@ -750,7 +761,7 @@ class _GetSetCheckoutScreenState extends State<GetSetCheckoutScreen> {
                                                                               Fluttertoast.showToast(msg: "Payment successfully".tr);
 
                                                                               CartController controller = Get.find();
-                                                                              controller.placeOrder(address_id.toString(), "razorpay", "").then((value) {
+                                                                              controller.placeOrder(address_id.toString(), "cashfree", "").then((value) {
                                                                                 if (value['status'] == true) {
                                                                                   Get.offAll(
                                                                                     OrderPlaced(
@@ -875,6 +886,85 @@ class _GetSetCheckoutScreenState extends State<GetSetCheckoutScreen> {
                                     ),
                                   ),
                                 ),
+                                Obx(() {
+                                  return Container(
+                                      width: double.maxFinite,
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 15),
+                                      decoration: const BoxDecoration(
+                                          color: colors.myCardColor,
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(15))),
+                                      child: Row(
+                                        children: [
+                                          Expanded(
+                                              flex: 2,
+                                              child: MyHintTextField(
+                                                isReadOnly:
+                                                    controller.isApply.value,
+                                                hintText: const Text('Coupon'),
+                                                isActive: true,
+                                                controller: couponController,
+                                              )),
+                                          Expanded(
+                                            flex: 1,
+                                            child: InkWell(
+                                              onTap: () {
+                                                if (controller.isApply.value ==
+                                                    true) {
+                                                  controller.isApply.value =
+                                                      false;
+                                                  couponController.text = "";
+                                                  controller.discountAmount
+                                                      .value = 0.0;
+                                                } else {
+                                                  controller.applyCoupon(
+                                                      controller.checkOutModel
+                                                          .value.total
+                                                          .toString(),
+                                                      couponController.text);
+                                                }
+                                              },
+                                              child: Container(
+                                                height: 55,
+                                                decoration: const BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.only(
+                                                            topRight: Radius
+                                                                .circular(10),
+                                                            bottomRight:
+                                                                Radius.circular(
+                                                                    10)),
+                                                    gradient:
+                                                        colors.buttonGradient),
+                                                child: Center(
+                                                  child: controller
+                                                          .isLoadingcoupon.value
+                                                      ? const CircularProgressIndicator(
+                                                          color:
+                                                              colors.whiteTemp,
+                                                        )
+                                                      : Text(
+                                                          controller.isApply
+                                                                      .value ==
+                                                                  false
+                                                              ? 'Apply'
+                                                              : 'Remove',
+                                                          style: TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500,
+                                                              fontSize: 16,
+                                                              color: colors
+                                                                  .whiteTemp),
+                                                        ),
+                                                ),
+                                              ),
+                                            ),
+                                          )
+                                        ],
+                                      ));
+                                }),
                                 widget.isfrom ?? false
                                     ? const SizedBox()
                                     : Container(
@@ -1002,7 +1092,7 @@ class _GetSetCheckoutScreenState extends State<GetSetCheckoutScreen> {
                                                         color: Colors.black54),
                                                   ),
                                                   Text(
-                                                    "${AppConstants.currencySymbol}0",
+                                                    "${AppConstants.currencySymbol}${controller.discountAmount}",
                                                     style: TextStyle(
                                                       fontSize: 18,
                                                       color: Colors.black,
@@ -1038,7 +1128,8 @@ class _GetSetCheckoutScreenState extends State<GetSetCheckoutScreen> {
                                                     ),
                                                   ),
                                                   Text(
-                                                    "${AppConstants.currencySymbol}${controller.checkOutModel.value.total.toString()}",
+                                                    //"${AppConstants.currencySymbol}${controller}",
+                                                    "${AppConstants.currencySymbol}${calculate(controller)}",
                                                     style: TextStyle(
                                                       fontSize: 18,
                                                       color: Colors.green,
@@ -1202,9 +1293,12 @@ class _GetSetCheckoutScreenState extends State<GetSetCheckoutScreen> {
                                         MaterialPageRoute(
                                             builder: (context) =>
                                                 PaymentScreenTree(
-                                                  totalAmount: controller
-                                                      .checkOutModel.value.total
-                                                      .toString(),
+                                                  totalAmount:
+                                                      calculate(carController)
+                                                          .toString(),
+                                                  // totalAmount: controller
+                                                  //     .checkOutModel.value.total
+                                                  //     .toString(),
                                                 )));
 
                                     if (data != null) {
@@ -1246,7 +1340,7 @@ class _GetSetCheckoutScreenState extends State<GetSetCheckoutScreen> {
                                                   controller
                                                       .placeOrder(
                                                           address_id.toString(),
-                                                          "razorpay",
+                                                          "cashfree",
                                                           "")
                                                       .then((value) {
                                                     if (value['status'] ==
@@ -1354,5 +1448,17 @@ class _GetSetCheckoutScreenState extends State<GetSetCheckoutScreen> {
                 );
               });
         });
+  }
+
+  double? calculate(CartController carController) {
+    print("carController $carController ");
+    double? one = double.tryParse(
+            carController.checkOutModel?.value?.total?.replaceAll(",", "") ??
+                "0.0") ??
+        0.0;
+    double? two = double.tryParse(
+            carController.discountAmount.value.toString() ?? "0.0") ??
+        0.0;
+    return one! - two!;
   }
 }

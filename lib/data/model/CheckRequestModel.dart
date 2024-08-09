@@ -17,6 +17,7 @@ class CheckOutRequest {
   String? wallet_used = "";
   String? transaction_id = "";
   String? quantity = "1";
+  String? coupan_discount_amount = "0.0";
 
   CheckOutRequest({
     this.categoryId,
@@ -37,12 +38,14 @@ class CheckOutRequest {
     this.transaction_id,
     this.quantity,
     this.service_type,
+    this.coupan_discount_amount,
   });
 
   CheckOutRequest.fromJson(Map<String, dynamic> json) {
     categoryId = json['category_id'] ?? "";
     vehicleType = json['vehicle_type'] ?? "";
     vehicleModel = json['vehicle_model'] ?? "";
+    coupan_discount_amount = json['coupan_discount_amount'] ?? "";
     tyreSize = json['tyre_size'] ?? "";
     fuel_type = json['fuel_type'] ?? "";
     timeSlotId = json['time_slot_id'] ?? "";
@@ -64,6 +67,7 @@ class CheckOutRequest {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['category_id'] = this.categoryId ?? "";
     data['vehicle_type'] = this.vehicleType ?? "";
+    data['coupan_discount_amount'] = this.coupan_discount_amount ?? "";
     data['vehicle_model'] = this.vehicleModel ?? "";
     data['tyre_size'] = this.tyreSize ?? "";
     data['fuel_type'] = this.fuel_type ?? "";
