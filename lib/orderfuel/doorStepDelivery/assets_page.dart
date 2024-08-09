@@ -35,7 +35,7 @@ class _AssetsPageState extends State<AssetsPage> {
               child: TextFormField(
                 decoration: InputDecoration(
                   hintText: 'Search Assets',
-                  prefixIcon: Icon(Icons.search),
+                  prefixIcon: const Icon(Icons.search),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
                     borderSide: BorderSide.none,

@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:test_prj/controller/appBase/appbase_controller.dart';
+import 'package:test_prj/data/model/industry_type_model.dart';
 
 import '../data/model/CheckOtpModel.dart';
 import '../repository/model/user_model.dart';
@@ -11,6 +12,14 @@ class SignupController extends AppBaseController {
   // Get.find<SettingsService>()
   LaravelApiClient _laravelApiClient = Get.find<LaravelApiClient>();
 
+  @override
+  void onInit() {
+    // TODO: implement onInit
+    super.onInit();
+    getIndustryType();
+  }
+
+  IndustryTypeData? selectedIndustry;
   var name = 'Select Industry';
   final List<String> companyNames = [
     'Select Industry',
@@ -21,6 +30,8 @@ class SignupController extends AppBaseController {
     'Sunpharma',
     'Lupin',
   ];
+
+  RxList<IndustryTypeData> industryTypeList = <IndustryTypeData>[].obs;
 
   RxBool isLoading = false.obs;
 
@@ -70,5 +81,9 @@ class SignupController extends AppBaseController {
     isLoading(false);
     return response;
     print("object response ${response['temporary_token']}");
+  }
+
+  Future<void> getIndustryType() async {
+    industryTypeList.value = await _laravelApiClient.getIndustryType();
   }
 }

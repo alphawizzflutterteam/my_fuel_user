@@ -108,60 +108,68 @@ class _LanguageScreenState extends State<LanguageScreen> {
                                     childAspectRatio: 0.9),
                             itemCount: controller.languageList.length,
                             itemBuilder: (context, index) {
-                              var item = controller.languageList[index];
-                              return InkWell(
-                                onTap: () async {
-                                  controller.languageList.forEach((element) {
-                                    element.isSelected = false;
-                                  });
+                              return Obx(
+                                () {
+                                  var item = controller.languageList[index];
+                                  return InkWell(
+                                    onTap: () async {
+                                      controller.languageList
+                                          .forEach((element) {
+                                        element.isSelected = false;
+                                      });
 
-                                  controller.languageList[index].isSelected =
-                                      true;
+                                      controller.languageList[index]
+                                          .isSelected = true;
+                                      setState(() {});
 
-                                  showReviewDialog(context);
-
-                                  setState(() {});
+                                      showReviewDialog(context);
+                                    },
+                                    child: Container(
+                                      width: 150,
+                                      height: 155,
+                                      decoration: BoxDecoration(
+                                          color: colors.whiteTemp,
+                                          border: Border.all(
+                                              color: item.isSelected ?? false
+                                                  ? colors.primary
+                                                  : Colors.yellow),
+                                          boxShadow: [
+                                            BoxShadow(
+                                                color: item.isSelected ?? false
+                                                    ? colors.greyTemp
+                                                        .withOpacity(0.5)
+                                                    : colors.cardColor,
+                                                spreadRadius: 2,
+                                                blurRadius: 5)
+                                          ],
+                                          borderRadius:
+                                              BorderRadius.circular(8)),
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Image.asset(
+                                            item.image ?? '',
+                                            height: 100,
+                                            width: 100,
+                                            scale: index != 0 && index != 1
+                                                ? 2
+                                                : 1,
+                                          ),
+                                          Text(
+                                            item.title ?? '',
+                                            style:
+                                                const TextStyle(fontSize: 24),
+                                          ),
+                                          const Text(
+                                            "",
+                                            style: TextStyle(fontSize: 24),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  );
                                 },
-                                child: Container(
-                                  width: 150,
-                                  height: 155,
-                                  decoration: BoxDecoration(
-                                      color: colors.whiteTemp,
-                                      border: Border.all(
-                                          color: item.isSelected ?? false
-                                              ? colors.primary
-                                              : Colors.yellow),
-                                      boxShadow: [
-                                        BoxShadow(
-                                            color: item.isSelected ?? false
-                                                ? colors.greyTemp
-                                                    .withOpacity(0.5)
-                                                : colors.cardColor,
-                                            spreadRadius: 2,
-                                            blurRadius: 5)
-                                      ],
-                                      borderRadius: BorderRadius.circular(8)),
-                                  child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Image.asset(
-                                        item.image ?? '',
-                                        height: 100,
-                                        width: 100,
-                                        scale: index != 0 && index != 1 ? 2 : 1,
-                                      ),
-                                      Text(
-                                        item.title ?? '',
-                                        style: const TextStyle(fontSize: 24),
-                                      ),
-                                      const Text(
-                                        "",
-                                        style: TextStyle(fontSize: 24),
-                                      )
-                                    ],
-                                  ),
-                                ),
                               );
                             },
                           )

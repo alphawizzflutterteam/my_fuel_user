@@ -121,10 +121,10 @@ class _SelectAddressState extends State<SelectAddress> {
                           alignment: Alignment.center,
                           child: TextButton(
                               onPressed: () {},
-                              child: Row(
+                              child: const Row(
                                 children: [
                                   Padding(
-                                    padding: const EdgeInsets.only(left: 95.0),
+                                    padding: EdgeInsets.only(left: 95.0),
                                     child: Icon(Icons.my_location),
                                   ),
                                   Text(
@@ -145,8 +145,8 @@ class _SelectAddressState extends State<SelectAddress> {
               ),
             ),
             //SizedBox(height: 20),
-            Padding(
-              padding: const EdgeInsets.only(right: 200.0),
+            const Padding(
+              padding: EdgeInsets.only(right: 200.0),
               child: Text(
                 'Select Delivery type',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),

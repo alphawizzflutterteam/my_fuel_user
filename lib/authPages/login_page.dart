@@ -135,11 +135,14 @@ class _LoginPageState extends State<LoginPage> {
                         Row(
                           children: [
                             Text(
-                              "Forgot Password? ".tr,
+                              "Forgot Password?".tr,
                               style: TextStyle(
                                   color: Colors.black,
                                   fontSize: 14,
                                   fontWeight: FontWeight.bold),
+                            ),
+                            SizedBox(
+                              width: 5,
                             ),
                             GestureDetector(
                               onTap: () => Navigator.push(
@@ -274,7 +277,7 @@ class _LoginPageState extends State<LoginPage> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text("Don't Have an account? ".tr),
+                            Text("Don't Have an account?".tr),
                             GestureDetector(
                               onTap: () {
                                 String argumentData =

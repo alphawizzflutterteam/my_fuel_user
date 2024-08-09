@@ -482,6 +482,15 @@ class _ProfileAssetsState extends State<ProfileAssets> {
                                                           // backgroundColor: Colors.white,
                                                           // backgroundColor: Colors.grey.shade200,
                                                           onPressed: () {
+                                                            Get.to(
+                                                                MyFullAssets(),
+                                                                arguments: [
+                                                                  true,
+                                                                  controller
+                                                                          .assetDataList![
+                                                                      index]
+                                                                ]);
+
                                                             Navigator.push(
                                                                 context,
                                                                 MaterialPageRoute(

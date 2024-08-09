@@ -13,6 +13,7 @@ class Routes {
   static const VENDORSCREEN = '/vendorScreen';
   static const orderFuelCheckout = '/orderFuelCheckout';
   static const CarCheckout = '/carCheckout';
+  static const MyAssets = '/myAssets';
 
   static const ROOT = '/root';
   static const RATING = '/rating';

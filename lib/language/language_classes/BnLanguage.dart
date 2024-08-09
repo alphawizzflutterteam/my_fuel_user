@@ -413,6 +413,9 @@ class Bangla extends Translations {
           "No History Found": "చరిత్ర కనుగొనబడలేదు",
           "Fuel Quantity(Min 5 ltrs - Max 20 ltrs":
               "জ্বালানির পরিমাণ (সর্বনিম্ন 5 লিটার - সর্বোচ্চ 20 লিটার",
+          "Forgot Password?": "পাসওয়ার্ড ভুলে গেছি?",
+          "Don't Have an account?": "একটি অ্যাকাউন্ট নেই?",
+          " and ": " এবং "
         }
       };
 }

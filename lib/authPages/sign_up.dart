@@ -7,6 +7,7 @@ import 'package:test_prj/components/my_background.dart';
 import 'package:test_prj/components/my_button.dart';
 import 'package:test_prj/components/my_textfield.dart';
 import 'package:test_prj/controller/singup_controller.dart';
+import 'package:test_prj/data/model/industry_type_model.dart';
 import 'package:test_prj/helper/utils/app_constants.dart';
 import 'package:test_prj/helper/utils/validator_all.dart';
 
@@ -69,14 +70,14 @@ class _SignUpState extends State<SignUp> {
                       height: 62,
                     ),
                     const SizedBox(height: 10),
-                    const Text(
-                      "Sign Up",
+                    Text(
+                      "Sign Up".tr,
                       style:
                           TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(height: 8),
-                    const Text(
-                      "Please Sign in to your account",
+                    Text(
+                      "Please Sign in to your account".tr,
                     ),
 
                     data == "1" ? showBusiness(controller) : showUser(),
@@ -94,7 +95,7 @@ class _SignUpState extends State<SignUp> {
                           },
                         ),
                         Padding(
-                          padding: EdgeInsets.symmetric(vertical: 14),
+                          padding: const EdgeInsets.symmetric(vertical: 14),
                           child: InkWell(
                               onTap: () {
                                 Navigator.push(
@@ -114,9 +115,9 @@ class _SignUpState extends State<SignUp> {
                                 ],
                               )),
                         ),
-                        Text(" and "),
+                        Text(" and ".tr),
                         Padding(
-                          padding: EdgeInsets.symmetric(vertical: 14),
+                          padding: const EdgeInsets.symmetric(vertical: 14),
                           child: InkWell(
                               onTap: () {
                                 Navigator.push(
@@ -184,6 +185,12 @@ class _SignUpState extends State<SignUp> {
                                           return;
                                         }
                                       }
+                                      if (data != "0" &&
+                                          controller.selectedIndustry == null) {
+                                        Fluttertoast.showToast(
+                                            msg: "Please select industry type");
+                                        return;
+                                      }
 
                                       if (_formKeyReset!.currentState!
                                           .validate()) {
@@ -201,6 +208,9 @@ class _SignUpState extends State<SignUp> {
                                         user.profile = data == "0"
                                             ? "normal"
                                             : "bussiness";
+
+                                        user.industryType =
+                                            controller.selectedIndustry?.name;
 
                                         controller.Register(user).then((value) {
                                           if (value!.containsKey('errors')) {
@@ -241,7 +251,7 @@ class _SignUpState extends State<SignUp> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Text("Already Have an account? "),
+                        Text("Already Have an account?".tr),
                         GestureDetector(
                           onTap: () {
                             Navigator.push(
@@ -263,8 +273,8 @@ class _SignUpState extends State<SignUp> {
                             //
                             // }
                           },
-                          child: const Text(
-                            "Sign in",
+                          child: Text(
+                            "Sign in".tr,
                             style: TextStyle(
                               color: Color.fromRGBO(138, 180, 2, 1),
                             ),
@@ -342,22 +352,23 @@ class _SignUpState extends State<SignUp> {
               borderRadius: BorderRadius.circular(10),
             ),
             padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: DropdownButton<String>(
+            child: DropdownButton<IndustryTypeData>(
               hint: Text('Select Vehicle Manufacture Type'.tr),
-              value: controller.name,
+              value: controller.selectedIndustry,
               underline: Container(),
               isExpanded: true,
-              onChanged: (String? newValue) {
+              onChanged: (IndustryTypeData? newValue) {
                 if (newValue != null) {
-                  controller.name = newValue;
+                  controller.selectedIndustry = newValue;
                   setState(() {});
                 }
               },
-              items: controller.companyNames!
-                  .map<DropdownMenuItem<String>>((String value) {
-                return DropdownMenuItem<String>(
+              items: controller.industryTypeList!
+                  .map<DropdownMenuItem<IndustryTypeData>>(
+                      (IndustryTypeData value) {
+                return DropdownMenuItem<IndustryTypeData>(
                   value: value,
-                  child: Text(value.toString()),
+                  child: Text(value.name ?? ''),
                 );
               }).toList(),
             )
@@ -426,19 +437,19 @@ class _SignUpState extends State<SignUp> {
           controller: phoneController,
           maxLenth: AppConstants.phoneValidation,
           isAmount: true,
-          labelText: const Text("Phone No "),
+          labelText: Text("Phone No".tr),
         ),
         const SizedBox(height: 15),
         MyTextField(
           validator: (value) => Validator.validateEmail(value),
           controller: emailController,
-          labelText: const Text("Email"),
+          labelText: Text("Email".tr),
         ),
         const SizedBox(height: 15),
         MyTextField(
           validator: (value) => Validator.validateName(value),
           controller: nameController,
-          labelText: const Text("Full Name"),
+          labelText: Text("Full Name".tr),
         ),
         const SizedBox(height: 15),
         MyTextField(
@@ -446,14 +457,14 @@ class _SignUpState extends State<SignUp> {
           isGst: true,
           validator: (value) => null,
           controller: gstController,
-          labelText: const Text("Gst Number (optional)"),
+          labelText: Text("Gst Number(optional)".tr),
         ),
         const SizedBox(height: 15),
         MyTextField(
           validator: (value) => Validator.validatePassword(value),
           isPassword: true,
           controller: passwordController,
-          labelText: const Text("Password"),
+          labelText: Text("Password".tr),
         ),
         const SizedBox(height: 15),
         MyTextField(
@@ -461,7 +472,7 @@ class _SignUpState extends State<SignUp> {
               Validator.validateConfirmPassword(value, passwordController.text),
           isPassword: true,
           controller: confirmpasswordController,
-          labelText: const Text("Confirm Password"),
+          labelText: Text("Confirm Password".tr),
         ),
       ],
     );

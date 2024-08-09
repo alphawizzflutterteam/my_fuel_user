@@ -97,7 +97,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<SplashController>(
-        init: SplashController(),
+        init: Get.put(SplashController(), permanent: true),
         builder: (controller) {
           // controller.getSettingAPi();
           return Scaffold(

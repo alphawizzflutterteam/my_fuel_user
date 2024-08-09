@@ -4,6 +4,7 @@ class ApiConstants {
   static const String getSettingUri = '/api/v1/config';
   static const String getProfile = '/api/v1/customer/info';
   static const String banners = '/api/v1/banners';
+  static const String industryType = '/api/v1/industries-list';
   static const String checkPhone = '/api/v1/auth/check-phone';
   static const String veriFyPhone = '/api/v1/auth/verify-phone';
   static const String homeServices = '/api/v1/services';
@@ -19,6 +20,7 @@ class ApiConstants {
   static const String walletTransactionHistory =
       '/api/v1/customer/wallet/list?offset=0&limit=10&transaction_type=all';
   static const String addAsset = '/api/v1/customer/order/asset-store';
+  static const String getService = '/api/v1/fuel-list';
   static const String updateAsset = '/api/v1/customer/order/asset-update';
   static const String assetsList = '/api/v1/customer/order/asset-list';
   static const String deleteAsset = '/api/v1/customer/order/asset-delete/';

@@ -1,12 +1,18 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:test_prj/components/my_appbar.dart';
 import 'package:test_prj/components/my_button.dart';
 import 'package:test_prj/components/widgets/globle_widgets.dart';
 import 'package:test_prj/controller/asset_controller.dart';
+import 'package:test_prj/data/model/OrderFuelModel.dart';
+import 'package:test_prj/data/model/fuel_services_model.dart';
+import 'package:test_prj/helper/colors.dart';
 import 'package:test_prj/helper/utils/validator_all.dart';
 import 'package:test_prj/orderfuel/doorStepDelivery/assets_page.dart';
+import 'package:test_prj/splashScreen.dart';
 
 import '../data/model/assetlist_model.dart';
 
@@ -20,53 +26,50 @@ class MyFullAssets extends StatefulWidget {
 }
 
 class _AssetsState extends State<MyFullAssets> {
-  int selectedValue = 1;
-
-  Widget customRadio(String text, int index) {
+  Widget customRadio(String text, int index, AssetController controller) {
     return OutlinedButton(
       onPressed: () {
         setState(() {
-          selectedValue = index;
+          controller.selectedAsset = index;
         });
       },
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            text,
-            style: TextStyle(
-              color: (selectedValue == index) ? Colors.black : Colors.blueGrey,
-            ),
-          ),
-          Radio<int>(
-            value: index,
-            groupValue: selectedValue,
-            onChanged: (value) {
-              setState(() {
-                selectedValue = value!;
-              });
-            },
-            activeColor: Colors.orange,
-          ),
-        ],
-      ),
       style: OutlinedButton.styleFrom(
         minimumSize: const Size(double.infinity, 50),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadiusDirectional.circular(10),
         ),
         side: BorderSide(
-          color: (selectedValue == index) ? Colors.black : Colors.grey,
+          color:
+              (controller.selectedAsset == index) ? Colors.black : Colors.grey,
         ),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            text,
+            style: TextStyle(
+              color: (controller.selectedAsset == index)
+                  ? Colors.black
+                  : Colors.blueGrey,
+            ),
+          ),
+          Radio<int>(
+            value: index,
+            groupValue: controller.selectedAsset,
+            onChanged: (value) {
+              setState(() {
+                controller.selectedAsset = value!;
+              });
+            },
+            activeColor: Colors.orange,
+          ),
+        ],
       ),
     );
   }
 
   final _formKeyReset = GlobalKey<FormState>();
-
-  TextEditingController nameControiller = TextEditingController();
-  TextEditingController capacityControiller = TextEditingController();
-  TextEditingController fuelcapacityControiller = TextEditingController();
 
   @override
   void initState() {
@@ -80,7 +83,7 @@ class _AssetsState extends State<MyFullAssets> {
   Widget build(BuildContext context) {
     return GetBuilder<AssetController>(
         init: AssetController(),
-        builder: (asetController) {
+        builder: (controller) {
           return Scaffold(
             appBar: MyAppFinalbar(
               title: "Assets".tr,
@@ -138,7 +141,7 @@ class _AssetsState extends State<MyFullAssets> {
                     const SizedBox(
                       height: 10,
                     ),
-                    Padding(
+                    /* Padding(
                       padding: const EdgeInsets.all(10.0),
                       child: Column(
                         children: [
@@ -156,19 +159,35 @@ class _AssetsState extends State<MyFullAssets> {
                           ),
                         ],
                       ),
+                    ),*/
+
+                    ListView.builder(
+                      itemCount: controller.assetTypeList.length,
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        var item = controller.assetTypeList[index];
+                        return Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: customRadio(
+                                item.title ?? '', index, controller));
+                      },
                     ),
-                    Padding(
-                      padding: EdgeInsets.only(right: 219),
-                      child: Text(
-                        'Add Details'.tr,
-                        style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.w500),
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 10.0),
+                        child: Text(
+                          'Add Details'.tr,
+                          style: const TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.w500),
+                        ),
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.all(10.0),
                       child: TextFormField(
-                        controller: nameControiller,
+                        controller: controller.nameControiller,
                         validator: (value) => Validator.validateWithhint(
                             value, "Asset Name (eg: genset1)".tr),
                         decoration: InputDecoration(
@@ -180,22 +199,132 @@ class _AssetsState extends State<MyFullAssets> {
                         ),
                       ),
                     ),
+
                     Padding(
                       padding: const EdgeInsets.all(10.0),
-                      child: TextFormField(
-                        controller: capacityControiller,
-                        validator: (value) => Validator.validateWithhint(
-                            value, "Asset Capacity/Power (eg: 120kva)".tr),
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
+                      child: Container(
+                          height: 60,
+                          decoration: BoxDecoration(
+                            border:
+                                Border.all(color: colors.greyTemp, width: 1),
+                            borderRadius: BorderRadius.circular(10),
                           ),
-                          hintText: 'Asset Capacity/Power (eg: 120kva)'.tr,
-                          hintStyle: const TextStyle(color: Colors.grey),
-                        ),
+                          padding: const EdgeInsets.only(
+                              top: 10, left: 10, right: 10, bottom: 10),
+                          child: DropdownButton<FuelServices>(
+                            hint: Text(
+                              'Select Service Type'.tr,
+                              style: TextStyle(
+                                  color: colors.greyTemp.withOpacity(0.8)),
+                            ),
+                            value: controller.selectedData,
+                            underline: Container(),
+                            isExpanded: true,
+                            onChanged: (FuelServices? newValue) {
+                              if (newValue != null) {
+                                controller.selectedData = newValue;
+                                setState(() {});
+                              }
+                            },
+                            items: controller.servicesList
+                                .map<DropdownMenuItem<FuelServices>>(
+                                    (FuelServices value) {
+                              return DropdownMenuItem<FuelServices>(
+                                value: value,
+                                child: Text(value.name ?? ''),
+                              );
+                            }).toList(),
+                          )
+                          // DropdownButton<String>(
+                          //   hint: const Text('Select Vehicle Manufacture Type'),
+                          //   value: selectedVehicleManufacture,
+                          //   underline: Container(),
+                          //   isExpanded: true,
+                          //   onChanged: (String? newValue) {
+                          //     if (newValue != null) {
+                          //       // otherCategory.vehicleType = newValue.
+                          //       setState(() {
+                          //         selectedVehicleManufacture = newValue;
+                          //       });
+                          //     }
+                          //   },
+                          //   items: vehicles
+                          //       .map<DropdownMenuItem<String>>((String value) {
+                          //     return DropdownMenuItem<String>(
+                          //       value: value,
+                          //       child: Text(value),
+                          //     );
+                          //   }).toList(),
+                          // ),
+                          ),
+                    ),
+
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            flex: 2,
+                            child: TextFormField(
+                              controller: controller.capacityControiller,
+                              keyboardType: TextInputType.number,
+                              validator: (value) => Validator.validateWithhint(
+                                  value,
+                                  "Asset Capacity/Power (eg: 120kva)".tr),
+                              decoration: InputDecoration(
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                hintText:
+                                    'Asset Capacity/Power (eg: 120kva)'.tr,
+                                hintStyle: const TextStyle(color: Colors.grey),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 5,
+                          ),
+                          Expanded(
+                            flex: 1,
+                            child: Container(
+                                height: 60,
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                      color: colors.greyTemp, width: 1),
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 20),
+                                child: DropdownButton<String>(
+                                  hint: Text(
+                                    'Select Unit'.tr,
+                                    style: TextStyle(
+                                        color:
+                                            colors.greyTemp.withOpacity(0.8)),
+                                  ),
+                                  value: controller.selectedUnit,
+                                  underline: Container(),
+                                  isExpanded: true,
+                                  onChanged: (String? newValue) {
+                                    if (newValue != null) {
+                                      controller.selectedUnit = newValue;
+                                      setState(() {});
+                                    }
+                                  },
+                                  items: (configModel?.unit ?? [])
+                                      .map<DropdownMenuItem<String>>(
+                                          (String value) {
+                                    return DropdownMenuItem<String>(
+                                      value: value,
+                                      child: Text(value ?? ''),
+                                    );
+                                  }).toList(),
+                                )),
+                          ),
+                        ],
                       ),
                     ),
-                    Padding(
+                    /*Padding(
                       padding: const EdgeInsets.all(10.0),
                       child: TextFormField(
                         controller: fuelcapacityControiller,
@@ -209,8 +338,8 @@ class _AssetsState extends State<MyFullAssets> {
                           hintStyle: const TextStyle(color: Colors.grey),
                         ),
                       ),
-                    ),
-                    const SizedBox(height: 80),
+                    ),*/
+                    const SizedBox(height: 40),
 
                     // asetController.isLoading.value == true
                     //     ? isCircularLoading()
@@ -290,7 +419,7 @@ class _AssetsState extends State<MyFullAssets> {
                 padding: const EdgeInsets.symmetric(horizontal: 10.0),
                 child: Align(
                   alignment: Alignment.centerRight,
-                  child: Obx(() => asetController.isLoading.value == true
+                  child: Obx(() => controller.isLoading.value == true
                       ? isCircularLoading()
                       : Padding(
                           padding: const EdgeInsets.all(10.0),
@@ -303,17 +432,20 @@ class _AssetsState extends State<MyFullAssets> {
                                       if (_formKeyReset.currentState!
                                           .validate()) {
                                         if (widget.update == true) {
-                                          asetController
+                                          controller
                                               .updateA(
                                                   widget.data!.id.toString(),
-                                                  selectedValue == 1
-                                                      ? "genset"
-                                                      : selectedValue == 2
-                                                          ? "heavy_machinery"
-                                                          : "equipments",
-                                                  nameControiller.text,
-                                                  capacityControiller.text,
-                                                  fuelcapacityControiller.text)
+                                                  controller
+                                                          .assetDataList![
+                                                              controller
+                                                                  .selectedAsset]
+                                                          .name ??
+                                                      '',
+                                                  controller
+                                                      .nameControiller.text,
+                                                  controller
+                                                      .capacityControiller.text,
+                                                  controller.selectedUnit ?? '')
                                               .then((value) {
                                             if (value['status'] == true) {
                                               Fluttertoast.showToast(
@@ -325,16 +457,19 @@ class _AssetsState extends State<MyFullAssets> {
                                             }
                                           });
                                         } else {
-                                          asetController
+                                          controller
                                               .createAst(
-                                                  selectedValue == 1
-                                                      ? "Genset"
-                                                      : selectedValue == 2
-                                                          ? "heavy_machinery"
-                                                          : "Equipments",
-                                                  nameControiller.text,
-                                                  capacityControiller.text,
-                                                  fuelcapacityControiller.text)
+                                                  controller
+                                                          .assetDataList![
+                                                              controller
+                                                                  .selectedAsset]
+                                                          .name ??
+                                                      "",
+                                                  controller
+                                                      .nameControiller.text,
+                                                  controller
+                                                      .capacityControiller.text,
+                                                  controller.selectedUnit ?? '')
                                               .then((value) {
                                             if (value['status'] == true) {
                                               Fluttertoast.showToast(
@@ -362,24 +497,24 @@ class _AssetsState extends State<MyFullAssets> {
   }
 
   void initUI() {
-    if (widget.update == true) {
-      print(
-          "object Edit Data ${widget.data!.assetType.toString().toLowerCase()}");
-      if (widget.data!.assetType.toString().toLowerCase() ==
-          "Genset".toString().toLowerCase()) {
-        selectedValue = 1;
-      } else if (widget.data!.assetType.toString().toLowerCase() ==
-          "heavy_machinery".toString().toLowerCase()) {
-        selectedValue = 2;
-      } else if (widget.data!.assetType.toString().toLowerCase() ==
-          "Equipments".toString().toLowerCase()) {
-        selectedValue = 3;
-      }
-
-      nameControiller.text = widget.data!.name!.toString();
-      capacityControiller.text = widget.data!.capacity!.toString();
-      fuelcapacityControiller.text = widget.data!.fuelCapacity!.toString();
-      setState(() {});
-    }
+    // if (widget.update == true) {
+    //   print(
+    //       "object Edit Data ${widget.data!.assetType.toString().toLowerCase()}");
+    //   if (widget.data!.assetType.toString().toLowerCase() ==
+    //       "Genset".toString().toLowerCase()) {
+    //     selectedValue = 1;
+    //   } else if (widget.data!.assetType.toString().toLowerCase() ==
+    //       "heavy_machinery".toString().toLowerCase()) {
+    //     selectedValue = 2;
+    //   } else if (widget.data!.assetType.toString().toLowerCase() ==
+    //       "Equipments".toString().toLowerCase()) {
+    //     selectedValue = 3;
+    //   }
+    //
+    //   nameControiller.text = widget.data!.name!.toString();
+    //   capacityControiller.text = widget.data!.capacity!.toString();
+    //   fuelcapacityControiller.text = widget.data!.fuelCapacity!.toString();
+    //   setState(() {});
+    // }
   }
 }

@@ -10,6 +10,7 @@ class User {
   String? gst;
   String? profile;
   String? guest_id;
+  String? industryType;
 
   User(
       {this.fName,
@@ -22,6 +23,7 @@ class User {
       this.msme,
       this.gst,
       this.profile,
+      this.industryType,
       this.guest_id});
 
   User.fromJson(Map<String, dynamic> json) {
@@ -37,6 +39,7 @@ class User {
     gst = json['gst'];
     profile = json['profile'];
     guest_id = json['guest_id'];
+    industryType = json['industry_type'];
   }
 
   Map<String, dynamic> toJson() {
@@ -52,6 +55,7 @@ class User {
     data['msme'] = msme;
     data['gst'] = gst;
     data['profile'] = profile;
+    data['industry_type'] = industryType;
     return data;
   }
 }

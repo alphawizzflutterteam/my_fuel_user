@@ -116,7 +116,8 @@ class _SelectNewAddressState extends State<SelectNewAddress> {
     Placemark place = placemark[0];
 
     address =
-        "${place.street}, ${place.locality}, ${place.postalCode}, ${place.country}";
+        "${place.subLocality}, ${place.locality}, ${place.postalCode}, ${place.administrativeArea}";
+    print('${address}_______________');
 
     ProfileController profileController = Get.put(ProfileController());
     AddressController addressController = Get.put(AddressController());
@@ -126,9 +127,9 @@ class _SelectNewAddressState extends State<SelectNewAddress> {
             profileController.userInfoModel.value.fName ?? fName.toString(),
             profileController.userInfoModel.value.phone ?? Phone.toString(),
             "Home",
-            place.street.toString(),
+            place.subLocality.toString(),
             place.locality.toString(),
-            place.locality.toString(),
+            place.subLocality.toString(),
             place.country.toString(),
             place.administrativeArea.toString(),
             place.locality.toString(),
@@ -504,7 +505,7 @@ class _SelectNewAddressState extends State<SelectNewAddress> {
                                                             ],
                                                           ),
                                                           Text(
-                                                            '${controller.addressAList[index].building},${controller.addressAList[index].landmark} ${controller.addressAList[index].city} ',
+                                                            '${controller.addressAList[index].address},${controller.addressAList[index].city} ${controller.addressAList[index].state} ',
                                                             // 'sobari nagar,sukhliya..',
                                                             style: const TextStyle(
                                                                 overflow:
@@ -604,7 +605,9 @@ class _SelectNewAddressState extends State<SelectNewAddress> {
                         return Visibility(
                           visible: !controller.isBillDeilivery.value,
                           child: SizedBox(
-                            height: Get.height / 2.7,
+                            height: controller.addressAList.isEmpty
+                                ? Get.height / 2
+                                : Get.height / 2.7,
                             child: SingleChildScrollView(
                               padding: EdgeInsets.zero,
                               child: Column(

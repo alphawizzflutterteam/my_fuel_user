@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:test_prj/data/model/OtherCategoryModel.dart';
+import 'package:test_prj/data/model/industry_type_model.dart';
 import 'package:test_prj/data/model/service_detail.dart';
 
 import 'package:test_prj/helper/utils/app_constants.dart';
@@ -144,6 +145,26 @@ class LaravelApiClient extends GetxService with ApiClient {
       return json.decode(response.toString());
     } else {
       return json.decode(response.toString());
+    }
+  }
+
+  Future<List<IndustryTypeData>> getIndustryType() async {
+    List<IndustryTypeData> industryTypeData = [];
+
+    var response = await httpClient.getUri(
+      Uri.parse(ApiConstants.industryType),
+      options: optionsNetwork,
+    );
+    if (response.statusCode == 200) {
+      var data = response.data;
+
+      industryTypeData = IndustryTypeModel.fromJson(data).industryLists ?? [];
+      // data.forEach((element) {
+      //   bannerList.add(BannerModel.fromJson(json.decode(element.toString())));
+      // });
+      return industryTypeData;
+    } else {
+      throw Exception(response.orderTypeList['message']);
     }
   }
 
@@ -986,6 +1007,25 @@ class LaravelApiClient extends GetxService with ApiClient {
     optionsNetwork.headers!['Authorization'] = "Bearer $token";
     var response = await httpClient.delete(
       "${ApiConstants.deleteAsset}$id",
+      options: optionsNetwork,
+    );
+    if (response.statusCode == 200) {
+      print("userRegister ${response.toString()} ");
+
+      return json.decode(response.toString());
+    } else {
+      return json.decode(response.toString());
+    }
+  }
+
+  Future<Map<String, dynamic>> getService() async {
+    SharedPreferencesService? instance =
+        await SharedPreferencesService.getInstance();
+
+    String token = instance.getData(SharedPreferencesService.kTokenKey);
+    optionsNetwork.headers!['Authorization'] = "Bearer $token";
+    var response = await httpClient.get(
+      ApiConstants.getService,
       options: optionsNetwork,
     );
     if (response.statusCode == 200) {

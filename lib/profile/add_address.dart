@@ -369,6 +369,9 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
         .then((List<Placemark> placemarks) {
       Placemark place = placemarks[0];
       pincodeController.text = place.postalCode.toString();
+      cityController.text = place.locality ?? '';
+      stateController.text = place.administrativeArea ?? '';
+      countryController.text = place.country ?? '';
       setState(() {
         print('${place.name}____________');
         print('${place.postalCode}____________');

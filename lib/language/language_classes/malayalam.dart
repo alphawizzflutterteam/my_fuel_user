@@ -411,7 +411,10 @@ class Malayalam extends Translations {
           "Update Profile": "പ്രൊഫൈൽ അപ്ഡേറ്റ് ചെയ്യുക",
           "No History Found": "ചരിത്രമൊന്നും കണ്ടെത്തിയില്ല",
           "Fuel Quantity(Min 5 ltrs - Max 20 ltrs":
-              "ഇന്ധനത്തിൻ്റെ അളവ് (കുറഞ്ഞത് 5 ലിറ്റർ - പരമാവധി 20 ലിറ്റർ"
+              "ഇന്ധനത്തിൻ്റെ അളവ് (കുറഞ്ഞത് 5 ലിറ്റർ - പരമാവധി 20 ലിറ്റർ",
+          "Forgot Password?": "പാസ്വേഡ് മറന്നോ?",
+          "Don't Have an account?": "അക്കൗണ്ട് ഇല്ലേ?",
+          " and ": " ഒപ്പം "
         }
       };
 }

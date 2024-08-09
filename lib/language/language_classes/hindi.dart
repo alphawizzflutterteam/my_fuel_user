@@ -403,7 +403,10 @@ class Hindi extends Translations {
           "Fuel Quantity(Min 5 ltrs - Max 20 ltrs":
               "জ্বালানির পরিমাণ (সর্বনিম্ন 5 লিটার - সর্বোচ্চ 20 লিটার",
           "Edit Profile": "बायोडाटा संपादित करें",
-          "Update Profile": "प्रोफ़ाइल अपडेट करें"
+          "Update Profile": "प्रोफ़ाइल अपडेट करें",
+          "Forgot Password?": "पासवर्ड भूल गए?",
+          "Don't Have an account?": "क्या आपके पास खाता नहीं है?",
+          " and ": " और "
         }
       };
 }

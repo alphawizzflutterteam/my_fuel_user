@@ -1,4 +1,5 @@
 import 'package:get/get_navigation/src/routes/get_route.dart';
+import 'package:test_prj/Home/FullAssets.dart';
 import 'package:test_prj/authPages/create_password.dart';
 import 'package:test_prj/authPages/language_page.dart';
 import 'package:test_prj/authPages/login_page.dart';
@@ -95,6 +96,11 @@ class AppPages {
     GetPage(
       name: Routes.CarCheckout,
       page: () => Checkout_Car_Service(),
+      binding: InitialBinding(),
+    ),
+    GetPage(
+      name: Routes.MyAssets,
+      page: () => MyFullAssets(),
       binding: InitialBinding(),
     ),
 //     GetPage(name: Routes.ROOT, page: () => RootView(), binding: RootBinding(), middlewares: [AuthMiddleware(), SalonOwnerMiddleware()]),

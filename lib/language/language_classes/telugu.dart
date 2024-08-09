@@ -407,7 +407,10 @@ class Telugu extends Translations {
           "Edit Profile": "പ്രൊഫൈൽ എഡിറ്റ് ചെയ്യുക",
           "Update Profile": "പ്രൊഫൈൽ അപ്ഡേറ്റ് ചെയ്യുക",
           "Fuel Quantity(Min 5 ltrs - Max 20 ltrs":
-              "Fuel Quantity(Min 5 ltrs - Max 20 ltrs"
+              "Fuel Quantity(Min 5 ltrs - Max 20 ltrs",
+          "Forgot Password?": "పాస్‌వర్డ్ మర్చిపోయారా?",
+          "Don't Have an account?": "ఖాతా లేదా?",
+          " and ": " మరియు "
         }
       };
 }

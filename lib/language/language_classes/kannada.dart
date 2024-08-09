@@ -408,7 +408,10 @@ class Kannada extends Translations {
           "Edit Profile": "ಪ್ರೊಫೈಲ್ ಬದಲಿಸು",
           "Update Profile": "ಪ್ರೊಫೈಲ್ ಅನ್ನು ನವೀಕರಿಸಿ",
           "Fuel Quantity(Min 5 ltrs - Max 20 ltrs":
-              "Fuel Quantity(Min 5 ltrs - Max 20 ltrs"
+              "Fuel Quantity(Min 5 ltrs - Max 20 ltrs",
+          "Forgot Password?": "ಪಾಸ್ವರ್ಡ್ ಮರೆತುಹೋಗಿದೆ?",
+          "Don't Have an account?": "ಖಾತೆಯನ್ನು ಹೊಂದಿಲ್ಲವೇ?",
+          " and ": " ಮತ್ತು "
         }
       };
 }

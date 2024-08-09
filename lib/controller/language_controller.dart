@@ -11,7 +11,7 @@ import 'package:test_prj/routes/app_routes.dart';
 import '../helper/utils/shared_preference.dart';
 
 class LanguageController extends AppBaseController {
-  List<LanguageModel> languageList = [
+  RxList<LanguageModel> languageList = [
     LanguageModel(
         image: AppImages.hindiImage, title: 'Hindi', isSelected: false),
     LanguageModel(
@@ -24,7 +24,7 @@ class LanguageController extends AppBaseController {
         image: AppImages.kannadaImage, title: 'Kannada', isSelected: false),
     LanguageModel(
         image: AppImages.bengaliImage, title: 'Bengali', isSelected: false),
-  ];
+  ].obs;
 
   @override
   void onInit() {

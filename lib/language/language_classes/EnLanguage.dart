@@ -154,7 +154,7 @@ class English extends Translations {
           "Enter Your Vehicle Number": "Enter Your Vehicle Number",
           "Vehicle Number": "Vehicle Number",
           "Select a Tyres For your Vehicle": "Select a Tyres For your Vehicle",
-          "Select Vehicle Manufacture Type": "Select Vehicle Manufacture Type",
+          "Select Vehicle Manufacture Type": "Select Industry Type",
           "Select Model": "Select Model",
           "Tyre Size": "Tyre Size",
           "lorem lpsum is simply dummy text of the printing and typesetting industry":
@@ -413,7 +413,10 @@ class English extends Translations {
               "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
           "No Address Found": "No Address Found",
           "Edit Profile": "Edit Profile",
-          "Update Profile": "Update Profile"
+          "Update Profile": "Update Profile",
+          "Forgot Password?": "Forgot Password?",
+          "Don't Have an account?": "Don't Have an account?",
+          " and ": " and "
         }
       };
 }
