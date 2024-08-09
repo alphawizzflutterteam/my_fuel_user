@@ -402,8 +402,8 @@ class Hindi extends Translations {
               "Lorem Ipsum प्रिंटिंग और टाइपसेटिंग उद्योग का केवल डमी टेक्स्ट है",
           "Fuel Quantity(Min 5 ltrs - Max 20 ltrs":
               "জ্বালানির পরিমাণ (সর্বনিম্ন 5 লিটার - সর্বোচ্চ 20 লিটার",
-          "Edit Profile": "জীবন বৃত্তান্ত সম্পাদনা",
-          "Update Profile": "প্রফাইল হালনাগাদ"
+          "Edit Profile": "बायोडाटा संपादित करें",
+          "Update Profile": "प्रोफ़ाइल अपडेट करें"
         }
       };
 }

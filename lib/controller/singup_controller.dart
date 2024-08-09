@@ -11,6 +11,17 @@ class SignupController extends AppBaseController {
   // Get.find<SettingsService>()
   LaravelApiClient _laravelApiClient = Get.find<LaravelApiClient>();
 
+  var name = 'Select Industry';
+  final List<String> companyNames = [
+    'Select Industry',
+    'TCS',
+    'Infosys',
+    'Capgimini',
+    'Genpack',
+    'Sunpharma',
+    'Lupin',
+  ];
+
   RxBool isLoading = false.obs;
 
   var checkOtpval = CheckOtpNodel().obs;

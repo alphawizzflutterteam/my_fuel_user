@@ -170,7 +170,7 @@ class _RegisterCompleteState extends State<RegisterComplete> {
                     ),
                     borderRadius: BorderRadius.circular(8)),
                 padding: const EdgeInsets.only(left: 10),
-                child: const Row(
+                child: Row(
                   mainAxisSize: MainAxisSize
                       .min, // Adjust the row size to fit the content
                   children: [
@@ -180,7 +180,8 @@ class _RegisterCompleteState extends State<RegisterComplete> {
                         width:
                             8), // Add some space between the icon and the text
                     Text(
-                      'Card added to your profile',
+                      'Your my fuels card has been added\n to your profile section.'
+                          .tr,
                       style: TextStyle(color: Colors.black, fontSize: 15),
                     ),
                     SizedBox(width: 80),
@@ -198,7 +199,7 @@ class _RegisterCompleteState extends State<RegisterComplete> {
     receivedList = Get.arguments;
     setState(() {});
 
-    await Future.delayed(const Duration(milliseconds: 800), () async {
+    await Future.delayed(const Duration(milliseconds: 3000), () async {
       Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(

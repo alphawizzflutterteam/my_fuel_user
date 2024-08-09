@@ -284,6 +284,55 @@ class ProfilePageState extends State<ProfilePage> {
                                                           fontWeight:
                                                               FontWeight.w800),
                                                     )),
+                                              Obx(() => controller
+                                                          .isLoading.value ==
+                                                      true
+                                                  ? SizedBox(
+                                                      width: 200.0,
+                                                      height: 30.0,
+                                                      child: Shimmer.fromColors(
+                                                        baseColor: Colors.grey,
+                                                        highlightColor:
+                                                            Colors.grey,
+                                                        child: Text(
+                                                          '     ',
+                                                          textAlign:
+                                                              TextAlign.center,
+                                                          style: TextStyle(
+                                                            fontSize: 10.0,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    )
+                                                  : controller.userInfoModel !=
+                                                              null &&
+                                                          controller
+                                                                  .userInfoModel
+                                                                  .value !=
+                                                              null
+                                                      ? controller.userInfoModel
+                                                                  .value.profile
+                                                                  .toString() ==
+                                                              "normal"
+                                                          ? Text(
+                                                              "Personal",
+                                                              style: TextStyle(
+                                                                fontSize: 16.0,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                              ),
+                                                            )
+                                                          : Text("Business",
+                                                              style: TextStyle(
+                                                                fontSize: 16.0,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                              ))
+                                                      : SizedBox()),
                                             ],
                                           ),
                                         ),

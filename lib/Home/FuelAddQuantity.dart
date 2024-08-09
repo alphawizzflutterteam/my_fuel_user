@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pinput/pinput.dart';
 import 'package:test_prj/components/my_button.dart';
 import 'package:test_prj/components/my_hinttext_field.dart';
 import 'package:test_prj/helper/utils/extentions.dart';
@@ -8,11 +9,14 @@ import 'package:test_prj/orderfuel/bottom_sheet.dart';
 import '../orderfuel/fuelToGo/vendors_page2.dart';
 
 class FueladdQuantity extends StatefulWidget {
-  const FueladdQuantity({super.key, required this.controller, this.ontab});
+  final List<int?>? idList;
+  const FueladdQuantity(
+      {super.key, required this.controller, this.ontab, this.idList});
 
   final VoidCallback? ontab;
-  final TextEditingController controller;
 
+  // final TextEditingController controller;
+  final List<TextEditingController> controller;
   @override
   State<FueladdQuantity> createState() => _FueladdQuantityState();
 }
@@ -37,11 +41,24 @@ class _FueladdQuantityState extends State<FueladdQuantity> {
             const SizedBox(
               height: 40,
             ),
-            TextFormField(
-                keyboardType: TextInputType.number,
-                controller: widget.controller,
-                decoration: CustomInputDecoration.inputDecoration(
-                    'Add Fuel Quantity'.tr)),
+            ListView.builder(
+              shrinkWrap: true,
+              itemCount: widget.idList?.length,
+              itemBuilder: (context, index) {
+                return Column(
+                  children: [
+                    TextFormField(
+                        keyboardType: TextInputType.number,
+                        controller: widget.controller[index],
+                        decoration: CustomInputDecoration.inputDecoration(
+                            'Add Fuel Quantity'.tr)),
+                    SizedBox(
+                      height: 10,
+                    )
+                  ],
+                );
+              },
+            ),
             const SizedBox(
               height: 40,
             ),

@@ -10,6 +10,7 @@ import 'package:test_prj/controller/singup_controller.dart';
 import 'package:test_prj/helper/utils/app_constants.dart';
 import 'package:test_prj/helper/utils/validator_all.dart';
 
+import '../helper/colors.dart';
 import '../repository/model/user_model.dart';
 import '../routes/app_routes.dart';
 import '../staticpage/privacy_policy.dart';
@@ -78,7 +79,7 @@ class _SignUpState extends State<SignUp> {
                       "Please Sign in to your account",
                     ),
 
-                    data == "1" ? showBusiness() : showUser(),
+                    data == "1" ? showBusiness(controller) : showUser(),
 
                     const SizedBox(height: 20),
                     Row(
@@ -292,7 +293,7 @@ class _SignUpState extends State<SignUp> {
 
   final _formKeyReset = GlobalKey<FormState>();
 
-  Widget showBusiness() {
+  Widget showBusiness(SignupController controller) {
     return Column(
       children: [
         const SizedBox(height: 25),
@@ -301,20 +302,20 @@ class _SignUpState extends State<SignUp> {
           controller: phoneController,
           validator: (value) => Validator.validatePhone(value),
           maxLenth: AppConstants.phoneValidation,
-          labelText: const Text("Phone No "),
+          labelText: Text("Phone No ".tr),
         ),
         const SizedBox(height: 15),
         MyTextField(
           validator: (value) => Validator.validateEmail(value),
           controller: emailController,
-          labelText: const Text("Email"),
+          labelText: Text("Email".tr),
         ),
         const SizedBox(height: 15),
         MyTextField(
           validator: (value) =>
               Validator.validateWithhint(value, "Company Name"),
           controller: nameController,
-          labelText: const Text("Company Name"),
+          labelText: Text("Company Name".tr),
         ),
         const SizedBox(height: 15),
         MyTextField(
@@ -322,15 +323,66 @@ class _SignUpState extends State<SignUp> {
           isGst: true,
           validator: (value) => null,
           controller: gstController,
-          labelText: const Text("Gst Number (optional)"),
+          labelText: Text("Gst Number (optional)".tr),
         ),
         const SizedBox(height: 15),
         MyTextField(
           validator: (value) =>
-              Validator.validateWithhint(value, "Company Address"),
+              Validator.validateWithhint(value, "Company Address".tr),
           controller: addressController,
-          labelText: const Text("Company Address"),
+          labelText: Text("Company Address".tr),
         ),
+        const SizedBox(
+          height: 10,
+        ),
+        Container(
+            height: 55,
+            decoration: BoxDecoration(
+              border: Border.all(color: colors.black12, width: 2),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: DropdownButton<String>(
+              hint: Text('Select Vehicle Manufacture Type'.tr),
+              value: controller.name,
+              underline: Container(),
+              isExpanded: true,
+              onChanged: (String? newValue) {
+                if (newValue != null) {
+                  controller.name = newValue;
+                  setState(() {});
+                }
+              },
+              items: controller.companyNames!
+                  .map<DropdownMenuItem<String>>((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value.toString()),
+                );
+              }).toList(),
+            )
+            // DropdownButton<String>(
+            //   hint: const Text('Select Vehicle Manufacture Type'),
+            //   value: selectedVehicleManufacture,
+            //   underline: Container(),
+            //   isExpanded: true,
+            //   onChanged: (String? newValue) {
+            //     if (newValue != null) {
+            //       // otherCategory.vehicleType = newValue.
+            //       setState(() {
+            //         selectedVehicleManufacture = newValue;
+            //       });
+            //     }
+            //   },
+            //   items: vehicles
+            //       .map<DropdownMenuItem<String>>((String value) {
+            //     return DropdownMenuItem<String>(
+            //       value: value,
+            //       child: Text(value),
+            //     );
+            //   }).toList(),
+            // ),
+            ),
         const SizedBox(height: 15),
         MyTextField(
           maxLenth: 10,

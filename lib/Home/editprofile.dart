@@ -460,6 +460,7 @@ class _EditProfileState extends State<EditProfile> {
         const SizedBox(height: 15),
         MyTextField(
           maxLenth: 16,
+          isGst: true,
           validator: (value) => null,
           controller: gstController,
           labelText: Text("Gst Number (optional)".tr),
@@ -520,6 +521,7 @@ class _EditProfileState extends State<EditProfile> {
         const SizedBox(height: 15),
         MyTextField(
           maxLenth: 16,
+          isGst: true,
           validator: (value) => null,
           controller: gstController,
           labelText: const Text("Gst Number (optional)"),

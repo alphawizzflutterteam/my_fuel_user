@@ -24,9 +24,10 @@ class AddVehicles extends StatefulWidget {
 
 class _AddVehiclesState extends State<AddVehicles> {
   final TextEditingController _controller = TextEditingController();
-  final TextEditingController _fuelQuantityController = TextEditingController();
+  // final TextEditingController _fuelQuantityController = TextEditingController();
   final TextEditingController _dateController = TextEditingController();
 
+  List<TextEditingController> _fuelQuantityController = [];
   final List<String> items = [
     "Four Wheeler",
     "Heavy Vehicle",
@@ -58,7 +59,7 @@ class _AddVehiclesState extends State<AddVehicles> {
                           child: FueladdQuantity(
                             controller: _fuelQuantityController,
                             ontab: () {
-                              if (_fuelQuantityController.text.isEmpty) {
+                              if (_fuelQuantityController[0].text.isEmpty) {
                                 Fluttertoast.showToast(
                                     msg: 'please add fuel quantity');
                               } else {
@@ -151,7 +152,7 @@ class _AddVehiclesState extends State<AddVehicles> {
                       controller.timeslotList[controller.selectedSlot].id,
                   'vehicleType': controller.selectedValue?.value,
                   'registration': _controller.text,
-                  'quantity': _fuelQuantityController.text
+                  'quantity': _fuelQuantityController[0].text
                 });
               }
             },

@@ -18,7 +18,7 @@ class AssetController extends AppBaseController {
   RxList<AssetData>? assetDataList = <AssetData>[].obs;
 
   RxInt selectedButton = 1.obs;
-  RxInt selectedAsset = 0.obs;
+  // RxInt selectedAsset = 0.obs;
   @override
   void onInit() {
     super.onInit();

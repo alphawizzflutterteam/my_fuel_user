@@ -361,7 +361,7 @@ class _VenderDetailsState extends State<VenderDetails> {
                                 child: widget.booking.seller == null
                                     ? SizedBox()
                                     : Text(
-                                        'Sold by : ${widget.booking.seller?.fName}',
+                                        'Delivered by : ${widget.booking.seller?.fName}',
                                         style: TextStyle(
                                             fontSize: 14,
                                             fontWeight: FontWeight.bold),

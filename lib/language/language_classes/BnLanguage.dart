@@ -302,9 +302,9 @@ class Bangla extends Translations {
           "My Assets": "আমার সম্পদ",
           "Asset Capacity/Power": "Asset Capacity/Power",
           "Edit Assets": "Edit Assets",
-          "Are you Sure you want to": "Are you Sure you want to",
-          "delete": "delete",
-          "Asset Name (eg: genset1)": "Asset Name (eg: genset1)",
+          "Are you Sure you want to": "আপনি কি নিশ্চিত আপনি চান",
+          "delete": "মুছে ফেলুন",
+          "Asset Name (eg: genset1)": "সম্পদের নাম (যেমন: genset1)",
           "Asset Capacity/Power (eg: 120kva)":
               "Asset Capacity/Power (eg: 120kva)",
           "Fuel capacity(eg: 200 litres)": "Fuel capacity(eg: 200 litres)",
@@ -407,12 +407,12 @@ class Bangla extends Translations {
           "Battery Listing": "ব্যাটারি তালিকা",
           "Select Car Type": "গাড়ির ধরন নির্বাচন করুন",
           "Select Car Wash": "গাড়ি ধোয়া নির্বাচন করুন",
-          "Edit Profile": "Edit Profile",
-          "Update Profile": "Update Profile",
+          "Edit Profile": "প্রোফাইল সম্পাদনা করুন",
+          "Update Profile": "প্রোফাইল আপডেট করুন",
           "Self Service": "স্বয়ং সেবা",
           "No History Found": "చరిత్ర కనుగొనబడలేదు",
           "Fuel Quantity(Min 5 ltrs - Max 20 ltrs":
-              "Fuel Quantity(Min 5 ltrs - Max 20 ltrs"
+              "জ্বালানির পরিমাণ (সর্বনিম্ন 5 লিটার - সর্বোচ্চ 20 লিটার",
         }
       };
 }
