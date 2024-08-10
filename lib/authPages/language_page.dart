@@ -122,7 +122,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
                                           .isSelected = true;
                                       setState(() {});
 
-                                      showReviewDialog(context);
+                                      showReviewDialog(context, controller);
                                     },
                                     child: Container(
                                       width: 150,
@@ -401,8 +401,12 @@ class _LanguageScreenState extends State<LanguageScreen> {
         });
   }
 
-  void showReviewDialog(BuildContext context) {
-    showDialog(
+  Future<void> showReviewDialog(
+      BuildContext context, LanguageController controller) {
+    var selectedItem =
+        controller.languageList.firstWhere((item) => item.isSelected == true);
+
+    return showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
@@ -410,14 +414,11 @@ class _LanguageScreenState extends State<LanguageScreen> {
           content: SizedBox(
             height: 220,
             child: Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: GetBuilder<LanguageController>(builder: (controller) {
-                var selectedItem = controller.languageList
-                    .firstWhere((item) => item.isSelected == true);
-                return Column(
+                padding: const EdgeInsets.all(12.0),
+                child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    SizedBox(
+                    const SizedBox(
                       height: 30,
                     ),
                     Container(
@@ -427,7 +428,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
                         borderRadius: BorderRadius.circular(26),
                         color: colors.primary.withOpacity(.2),
                       ),
-                      child: Icon(
+                      child: const Icon(
                         Icons.add_alert_outlined,
                         color: colors.primary,
                       ),
@@ -472,81 +473,77 @@ class _LanguageScreenState extends State<LanguageScreen> {
                     //   ),
                     // )
                   ],
-                );
-              }),
-            ),
+                )),
           ),
           actions: [
-            GetBuilder<LanguageController>(builder: (controller) {
-              return TextButton(
-                onPressed: () async {
-                  Navigator.of(context).pop(); // Close the dialog
-                  // Handle Yes action
-                  print('User clicked Yes');
+            TextButton(
+              onPressed: () async {
+                Navigator.of(context).pop(); // Close the dialog
+                // Handle Yes action
+                print('User clicked Yes');
 
-                  SharedPreferencesService? instance =
-                      await SharedPreferencesService.getInstance();
-                  for (int index = 0;
-                      index < controller.languageList.length;
-                      index++) {
-                    if (controller.languageList[index].isSelected == true) {
-                      print("object AAAAAA $index");
-                    }
-
-                    if (index == 0 &&
-                        controller.languageList[index].isSelected == true) {
-                      instance.saveData(
-                          SharedPreferencesService.kLanguageKey, "1");
-                      controller.changeLanguage('hi', 'IN');
-
-                      // controller
-                      //     .setLanguage(const Locale('hi', 'IN'));
-                    } else if (index == 1 &&
-                        controller.languageList[index].isSelected == true) {
-                      instance.saveData(
-                          SharedPreferencesService.kLanguageKey, "2");
-                      controller.changeLanguage('en', 'US');
-                    } else if (index == 2 &&
-                        controller.languageList[index].isSelected == true) {
-                      instance.saveData(
-                          SharedPreferencesService.kLanguageKey, "3");
-                      controller.changeLanguage('te', 'IN');
-                    } else if (index == 3 &&
-                        controller.languageList[index].isSelected == true) {
-                      instance.saveData(
-                          SharedPreferencesService.kLanguageKey, "4");
-                      controller.changeLanguage('ml', 'IN');
-                    } else if (index == 4 &&
-                        controller.languageList[index].isSelected == true) {
-                      instance.saveData(
-                          SharedPreferencesService.kLanguageKey, "5");
-                      controller.changeLanguage('kn', 'IN');
-                    } else if (index == 5 &&
-                        controller.languageList[index].isSelected == true) {
-                      instance.saveData(
-                          SharedPreferencesService.kLanguageKey, "6");
-                      controller.changeLanguage('bn', 'IN');
-                    } else if (index == 6 &&
-                        controller.languageList[index].isSelected == true) {
-                      instance.saveData(
-                          SharedPreferencesService.kLanguageKey, "7");
-                      controller.changeLanguage('en', 'US');
-                    }
-
-                    Future.delayed(
-                      Duration(seconds: 1),
-                      () => {
-                        if (widget.isLogin == true)
-                          {Get.back()}
-                        else
-                          {Get.toNamed(Routes.LOGIN)}
-                      },
-                    );
+                SharedPreferencesService? instance =
+                    await SharedPreferencesService.getInstance();
+                for (int index = 0;
+                    index < controller.languageList.length;
+                    index++) {
+                  if (controller.languageList[index].isSelected == true) {
+                    print("object AAAAAA $index");
                   }
-                },
-                child: Text('Yes'.tr),
-              );
-            }),
+
+                  if (index == 0 &&
+                      controller.languageList[index].isSelected == true) {
+                    instance.saveData(
+                        SharedPreferencesService.kLanguageKey, "1");
+                    controller.changeLanguage('hi', 'IN');
+
+                    // controller
+                    //     .setLanguage(const Locale('hi', 'IN'));
+                  } else if (index == 1 &&
+                      controller.languageList[index].isSelected == true) {
+                    instance.saveData(
+                        SharedPreferencesService.kLanguageKey, "2");
+                    controller.changeLanguage('en', 'US');
+                  } else if (index == 2 &&
+                      controller.languageList[index].isSelected == true) {
+                    instance.saveData(
+                        SharedPreferencesService.kLanguageKey, "3");
+                    controller.changeLanguage('te', 'IN');
+                  } else if (index == 3 &&
+                      controller.languageList[index].isSelected == true) {
+                    instance.saveData(
+                        SharedPreferencesService.kLanguageKey, "4");
+                    controller.changeLanguage('ml', 'IN');
+                  } else if (index == 4 &&
+                      controller.languageList[index].isSelected == true) {
+                    instance.saveData(
+                        SharedPreferencesService.kLanguageKey, "5");
+                    controller.changeLanguage('kn', 'IN');
+                  } else if (index == 5 &&
+                      controller.languageList[index].isSelected == true) {
+                    instance.saveData(
+                        SharedPreferencesService.kLanguageKey, "6");
+                    controller.changeLanguage('bn', 'IN');
+                  } else if (index == 6 &&
+                      controller.languageList[index].isSelected == true) {
+                    instance.saveData(
+                        SharedPreferencesService.kLanguageKey, "7");
+                    controller.changeLanguage('en', 'US');
+                  }
+
+                  Future.delayed(
+                    Duration(seconds: 1),
+                    () => {
+                      if (widget.isLogin == true)
+                        {Get.back()}
+                      else
+                        {Get.toNamed(Routes.LOGIN)}
+                    },
+                  );
+                }
+              },
+              child: Text('Yes'.tr),
+            ),
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop(); // Close the dialog

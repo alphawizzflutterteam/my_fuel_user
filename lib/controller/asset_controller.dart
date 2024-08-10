@@ -28,7 +28,7 @@ class AssetController extends AppBaseController {
   RxList<AssetData>? assetDataList = <AssetData>[].obs;
 
   RxInt selectedButton = 1.obs;
-  int selectedAsset = 1;
+  int selectedAsset = 0;
 
   RxList<FuelServices> servicesList = <FuelServices>[].obs;
   RxList<AssetTypeData> assetTypeList = <AssetTypeData>[].obs;
@@ -45,15 +45,17 @@ class AssetController extends AppBaseController {
     await getAssets();
     await getFuelOrderService();
 
-    data = Get.arguments;
+    // initUI();
   }
 
-  Future<Map<String, dynamic>> createAst(String asset_type, String name,
-      String capacity, String fuel_capacity) async {
+  Future<Map<String, dynamic>> createAst(
+      String asset_type, String name, String capacity, String fuel_capacity,
+      {String? serviceType, String? unit}) async {
     isLoading(true);
 
     Map<String, dynamic> value = await _laravelApiClient.createAsset(
-        asset_type, name, capacity, fuel_capacity);
+        asset_type, name, capacity, fuel_capacity,
+        serviceType: serviceType, unit: unit);
 
     if (value['status'] == true) {
       Fluttertoast.showToast(msg: "${value['message']}");
@@ -122,18 +124,23 @@ class AssetController extends AppBaseController {
   }
 
   void initUI() {
+    data = Get.arguments;
+    print('${data}');
+
     if (data.isNotEmpty && data[0]) {
       for (int i = 0; i < assetTypeList.length; i++) {
-        if (data[1].data!.assetType.toString().toLowerCase() ==
+        if (data[1]!.assetType.toString().toLowerCase() ==
             assetTypeList[i].title.toString().toLowerCase()) {
           selectedAsset = i;
         }
       }
 
-      nameControiller.text = data[1].data!.name!.toString();
-      capacityControiller.text = data[1].data!.capacity!.toString();
+      nameControiller.text = data[1]!.name!.toString();
+      capacityControiller.text = data[1]!.capacity!.toString();
+      selectedUnit = data[1].fuelCapacity.toString();
+
       // fuelcapacityControiller.text = widget.data!.fuelCapacity!.toString();
-      update();
+      // update();
     }
   }
 }

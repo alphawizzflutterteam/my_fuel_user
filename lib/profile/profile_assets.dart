@@ -117,9 +117,21 @@ class _ProfileAssetsState extends State<ProfileAssets> {
                                         ?.where((item) =>
                                             item.selectedAsset == true)
                                         .toList();
+
+                                    ///for making quantity according to asset selection
                                     List<int?> idList = filteredItems!
                                         .map((asset) => asset.id)
                                         .toList();
+
+                                    ///for making quantity units according to asset selection
+                                    List<String?> units = filteredItems
+                                        .map((asset) => asset.unit)
+                                        .toList();
+
+                                    List<String?> capecity = filteredItems
+                                        .map((asset) => asset.capacity)
+                                        .toList();
+
                                     idList.forEach((element) {
                                       _fuelQuantityController
                                           .add(TextEditingController());
@@ -133,28 +145,37 @@ class _ProfileAssetsState extends State<ProfileAssets> {
                                             bottom: MediaQuery.of(context)
                                                 .viewInsets
                                                 .bottom),
-                                        child: FueladdQuantity(
+                                        child: FueladdQuantity2(
                                           idList: idList,
                                           controller: _fuelQuantityController,
                                           ontab: () {
                                             // _fuelQuantityController.forEach((element) {
-                                            for (var element
-                                                in _fuelQuantityController) {
+                                            for (int i = 0;
+                                                i <
+                                                    _fuelQuantityController
+                                                        .length;
+                                                i++) {
+                                              print(
+                                                  '${capecity[i]}_____________');
+                                              print(
+                                                  '${_fuelQuantityController.length}_____________');
+                                              var item =
+                                                  _fuelQuantityController[i];
                                               bool isNotTrue = false;
-                                              if (element.text.isEmpty) {
+                                              if (item.text.isEmpty) {
                                                 Fluttertoast.showToast(
                                                     msg:
                                                         'please add fuel quantity'
                                                             .tr);
                                                 isNotTrue = true;
                                                 return;
-                                              } else if (double.parse(element
-                                                      .text
-                                                      .toString()) <=
-                                                  0) {
+                                              } else if (double.parse(
+                                                      item.text.toString()) <=
+                                                  double.parse(
+                                                      capecity[i] ?? '0.0')) {
                                                 Fluttertoast.showToast(
                                                     msg:
-                                                        'please enter quantity greater than 0'
+                                                        'please enter quantity less than or equals to asset capacity'
                                                             .tr);
                                                 isNotTrue = true;
 
@@ -164,10 +185,34 @@ class _ProfileAssetsState extends State<ProfileAssets> {
                                                 break;
                                               }
                                             }
+                                            // for (var element
+                                            //     in _fuelQuantityController) {
+                                            //   bool isNotTrue = false;
+                                            //   if (element.text.isEmpty) {
+                                            //     Fluttertoast.showToast(
+                                            //         msg:
+                                            //             'please add fuel quantity'
+                                            //                 .tr);
+                                            //     isNotTrue = true;
+                                            //     return;
+                                            //   } else if (double.parse(element.text.toString()) <= 0) {
+                                            //     Fluttertoast.showToast(
+                                            //         msg:
+                                            //             'please enter quantity greater than 0'
+                                            //                 .tr);
+                                            //     isNotTrue = true;
+                                            //
+                                            //     return;
+                                            //   }
+                                            //   if (isNotTrue == true) {
+                                            //     break;
+                                            //   }
+                                            // }
 
                                             Navigator.pop(context);
                                             shoTimeSlot(controller);
                                           },
+                                          unitList: units,
                                         ),
                                       ),
                                     );
@@ -238,7 +283,7 @@ class _ProfileAssetsState extends State<ProfileAssets> {
                                   child: Center(
                                     child: Text(
                                       'Add Assets'.tr,
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                           fontWeight: FontWeight.w700,
                                           color: colors.blackTemp),
                                     ),
@@ -305,11 +350,11 @@ class _ProfileAssetsState extends State<ProfileAssets> {
                                 height: widget.isFromFuel ?? false
                                     ? MediaQuery.of(context).size.height * 0.75
                                     : MediaQuery.of(context).size.height * 0.66,
-                                child: controller.assetDataList!.length! == 0
+                                child: controller.assetDataList!.isEmpty
                                     ? Nodata()
                                     : ListView.builder(
                                         itemCount:
-                                            controller.assetDataList!.length!,
+                                            controller.assetDataList!.length,
                                         shrinkWrap: true,
                                         physics:
                                             const AlwaysScrollableScrollPhysics(),
@@ -358,19 +403,7 @@ class _ProfileAssetsState extends State<ProfileAssets> {
                                                     CrossAxisAlignment.start,
                                                 children: [
                                                   Text(
-                                                    controller
-                                                                .assetDataList![
-                                                                    index]
-                                                                .assetType ==
-                                                            "heavy_machinery"
-                                                        ? "Heavy Machinery"
-                                                        : controller
-                                                                    .assetDataList![
-                                                                        index]
-                                                                    .assetType ==
-                                                                "equipments"
-                                                            ? "Equipments"
-                                                            : "Genset",
+                                                    '${controller.assetDataList![index].assetType}',
                                                     style: const TextStyle(
                                                         fontSize: 16,
                                                         fontWeight:
@@ -419,7 +452,7 @@ class _ProfileAssetsState extends State<ProfileAssets> {
                                                                     .shade600),
                                                           ),
                                                           Text(
-                                                            "${controller.assetDataList![index].capacity}",
+                                                            "${controller.assetDataList![index].capacity}${controller.assetDataList![index].fuelCapacity}",
                                                             style: const TextStyle(
                                                                 color: Colors
                                                                     .black,
@@ -444,7 +477,7 @@ class _ProfileAssetsState extends State<ProfileAssets> {
                                                                 .grey.shade600),
                                                       ),
                                                       Text(
-                                                        "${controller.assetDataList![index].fuelCapacity}",
+                                                        "${controller.assetDataList![index].capacity}${controller.assetDataList![index].fuelCapacity}",
                                                         style: const TextStyle(
                                                             color: Colors.black,
                                                             fontWeight:
@@ -491,7 +524,7 @@ class _ProfileAssetsState extends State<ProfileAssets> {
                                                                       index]
                                                                 ]);
 
-                                                            Navigator.push(
+                                                            /*Navigator.push(
                                                                 context,
                                                                 MaterialPageRoute(
                                                                   builder: (context) => MyFullAssets(
@@ -500,7 +533,7 @@ class _ProfileAssetsState extends State<ProfileAssets> {
                                                                           index],
                                                                       update:
                                                                           true),
-                                                                ));
+                                                                ));*/
                                                             // Navigato
                                                             // Add your onPressed logic here
                                                           },
@@ -809,7 +842,8 @@ class _ProfileAssetsState extends State<ProfileAssets> {
                       .id,
                   'vehicleType': '',
                   'registration': '',
-                  'quantity': _fuelQuantityController[0].text,
+                  'quantity':
+                      _fuelQuantityController.map((e) => e.text).join(','),
                   'assetId': "${idList.join(",")}"
                 });
               }

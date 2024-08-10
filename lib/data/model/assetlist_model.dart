@@ -32,6 +32,7 @@ class AssetData {
   int? id;
   String? assetType;
   String? name;
+  String? unit;
   String? capacity;
   String? fuelCapacity;
   String? userId;
@@ -52,6 +53,7 @@ class AssetData {
       this.createdAt,
       this.selectedAsset,
       this.updatedAt,
+      this.unit,
       this.user});
 
   AssetData.fromJson(Map<String, dynamic> json) {
@@ -64,6 +66,7 @@ class AssetData {
     status = json['status'].toString();
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
+    unit = json['unit'];
     user = json['user'] != null ? new User.fromJson(json['user']) : null;
   }
 
@@ -78,6 +81,7 @@ class AssetData {
     data['status'] = this.status;
     data['created_at'] = this.createdAt;
     data['updated_at'] = this.updatedAt;
+    data['unit'] = this.unit;
     if (this.user != null) {
       data['user'] = this.user!.toJson();
     }

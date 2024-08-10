@@ -70,11 +70,14 @@ class _AssetsState extends State<MyFullAssets> {
   }
 
   final _formKeyReset = GlobalKey<FormState>();
+  final controller = Get.find<AssetController>();
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+
+    controller.initUI();
 
     initUI();
   }
@@ -460,16 +463,20 @@ class _AssetsState extends State<MyFullAssets> {
                                           controller
                                               .createAst(
                                                   controller
-                                                          .assetDataList![
+                                                          .assetTypeList![
                                                               controller
                                                                   .selectedAsset]
-                                                          .name ??
+                                                          .title ??
                                                       "",
                                                   controller
                                                       .nameControiller.text,
                                                   controller
                                                       .capacityControiller.text,
-                                                  controller.selectedUnit ?? '')
+                                                  controller.selectedUnit ?? '',
+                                                  serviceType: controller
+                                                      .selectedData?.id
+                                                      .toString(),
+                                                  unit: controller.selectedUnit)
                                               .then((value) {
                                             if (value['status'] == true) {
                                               Fluttertoast.showToast(

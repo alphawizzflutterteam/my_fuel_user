@@ -316,11 +316,12 @@ class LaravelApiClient extends GetxService with ApiClient {
         // "phone": "$emailPhone",
         "password": "$password",
         // "guest_id": "$membNo"
-        "guest_id": "123",
+        "guest_id": membNo,
         "device_token": "$device_token"
       },
       options: optionsNetwork,
     );
+    print("userRegister ${response.data} ");
     if (response.statusCode == 200) {
       print("userRegister ${response.toString()} ");
 
@@ -939,8 +940,9 @@ class LaravelApiClient extends GetxService with ApiClient {
     }
   }
 
-  Future<Map<String, dynamic>> createAsset(String asset_type, String name,
-      String capacity, String fuel_capacity) async {
+  Future<Map<String, dynamic>> createAsset(
+      String asset_type, String name, String capacity, String fuel_capacity,
+      {String? serviceType, String? unit}) async {
     SharedPreferencesService? instance =
         await SharedPreferencesService.getInstance();
 
@@ -954,13 +956,14 @@ class LaravelApiClient extends GetxService with ApiClient {
         "name": "$name",
         // "guest_id": "$membNo"
         "capacity": "$capacity",
-        "fuel_capacity": "$fuel_capacity"
+        "fuel_capacity": "",
+        "service_type": serviceType,
+        "unit": unit
       },
       options: optionsNetwork,
     );
+    print("userRegister ${response.data} ");
     if (response.statusCode == 200) {
-      print("userRegister ${response.toString()} ");
-
       return json.decode(response.toString());
     } else {
       return json.decode(response.toString());

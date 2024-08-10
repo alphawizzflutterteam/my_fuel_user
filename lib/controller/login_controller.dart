@@ -29,8 +29,12 @@ class LoginController extends AppBaseController {
 
     log('dsdsdsds ${value}');
     if (value.containsKey("errors")) {
-      var data = value['errors'][0]['message'];
-      Fluttertoast.showToast(msg: "${data}");
+      if (value['errors'].isNotEmpty) {
+        var data = value['errors'][0]['message'];
+        Fluttertoast.showToast(msg: "${data}");
+      } else {
+        Fluttertoast.showToast(msg: "${value['message']}");
+      }
     } else if (value['token'] != null) {}
 
     isLoading(false);

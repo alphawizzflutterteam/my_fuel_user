@@ -84,3 +84,87 @@ class _FueladdQuantityState extends State<FueladdQuantity> {
     );
   }
 }
+
+class FueladdQuantity2 extends StatefulWidget {
+  final List<int?>? idList;
+  final List<String?>? unitList;
+  const FueladdQuantity2(
+      {super.key,
+      required this.controller,
+      this.ontab,
+      this.idList,
+      this.unitList});
+
+  final VoidCallback? ontab;
+
+  // final TextEditingController controller;
+  final List<TextEditingController> controller;
+  @override
+  State<FueladdQuantity2> createState() => _FueladdQuantity2State();
+}
+
+class _FueladdQuantity2State extends State<FueladdQuantity2> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.zero,
+      child: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            const SizedBox(
+              height: 10,
+            ),
+            Text(
+              'Add Fuel Quantity'.tr,
+              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.w500),
+            ),
+            const SizedBox(
+              height: 40,
+            ),
+            ListView.builder(
+              shrinkWrap: true,
+              itemCount: widget.idList?.length,
+              itemBuilder: (context, index) {
+                return Column(
+                  children: [
+                    TextFormField(
+                      keyboardType: TextInputType.number,
+                      controller: widget.controller[index],
+                      decoration: CustomInputDecoration.inputDecoration(
+                          'Add Fuel Quantity'.tr,
+                          surffix: Text(widget.unitList?[index] ?? '')),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    )
+                  ],
+                );
+              },
+            ),
+            const SizedBox(
+              height: 40,
+            ),
+            InkWell(
+              // onTap: () {
+              //   showModalBottomSheet(
+              //     context: context,
+              //     builder: (context) => BottamSheet(),
+              //   );
+              // },
+              child: InkWell(
+                onTap: widget.ontab,
+                child: Container(
+                  child: MyButton(
+                    text: "Add Quantity".tr,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
