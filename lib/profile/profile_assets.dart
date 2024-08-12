@@ -107,6 +107,8 @@ class _ProfileAssetsState extends State<ProfileAssets> {
                                   onTap: () async {
                                     controller.selectedButton.value = 1;
 
+                                    _fuelQuantityController = [];
+
                                     if (controller.assetDataList?.length == 0) {
                                       Fluttertoast.showToast(
                                           msg: "Please add assets");
@@ -150,67 +152,40 @@ class _ProfileAssetsState extends State<ProfileAssets> {
                                           controller: _fuelQuantityController,
                                           ontab: () {
                                             // _fuelQuantityController.forEach((element) {
+                                            bool isClear = false;
                                             for (int i = 0;
                                                 i <
                                                     _fuelQuantityController
                                                         .length;
                                                 i++) {
-                                              print(
-                                                  '${capecity[i]}_____________');
-                                              print(
-                                                  '${_fuelQuantityController.length}_____________');
+                                              isClear = false;
                                               var item =
                                                   _fuelQuantityController[i];
-                                              bool isNotTrue = false;
+
                                               if (item.text.isEmpty) {
                                                 Fluttertoast.showToast(
                                                     msg:
                                                         'please add fuel quantity'
                                                             .tr);
-                                                isNotTrue = true;
-                                                return;
+                                                isClear = true;
+                                                break;
                                               } else if (double.parse(
-                                                      item.text.toString()) <=
+                                                      item.text.toString()) >
                                                   double.parse(
                                                       capecity[i] ?? '0.0')) {
                                                 Fluttertoast.showToast(
                                                     msg:
                                                         'please enter quantity less than or equals to asset capacity'
                                                             .tr);
-                                                isNotTrue = true;
-
-                                                return;
-                                              }
-                                              if (isNotTrue == true) {
+                                                isClear = true;
                                                 break;
                                               }
                                             }
-                                            // for (var element
-                                            //     in _fuelQuantityController) {
-                                            //   bool isNotTrue = false;
-                                            //   if (element.text.isEmpty) {
-                                            //     Fluttertoast.showToast(
-                                            //         msg:
-                                            //             'please add fuel quantity'
-                                            //                 .tr);
-                                            //     isNotTrue = true;
-                                            //     return;
-                                            //   } else if (double.parse(element.text.toString()) <= 0) {
-                                            //     Fluttertoast.showToast(
-                                            //         msg:
-                                            //             'please enter quantity greater than 0'
-                                            //                 .tr);
-                                            //     isNotTrue = true;
-                                            //
-                                            //     return;
-                                            //   }
-                                            //   if (isNotTrue == true) {
-                                            //     break;
-                                            //   }
-                                            // }
 
-                                            Navigator.pop(context);
-                                            shoTimeSlot(controller);
+                                            if (!isClear) {
+                                              Navigator.pop(context);
+                                              shoTimeSlot(controller);
+                                            }
                                           },
                                           unitList: units,
                                         ),

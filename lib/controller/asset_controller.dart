@@ -124,23 +124,24 @@ class AssetController extends AppBaseController {
   }
 
   void initUI() {
-    data = Get.arguments;
-    print('${data}');
+    if (Get.arguments != null) {
+      data = Get.arguments;
 
-    if (data.isNotEmpty && data[0]) {
-      for (int i = 0; i < assetTypeList.length; i++) {
-        if (data[1]!.assetType.toString().toLowerCase() ==
-            assetTypeList[i].title.toString().toLowerCase()) {
-          selectedAsset = i;
+      if (data.isNotEmpty && data[0]) {
+        for (int i = 0; i < assetTypeList.length; i++) {
+          if (data[1]!.assetType.toString().toLowerCase() ==
+              assetTypeList[i].title.toString().toLowerCase()) {
+            selectedAsset = i;
+          }
         }
+
+        nameControiller.text = data[1]!.name!.toString();
+        capacityControiller.text = data[1]!.capacity!.toString();
+        selectedUnit = data[1].fuelCapacity.toString();
+
+        // fuelcapacityControiller.text = widget.data!.fuelCapacity!.toString();
+        // update();
       }
-
-      nameControiller.text = data[1]!.name!.toString();
-      capacityControiller.text = data[1]!.capacity!.toString();
-      selectedUnit = data[1].fuelCapacity.toString();
-
-      // fuelcapacityControiller.text = widget.data!.fuelCapacity!.toString();
-      // update();
     }
   }
 }
